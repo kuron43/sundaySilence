@@ -133,6 +133,12 @@
     <ClCompile Include="Engine\BASE\FPS.cpp" />
     <ClCompile Include="Engine\BASE\WinApp.cpp" />
     <ClCompile Include="Engine\INPUT\Input.cpp" />
+    <ClCompile Include="Engine\MATH\Affin.cpp" />
+    <ClCompile Include="Engine\MATH\ConvertXM.cpp" />
+    <ClCompile Include="Engine\MATH\Matrix4.cpp" />
+    <ClCompile Include="Engine\MATH\Quaternion.cpp" />
+    <ClCompile Include="Engine\MATH\Vector2.cpp" />
+    <ClCompile Include="Engine\MATH\Vector3.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="User\SCENE\GameScene.cpp" />
   </ItemGroup>
@@ -141,6 +147,12 @@
     <ClInclude Include="Engine\BASE\FPS.h" />
     <ClInclude Include="Engine\BASE\WinApp.h" />
     <ClInclude Include="Engine\INPUT\Input.h" />
+    <ClInclude Include="Engine\MATH\Affin.h" />
+    <ClInclude Include="Engine\MATH\ConvertXM.h" />
+    <ClInclude Include="Engine\MATH\Matrix4.h" />
+    <ClInclude Include="Engine\MATH\Quaternion.h" />
+    <ClInclude Include="Engine\MATH\Vector2.h" />
+    <ClInclude Include="Engine\MATH\Vector3.h" />
     <ClInclude Include="User\SCENE\GameScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

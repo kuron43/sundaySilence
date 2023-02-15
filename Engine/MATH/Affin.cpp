@@ -64,9 +64,8 @@ float Affin::degConvert(float value) {
 /// ‰ñ“] X•ûŒü
 /// </summary>
 Matrix4 Affin::matRotateX(float rotationX) {
-	float rotRad = radConvert(rotationX);
-	float cosRad = cos(rotRad);
-	float sinRad = sin(rotRad);
+	float cosRad = cos(rotationX);
+	float sinRad = sin(rotationX);
 	Matrix4 matRotX;
 
 	matRotX = { 1.0f, 0.0f,    0.0f,   0.0f, 0.0f, cosRad, sinRad, 0.0f,
@@ -79,9 +78,8 @@ Matrix4 Affin::matRotateX(float rotationX) {
 /// ‰ñ“] Y•ûŒü
 /// </summary>
 Matrix4 Affin::matRotateY(float rotationY) {
-	float rotRad = radConvert(rotationY);
-	float cosRad = cos(rotRad);
-	float sinRad = sin(rotRad);
+	float cosRad = cos(rotationY);
+	float sinRad = sin(rotationY);
 	Matrix4 matRotY;
 
 	matRotY = { cosRad, 0.0f, -sinRad, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
@@ -94,9 +92,8 @@ Matrix4 Affin::matRotateY(float rotationY) {
 /// ‰ñ“] Z•ûŒü
 /// </summary>
 Matrix4 Affin::matRotateZ(float rotationZ) {
-	float rotRad = radConvert(rotationZ);
-	float cosRad = cos(rotRad);
-	float sinRad = sin(rotRad);
+	float cosRad = cos(rotationZ);
+	float sinRad = sin(rotationZ);
 	Matrix4 matRotZ;
 
 	matRotZ = { cosRad, sinRad, 0.0f, 0.0f, -sinRad, cosRad, 0.0f, 0.0f,

@@ -88,6 +88,24 @@
     <ClCompile Include="Engine\BASE\WinApp.cpp">
       <Filter>Engine\ソースファイル\BASE</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\MATH\Affin.cpp">
+      <Filter>Engine\ソースファイル\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MATH\ConvertXM.cpp">
+      <Filter>Engine\ソースファイル\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MATH\Matrix4.cpp">
+      <Filter>Engine\ソースファイル\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MATH\Quaternion.cpp">
+      <Filter>Engine\ソースファイル\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MATH\Vector2.cpp">
+      <Filter>Engine\ソースファイル\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MATH\Vector3.cpp">
+      <Filter>Engine\ソースファイル\MATH</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -104,6 +122,24 @@
     </ClInclude>
     <ClInclude Include="Engine\BASE\WinApp.h">
       <Filter>Engine\ヘッダーファイル\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MATH\Affin.h">
+      <Filter>Engine\ヘッダーファイル\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MATH\ConvertXM.h">
+      <Filter>Engine\ヘッダーファイル\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MATH\Matrix4.h">
+      <Filter>Engine\ヘッダーファイル\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MATH\Quaternion.h">
+      <Filter>Engine\ヘッダーファイル\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MATH\Vector2.h">
+      <Filter>Engine\ヘッダーファイル\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MATH\Vector3.h">
+      <Filter>Engine\ヘッダーファイル\MATH</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
