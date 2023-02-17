@@ -106,6 +106,21 @@
     <ClCompile Include="Engine\MATH\Vector3.cpp">
       <Filter>Engine\ソースファイル\MATH</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\CAMERA\Camera.cpp">
+      <Filter>Engine\ソースファイル\CAMERA</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AUDIO\Audio.cpp">
+      <Filter>Engine\ソースファイル\AUDIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Model.cpp">
+      <Filter>Engine\ソースファイル\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Object3d.cpp">
+      <Filter>Engine\ソースファイル\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Transform.cpp">
+      <Filter>Engine\ソースファイル\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -140,6 +155,21 @@
     </ClInclude>
     <ClInclude Include="Engine\MATH\Vector3.h">
       <Filter>Engine\ヘッダーファイル\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CAMERA\Camera.h">
+      <Filter>Engine\ヘッダーファイル\CAMERA</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AUDIO\Audio.h">
+      <Filter>Engine\ヘッダーファイル\AUDIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Model.h">
+      <Filter>Engine\ヘッダーファイル\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Object3d.h">
+      <Filter>Engine\ヘッダーファイル\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Transform.h">
+      <Filter>Engine\ヘッダーファイル\3D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

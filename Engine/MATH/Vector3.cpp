@@ -41,6 +41,39 @@ const Vector3 Vector3::lerp(const Vector3& start, const Vector3& end, const floa
 	return start * (1.0f - t) + end * t;
 }
 
+Vector3 Vector3::Vector3Zero() {
+	Vector3 a(0, 0, 0);
+	return a;
+}
+
+bool Vector3::Vector3Equal(Vector3 v1, Vector3 v2) {
+	if (v1.x == v2.x) {
+		if (v1.y == v2.y) {
+			if (v1.z == v2.z) {
+				return true;
+
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+bool Vector3::Vector3IsInfinite() {
+	if (isfinite(this->x)&&isfinite(this->y)&&isfinite(this->z)) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
 Vector3 Vector3::operator+()const {
 	return *this;
 }
