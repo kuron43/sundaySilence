@@ -10,6 +10,7 @@
 
 
 #include "Vector3.h"
+#include "Vector4.h"
 #include "Matrix4.h"
 #include "Affin.h"
 
@@ -36,18 +37,12 @@ private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::を省略
-	/*using XMFLOAT2 = DirectX::XMFLOAT2;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMFLOAT4 = DirectX::XMFLOAT4;
-	using XMMATRIX = DirectX::XMMATRIX;*/
-
-
 
 	// 定数バッファ用データ構造体
 	struct ConstBufferDataB0
 	{
 		//XMFLOAT4 color;	// 色 (RGBA)
-		XMMATRIX mat;	// ３Ｄ変換行列
+		Matrix4 mat;	// ３Ｄ変換行列
 	};
 
 	
@@ -104,15 +99,18 @@ private: // 静的メンバ変数
 	
 
 	// ビュー行列
-	static XMMATRIX matView;
+	static Matrix4 matView;
 	// 射影行列
-	static XMMATRIX matProjection;
+	static Matrix4 matProjection;
 	// 視点座標
-	static XMFLOAT3 eye;
+	static Vector3 eye;
 	// 注視点座標
-	static XMFLOAT3 target;
+	static Vector3 target;
 	// 上方向ベクトル
-	static XMFLOAT3 up;
+	static Vector3 up;
+
+
+	static float focalLengs;
 
 private:// 静的メンバ関数
 
@@ -157,20 +155,12 @@ public: // メンバ関数
 	//setter
 	void SetModel(Model* model) { this->model = model; }
 
-	static void MakePerspectiveL(float fovAngleY, float aspect, float near_, float far_, Matrix4& matrix);
-
-	static void MakeLookL(const Vector3& eye, const Vector3& target, const Vector3& up, Matrix4& mat);
-
-	static Matrix4 MakeInverse(const Matrix4* mat);
-
-
-
 private: // メンバ変数
 	public:
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 
 	// 色
-	XMFLOAT4 color = { 1,1,1,1 };	
+	Vector4 color ={ 1,1,1,1 };	
 
 	// 親オブジェクト
 	Object3d* parent = nullptr;

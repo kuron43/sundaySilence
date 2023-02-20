@@ -23,6 +23,7 @@ public:
 
 	// 代入演算子オーバーロード
 	//Matrix4 operator*=(const Matrix4& m2);
+	static void MakeOrthogonalL(float left, float right, float bottom, float top, float near_, float far_, Matrix4& matrix);
 	static void MakeLookL(const Vector3& eye, const Vector3& target, const Vector3& up, Matrix4& mat);
 	static void MakePerspectiveL(float fovAngleY, float aspect, float near_, float far_, Matrix4& matrix);
 	Matrix4 MakeInverse(const Matrix4* mat);

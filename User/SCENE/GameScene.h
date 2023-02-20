@@ -2,20 +2,17 @@
 
 #include "DirectXCommon.h"
 #include "Input.h"
-//#include "Audio.h"
-//
-//#include <string>
-//#include <DirectXMath.h>
-//
-//#include "Object3d.h"
-//#include "SpriteCommon.h"
-//#include "Sprite.h"
-//#include "Model.h"
-//
-//#include "Matrix4.h"
-//#include "ConvertXM.h"
-//#include "Transform.h"
-//#include "DebugCamera.h"
+#include "Audio.h"
+#include <string>
+#include "Object3d.h"
+#include "SpriteCommon.h"
+#include "Sprite.h"
+#include "Model.h"
+
+#include "Matrix4.h"
+#include "ConvertXM.h"
+#include "Transform.h"
+#include "Camera.h"
 //#include "FBX/FBXObject3d.h"
 //#include "FBX/FbxLoader.h"
 //#include "Particle/ParticleManager.h"
@@ -57,8 +54,22 @@ public: // メンバ関数
 	void Draw();
 
 public:
+	//音を止める関数
+	IXAudio2SourceVoice* pSourceVoice[10] = { 0 };
+
 	
-private: // メンバ変数
+private: // メンバ変数 (固定)
+	DirectXCommon* dxCommon = nullptr;
+	Input* input = nullptr;
+
+	SpriteCommon* spriteCommon = nullptr;
+	Camera* camera = nullptr;
+	Audio* audio = nullptr;
+
+private:	//メンバ変数
+
+	Object3d* skydome = nullptr;
+	Model* skydomeMD = nullptr;
 
 };
 

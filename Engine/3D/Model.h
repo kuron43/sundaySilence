@@ -2,10 +2,15 @@
 
 #include <vector>
 #include <d3d12.h>
-#include <DirectXMath.h>
 #include <string>
 #include <wrl.h>
 #include <d3dx12.h>
+
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Matrix4.h"
+#include "Affin.h"
 
 
 class Model
@@ -14,26 +19,22 @@ private: // エイリアス
 // Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::を省略
-	using XMFLOAT2 = DirectX::XMFLOAT2;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMFLOAT4 = DirectX::XMFLOAT4;
-	using XMMATRIX = DirectX::XMMATRIX;
 
 public: // サブクラス
 // 頂点データ構造体
 	struct VertexPosNormalUv
 	{
-		XMFLOAT3 pos; // xyz座標
-		XMFLOAT3 normal; // 法線ベクトル
-		XMFLOAT2 uv;  // uv座標
+		Vector3 pos; // xyz座標
+		Vector3 normal; // 法線ベクトル
+		Vector2 uv;  // uv座標
 	};
 
 	struct ConstBufferDataB1 {
-		XMFLOAT3 ambient;	//アンビエント係数
+		Vector3 ambient;	//アンビエント係数
 		float pad1;			//パティング
-		XMFLOAT3 diffuse;	//ディフーズ係数
+		Vector3 diffuse;	//ディフーズ係数
 		float pad2;			//パティング
-		XMFLOAT3 specular;	//スペキュラー係数
+		Vector3 specular;	//スペキュラー係数
 		float alpha;		//アルファ
 	};
 
@@ -111,9 +112,9 @@ private:
 	struct Material
 	{
 		std::string name; //マテリアル名
-		XMFLOAT3 ambient; //アンビエント影響度
-		XMFLOAT3 diffuse; //ディフューズ影響度
-		XMFLOAT3 specular; //スペキュラー影響度
+		Vector3 ambient; //アンビエント影響度
+		Vector3 diffuse; //ディフューズ影響度
+		Vector3 specular; //スペキュラー影響度
 		float alpha; //アルファ
 		std::string textureFilename; //テクスチャファイル名
 		//コンストラクタ

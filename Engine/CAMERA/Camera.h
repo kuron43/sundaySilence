@@ -1,19 +1,16 @@
 ﻿#pragma once
 
-#include <DirectXMath.h>
+//#include <DirectXMath.h>
+
+#include "Vector3.h"
+#include "Matrix4.h"
+#include "Affin.h"
 
 /// <summary>
 /// カメラ基本機能
 /// </summary>
 class Camera
 {
-protected: // エイリアス
-	// DirectX::を省略
-	using XMFLOAT2 = DirectX::XMFLOAT2;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMFLOAT4 = DirectX::XMFLOAT4;
-	using XMVECTOR = DirectX::XMVECTOR;
-	using XMMATRIX = DirectX::XMMATRIX;
 
 public: // メンバ関数
 	/// <summary>
@@ -47,7 +44,7 @@ public: // メンバ関数
 	/// ビュー行列の取得
 	/// </summary>
 	/// <returns>ビュー行列</returns>
-	inline const XMMATRIX& GetViewMatrix() {
+	inline const Matrix4& GetViewMatrix() {
 		return matView;
 	}
 
@@ -55,7 +52,7 @@ public: // メンバ関数
 	/// 射影行列の取得
 	/// </summary>
 	/// <returns>射影行列</returns>
-	inline const XMMATRIX& GetProjectionMatrix() {
+	inline const Matrix4& GetProjectionMatrix() {
 		return matProjection;
 	}
 
@@ -63,7 +60,7 @@ public: // メンバ関数
 	/// ビュー射影行列の取得
 	/// </summary>
 	/// <returns>ビュー射影行列</returns>
-	inline const XMMATRIX& GetViewProjectionMatrix() {
+	inline const Matrix4& GetViewProjectionMatrix() {
 		return matViewProjection;
 	}
 
@@ -71,7 +68,7 @@ public: // メンバ関数
 	/// ビルボード行列の取得
 	/// </summary>
 	/// <returns>ビルボード行列</returns>
-	inline const XMMATRIX& GetBillboardMatrix() {
+	inline const Matrix4& GetBillboardMatrix() {
 		return matBillboard;
 	}
 
@@ -79,7 +76,7 @@ public: // メンバ関数
 	/// 視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	inline const XMFLOAT3& GetEye() {
+	inline const Vector3& GetEye() {
 		return eye;
 	}
 
@@ -87,7 +84,7 @@ public: // メンバ関数
 	/// 視点座標の設定
 	/// </summary>
 	/// <param name="eye">座標</param>
-	inline void SetEye(XMFLOAT3 eye) {
+	inline void SetEye(Vector3 eye) {
 		this->eye = eye; viewDirty = true;
 	}
 
@@ -95,7 +92,7 @@ public: // メンバ関数
 	/// 注視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	inline const XMFLOAT3& GetTarget() {
+	inline const Vector3& GetTarget() {
 		return target;
 	}
 
@@ -103,7 +100,7 @@ public: // メンバ関数
 	/// 注視点座標の設定
 	/// </summary>
 	/// <param name="target">座標</param>
-	inline void SetTarget(XMFLOAT3 target) {
+	inline void SetTarget(Vector3 target) {
 		this->target = target; viewDirty = true;
 	}
 
@@ -111,7 +108,7 @@ public: // メンバ関数
 	/// 上方向ベクトルの取得
 	/// </summary>
 	/// <returns>上方向ベクトル</returns>
-	inline const XMFLOAT3& GetUp() {
+	inline const Vector3& GetUp() {
 		return up;
 	}
 
@@ -119,7 +116,7 @@ public: // メンバ関数
 	/// 上方向ベクトルの設定
 	/// </summary>
 	/// <param name="up">上方向ベクトル</param>
-	inline void SetUp(XMFLOAT3 up) {
+	inline void SetUp(Vector3 up) {
 		this->up = up; viewDirty = true;
 	}
 
@@ -143,39 +140,37 @@ public: // メンバ関数
 	/// ベクトルによる視点移動
 	/// </summary>
 	/// <param name="move">移動量</param>
-	void MoveEyeVector(const XMFLOAT3& move);
-	void MoveEyeVector(const XMVECTOR& move);
+	void MoveEyeVector(const Vector3& move);
 
 	/// <summary>
 	/// ベクトルによる移動
 	/// </summary>
 	/// <param name="move">移動量</param>
-	void MoveVector(const XMFLOAT3& move);
-	void MoveVector(const XMVECTOR& move);
+	void MoveVector(const Vector3& move);
 
 	float FieldOfViewY();
 
 protected: // メンバ変数
 	// ビュー行列
-	XMMATRIX matView = DirectX::XMMatrixIdentity();
+	Matrix4 matView = Affin::matUnit();
 	// ビルボード行列
-	XMMATRIX matBillboard = DirectX::XMMatrixIdentity();
+	Matrix4 matBillboard = Affin::matUnit();
 	// Y軸回りビルボード行列
-	XMMATRIX matBillboardY = DirectX::XMMatrixIdentity();
+	Matrix4 matBillboardY = Affin::matUnit();
 	// 射影行列
-	XMMATRIX matProjection = DirectX::XMMatrixIdentity();
+	Matrix4 matProjection = Affin::matUnit();
 	// ビュー射影行列
-	XMMATRIX matViewProjection = DirectX::XMMatrixIdentity();
+	Matrix4 matViewProjection = Affin::matUnit();
 	// ビュー行列ダーティフラグ
 	bool viewDirty = false;
 	// 射影行列ダーティフラグ
 	bool projectionDirty = false;
 	// 視点座標
-	XMFLOAT3 eye = {0, 0, -1};
+	Vector3 eye = {0, 0, -1};
 	// 注視点座標
-	XMFLOAT3 target = {0, 0, 0};
+	Vector3 target = {0, 0, 0};
 	// 上方向ベクトル
-	XMFLOAT3 up = {0, 1, 0};
+	Vector3 up = {0, 1, 0};
 	// アスペクト比
 	float aspectRatio = 1.0f;
 

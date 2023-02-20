@@ -121,6 +121,15 @@
     <ClCompile Include="Engine\3D\Transform.cpp">
       <Filter>Engine\ソースファイル\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\2D\Sprite.cpp">
+      <Filter>Engine\ソースファイル\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\SpriteCommon.cpp">
+      <Filter>Engine\ソースファイル\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MATH\Vector4.cpp">
+      <Filter>Engine\ソースファイル\MATH</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -171,5 +180,36 @@
     <ClInclude Include="Engine\3D\Transform.h">
       <Filter>Engine\ヘッダーファイル\3D</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\2D\Sprite.h">
+      <Filter>Engine\ヘッダーファイル\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\SpriteCommon.h">
+      <Filter>Engine\ヘッダーファイル\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MATH\Vector4.h">
+      <Filter>Engine\ヘッダーファイル\MATH</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\SHADER\Sprite.hlsli">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </None>
+    <None Include="Engine\SHADER\OBJShaderHeader.hlsli">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Engine\SHADER\SpritePS.hlsl">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Engine\SHADER\SpriteVS.hlsl">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Engine\SHADER\OBJPixelShader.hlsl">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Engine\SHADER\OBJVertexShader.hlsl">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

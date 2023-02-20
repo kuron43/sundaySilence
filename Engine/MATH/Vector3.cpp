@@ -42,34 +42,17 @@ const Vector3 Vector3::lerp(const Vector3& start, const Vector3& end, const floa
 }
 
 Vector3 Vector3::Vector3Zero() {
-	Vector3 a(0, 0, 0);
+	Vector3 a = { 0, 0, 0 };
 	return a;
 }
 
 bool Vector3::Vector3Equal(Vector3 v1, Vector3 v2) {
-	if (v1.x == v2.x) {
-		if (v1.y == v2.y) {
-			if (v1.z == v2.z) {
-				return true;
-
-			}
-			else {
-				return false;
-			}
-		}
-		else {
-			return false;
-		}
-	}
-	else {
-		return false;
+	if (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z) {
+		return true;
 	}
 }
 bool Vector3::Vector3IsInfinite() {
-	if (isfinite(this->x)&&isfinite(this->y)&&isfinite(this->z)) {
-		return false;
-	}
-	else {
+	if (!isfinite(this->x) && !isfinite(this->y) && !isfinite(this->z)) {
 		return true;
 	}
 }
