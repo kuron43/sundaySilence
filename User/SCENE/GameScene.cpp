@@ -52,6 +52,13 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 	skydome->SetModel(skydomeMD);
 	skydome->wtf.scale = (Vector3{ 1000, 1000, 1000 });
 	skydome->Update();
+
+	sprite->Initialize(spriteCommon);
+	sprite->SetPozition(spritePOS);
+	sprite->SetSize(Vector2{ WinApp::window_width,WinApp::window_height });
+
+	spriteCommon->LoadTexture(0, "inu.png");
+	sprite->SetTextureIndex(0);
 }
 
 /// <summary>
@@ -81,4 +88,6 @@ void GameScene::Draw() {
 	
 	//3Dオブジェクト描画後処理
 	Object3d::PostDraw();
+
+	sprite->Draw();
 }
