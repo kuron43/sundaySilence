@@ -5,6 +5,8 @@
 void ImGuiManager::Initialize(WinApp* winApp, DirectXCommon* dxCommon) {
 	assert(winApp);
 	assert(dxCommon);
+
+	dxCommon_ = dxCommon;
 	HRESULT result;
 
 	// ImGuiのコンテキスト生成
@@ -21,13 +23,13 @@ void ImGuiManager::Initialize(WinApp* winApp, DirectXCommon* dxCommon) {
 	desc.NumDescriptors = 1;
 	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	// デスクリプターヒープ生成	
-	result = dxCommon->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap_));
+	result = dxCommon_->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap_));
 	assert(SUCCEEDED(result));
 
 	// DirectX12用の初期関数呼び出し
 	ImGui_ImplDX12_Init(
-		dxCommon->GetDevice(),
-		static_cast<int>(dxCommon->GetBackBufferCount()),
+		dxCommon_->GetDevice(),
+		static_cast<int>(dxCommon_->GetBackBufferCount()),
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, srvHeap_.Get(),
 		srvHeap_->GetCPUDescriptorHandleForHeapStart(),
 		srvHeap_->GetGPUDescriptorHandleForHeapStart()
@@ -39,4 +41,38 @@ void ImGuiManager::Initialize(WinApp* winApp, DirectXCommon* dxCommon) {
 	io.Fonts->AddFontDefault();
 
 
+}
+
+void ImGuiManager::Finalize() {
+	// 後始末
+	ImGui_ImplDX12_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
+	// デスクリプターヒープを解放
+	srvHeap_.Reset();
+
+}
+
+void ImGuiManager::Begin() {
+	// ImGuiフレーム開始
+	ImGui_ImplDX12_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+}
+
+void ImGuiManager::End() {
+	// 描画前準備
+	ImGui::Render();
+
+}
+
+void ImGuiManager::Draw() {
+	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+
+	// デスクリプターヒープの配列をセットするコマンド
+	ID3D12DescriptorHeap* ppHeaps[] = { srvHeap_.Get() };
+	commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	// 描画コマンドを発行
+	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList);
 }
