@@ -1,8 +1,11 @@
 
-#include "FPS.h"
 #include "WinApp.h"
 #include "Input.h"
 #include "DirectXCommon.h"
+#include "FPS.h"
+#include "ImGuiManager.h"
+
+
 #include "GameScene.h"
 
 
@@ -19,6 +22,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	Input* input = nullptr;
 	GameScene* gameScene = nullptr;
 
+	ImGuiManager* imgui = nullptr;
+
 	//windowsAPI‚Ì‰Šú‰»
 	winApp = new WinApp();
 	winApp->Initialize();
@@ -29,6 +34,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	//“ü—Í‚Ì‰Šú‰»@
 	input = new Input();
 	input->Initialize(winApp);
+
+	// ImGui‚Ì‰Šú‰»
+
 
 
 
@@ -116,6 +124,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 #pragma region  WindowsAPIŒãŽn––
 
 	delete gameScene;
+	delete imgui;
 	//WindowsAPI‚ÌI—¹ˆ—
 	winApp->Finalize();
 

@@ -55,7 +55,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 
 	sprite->Initialize(spriteCommon);
 	sprite->SetPozition(spritePOS);
-	sprite->SetSize(Vector2{ WinApp::window_width,WinApp::window_height });
+	sprite->SetSize(Vector2{ WinApp::window_width/3,WinApp::window_height/3 });
 
 	spriteCommon->LoadTexture(0, "inu.png");
 	sprite->SetTextureIndex(0);
