@@ -71,5 +71,8 @@ private:	//ƒƒ“ƒo•Ï”
 	Object3d* skydome = nullptr;
 	Model* skydomeMD = nullptr;
 
+	Sprite* sprite = new Sprite();
+	Vector2 spritePOS = sprite->GetPosition();
+
 };
 

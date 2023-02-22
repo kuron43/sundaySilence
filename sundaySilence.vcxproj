@@ -112,7 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,7 +127,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,6 +148,7 @@
     <ClCompile Include="Engine\BASE\FPS.cpp" />
     <ClCompile Include="Engine\BASE\WinApp.cpp" />
     <ClCompile Include="Engine\CAMERA\Camera.cpp" />
+    <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp" />
     <ClCompile Include="Engine\INPUT\Input.cpp" />
     <ClCompile Include="Engine\MATH\Affin.cpp" />
     <ClCompile Include="Engine\MATH\ConvertXM.cpp" />
@@ -169,6 +171,7 @@
     <ClInclude Include="Engine\BASE\FPS.h" />
     <ClInclude Include="Engine\BASE\WinApp.h" />
     <ClInclude Include="Engine\CAMERA\Camera.h" />
+    <ClInclude Include="Engine\DEBUG\ImGuiManager.h" />
     <ClInclude Include="Engine\INPUT\Input.h" />
     <ClInclude Include="Engine\MATH\Affin.h" />
     <ClInclude Include="Engine\MATH\ConvertXM.h" />
@@ -182,6 +185,9 @@
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
+    <ProjectReference Include="imgui\imgui.vcxproj">
+      <Project>{eff8cfe2-34ca-4153-a28f-e6c23291dd46}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

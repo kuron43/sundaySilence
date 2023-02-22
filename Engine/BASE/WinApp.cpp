@@ -1,8 +1,16 @@
 #include "WinApp.h"
 #include <tchar.h>
 
+#include <imgui_impl_win32.h>
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 LRESULT WinApp::WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+	// ImGui用ウィンドウプロシージャ呼び出し
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {
+		return true;
+	}
 	//メッセージで分岐
 	switch (msg) {
 	case WM_DESTROY: //ウィンドウが破棄された

@@ -70,6 +70,12 @@
     <Filter Include="Engine\ソースファイル\MATH">
       <UniqueIdentifier>{3aa7c3a7-76c8-42ac-8131-eafb2efd6470}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ソースファイル\DEBUG">
+      <UniqueIdentifier>{c6282086-9338-4112-ae31-a4a039dc481f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダーファイル\DEBUG">
+      <UniqueIdentifier>{f74ca677-552f-4747-baf2-c14ad7e8f7fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -130,6 +136,9 @@
     <ClCompile Include="Engine\MATH\Vector4.cpp">
       <Filter>Engine\ソースファイル\MATH</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp">
+      <Filter>Engine\ソースファイル\DEBUG</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -188,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="Engine\MATH\Vector4.h">
       <Filter>Engine\ヘッダーファイル\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DEBUG\ImGuiManager.h">
+      <Filter>Engine\ヘッダーファイル\DEBUG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
