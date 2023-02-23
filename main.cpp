@@ -56,10 +56,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 #pragma region 描画初期化処理
 
-
-
-
-
 	////////////////////////////
 	//------音声読み込み--------//
 	///////////////////////////
@@ -95,16 +91,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		///////////////////////////////////////////////////
 
 		//入力の更新
-		input->Update();
-
-	
+		input->Update();	
 
 		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
-		
-		
-
-		
+		gameScene->Update();		
 
 		//////////////////////////////////////////////
 		//-------DireceX毎フレーム処理　ここまで--------//
