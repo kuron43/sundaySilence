@@ -56,10 +56,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 #pragma region 描画初期化処理
 
-
-
-
-
 	////////////////////////////
 	//------音声読み込み--------//
 	///////////////////////////
@@ -95,19 +91,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		///////////////////////////////////////////////////
 
 		//入力の更新
-		input->Update();
-
-		// Imgui受付開始
-		imgui->Begin();
+		input->Update();	
 
 		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
-		
-		// デモウィンドウの表示オン
-		ImGui::ShowDemoWindow();
-
-		// Imgui受付終了
-		imgui->End();
+		gameScene->Update();		
 
 		//////////////////////////////////////////////
 		//-------DireceX毎フレーム処理　ここまで--------//
@@ -119,10 +106,21 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		//4.描画コマンドここから
 		dxCommon->PreDraw();
+
+		// Imgui受付開始
+		imgui->Begin();
+		// デモウィンドウの表示オン
+		ImGui::ShowDemoWindow();
+
 		// ゲームシーンの描画
 		gameScene->Draw();
+
+
+		// Imgui受付終了
+		imgui->End();
 		// Imgui描画
 		imgui->Draw();
+
 		// 描画終了
 		dxCommon->PostDraw();
 
@@ -137,9 +135,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	}
 #pragma region  WindowsAPI後始末
 
-	imgui->Finalize();
 	delete gameScene;
 
+	imgui->Finalize();
 	//WindowsAPIの終了処理
 	winApp->Finalize();
 	delete imgui;
