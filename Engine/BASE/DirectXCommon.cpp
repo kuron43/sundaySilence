@@ -287,8 +287,8 @@ void DirectXCommon::PostDraw()
 	result = commandList->Close();
 	assert(SUCCEEDED(result));
 	// コマンドリストの実行
-	ID3D12CommandList* commandLists[] = { commandList.Get() };
-	commandQueue->ExecuteCommandLists(1, commandLists);
+	ComPtr<ID3D12CommandList> commandLists[] = { commandList.Get() };
+	commandQueue->ExecuteCommandLists(1, commandLists->GetAddressOf());
 	// 画面に表示するバッファをフリップ(裏表の入替え)
 	result = swapChain->Present(1, 0);
 	assert(SUCCEEDED(result));

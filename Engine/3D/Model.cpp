@@ -7,10 +7,11 @@
 #include <d3dx12.h>
 
 using namespace DirectX;
+using namespace Microsoft::WRL;
 using namespace std;
 
 //静的メンバ変数の実体
-ID3D12Device* Model::device = nullptr;
+ComPtr<ID3D12Device> Model::device ;
 
 
 Model* Model::LoadFromOBJ(const std::string& modelname)
@@ -35,8 +36,8 @@ void Model::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial
 	cmdList->IASetIndexBuffer(&ibView);
 
 	// デスクリプタヒープの配列
-	ID3D12DescriptorHeap* ppHeaps[] = { descHeap.Get() };
-	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	ComPtr<ID3D12DescriptorHeap> ppHeaps[] = { descHeap.Get() };
+	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
 	
 	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(rootParamIndexMaterial, constBuffB1->GetGPUVirtualAddress());

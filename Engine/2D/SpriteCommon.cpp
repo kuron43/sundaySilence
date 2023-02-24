@@ -175,7 +175,7 @@ void SpriteCommon::Initialize(DirectXCommon* dxcommon)
 	rootSigBlob->Release();
 
 	// パイプラインにルートシグネチャをセット
-	pipelineDesc.pRootSignature = rootSignature;
+	pipelineDesc.pRootSignature = rootSignature.Get();
 	result = dxcommon_->GetDevice()->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 
@@ -285,13 +285,13 @@ void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
 void SpriteCommon::SetTextureCommands(uint32_t index)
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	dxcommon_->GetCommandList()->SetPipelineState(pipelineState);
-	dxcommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature);
+	dxcommon_->GetCommandList()->SetPipelineState(pipelineState.Get());
+	dxcommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
 
 	//プリミティブ形状の設定コマンド
 	dxcommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);//三角リスト
 	// SRVヒープの設定コマンド
-	dxcommon_->GetCommandList()->SetDescriptorHeaps(1, &srvHeap);
+	dxcommon_->GetCommandList()->SetDescriptorHeaps(1,srvHeap.GetAddressOf());
 	// SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
 	// SRVヒープの先頭にあるSRVをルートパラメータ1番に設定

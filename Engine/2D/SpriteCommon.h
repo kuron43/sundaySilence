@@ -13,6 +13,8 @@
 //スプライト共通部分
 class SpriteCommon {
 public:
+	// Microsoft::WRL::を省略
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	struct Vertex
 	{
 		Vector3 pos; // xyz座標
@@ -32,11 +34,11 @@ public:
 
 	DirectXCommon* GetDxCommon() { return dxcommon_; }
 
-	ID3D12RootSignature* GetRootSignature() { return rootSignature; }
+	ID3D12RootSignature* GetRootSignature() { return rootSignature.Get(); }
 
-	ID3D12PipelineState* GetPipelineState() { return pipelineState; }
+	ID3D12PipelineState* GetPipelineState() { return pipelineState.Get(); }
 
-	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap; }
+	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap.Get(); }
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetSrvHandle() { return srvHandle; }
 
@@ -48,12 +50,12 @@ public:
 
 	void SetTextureCommands(uint32_t index);
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> GetTexBuff(uint32_t index) { return texBuff[index]; }
+	//Microsoft::WRL::ComPtr<ID3D12Resource> GetTexBuff(uint32_t index) { return texBuff[index]; }
 
-	ID3D12Resource* GetTextureBuffer(uint32_t index)const { return texBuff[index].Get(); }
+	Microsoft::WRL::ComPtr<ID3D12Resource> GetTextureBuffer(uint32_t index)const { return texBuff[index].Get(); }
 
 	//SRV用デスクリプタヒープ
-	ID3D12DescriptorHeap* srvHeap = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap = nullptr;
 private:
 	// 頂点データ
 	Vertex vertices[4] = {
@@ -66,17 +68,17 @@ private:
 	// SRVの最大個数
 	static const size_t kMaxSRVCount = 2056;
 
-	DirectXCommon* dxcommon_ = nullptr;
-	ID3DBlob* vsBlob = nullptr; // 頂点シェーダオブジェクト
-	ID3DBlob* psBlob = nullptr; // ピクセルシェーダオブジェクト
-	ID3DBlob* errorBlob = nullptr; // エラーオブジェクト
+	DirectXCommon* dxcommon_;
+	ComPtr<ID3DBlob> vsBlob; // 頂点シェーダオブジェクト
+	ComPtr<ID3DBlob> psBlob; // ピクセルシェーダオブジェクト
+	ComPtr<ID3DBlob> errorBlob; // エラーオブジェクト
 	HRESULT result;
 
 	// ルートシグネチャ
-	ID3D12RootSignature* rootSignature;
+	ComPtr<ID3D12RootSignature> rootSignature;
 	// パイプランステートの生成
-	ID3D12PipelineState* pipelineState = nullptr;
-	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxSRVCount>texBuff;
+	ComPtr<ID3D12PipelineState> pipelineState;
+	std::array<ComPtr<ID3D12Resource>, kMaxSRVCount>texBuff;
 
 	//横方向ピクセル数
 	const size_t textureWidth = 256;

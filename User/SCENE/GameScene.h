@@ -10,8 +10,6 @@
 #include "Model.h"
 
 #include "Matrix4.h"
-#include "ConvertXM.h"
-#include "Transform.h"
 #include "Camera.h"
 //#include "FBX/FBXObject3d.h"
 //#include "FBX/FbxLoader.h"
@@ -68,11 +66,10 @@ private: // ƒƒ“ƒo•Ï” (ŒÅ’è)
 
 private:	//ƒƒ“ƒo•Ï”
 
-	Object3d* skydome = nullptr;
+	/*Object3d* skydome = nullptr;
 	Model* skydomeMD = nullptr;
-
-	Sprite* sprite = new Sprite();
-	Vector2 spritePOS = sprite->GetPosition();
+	*/
+	Sprite* sprite=nullptr;
 
 };
 

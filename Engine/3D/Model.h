@@ -82,7 +82,7 @@ private:
 	ComPtr<ID3D12Resource> constBuffB1; // 定数バッファ	
 
 	// デバイス
-	static ID3D12Device* device;
+	static ComPtr<ID3D12Device> device;
 	// テクスチャバッファ
 	ComPtr<ID3D12Resource> texbuff;
 	// シェーダリソースビューのハンドル(CPU)

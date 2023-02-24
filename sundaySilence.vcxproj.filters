@@ -76,6 +76,18 @@
     <Filter Include="Engine\ヘッダーファイル\DEBUG">
       <UniqueIdentifier>{f74ca677-552f-4747-baf2-c14ad7e8f7fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ソースファイル\COLLISION">
+      <UniqueIdentifier>{fe62a16e-13af-4b9b-a6ae-06d09f0cc588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダーファイル\COLLISION">
+      <UniqueIdentifier>{47d2bda0-7260-477e-90b2-d675a74f6dc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダーファイル\LIGHT">
+      <UniqueIdentifier>{965007ed-129d-4c35-94c6-280d292716cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ソースファイル\LIGHT">
+      <UniqueIdentifier>{4d6b5665-f4e0-4a51-a967-7e24850493e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
