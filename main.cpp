@@ -135,12 +135,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	}
 #pragma region  WindowsAPIŒãŽn––
 
-	ID3D12DebugDevice* debugInterface;
-
+	/*ID3D12DebugDevice* debugInterface;
 	if (SUCCEEDED(dxCommon->GetDevice()->QueryInterface(&debugInterface))) {
 		debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
 		debugInterface->Release();
-	}
+	}*/
 
 	delete gameScene;
 

@@ -45,14 +45,14 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 	Object3d::SetCamera(camera);
 
 
-	/*skydomeMD = Model::LoadFromOBJ("skydome");
+	skydomeMD = Model::LoadFromOBJ("skydome");
 
 	skydome = Object3d::Create();
 
 	skydome->SetModel(skydomeMD);
 	skydome->wtf.scale = (Vector3{ 1000, 1000, 1000 });
 	skydome->Update();
-	*/
+	
 
 	sprite = new Sprite();
 
@@ -69,7 +69,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 /// 毎フレーム処理
 /// </summary>
 void GameScene::Update() {
-	//skydome->Update();
+	skydome->Update();
 
 
 
@@ -88,7 +88,7 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// <summary>
 	
-	//skydome->Draw();
+	skydome->Draw();
 	
 	//3Dオブジェクト描画後処理
 	Object3d::PostDraw();

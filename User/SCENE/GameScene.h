@@ -66,9 +66,9 @@ private: // ƒƒ“ƒo•Ï” (ŒÅ’è)
 
 private:	//ƒƒ“ƒo•Ï”
 
-	/*Object3d* skydome = nullptr;
+	Object3d* skydome = nullptr;
 	Model* skydomeMD = nullptr;
-	*/
+	
 	Sprite* sprite=nullptr;
 
 };
