@@ -20,25 +20,7 @@ void Camera::Update()
 {
 	UpdateViewMatrix();
 	UpdateProjectionMatrix();
-	matViewProjection = matView * matProjection;/////////////  
-
-	//if (viewDirty || projectionDirty) {
-	//	// 再計算必要なら
-	//	if (viewDirty) {
-	//		// ビュー行列更新
-	//		UpdateViewMatrix();
-	//		viewDirty = false;
-	//	}
-
-	//	// 再計算必要なら
-	//	if (projectionDirty) {
-	//		// ビュー行列更新
-	//		UpdateProjectionMatrix();
-	//		projectionDirty = false;
-	//	}
-	//	// ビュープロジェクションの合成
-	//	matViewProjection = matView * matProjection;
-	//}
+	matViewProjection = matView * matProjection;
 }
 
 void Camera::UpdateViewMatrix()
@@ -52,11 +34,13 @@ void Camera::UpdateViewMatrix()
 
 	// カメラZ軸（視線方向）
 	Vector3 cameraAxisZ = targetPosition - eyePosition;
+
 	// 0ベクトルだと向きが定まらないので除外
-	assert(Vector3::Vector3Equal(cameraAxisZ, Vector3::Vector3Zero()));
+	/*assert(Vector3::Vector3Equal(cameraAxisZ, Vector3::Vector3Zero()));
 	assert(cameraAxisZ.Vector3IsInfinite());
 	assert(Vector3::Vector3Equal(upVector, Vector3::Vector3Zero()));
-	assert(upVector.Vector3IsInfinite());
+	assert(upVector.Vector3IsInfinite());*/
+
 	// ベクトルを正規化
 	cameraAxisZ.nomalize();
 

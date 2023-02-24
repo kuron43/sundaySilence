@@ -6,10 +6,15 @@
 //#include <DirectXTex.h>
 #include <vector>
 
+// Microsoft::WRL::‚ğÈ—ª
+//template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+
 //DirectXŠî”Õ
 class DirectXCommon
 {
 public://ƒƒ“ƒoŠÖ”
+	// Microsoft::WRL::‚ğÈ—ª
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	//‰Šú‰»
 	void Initialize(WinApp* winApp);
 

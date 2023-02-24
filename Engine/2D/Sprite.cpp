@@ -88,10 +88,7 @@ void Sprite::Initialize(SpriteCommon* spritecommon_)
 		0.0f, (float)WinApp::window_width,
 		(float)WinApp::window_height, 0.0f,
 		0.0f, 1.0f, matProjection);
-	/*matProjection = XMMatrixOrthographicOffCenterLH(
-		0.0f, (float)WinApp::window_width,
-		(float)WinApp::window_height, 0.0f,
-		0.0f, 1.0f);*/
+	
 
 	// 定数バッファの生成
 	result = spritecomon->GetDxCommon()->GetDevice()->CreateCommittedResource(
@@ -146,7 +143,7 @@ void Sprite::Draw()
 
 void Sprite::Update()
 {
-	ID3D12Resource* textureBuffer = spritecomon->GetTextureBuffer(textureIndex_);
+	ComPtr<ID3D12Resource> textureBuffer = spritecomon->GetTextureBuffer(textureIndex_);
 
 	float left = (0.0f - anchorpoint.x) * size_.x;
 	float right = (1.0f - anchorpoint.x) * size_.x;

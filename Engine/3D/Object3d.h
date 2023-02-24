@@ -17,16 +17,6 @@
 #include "Transform.h"
 #include "Camera.h"
 
-//// 定数バッファ用データ構造体
-//struct ViewState
-//{
-//	XMFLOAT3 eye;
-//	XMFLOAT3 target;
-//	XMFLOAT3 up;
-//
-//	XMMATRIX view;       // ワールド → ビュー変換行列
-//	XMMATRIX projection; // ビュー → プロジェクション変換行列
-//};
 
 /// <summary>
 /// 3Dオブジェクト
@@ -86,10 +76,10 @@ public: // 静的メンバ関数
 
 private: // 静的メンバ変数
 	// デバイス
-	static ID3D12Device* device;
+	static ComPtr<ID3D12Device> device;
 	
 	// コマンドリスト
-	static ID3D12GraphicsCommandList* cmdList;
+	static ComPtr<ID3D12GraphicsCommandList> cmdList;
 	// ルートシグネチャ
 	static ComPtr<ID3D12RootSignature> rootsignature;
 	// パイプラインステートオブジェクト

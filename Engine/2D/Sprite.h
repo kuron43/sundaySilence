@@ -17,6 +17,8 @@ struct Vertex
 //スプライト
 class Sprite {
 public:
+	// Microsoft::WRL::を省略
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// 定数バッファ用データ構造体（マテリアル）
 	struct ConstBufferDataMaterial {
 		Vector4 color; // 色 (RGBA)
@@ -111,12 +113,12 @@ private:
 
 	Vector2 anchorPoint = { 0.0f,0.0f };
 
-	ID3D12Resource* constBuffTransform = nullptr;
+	ComPtr<ID3D12Resource> constBuffTransform;
 	ConstBufferDataTransform* constMapTransform = nullptr;
 
 	ConstBufferDataMaterial* constMapMaterial = nullptr;
 
-	ID3D12Resource* constBuffMaterial = nullptr;
+	ComPtr<ID3D12Resource> constBuffMaterial;
 
 	Vertex vertices_[4];
 
@@ -136,7 +138,7 @@ private:
 	Vector2 anchorpoint = { 0, 0 };
 
 	// 頂点バッファの生成
-	ID3D12Resource* vertBuff = nullptr;
+	ComPtr<ID3D12Resource> vertBuff = nullptr;
 
 	// 左右反転
 	bool isFlipX = false;
