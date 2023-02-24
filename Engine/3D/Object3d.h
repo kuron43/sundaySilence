@@ -123,6 +123,9 @@ private:// 静的メンバ関数
 	static void UpdateViewMatrix();
 
 public: // メンバ関数
+
+	Object3d();
+	~Object3d();
 	
 	bool Initialize();
 	/// <summary>

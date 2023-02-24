@@ -31,6 +31,13 @@ float Object3d::focalLengs = 50.0f;
 
 Camera* Object3d::camera = nullptr;
 
+Object3d::Object3d() {
+
+}
+Object3d::~Object3d() {
+	delete model;
+}
+
 void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
 {
 	// nullptrチェック
@@ -338,7 +345,7 @@ void Object3d::Draw()
 {
 	// nullptrチェック
 	assert(device);
-	assert(Object3d::cmdList);
+	//assert(Object3d::cmdList);
 
 	//モデルがセットされてなければ描画をスキップ
 	if (model == nullptr) return;
