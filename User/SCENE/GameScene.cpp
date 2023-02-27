@@ -122,14 +122,15 @@ void GameScene::Update() {
 /// </summary>
 void GameScene::Draw() {
 
-	//3Dオブジェクト描画前処理
-	Object3d::PreDraw(dxCommon->GetCommandList());
 	/// <summary>
 	/// 3Dオブジェクトの描画
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// <summary>
+	//3Dオブジェクト描画前処理
+	Object3d::PreDraw(dxCommon->GetCommandList());
 	
-	//skydome->Draw();
+	
+	skydome->Draw();
 	
 	//3Dオブジェクト描画後処理
 	Object3d::PostDraw();
