@@ -112,7 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,7 +127,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -142,6 +142,7 @@
     <ClCompile Include="Engine\2D\SpriteCommon.cpp" />
     <ClCompile Include="Engine\3D\Model.cpp" />
     <ClCompile Include="Engine\3D\Object3d.cpp" />
+    <ClCompile Include="Engine\3D\Particle\ParticleManager.cpp" />
     <ClCompile Include="Engine\3D\Transform.cpp" />
     <ClCompile Include="Engine\AUDIO\Audio.cpp" />
     <ClCompile Include="Engine\BASE\DirectXCommon.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Engine\2D\SpriteCommon.h" />
     <ClInclude Include="Engine\3D\Model.h" />
     <ClInclude Include="Engine\3D\Object3d.h" />
+    <ClInclude Include="Engine\3D\Particle\ParticleManager.h" />
     <ClInclude Include="Engine\3D\Transform.h" />
     <ClInclude Include="Engine\AUDIO\Audio.h" />
     <ClInclude Include="Engine\BASE\DirectXCommon.h" />
@@ -192,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\SHADER\OBJShaderHeader.hlsli" />
+    <None Include="Engine\SHADER\Particle.hlsli" />
     <None Include="Engine\SHADER\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +205,24 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Engine\SHADER\OBJVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Engine\SHADER\ParticleGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Engine\SHADER\ParticlePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Engine\SHADER\ParticleVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>

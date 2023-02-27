@@ -88,6 +88,12 @@
     <Filter Include="Engine\ソースファイル\LIGHT">
       <UniqueIdentifier>{4d6b5665-f4e0-4a51-a967-7e24850493e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ソースファイル\3D\Particle">
+      <UniqueIdentifier>{c2b13d9a-9288-4f59-92bb-58908ec38831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダーファイル\3D\Particle">
+      <UniqueIdentifier>{2d773a98-2685-4e8b-af72-1a69c8594c02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -151,6 +157,9 @@
     <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp">
       <Filter>Engine\ソースファイル\DEBUG</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\3D\Particle\ParticleManager.cpp">
+      <Filter>Engine\ソースファイル\3D\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -213,12 +222,18 @@
     <ClInclude Include="Engine\DEBUG\ImGuiManager.h">
       <Filter>Engine\ヘッダーファイル\DEBUG</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\3D\Particle\ParticleManager.h">
+      <Filter>Engine\ヘッダーファイル\3D\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\SHADER\Sprite.hlsli">
       <Filter>Engine\シェーダーファイル</Filter>
     </None>
     <None Include="Engine\SHADER\OBJShaderHeader.hlsli">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </None>
+    <None Include="Engine\SHADER\Particle.hlsli">
       <Filter>Engine\シェーダーファイル</Filter>
     </None>
   </ItemGroup>
@@ -233,6 +248,15 @@
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
     <FxCompile Include="Engine\SHADER\OBJVertexShader.hlsl">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Engine\SHADER\ParticleGS.hlsl">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Engine\SHADER\ParticlePS.hlsl">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Engine\SHADER\ParticleVS.hlsl">
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
   </ItemGroup>
