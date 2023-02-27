@@ -105,7 +105,7 @@ void Sprite::Initialize(SpriteCommon* spritecommon_)
 	assert(SUCCEEDED(result));
 
 	// ílÇèëÇ´çûÇﬁÇ∆é©ìÆìIÇ…ì]ëóÇ≥ÇÍÇÈ
-	constMapMaterial->color = Vector4(1, 0, 0, 0.5f);              // RGBAÇ≈îºìßñæÇÃê‘
+	constMapMaterial->color = Vector4(1, 1, 1, 1);              // RGBAÇ≈îºìßñæÇÃê‘
 }
 
 void Sprite::Draw()
