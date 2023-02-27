@@ -49,7 +49,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 #pragma region DirectX初期化処理
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
-
+	//パーティクル静的初期化
+	ParticleManager::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
 	
 
 #pragma endregion
@@ -135,12 +136,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	}
 #pragma region  WindowsAPI後始末
 
-	ID3D12DebugDevice* debugInterface;
-
+	/*ID3D12DebugDevice* debugInterface;
 	if (SUCCEEDED(dxCommon->GetDevice()->QueryInterface(&debugInterface))) {
 		debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
 		debugInterface->Release();
-	}
+	}*/
 
 	delete gameScene;
 
