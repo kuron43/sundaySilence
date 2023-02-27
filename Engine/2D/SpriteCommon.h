@@ -6,6 +6,7 @@
 
 #include "Vector2.h"
 #include "Vector3.h"
+#include "Vector4.h"
 #include "Matrix4.h"
 #include "Affin.h"
 
@@ -22,7 +23,7 @@ public:
 	};
 	// 定数バッファ用データ構造体（マテリアル）
 	struct ConstBufferDataMaterial {
-		XMFLOAT4 color; // 色 (RGBA)
+		Vector4 color; // 色 (RGBA)
 	};
 	//定数バッファ用構造体（３D変換行列）
 	struct ConstBufferDataTransform {

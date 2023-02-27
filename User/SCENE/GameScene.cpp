@@ -63,7 +63,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 	sprite->SetPozition(spritePOS);
 	sprite->SetSize(Vector2{ WinApp::window_width/3,WinApp::window_height/3 });
 
-	spriteCommon->LoadTexture(0, "inu.png");
+	spriteCommon->LoadTexture(0, "1.png");
 	sprite->SetTextureIndex(0);
 
 	// パーティクル生成
@@ -80,8 +80,6 @@ void GameScene::Update() {
 	particleManager->Update();
 
 	skydome->Update();
-
-
 
 	// パーティクル起動(長押し)
 	{
@@ -124,12 +122,13 @@ void GameScene::Update() {
 /// </summary>
 void GameScene::Draw() {
 
-	//3Dオブジェクト描画前処理
-	Object3d::PreDraw(dxCommon->GetCommandList());
 	/// <summary>
 	/// 3Dオブジェクトの描画
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// <summary>
+	//3Dオブジェクト描画前処理
+	Object3d::PreDraw(dxCommon->GetCommandList());
+	
 	
 	skydome->Draw();
 	

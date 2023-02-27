@@ -231,10 +231,13 @@ void ParticleManager::InitializeGraphicsPipeline()
 	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;	// RBGA全てのチャンネルを描画
 	blenddesc.BlendEnable = true;
 
-	////半透明
-	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
-	//blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
-	//blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+	//半透明
+	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
 
 	////加算
 	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
@@ -244,13 +247,13 @@ void ParticleManager::InitializeGraphicsPipeline()
 	//blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
 	//blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
 
-	//減算
-	blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;
-	blenddesc.SrcBlend = D3D12_BLEND_ONE;
-	blenddesc.DestBlend = D3D12_BLEND_ONE;
-	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_SUBTRACT;
-	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
-	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+	////減算
+	//blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;
+	//blenddesc.SrcBlend = D3D12_BLEND_ONE;
+	//blenddesc.DestBlend = D3D12_BLEND_ONE;
+	//blenddesc.BlendOpAlpha = D3D12_BLEND_OP_SUBTRACT;
+	//blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
+	//blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
 
 	gpipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 

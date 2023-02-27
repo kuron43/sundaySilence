@@ -50,10 +50,17 @@ bool Vector3::Vector3Equal(Vector3 v1, Vector3 v2) {
 	if (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z) {
 		return true;
 	}
+	else
+	{
+		return false;
+	}
 }
 bool Vector3::Vector3IsInfinite() {
-	if (!isfinite(this->x) && !isfinite(this->y) && !isfinite(this->z)) {
+	if (isfinite(this->x) && isfinite(this->y) && isfinite(this->z)) {
 		return true;
+	}
+	else {
+		return false;
 	}
 }
 

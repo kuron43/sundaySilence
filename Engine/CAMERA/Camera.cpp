@@ -32,14 +32,17 @@ void Camera::UpdateViewMatrix()
 	// （仮の）上方向
 	Vector3 upVector = up;
 
+	Vector3 ZERO = { 0,0,0 };
+	Vector3 resultt;
+
 	// カメラZ軸（視線方向）
 	Vector3 cameraAxisZ = targetPosition - eyePosition;
 
 	// 0ベクトルだと向きが定まらないので除外
-	/*assert(Vector3::Vector3Equal(cameraAxisZ, Vector3::Vector3Zero()));
+	assert(!Vector3::Vector3Equal(cameraAxisZ, ZERO));
 	assert(cameraAxisZ.Vector3IsInfinite());
-	assert(Vector3::Vector3Equal(upVector, Vector3::Vector3Zero()));
-	assert(upVector.Vector3IsInfinite());*/
+	assert(!Vector3::Vector3Equal(upVector, ZERO));
+	assert(upVector.Vector3IsInfinite());
 
 	// ベクトルを正規化
 	cameraAxisZ.nomalize();
