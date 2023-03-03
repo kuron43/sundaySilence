@@ -346,7 +346,7 @@ void Object3d::Draw()
 	// nullptrチェック
 	assert(device);
 	//assert(Object3d::cmdList);
-
+	
 	//モデルがセットされてなければ描画をスキップ
 	if (model == nullptr) return;
 

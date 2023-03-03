@@ -8,6 +8,7 @@
 #include "SpriteCommon.h"
 #include "Sprite.h"
 #include "Model.h"
+#include "SceneManager.h"
 
 #include "Matrix4.h"
 #include "Camera.h"
@@ -66,15 +67,17 @@ private: // メンバ変数 (固定)
 	Camera* camera = nullptr;
 	Audio* audio = nullptr;
 
+	SceneManager* sceneManager = nullptr;
+
 private:	//メンバ変数
 
-	Object3d* skydome = nullptr;
-	Model* skydomeMD = nullptr;
+	//Object3d* skydome = nullptr;
+	//Model* skydomeMD = nullptr;
+	//
+	//Sprite* sprite=nullptr;
 
 	//パーティクルクラスの初期化 
 	ParticleManager* particleManager = nullptr;
-	
-	Sprite* sprite=nullptr;
 
 };
 
