@@ -1,8 +1,5 @@
 #include "TitleScene.h"
-#include "Input.h"
-
 #include "SceneManager.h"
-#include "DirectXCommon.h"
 
 #include "GAME1Scene.h"
 
@@ -16,9 +13,6 @@ TitleScene::~TitleScene() {
 	delete sprite;
 }
 
-//TitleScene Create(SceneManager& controller) {
-//
-//}
 void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	//スプライト共通部分の初期化
 	spriteCommon = new SpriteCommon;
@@ -34,6 +28,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	spriteCommon->LoadTexture(0, "1.png");
 	sprite->SetTextureIndex(0);
 }
+
 void TitleScene::Update(Input* input) {
 
 	if (input->TriggerKey(DIK_SPACE)) {
@@ -41,6 +36,7 @@ void TitleScene::Update(Input* input) {
 		
 	}
 }
+
 void TitleScene::Draw(DirectXCommon* dxCommon) {
 	sprite->Draw();
 }

@@ -1,9 +1,16 @@
 #pragma once
+#include "Object3d.h"
+#include "SpriteCommon.h"
+#include "Sprite.h"
+#include "Model.h"
+#include "Audio.h"
+#include "SceneManager.h"
+#include "ParticleManager.h"
 
+#include "DirectXCommon.h"
+#include "Input.h"
 
-class Input;
 class SceneManager;
-class DirectXCommon;
 
 // シーン管理のための基底クラス
 // (純粋基底クラス)

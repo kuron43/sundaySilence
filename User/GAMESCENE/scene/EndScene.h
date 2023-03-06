@@ -1,5 +1,7 @@
 #pragma once
 #include "Scene.h"
+
+
 class EndScene :
     public Scene
 {
@@ -8,7 +10,6 @@ protected:
 
 public:
 	EndScene(SceneManager* controller);
-	EndScene();
 	~EndScene() override;
 
 	//void Cleate(SceneManager& controller) override;
@@ -20,6 +21,7 @@ public:
 private:
 
 public:
-
+	//パーティクルクラスの初期化 
+	ParticleManager* particleManager = nullptr;
 
 };

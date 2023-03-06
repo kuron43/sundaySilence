@@ -1,7 +1,5 @@
 #include "GAME1Scene.h"
 #include "SceneManager.h"
-#include "DirectXCommon.h"
-#include "Input.h"
 
 #include "EndScene.h"
 
@@ -25,6 +23,7 @@ void GAME1Scene::Initialize(DirectXCommon* dxCommon) {
 	skydome->Update();
 
 }
+
 void GAME1Scene::Update(Input* input) {
 
 	skydome->Update();
@@ -32,6 +31,7 @@ void GAME1Scene::Update(Input* input) {
 		_controller->ChangeScene(new EndScene(_controller));
 	}
 }
+
 void GAME1Scene::Draw(DirectXCommon* dxCommon) {
 
 	//3Dオブジェクト描画前処理

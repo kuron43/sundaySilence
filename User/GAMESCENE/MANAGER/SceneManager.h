@@ -26,8 +26,6 @@ public:
 
 	// ƒV[ƒ“‚ğ•ÏX‚·‚é
 	void ChangeScene(Scene*);
-	//void PushScene(Scene*);
-	//void PopScene();
 
 };
 

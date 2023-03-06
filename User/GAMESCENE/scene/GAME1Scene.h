@@ -1,8 +1,6 @@
 #pragma once
 #include "Scene.h"
 
-#include "Object3d.h"
-
 
 
 class GAME1Scene :
