@@ -7,80 +7,77 @@
 
 void Input::Initialize(WinApp* winApp)
 {
-	this->winApp_ = winApp;
-
-	HRESULT result;
-
-	// DirectInputのインスタンス生成
-	/*ComPtr<IDirectInput8> directInput = nullptr;*/
-	result = DirectInput8Create(winApp->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
-	assert(SUCCEEDED(result));
-
-	// キーボードデバイスの生成
-	//ComPtr<IDirectInputDevice8> keyboard = nullptr;
-	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
-	assert(SUCCEEDED(result));
-
-	// 入力データ形式のセット
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard); // 標準形式
-	assert(SUCCEEDED(result));
-
-	// 排他制御レベルのセット
-	result = keyboard->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
-	assert(SUCCEEDED(result));
+	keybord_ = new Keyboard_Input();
+	keybord_->Initialize(winApp);
+	
+	Xpad_ = new Pad_X_Input();
 }
 
 void Input::Update()
 {
-	HRESULT result;
-
-	// 前回のキー入力を保持
-	memcpy(keyPre, key, sizeof(key));
-
-	// キーボード情報の取得開始
-	result = keyboard->Acquire();
-
-	// 全キーの入力状態を取得する
-	/*BYTE key[256] = {};*/
-	result = keyboard->GetDeviceState(sizeof(key), key);
+	keybord_->Update();
+	Xpad_->Update();
 }
 
-bool Input::PushKey(BYTE keyNumber)
+bool Input::KeyboardPush(BYTE keyNumber)
 {
-	// 指定キーを押していればtrueを返す
-	if (key[keyNumber]) {
-		return true;
-	}
-	// そうではなければfalseを返す
-	return false;
+	return keybord_->PushKey(keyNumber);
 }
 
-bool Input::TriggerKey(BYTE keyNumber)
+bool Input::KeyboardTrigger(BYTE keyNumber)
 {
-	if (key[keyNumber])
-	{
-		if (keyPre[keyNumber]) {
-			return false;
-		}
-		return true;
-	}
-
-	return false;
+	return keybord_->TriggerKey(keyNumber);
 }
 
-/// <summary>
-/// キーのトリガーをチェック
-/// </summary>
-/// </param name="keyNumber">キー番号( DIK_0 等)</param>
-/// <reutrns>離されたか</params>
-bool Input::ReleaseKey(BYTE keyNumber) {
-	if (keyPre[keyNumber])
-	{
-		if (key[keyNumber]) {
-			return false;
-		}
-		return true;
-	}
+bool Input::KeyboardRelease(BYTE keyNumber)
+{
+	return keybord_->ReleaseKey(keyNumber);
+}
 
-	return false;
+
+bool Input::Pad_X_ButtonTrigger(ControllerButton button) {
+	return Xpad_->ButtonTrigger(button);
+}
+
+bool Input::Pad_X_StickTrigger(
+	ControllerStick stickInput,
+	const float& deadRange,
+	const Vector2& deadRate) {
+	return Xpad_->StickTrigger(stickInput, deadRange, deadRate);
+}
+
+bool Input::Pad_X_ButtonInput(ControllerButton button) {
+	return Xpad_->ButtonInput(button);
+}
+
+bool Input::Pad_X_StickInput(
+	ControllerStick stickInput,
+	const float& deadRange,
+	const Vector2& deadRate) {
+	return Xpad_->StickInput(stickInput, deadRange, deadRate);
+}
+
+bool Input::Pad_X_ButtonOffTrigger(ControllerButton button) {
+	return Xpad_->ButtonOffTrigger(button);
+}
+
+bool Input::Pad_X_StickOffTrigger(
+	ControllerStick stickInput,
+	const float& deadRang,
+	const Vector2& deadRate) {
+	return Xpad_->StickOffTrigger(stickInput, deadRang, deadRate);
+}
+
+Vector2 Input::Pad_X_GetLeftStickVec(const Vector2& deadRate) {
+	return Xpad_->GetLeftStickVec(deadRate);
+}
+
+Vector2 Input::Pad_X_GetRightStickVec(const Vector2& deadRate) {
+	return Xpad_->GetRightStickVec(deadRate);
+}
+
+void Input::Pad_X_ShakeController(
+	const float& power,
+	const int& span) {
+	return Xpad_->ShakeController(power, span);
 }

@@ -94,14 +94,17 @@
     <Filter Include="Engine\ヘッダーファイル\3D\Particle">
       <UniqueIdentifier>{2d773a98-2685-4e8b-af72-1a69c8594c02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="user\シーン\manager">
+      <UniqueIdentifier>{d1b5c775-eccf-40ac-99f5-abb390d26709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\シーン\scene">
+      <UniqueIdentifier>{2dd3e8c3-06d4-4cc2-8577-55dbc6f2e7fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\BASE\FPS.cpp">
       <Filter>Engine\ソースファイル\BASE</Filter>
-    </ClCompile>
-    <ClCompile Include="User\SCENE\GameScene.cpp">
-      <Filter>user\シーン</Filter>
     </ClCompile>
     <ClCompile Include="Engine\INPUT\Input.cpp">
       <Filter>Engine\ソースファイル\INPUT</Filter>
@@ -160,13 +163,34 @@
     <ClCompile Include="Engine\3D\Particle\ParticleManager.cpp">
       <Filter>Engine\ソースファイル\3D\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="User\GAMESCENE\GameScene.cpp">
+      <Filter>user\シーン</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\scene\IScene.cpp">
+      <Filter>user\シーン\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\MANAGER\SceneManager.cpp">
+      <Filter>user\シーン\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp">
+      <Filter>user\シーン\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\scene\GAME1Scene.cpp">
+      <Filter>user\シーン\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp">
+      <Filter>user\シーン\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\INPUT\PadInput.cpp">
+      <Filter>Engine\ソースファイル\INPUT</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\INPUT\Keyboard_Input.cpp">
+      <Filter>Engine\ソースファイル\INPUT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
       <Filter>Engine\ヘッダーファイル\BASE</Filter>
-    </ClInclude>
-    <ClInclude Include="User\SCENE\GameScene.h">
-      <Filter>user\シーン</Filter>
     </ClInclude>
     <ClInclude Include="Engine\INPUT\Input.h">
       <Filter>Engine\ヘッダーファイル\INPUT</Filter>
@@ -224,6 +248,30 @@
     </ClInclude>
     <ClInclude Include="Engine\3D\Particle\ParticleManager.h">
       <Filter>Engine\ヘッダーファイル\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\GameScene.h">
+      <Filter>user\シーン</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\scene\IScene.h">
+      <Filter>user\シーン\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\MANAGER\SceneManager.h">
+      <Filter>user\シーン\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\scene\TitleScene.h">
+      <Filter>user\シーン\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h">
+      <Filter>user\シーン\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\scene\EndScene.h">
+      <Filter>user\シーン\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\INPUT\PadInput.h">
+      <Filter>Engine\ヘッダーファイル\INPUT</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\INPUT\Keyboard_Input.h">
+      <Filter>Engine\ヘッダーファイル\INPUT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

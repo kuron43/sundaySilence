@@ -18,7 +18,7 @@ float Vector3::length()const {
 Vector3& Vector3::nomalize() {
 	float len = length();
 	if (len != 0) {
-		return *this /= length();
+		return *this /= len;
 	}
 	return *this;
 }

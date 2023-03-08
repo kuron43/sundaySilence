@@ -1,10 +1,9 @@
 #pragma once
-#include <windows.h>
-#include <wrl.h>
-#include <dinput.h>
 #include "WinApp.h"
 
-#define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
+#include "Keyboard_Input.h"
+#include "PadInput.h"
+
 
 
 // 入力
@@ -20,37 +19,109 @@ public: // メンバ関数
 
 	// 更新
 	void Update();
+#pragma region キーボード用関数
 
 	/// <summary>
 	/// キーの押下をチェック
 	/// </summary>
 	/// <param name = "keyNumber">キー番号(DIK_0 等)</param>
 	/// <returns>押されているか</returns>
-	bool PushKey(BYTE keyNumber);
+	bool KeyboardPush(BYTE keyNumber);
 
 	/// <summary>
 	/// キーのトリガーをチェック
 	/// </summary>
 	/// </param name="keyNumber">キー番号( DIK_0 等)</param>
 	/// <reutrns>トリガーか</params>
-	bool TriggerKey(BYTE keyNumber);
+	bool KeyboardTrigger(BYTE keyNumber);
 
 	/// <summary>
 	/// キーのトリガーをチェック
 	/// </summary>
 	/// </param name="keyNumber">キー番号( DIK_0 等)</param>
 	/// <reutrns>離されたか</params>
-	bool ReleaseKey(BYTE keyNumber);
+	bool KeyboardRelease(BYTE keyNumber);
+
+#pragma endregion キーボード用関数
+
+#pragma region Xbox Pad用関数
+
+	/// <summary>
+	/// コントローラーボタンのトリガー入力
+	/// </summary>
+	/// <param name="button">チェックしたいボタン</param>
+	/// <returns>押したか</returns>
+	bool Pad_X_ButtonTrigger(ControllerButton button);
+
+	/// <summary>
+	/// コントローラースティックのトリガー入力
+	/// </summary>
+	/// <param name="stickInput">コントローラースティック方向</param>
+	/// <param name="deadRange">デッドゾーンの範囲</param>
+	/// <param name="deadRate">デッドゾーン判定の度合い初期値1.0f</param>
+	/// <returns>倒したかどうか</returns>
+	bool Pad_X_StickTrigger(ControllerStick stickInput, const float& deadRange, const Vector2& deadRate);
+
+	/// <summary>
+	/// コントローラーボタンの入力
+	/// </summary>
+	/// <param name="button">チェックしたいボタン</param>
+	/// <returns>押したか</returns>
+	bool Pad_X_ButtonInput(ControllerButton button);
+
+	/// <summary>
+	/// コントローラースティックの入力
+	/// </summary>
+	/// <param name="stickInput">コントローラースティック方向</param>
+	/// <param name="deadRange">デッドゾーンの範囲</param>
+	/// <param name="deadRate">デッドゾーン判定の度合い初期値1.0f</param>
+	/// <returns>倒したかどうか</returns>
+	bool Pad_X_StickInput(ControllerStick stickInput, const float& deadRange, const Vector2& deadRate);
+
+	/// <summary>
+	/// コントローラーボタンの離した瞬間
+	/// </summary>
+	/// <param name="button">チェックしたいボタン</param>
+	/// <returns>離したか</returns>
+	bool Pad_X_ButtonOffTrigger(ControllerButton button);
+
+	/// <summary>
+	/// コントローラースティックの離した瞬間
+	/// </summary>
+	/// <param name="stickInput">コントローラースティック方向</param>
+	/// <param name="deadRange">デッドゾーンの範囲初期値0.3f</param>
+	/// <param name="deadRate">デッドゾーン判定の度合い初期値1.0f</param>
+	/// <returns>離したか</returns>
+	bool Pad_X_StickOffTrigger(ControllerStick stickInput, const float& deadRang, const Vector2& deadRate);
+
+
+	/// <summary>
+	/// コントローラーの左スティックのベクトル
+	/// </summary>
+	/// <param name="deadRate">デッドゾーン判定の度合い初期値1.0f</param>
+	/// <returns>ベクトル</returns>
+	Vector2 Pad_X_GetLeftStickVec(const Vector2& deadRate);
+
+	/// <summary>
+	/// コントローラーの右スティックのベクトル
+	/// </summary>
+	/// <param name="deadRate">デッドゾーン判定の度合い初期値1.0f</param>
+	/// <returns>ベクトル</returns>
+	Vector2 Pad_X_GetRightStickVec(const Vector2& deadRate);
+
+	/// <summary>
+	/// コントローラーを振動させる
+	/// </summary>
+	/// <param name="power">振動の強さ0.0f～1.0f</param>
+	/// <param name="span">振動の時間フレーム</param>
+	void Pad_X_ShakeController(const float& power, const int& span);
+
+#pragma endregion Xbox Pad用関数
 
 private: // メンバ変数
-	// キーボードのデバイス
-	ComPtr<IDirectInputDevice8> keyboard;
-	// DirectInputのインスタンス
-	ComPtr<IDirectInput8> directInput;
-	// 全キーの状態
-	BYTE key[256] = {};
-	// 前回の全キーの状態
-	BYTE keyPre[256] = {};
-	//windwsAPI
-	WinApp* winApp_ = nullptr;
+	
+	Keyboard_Input* keybord_;
+	Pad_X_Input* Xpad_;
+
+	
 };

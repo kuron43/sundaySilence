@@ -8,6 +8,7 @@
 
 
 #include "GameScene.h"
+#include "PadInput.h"
 
 
 
@@ -21,6 +22,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	DirectXCommon* dxCommon = nullptr;
 	FPS* fps = new FPS;
 	Input* input = nullptr;
+	Pad_X_Input* PadInput = nullptr;
 	GameScene* gameScene = nullptr;
 
 	ImGuiManager* imgui = nullptr;
@@ -35,6 +37,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	//入力の初期化　
 	input = new Input();
 	input->Initialize(winApp);
+
+	PadInput = new Pad_X_Input();
+
+
 
 	// ImGuiの初期化
 	imgui = new ImGuiManager();
@@ -64,6 +70,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// ゲームシーンの初期化
 	gameScene = new GameScene();
 	gameScene->Initialize(dxCommon, input);
+	
 
 	//FPS変えたいとき
 	fps->SetFrameRate(60);
@@ -77,7 +84,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		if (winApp->ProcessMessage()) {
 			break;
 		}
-		if (input->PushKey(DIK_ESCAPE)) {
+		if (input->KeyboardPush(DIK_ESCAPE)) {
 			break;
 		}
 
@@ -92,7 +99,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		///////////////////////////////////////////////////
 
 		//入力の更新
-		input->Update();	
+		input->Update();
+		PadInput->Update();
 
 		// ゲームシーンの毎フレーム処理
 		gameScene->Update();		
@@ -151,6 +159,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	//入力開放
 	delete input;
+	delete PadInput;
 	//WindowsAPI開放
 	delete winApp;
 	delete dxCommon;

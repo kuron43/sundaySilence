@@ -1,13 +1,15 @@
 #pragma once
 
 #include "DirectXCommon.h"
-#include "Input.h"
-#include "Audio.h"
 #include <string>
+#include "Input.h"
 #include "Object3d.h"
 #include "SpriteCommon.h"
 #include "Sprite.h"
 #include "Model.h"
+#include "Audio.h"
+#include "SceneManager.h"
+#include "ParticleManager.h"
 
 #include "Matrix4.h"
 #include "Camera.h"
@@ -15,7 +17,6 @@
 
 //#include "FBX/FBXObject3d.h"
 //#include "FBX/FbxLoader.h"
-#include "ParticleManager.h"
 
 
 /// <summary>
@@ -66,15 +67,9 @@ private: // メンバ変数 (固定)
 	Camera* camera = nullptr;
 	Audio* audio = nullptr;
 
+	SceneManager* sceneManager = nullptr;
+
 private:	//メンバ変数
-
-	Object3d* skydome = nullptr;
-	Model* skydomeMD = nullptr;
-
-	//パーティクルクラスの初期化 
-	ParticleManager* particleManager = nullptr;
-	
-	Sprite* sprite=nullptr;
 
 };
 
