@@ -166,7 +166,7 @@
     <ClCompile Include="User\GAMESCENE\GameScene.cpp">
       <Filter>user\シーン</Filter>
     </ClCompile>
-    <ClCompile Include="User\GAMESCENE\scene\Scene.cpp">
+    <ClCompile Include="User\GAMESCENE\scene\IScene.cpp">
       <Filter>user\シーン\scene</Filter>
     </ClCompile>
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneManager.cpp">
@@ -180,6 +180,9 @@
     </ClCompile>
     <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp">
       <Filter>user\シーン\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\INPUT\PadInput.cpp">
+      <Filter>Engine\ソースファイル\INPUT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,7 +249,7 @@
     <ClInclude Include="User\GAMESCENE\GameScene.h">
       <Filter>user\シーン</Filter>
     </ClInclude>
-    <ClInclude Include="User\GAMESCENE\scene\Scene.h">
+    <ClInclude Include="User\GAMESCENE\scene\IScene.h">
       <Filter>user\シーン\scene</Filter>
     </ClInclude>
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneManager.h">
@@ -260,6 +263,9 @@
     </ClInclude>
     <ClInclude Include="User\GAMESCENE\scene\EndScene.h">
       <Filter>user\シーン\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\INPUT\PadInput.h">
+      <Filter>Engine\ヘッダーファイル\INPUT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

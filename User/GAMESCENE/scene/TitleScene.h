@@ -1,7 +1,7 @@
 #pragma once
-#include "Scene.h"
+#include "IScene.h"
 
-class TitleScene :public Scene
+class TitleScene :public IScene
 {
 protected:
 	SceneManager* _controller;

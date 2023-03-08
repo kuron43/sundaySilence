@@ -15,7 +15,7 @@ class SceneManager;
 // シーン管理のための基底クラス
 // (純粋基底クラス)
 
-class Scene
+class IScene
 {
 protected:
 
@@ -23,8 +23,8 @@ protected:
 
 public:
 
-	Scene();
-	virtual ~Scene();
+	IScene();
+	virtual ~IScene();
 
 	//virtual Scene Create(SceneManager& controller) = 0;
 	/// シーンの更新を行う

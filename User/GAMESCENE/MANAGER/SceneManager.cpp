@@ -32,7 +32,7 @@ void SceneManager::SceneDraw() {
 
 }
 
-void SceneManager::ChangeScene(Scene* scene) {
+void SceneManager::ChangeScene(IScene* scene) {
 	_scene.reset(scene);
 	SceneInitialize();
 

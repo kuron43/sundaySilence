@@ -3,14 +3,14 @@
 #include <stack>
 
 class Input;
-class Scene;
+class IScene;
 class DirectXCommon;
 
 // シーン管理クラス
 class SceneManager
 {
 private:
-	std::shared_ptr<Scene> _scene;
+	std::shared_ptr<IScene> _scene;
 	DirectXCommon* _dxCommon;
 public:
 
@@ -25,7 +25,7 @@ public:
 	void SceneDraw();
 
 	// シーンを変更する
-	void ChangeScene(Scene*);
+	void ChangeScene(IScene*);
 
 };
 

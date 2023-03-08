@@ -1,10 +1,10 @@
 #pragma once
-#include "Scene.h"
+#include "IScene.h"
 
 
 
 class GAME1Scene :
-    public Scene
+    public IScene
 {
 protected:
 	SceneManager* _controller;

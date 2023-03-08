@@ -151,6 +151,7 @@
     <ClCompile Include="Engine\CAMERA\Camera.cpp" />
     <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp" />
     <ClCompile Include="Engine\INPUT\Input.cpp" />
+    <ClCompile Include="Engine\INPUT\PadInput.cpp" />
     <ClCompile Include="Engine\MATH\Affin.cpp" />
     <ClCompile Include="Engine\MATH\ConvertXM.cpp" />
     <ClCompile Include="Engine\MATH\Matrix4.cpp" />
@@ -163,7 +164,7 @@
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneManager.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\GAME1Scene.cpp" />
-    <ClCompile Include="User\GAMESCENE\scene\Scene.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\IScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +181,7 @@
     <ClInclude Include="Engine\CAMERA\Camera.h" />
     <ClInclude Include="Engine\DEBUG\ImGuiManager.h" />
     <ClInclude Include="Engine\INPUT\Input.h" />
+    <ClInclude Include="Engine\INPUT\PadInput.h" />
     <ClInclude Include="Engine\MATH\Affin.h" />
     <ClInclude Include="Engine\MATH\ConvertXM.h" />
     <ClInclude Include="Engine\MATH\Matrix4.h" />
@@ -191,7 +193,7 @@
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneManager.h" />
     <ClInclude Include="User\GAMESCENE\scene\EndScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h" />
-    <ClInclude Include="User\GAMESCENE\scene\Scene.h" />
+    <ClInclude Include="User\GAMESCENE\scene\IScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,9 @@
 #pragma once
-#include "Scene.h"
+#include "IScene.h"
 
 
 class EndScene :
-    public Scene
+    public IScene
 {
 protected:
 	SceneManager* _controller;
