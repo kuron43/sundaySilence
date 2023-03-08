@@ -69,7 +69,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// ƒQ[ƒ€ƒV[ƒ“‚Ì‰Šú‰»
 	gameScene = new GameScene();
-	gameScene->SetPad(PadInput);
 	gameScene->Initialize(dxCommon, input);
 	
 
@@ -85,7 +84,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		if (winApp->ProcessMessage()) {
 			break;
 		}
-		if (input->PushKey(DIK_ESCAPE)) {
+		if (input->KeyboardPush(DIK_ESCAPE)) {
 			break;
 		}
 

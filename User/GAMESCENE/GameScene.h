@@ -14,8 +14,6 @@
 #include "Matrix4.h"
 #include "Camera.h"
 
-#include "PadInput.h"
-
 
 //#include "FBX/FBXObject3d.h"
 //#include "FBX/FbxLoader.h"
@@ -56,8 +54,6 @@ public: // ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void Draw();
 
-	void SetPad(Pad_X_Input* Pad_X) { pad_ = Pad_X;}
-
 public:
 	//‰¹‚ğ~‚ß‚éŠÖ”
 	IXAudio2SourceVoice* pSourceVoice[10] = { 0 };
@@ -75,6 +71,5 @@ private: // ƒƒ“ƒo•Ï” (ŒÅ’è)
 
 private:	//ƒƒ“ƒo•Ï”
 
-	Pad_X_Input* pad_ = nullptr;
 };
 

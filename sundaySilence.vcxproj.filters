@@ -184,6 +184,9 @@
     <ClCompile Include="Engine\INPUT\PadInput.cpp">
       <Filter>Engine\ソースファイル\INPUT</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\INPUT\Keyboard_Input.cpp">
+      <Filter>Engine\ソースファイル\INPUT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -265,6 +268,9 @@
       <Filter>user\シーン\scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\INPUT\PadInput.h">
+      <Filter>Engine\ヘッダーファイル\INPUT</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\INPUT\Keyboard_Input.h">
       <Filter>Engine\ヘッダーファイル\INPUT</Filter>
     </ClInclude>
   </ItemGroup>

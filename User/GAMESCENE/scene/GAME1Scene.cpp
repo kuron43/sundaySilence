@@ -27,7 +27,7 @@ void GAME1Scene::Initialize(DirectXCommon* dxCommon) {
 void GAME1Scene::Update(Input* input) {
 
 	skydome->Update();
-	if (input->TriggerKey(DIK_SPACE)) {
+	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
 		_controller->ChangeScene(new EndScene(_controller));
 	}
 }

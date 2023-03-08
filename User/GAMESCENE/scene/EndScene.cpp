@@ -19,15 +19,13 @@ void EndScene::Initialize(DirectXCommon* dxCommon) {
 }
 
 void EndScene::Update(Input* input) {
-	if (input->TriggerKey(DIK_SPACE)) {
-		_controller->ChangeScene(new TitleScene(_controller));
-	}
+	
 
-	particleManager->Update();
+  	particleManager->Update();
 
 	// パーティクル起動( P 押し)
 	{
-		if (input->TriggerKey(DIK_P)) {
+		if (input->KeyboardTrigger(DIK_P)||input->Pad_X_ButtonTrigger(B)) {
 			//パーティクル範囲
 			for (int j = 0; j < 50; j++) {
 				//X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
@@ -59,6 +57,10 @@ void EndScene::Update(Input* input) {
 		}
 	}
 
+
+	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
+		_controller->ChangeScene(new TitleScene(_controller));
+	}
 }
 
 void EndScene::Draw(DirectXCommon* dxCommon) {

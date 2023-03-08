@@ -31,7 +31,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 
 void TitleScene::Update(Input* input) {
 
-	if (input->TriggerKey(DIK_SPACE)) {
+	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
 		_controller->ChangeScene(new GAME1Scene(_controller));
 		
 	}
