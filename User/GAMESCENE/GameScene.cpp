@@ -47,7 +47,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 /// </summary>
 void GameScene::Update() {
 	camera->Update();
-	if (input->Pad_X_ButtonInput(A)) {
+	if (input->Pad_X_ButtonInput(B)) {
 		input->Pad_X_ShakeController(1.0f, 10);
 	}
 	sceneManager->SceneUpdate(input);
