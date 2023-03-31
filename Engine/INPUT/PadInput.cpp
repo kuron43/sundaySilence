@@ -1,6 +1,6 @@
 #include "PadInput.h"
 #include <winerror.h>
-#include <intsafe.h>
+//#include <intsafe.h>
 
 Pad_X_Input::Pad_X_Input() {
 

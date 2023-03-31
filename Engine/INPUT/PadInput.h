@@ -1,13 +1,9 @@
 #pragma once
 #include <windows.h>
-#include <wrl.h>
-#include "WinApp.h"
 
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
-
-template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 #include <xinput.h>
 #pragma comment (lib, "xinput.lib")
