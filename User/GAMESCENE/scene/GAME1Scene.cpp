@@ -37,7 +37,7 @@ void GAME1Scene::Draw(DirectXCommon* dxCommon) {
 	//3Dオブジェクト描画前処理
 	Object3d::PreDraw(dxCommon->GetCommandList());
 
-	//obj2->Draw();
+	obj2->Draw();
 
 	//3Dオブジェクト描画後処理
 	Object3d::PostDraw();

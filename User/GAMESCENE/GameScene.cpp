@@ -1,5 +1,9 @@
 #include "GameScene.h"
 
+#include<sstream>
+#include<iomanip>
+#include"imgui.h"
+
 /// <summary>
 	/// コンストクラタ
 	/// </summary>
@@ -78,4 +82,8 @@ void GameScene::Update() {
 void GameScene::Draw() {
 	sceneManager->SceneDraw();
 
+	ImGui::Begin("Info");
+	ImGui::Text("E : particle");
+	ImGui::Text("arrowkey : camera");
+	ImGui::End();
 }

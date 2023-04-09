@@ -59,13 +59,13 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 
 	obj2 = Object3d::Create();
 	obj2->SetModel(obj2MD);
-	obj2->wtf.scale = (Vector3{ 1000, 1000, 1000 });
+	obj2->wtf.scale = (Vector3{ 0.8, 0.8, 0.8 });
 	obj2->Update();
 
 	obj = Object3d::Create();
 	obj->SetModel(model);
 	obj->wtf.position = (Vector3{ 5, 1, 5 });
-	obj->wtf.scale = (Vector3{ 100, 100, 100 });
+	obj->wtf.scale = (Vector3{ 0.1, 0.1, 0.1 });
 	obj->Update();
 
 }
@@ -132,7 +132,7 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	//3Dオブジェクト描画前処理
 	Object3d::PreDraw(dxCommon->GetCommandList());
 
-	//obj2->Draw();
+	obj2->Draw();
 	obj->Draw();
 
 	//3Dオブジェクト描画後処理
