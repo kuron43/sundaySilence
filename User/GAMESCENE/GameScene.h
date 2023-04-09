@@ -10,6 +10,7 @@
 #include "Audio.h"
 #include "SceneManager.h"
 #include "ParticleManager.h"
+#include "ParticleManager_2.h"
 
 #include "Matrix4.h"
 #include "Camera.h"
@@ -65,6 +66,7 @@ private: // ƒƒ“ƒo•Ï” (ŒÅ’è)
 
 	SpriteCommon* spriteCommon = nullptr;
 	Camera* camera = nullptr;
+	Transform cam_TF;
 	Audio* audio = nullptr;
 
 	SceneManager* sceneManager = nullptr;

@@ -21,7 +21,5 @@ public:
 private:
 
 public:
-	//パーティクルクラスの初期化 
-	ParticleManager* particleManager = nullptr;
 
 };
