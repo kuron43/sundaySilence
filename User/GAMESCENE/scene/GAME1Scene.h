@@ -22,8 +22,8 @@ private:
 
 
 public:
-	Object3d* skydome = nullptr;
-	Model* skydomeMD = nullptr;
+	Object3d* obj2 = nullptr;
+	Model* obj2MD = nullptr;
 
 };
 

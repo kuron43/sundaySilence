@@ -16,12 +16,12 @@
 class Model
 {
 private: // エイリアス
-// Microsoft::WRL::を省略
+	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::を省略
 
 public: // サブクラス
-// 頂点データ構造体
+	// 頂点データ構造体
 	struct VertexPosNormalUv
 	{
 		Vector3 pos; // xyz座標
@@ -62,18 +62,18 @@ public://静的メンバ関数
 	//setter
 	static void SetDevice(ID3D12Device* device) { Model::device = device; }
 
-	
+
 
 private://メンバ変数
-	
+
 	//OBJファイルから3Dモデルを読み込む(非公開)
 	void LoadFromOBJInternal(const std::string& modelname);
-		
+
 	/// <summary>
 	/// デスクリプタヒープの初期化
 	/// </summary>
 	void InitializeDescriptorHeap();
-		
+
 	//各種バッファ生成
 	void CreateBuffers();
 
@@ -129,4 +129,3 @@ private:
 	Material material;
 
 };
-

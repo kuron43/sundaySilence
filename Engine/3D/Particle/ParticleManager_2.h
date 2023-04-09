@@ -14,13 +14,13 @@
 #include "Affin.h"
 
 // 定数バッファ用データ構造体（マテリアル）
-	struct ConstBufferDataMaterial {
+	struct ConstBufferDataMaterial_2 {
 		Vector4 color; // 色 (RGBA)
 	};
 /// <summary>
 /// 3Dオブジェクト
 /// </summary>
-class ParticleManager
+class ParticleManager_2
 {
 private: // エイリアス
 	// Microsoft::WRL::を省略
@@ -100,7 +100,7 @@ public: // 静的メンバ関数
 	/// 3Dオブジェクト生成
 	/// </summary>
 	/// <returns></returns>
-	static ParticleManager* Create();
+	static ParticleManager_2* Create();
 
 	
 
@@ -166,8 +166,8 @@ private:// 静的メンバ関数
 public: // メンバ関数
 	static void LoadTexture(const std::string& fileName);
 
-	ParticleManager();
-	~ParticleManager();
+	ParticleManager_2();
+	~ParticleManager_2();
 
 	bool Initialize();
 	/// <summary>
@@ -189,9 +189,9 @@ public: // メンバ関数
 	///	<param name="accel">加速度</param>
 	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale);
 
-	static void SetCamera(Camera* camera) {ParticleManager::camera = camera; }
+	static void SetCamera(Camera* camera) {ParticleManager_2::camera = camera; }
 
-	static ConstBufferDataMaterial* constMapMaterial;
+	static ConstBufferDataMaterial_2* constMapMaterial;
 private: // メンバ変数
 	static Camera* camera;
 	// ローカルスケール

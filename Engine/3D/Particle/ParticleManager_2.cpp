@@ -1,4 +1,4 @@
-﻿#include "ParticleManager.h"
+﻿#include "ParticleManager_2.h"
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
 
@@ -12,40 +12,40 @@ using namespace Microsoft::WRL;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-const float ParticleManager::radius = 5.0f;				// 底面の半径
-const float ParticleManager::prizmHeight = 8.0f;			// 柱の高さ
-ComPtr<ID3D12Device> ParticleManager::device;
-UINT ParticleManager::descriptorHandleIncrementSize = 0;
-ComPtr<ID3D12GraphicsCommandList> ParticleManager::cmdList;
-ComPtr<ID3D12RootSignature> ParticleManager::rootsignature;
-ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate;
-ComPtr<ID3D12DescriptorHeap> ParticleManager::descHeap;
-ComPtr<ID3D12Resource> ParticleManager::vertBuff;
-ComPtr<ID3D12Resource> ParticleManager::texbuff;
-ComPtr<ID3D12Resource> ParticleManager::constBuff;
-CD3DX12_CPU_DESCRIPTOR_HANDLE ParticleManager::cpuDescHandleSRV;
-CD3DX12_GPU_DESCRIPTOR_HANDLE ParticleManager::gpuDescHandleSRV;
-D3D12_VERTEX_BUFFER_VIEW ParticleManager::vbView{};
-ParticleManager::VertexPos ParticleManager::vertices[vertexCount];
-Matrix4 ParticleManager::matBillboard = Affin::matUnit();
-Matrix4 ParticleManager::matBillboardY = Affin::matUnit();
+const float ParticleManager_2::radius = 5.0f;				// 底面の半径
+const float ParticleManager_2::prizmHeight = 8.0f;			// 柱の高さ
+ComPtr<ID3D12Device> ParticleManager_2::device;
+UINT ParticleManager_2::descriptorHandleIncrementSize = 0;
+ComPtr<ID3D12GraphicsCommandList> ParticleManager_2::cmdList;
+ComPtr<ID3D12RootSignature> ParticleManager_2::rootsignature;
+ComPtr<ID3D12PipelineState> ParticleManager_2::pipelinestate;
+ComPtr<ID3D12DescriptorHeap> ParticleManager_2::descHeap;
+ComPtr<ID3D12Resource> ParticleManager_2::vertBuff;
+ComPtr<ID3D12Resource> ParticleManager_2::texbuff;
+ComPtr<ID3D12Resource> ParticleManager_2::constBuff;
+CD3DX12_CPU_DESCRIPTOR_HANDLE ParticleManager_2::cpuDescHandleSRV;
+CD3DX12_GPU_DESCRIPTOR_HANDLE ParticleManager_2::gpuDescHandleSRV;
+D3D12_VERTEX_BUFFER_VIEW ParticleManager_2::vbView{};
+ParticleManager_2::VertexPos ParticleManager_2::vertices[vertexCount];
+Matrix4 ParticleManager_2::matBillboard = Affin::matUnit();
+Matrix4 ParticleManager_2::matBillboardY = Affin::matUnit();
 
-ConstBufferDataMaterial* ParticleManager::constMapMaterial;
-Camera* ParticleManager::camera = nullptr;
+ConstBufferDataMaterial_2* ParticleManager_2::constMapMaterial;
+Camera* ParticleManager_2::camera = nullptr;
 
-ParticleManager::ParticleManager() {
-
-}
-ParticleManager::~ParticleManager() {
+ParticleManager_2::ParticleManager_2() {
 
 }
+ParticleManager_2::~ParticleManager_2() {
 
-void ParticleManager::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
+}
+
+void ParticleManager_2::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
 {
 	// nullptrチェック
 	assert(device);
 
-	ParticleManager::device = device;
+	ParticleManager_2::device = device;
 
 	//// デスクリプタヒープの初期化
 	//InitializeDescriptorHeap();
@@ -61,7 +61,7 @@ void ParticleManager::StaticInitialize(ID3D12Device* device, int window_width, i
 
 }
 
-void ParticleManager::PreDraw(ID3D12GraphicsCommandList* cmdList)
+void ParticleManager_2::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	//// PreDrawとPostDrawがペアで呼ばれていなければエラー
 	//assert(ParticleManager::cmdList == nullptr);
@@ -77,31 +77,31 @@ void ParticleManager::PreDraw(ID3D12GraphicsCommandList* cmdList)
 	//cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 }
 
-void ParticleManager::PostDraw()
+void ParticleManager_2::PostDraw()
 {
 	// コマンドリストを解除
-	ParticleManager::cmdList = nullptr;
+	ParticleManager_2::cmdList = nullptr;
 }
 
-ParticleManager* ParticleManager::Create()
+ParticleManager_2* ParticleManager_2::Create()
 {
 	// 3Dオブジェクトのインスタンスを生成
-	ParticleManager* particleManager = new ParticleManager();
-	if (particleManager == nullptr) {
+	ParticleManager_2* particleManager_2 = new ParticleManager_2();
+	if (particleManager_2 == nullptr) {
 		return nullptr;
 	}
 
 	// 初期化
-	if (!particleManager->Initialize()) {
-		delete particleManager;
+	if (!particleManager_2->Initialize()) {
+		delete particleManager_2;
 		assert(0);
 		return nullptr;
 	}
 
-	return particleManager;
+	return particleManager_2;
 }
 
-void ParticleManager::InitializeDescriptorHeap()
+void ParticleManager_2::InitializeDescriptorHeap()
 {
 	HRESULT result = S_FALSE;
 
@@ -121,7 +121,7 @@ void ParticleManager::InitializeDescriptorHeap()
 }
 
 
-void ParticleManager::InitializeGraphicsPipeline()
+void ParticleManager_2::InitializeGraphicsPipeline()
 {
 	HRESULT result = S_FALSE;
 	ComPtr<ID3DBlob> vsBlob; // 頂点シェーダオブジェクト
@@ -307,7 +307,7 @@ void ParticleManager::InitializeGraphicsPipeline()
 
 }
 
-void ParticleManager::LoadTexture()
+void ParticleManager_2::LoadTexture()
 {
 	HRESULT result = S_FALSE;
 
@@ -379,8 +379,8 @@ void ParticleManager::LoadTexture()
 
 }
 
-std::string kDefaultTextureDirectoryPath1 = "Resources/";
-void ParticleManager::LoadTexture(const std::string& fileName)
+std::string kDefaultTextureDirectoryPath2 = "Resources/";
+void ParticleManager_2::LoadTexture(const std::string& fileName)
 {
 	HRESULT result = S_FALSE;
 
@@ -388,7 +388,7 @@ void ParticleManager::LoadTexture(const std::string& fileName)
 	ScratchImage scratchImg{};
 
 	//ディレクトリパスとファイル名を連結してフルパスを得る
-	std::string fullPath = kDefaultTextureDirectoryPath1 + fileName;
+	std::string fullPath = kDefaultTextureDirectoryPath2 + fileName;
 
 	//ワイド文字列に変換した際の文字列バッファサイズの計算
 	int filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
@@ -465,7 +465,7 @@ void ParticleManager::LoadTexture(const std::string& fileName)
 
 }
 
-void ParticleManager::CreateModel()
+void ParticleManager_2::CreateModel()
 {
 	// nullptrチェック
 	assert(device);
@@ -523,7 +523,7 @@ void ParticleManager::CreateModel()
 	assert((SUCCEEDED(result)));
 }
 
-bool ParticleManager::Initialize()
+bool ParticleManager_2::Initialize()
 {
 
 	InitializeDescriptorHeap();
@@ -533,7 +533,7 @@ bool ParticleManager::Initialize()
 	return true;
 }
 
-void ParticleManager::Update()
+void ParticleManager_2::Update()
 {
 	HRESULT result;
 
@@ -591,7 +591,7 @@ void ParticleManager::Update()
 	constBuff->Unmap(0, nullptr);
 }
 
-void ParticleManager::Draw(ID3D12GraphicsCommandList* cmdList)
+void ParticleManager_2::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	// nullptrチェック
 	assert(device);
@@ -620,7 +620,7 @@ void ParticleManager::Draw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->DrawInstanced((UINT)std::distance(particles.begin(), particles.end()), 1, 0, 0);
 }
 
-void ParticleManager::Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale)
+void ParticleManager_2::Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale)
 {
 	//リストに要素を追加
 	particles.emplace_front();

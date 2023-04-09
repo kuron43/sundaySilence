@@ -16,7 +16,7 @@ TitleScene::~TitleScene() {
 	delete particleManager;
 	delete particleManager2;
 
-	delete skydome, skydomeMD;
+	delete obj2, obj2MD;
 	delete obj, model;
 }
 
@@ -26,7 +26,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	particleManager = ParticleManager::Create();
 	particleManager->LoadTexture("1.png");
 	particleManager->Update();
-	particleManager2 = ParticleManager::Create();
+	particleManager2 = ParticleManager_2::Create();
 	particleManager2->LoadTexture("1_2.png");
 	particleManager2->Update();
 
@@ -35,36 +35,35 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	spriteCommon->Initialize(dxCommon);
 
 	sprite = new Sprite();
-
 	Vector2 spritePOS = sprite->GetPosition();
 	sprite->Initialize(spriteCommon);
-	sprite->SetPozition(spritePOS);
+	sprite->SetPozition({0,0});
 	sprite->SetSize(Vector2{ WinApp::window_width / 3,WinApp::window_height / 3 });
 
-	spriteCommon->LoadTexture(0, "title.png");
-	sprite->SetTextureIndex(0);
 
 	sprite2 = new Sprite();
-
 	Vector2 spritePOS2 = Vector2{ WinApp::window_width / 2,WinApp::window_height / 2 };
 	sprite2->Initialize(spriteCommon);
 	sprite2->SetPozition(spritePOS2);
 	sprite2->SetSize(Vector2{ WinApp::window_width / 3,WinApp::window_height / 3 });
 
-	spriteCommon->LoadTexture(1, "end.png");
+	spriteCommon->LoadTexture(0, "title.png");
+	sprite->SetTextureIndex(0);
+	spriteCommon->LoadTexture(1, "title.png");
 	sprite2->SetTextureIndex(1);
+	
 
 	
-	skydomeMD = Model::LoadFromOBJ("skydome");
-	skydome = Object3d::Create();
-	skydome->SetModel(skydomeMD);
-	skydome->wtf.scale = (Vector3{ 10000, 10000, 10000 });
-	skydome->Update();
+	obj2MD = Model::LoadFromOBJ("ene");
+	obj2 = Object3d::Create();
+	obj2->SetModel(obj2MD);
+	obj2->wtf.scale = (Vector3{ 100, 100, 100 });
+	obj2->Update();
 
-	model = Model::LoadFromOBJ("skydome");
+	model = Model::LoadFromOBJ("REX");
 	obj = Object3d::Create();
 	obj->SetModel(model);
-	obj->wtf.scale = (Vector3{ 10, 10, 10 });
+	obj->wtf.scale = (Vector3{ 100, 100, 100 });
 	obj->Update();
 
 }
@@ -76,14 +75,16 @@ void TitleScene::Update(Input* input) {
 
 
 	obj->Update();
-	skydome->Update();
+	obj2->Update();
 
 	particleManager->Update();
 	particleManager2->Update();
 
 	// パーティクル起動( P 押し)
 	{
-		if (input->KeyboardTrigger(DIK_P) || input->Pad_X_ButtonTrigger(B)) {
+
+		if (input->KeyboardTrigger(DIK_E)) {
+			particleManager2->LoadTexture("1_2.png");
 			//パーティクル範囲
 			for (int j = 0; j < 50; j++) {
 				//X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
@@ -100,7 +101,7 @@ void TitleScene::Update(Input* input) {
 				Vector3 vel{};
 				vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 				vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-				vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+				//vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 				//重力に見立ててYのみ[-0.001f,0]でランダムに分布
 				const float rnd_acc = -0.01f;
 				const float rnd_acc_v = -0.01f;
@@ -110,8 +111,8 @@ void TitleScene::Update(Input* input) {
 				//acc.z = (float)rand() / RAND_MAX * rnd_acc;
 
 				//追加
-				particleManager->Add(50, pos, vel, acc, 1.0f, 0.0f);
-				particleManager2->Add(100, pos, vel + vel, acc, 1.0f, 0.0f);
+				particleManager->Add(100, pos+acc, vel + vel, acc, 1.0f, 0.0f);
+				particleManager2->Add(100, pos, vel, acc, 1.0f, 0.0f);
 			}
 		}
 	}
@@ -123,17 +124,22 @@ void TitleScene::Update(Input* input) {
 }
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {
+
+	
 	sprite->Draw();
 	sprite2->Draw();
+	
 
-	particleManager->Draw();
-	particleManager2->Draw();
 
 	//3Dオブジェクト描画前処理
 	Object3d::PreDraw(dxCommon->GetCommandList());
 
-	skydome->Draw();
+	//obj2->Draw();
+	obj->Draw();
 
 	//3Dオブジェクト描画後処理
 	Object3d::PostDraw();
+	
+	particleManager->Draw(dxCommon->GetCommandList());
+	particleManager2->Draw(dxCommon->GetCommandList());
 }

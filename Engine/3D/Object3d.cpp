@@ -35,7 +35,7 @@ Object3d::Object3d() {
 
 }
 Object3d::~Object3d() {
-	delete model;
+
 }
 
 void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
@@ -96,13 +96,11 @@ Object3d* Object3d::Create()
 
 void Object3d::InitializeCamera(int window_width, int window_height)
 {
-	
-
 	//ビュー行列の算出
 	matView.MakeLookL(eye, target, up, matView);
 	matProjection.MakePerspectiveL(focalLengs,
 		(float)1280 / 720
-		, 0.1f, 1000.0f,
+		, 0.1f, 100000.0f,
 		matProjection);
 
 }
@@ -299,20 +297,11 @@ bool Object3d::Initialize()
 		IID_PPV_ARGS(&constBuffB0));
 	assert(SUCCEEDED(result));
 
-
-
-
 	return true;
 }
 
-
-void Object3d::Update()
-{
-
-	HRESULT result;
-	Matrix4 matScale, matRot, matTrans, resultMat;
-	resultMat = Affin::matUnit();
-
+void Object3d::UpdateMat() {
+	Matrix4 matScale, matRot, matTrans;
 	// スケール、回転、平行移動行列の計算
 	matScale = Affin::matScale(wtf.scale.x, wtf.scale.y, wtf.scale.z);
 	matRot = Affin::matUnit();
@@ -330,6 +319,35 @@ void Object3d::Update()
 		// 親オブジェクトのワールド行列を掛ける
 		wtf.matWorld *= parent->wtf.matWorld;
 	}
+}
+
+void Object3d::Update() {
+
+	HRESULT result;
+	Matrix4 resultMat;
+	resultMat = Affin::matUnit();
+
+	UpdateMat();
+
+	// 定数バッファへデータ転送
+	ConstBufferDataB0* constMap = nullptr;
+	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
+	resultMat = wtf.matWorld * camera->GetViewProjectionMatrix();	// 行列の合成
+
+	constMap->mat = resultMat;
+	constBuffB0->Unmap(0, nullptr);
+
+}
+
+void Object3d::Update(Transform* parentWtf) {
+
+	HRESULT result;
+	Matrix4 resultMat;
+	resultMat = Affin::matUnit();
+
+	UpdateMat();
+
+	wtf.matWorld *= parentWtf->matWorld;
 
 	// 定数バッファへデータ転送
 	ConstBufferDataB0* constMap = nullptr;
@@ -346,7 +364,7 @@ void Object3d::Draw()
 	// nullptrチェック
 	assert(device);
 	//assert(Object3d::cmdList);
-	
+
 	//モデルがセットされてなければ描画をスキップ
 	if (model == nullptr) return;
 
@@ -356,6 +374,3 @@ void Object3d::Draw()
 	//モデルを描画
 	model->Draw(cmdList.Get(), 1);
 }
-
-
-

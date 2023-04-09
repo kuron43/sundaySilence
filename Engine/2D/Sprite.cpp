@@ -1,8 +1,16 @@
 #include"Sprite.h"
 
-void Sprite::Initialize(SpriteCommon* spritecommon_)
+void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
 {
 	spritecomon = spritecommon_;
+
+	//テクスチャサイズをイメージに合わせる
+	if (textureIndex != UINT32_MAX) {
+		textureIndex_ = textureIndex;
+		AdjustTextureSize();
+		//テクスチャサイズをスプライトのサイズに適用
+		size_ = textureSize;
+	}
 
 	// 頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
@@ -17,7 +25,7 @@ void Sprite::Initialize(SpriteCommon* spritecommon_)
 		nullptr,
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
-	
+
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
@@ -82,13 +90,13 @@ void Sprite::Initialize(SpriteCommon* spritecommon_)
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	
+
 	// 射影行列計算
 	matProjection.MakeOrthogonalL(
 		0.0f, (float)WinApp::window_width,
 		(float)WinApp::window_height, 0.0f,
 		0.0f, 1.0f, matProjection);
-	
+
 
 	// 定数バッファの生成
 	result = spritecomon->GetDxCommon()->GetDevice()->CreateCommittedResource(
@@ -114,7 +122,7 @@ void Sprite::Draw()
 	matRot *= Affin::matRotateZ(XMConvertToRadians(rotation));//Z軸周りに0度回転してから
 	matTrans = Affin::matTrans(position.x, position.y, 0.0f);//(-50,0,0)平行移動
 
-	matWorld =Affin::matUnit();//変形をリセット
+	matWorld = Affin::matUnit();//変形をリセット
 	matWorld *= matRot;//ワールド行列にスケーリングを反映
 	matWorld *= matTrans;
 
@@ -183,7 +191,7 @@ void Sprite::Update()
 		vertices[RT].uv = { tex_right,tex_top };
 
 	}
-	
+
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	if (SUCCEEDED(result)) {
 		memcpy(vertMap, vertices, sizeof(vertices));
@@ -223,4 +231,14 @@ void Sprite::SetIsFlipX(bool isFlipX)
 	Update();
 }
 
+void Sprite::AdjustTextureSize()
+{
+	ComPtr<ID3D12Resource> textureBuffer = spritecomon->GetTextureBuffer(textureIndex_);
+	assert(textureBuffer);
 
+	//テクスチャ情報取得
+	D3D12_RESOURCE_DESC resDesc = textureBuffer->GetDesc();
+
+	textureSize.x = static_cast<float>(resDesc.Width);
+	textureSize.y = static_cast<float>(resDesc.Height);
+}

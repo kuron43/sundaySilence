@@ -20,7 +20,7 @@ private:
 public:
 	//パーティクルクラスの初期化 
 	ParticleManager* particleManager = nullptr;
-	ParticleManager* particleManager2 = nullptr;
+	ParticleManager_2* particleManager2 = nullptr;
 
 
 	SpriteCommon* spriteCommon = nullptr;
@@ -30,7 +30,7 @@ public:
 	Object3d* obj = nullptr;
 	Model* model = nullptr;
 
-	Object3d* skydome = nullptr;
-	Model* skydomeMD = nullptr;
+	Object3d* obj2 = nullptr;
+	Model* obj2MD = nullptr;
 
 };

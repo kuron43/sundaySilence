@@ -35,6 +35,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 	//FBXObject3d::SetCamera(camera);
 	ParticleManager::SetCamera(camera);
+	ParticleManager_2::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
 	sceneManager = new SceneManager(dxCommon);
@@ -47,9 +48,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 /// </summary>
 void GameScene::Update() {
 	camera->Update();
-	if (input->Pad_X_ButtonInput(B)) {
+	/*if (input->Pad_X_ButtonInput(B)) {
 		input->Pad_X_ShakeController(1.0f, 10);
-	}
+	}*/
 	sceneManager->SceneUpdate(input);
 
 }

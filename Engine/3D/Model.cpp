@@ -11,7 +11,7 @@ using namespace Microsoft::WRL;
 using namespace std;
 
 //静的メンバ変数の実体
-ComPtr<ID3D12Device> Model::device ;
+ComPtr<ID3D12Device> Model::device;
 
 
 Model* Model::LoadFromOBJ(const std::string& modelname)
@@ -38,13 +38,13 @@ void Model::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial
 	// デスクリプタヒープの配列
 	ComPtr<ID3D12DescriptorHeap> ppHeaps[] = { descHeap.Get() };
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
-	
+
 	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(rootParamIndexMaterial, constBuffB1->GetGPUVirtualAddress());
 
 	// シェーダリソースビューをセット
 	cmdList->SetGraphicsRootDescriptorTable(2, gpuDescHandleSRV);
-	
+
 	// 描画コマンド
 	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
 

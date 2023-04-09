@@ -35,7 +35,7 @@ private: // エイリアス
 		Matrix4 mat;	// ３Ｄ変換行列
 	};
 
-	
+
 
 private: // 定数
 	static const int division = 50;					// 分割数
@@ -70,14 +70,14 @@ public: // 静的メンバ関数
 	/// <returns></returns>
 	static Object3d* Create();
 
-	
+	bool IsDead() const { return  isDead_; }
 
-	
+
 
 private: // 静的メンバ変数
 	// デバイス
 	static ComPtr<ID3D12Device> device;
-	
+
 	// コマンドリスト
 	static ComPtr<ID3D12GraphicsCommandList> cmdList;
 	// ルートシグネチャ
@@ -86,7 +86,7 @@ private: // 静的メンバ変数
 	static ComPtr<ID3D12PipelineState> pipelinestate;
 
 
-	
+
 
 	// ビュー行列
 	static Matrix4 matView;
@@ -126,19 +126,20 @@ public: // メンバ関数
 
 	Object3d();
 	~Object3d();
-	
+
 	bool Initialize();
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
 	void Update();
+	void Update(Transform* parentWtf);
 
-	//void Update(View* view);
+	void UpdateMat();
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();	
+	void Draw();
 
 	Object3d* GetParent() const { return parent; }
 
@@ -149,11 +150,13 @@ public: // メンバ関数
 	void SetModel(Model* model) { this->model = model; }
 
 private: // メンバ変数
-	public:
+public:
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 
+	bool isDead_ = false;
+
 	// 色
-	Vector4 color ={ 1,1,1,1 };	
+	Vector4 color = { 1,1,1,1 };
 
 	// 親オブジェクト
 	Object3d* parent = nullptr;
