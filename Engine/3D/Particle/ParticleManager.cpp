@@ -22,6 +22,7 @@ ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate;
 ComPtr<ID3D12DescriptorHeap> ParticleManager::descHeap;
 ComPtr<ID3D12Resource> ParticleManager::vertBuff;
 ComPtr<ID3D12Resource> ParticleManager::texbuff;
+ComPtr<ID3D12Resource> ParticleManager::constBuff;
 CD3DX12_CPU_DESCRIPTOR_HANDLE ParticleManager::cpuDescHandleSRV;
 CD3DX12_GPU_DESCRIPTOR_HANDLE ParticleManager::gpuDescHandleSRV;
 D3D12_VERTEX_BUFFER_VIEW ParticleManager::vbView{};
@@ -29,6 +30,7 @@ ParticleManager::VertexPos ParticleManager::vertices[vertexCount];
 Matrix4 ParticleManager::matBillboard = Affin::matUnit();
 Matrix4 ParticleManager::matBillboardY = Affin::matUnit();
 
+ConstBufferDataMaterial* ParticleManager::constMapMaterial;
 Camera* ParticleManager::camera = nullptr;
 
 ParticleManager::ParticleManager() {
@@ -45,34 +47,34 @@ void ParticleManager::StaticInitialize(ID3D12Device* device, int window_width, i
 
 	ParticleManager::device = device;
 
-	// デスクリプタヒープの初期化
-	InitializeDescriptorHeap();
+	//// デスクリプタヒープの初期化
+	//InitializeDescriptorHeap();
 
 	// パイプライン初期化
 	InitializeGraphicsPipeline();
 
-	// テクスチャ読み込み
-	LoadTexture();
+	//// テクスチャ読み込み
+	//LoadTexture();
 
-	// モデル生成
-	CreateModel();
+	//// モデル生成
+	//CreateModel();
 
 }
 
 void ParticleManager::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
-	// PreDrawとPostDrawがペアで呼ばれていなければエラー
-	assert(ParticleManager::cmdList == nullptr);
+	//// PreDrawとPostDrawがペアで呼ばれていなければエラー
+	//assert(ParticleManager::cmdList == nullptr);
 
-	// コマンドリストをセット
-	ParticleManager::cmdList = cmdList;
+	//// コマンドリストをセット
+	//ParticleManager::cmdList = cmdList;
 
-	// パイプラインステートの設定
-	cmdList->SetPipelineState(pipelinestate.Get());
-	// ルートシグネチャの設定
-	cmdList->SetGraphicsRootSignature(rootsignature.Get());
-	// プリミティブ形状を設定
-	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+	//// パイプラインステートの設定
+	//cmdList->SetPipelineState(pipelinestate.Get());
+	//// ルートシグネチャの設定
+	//cmdList->SetGraphicsRootSignature(rootsignature.Get());
+	//// プリミティブ形状を設定
+	//cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 }
 
 void ParticleManager::PostDraw()
@@ -465,13 +467,15 @@ void ParticleManager::LoadTexture(const std::string& fileName)
 
 void ParticleManager::CreateModel()
 {
-	HRESULT result = S_FALSE;
+	// nullptrチェック
+	assert(device);
 
 	//四角形のインデックスデータ
 	unsigned short indicesSquare[] = {
 		0,1,2,//三角形１
 		2,1,3,//三角形２
 	};
+	HRESULT result = S_FALSE;
 
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices));
 
@@ -498,20 +502,14 @@ void ParticleManager::CreateModel()
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
 	vbView.SizeInBytes = sizeof(vertices);
 	vbView.StrideInBytes = sizeof(vertices[0]);
-}
 
-bool ParticleManager::Initialize()
-{
-	// nullptrチェック
-	assert(device);
+	
 
 	// ヒーププロパティ
-	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+	CD3DX12_HEAP_PROPERTIES heapPropsCBV = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	// リソース設定
-	CD3DX12_RESOURCE_DESC resourceDesc =
+	CD3DX12_RESOURCE_DESC resourceDescCBV =
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
-
-	HRESULT result;
 
 	// 定数バッファの生成
 	result = device->CreateCommittedResource(
@@ -523,6 +521,14 @@ bool ParticleManager::Initialize()
 	//定数バッファのマッピング
 	result = constBuff->Map(0, nullptr, (void**)&constMapMaterial);
 	assert((SUCCEEDED(result)));
+}
+
+bool ParticleManager::Initialize()
+{
+
+	InitializeDescriptorHeap();
+	CreateModel();
+	
 
 	return true;
 }
@@ -593,6 +599,13 @@ void ParticleManager::Draw()
 
 	// 頂点バッファの設定
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
+
+	// パイプラインステートの設定
+	cmdList->SetPipelineState(pipelinestate.Get());
+	// ルートシグネチャの設定
+	cmdList->SetGraphicsRootSignature(rootsignature.Get());
+	// プリミティブ形状を設定
+	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
 	// デスクリプタヒープの配列
 	ID3D12DescriptorHeap* ppHeaps[] = { descHeap.Get() };

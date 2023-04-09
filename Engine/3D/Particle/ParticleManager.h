@@ -13,6 +13,10 @@
 #include "Matrix4.h"
 #include "Affin.h"
 
+// 定数バッファ用データ構造体（マテリアル）
+	struct ConstBufferDataMaterial {
+		Vector4 color; // 色 (RGBA)
+	};
 /// <summary>
 /// 3Dオブジェクト
 /// </summary>
@@ -24,10 +28,7 @@ private: // エイリアス
 	
 
 public: // サブクラス
-	// 定数バッファ用データ構造体（マテリアル）
-	struct ConstBufferDataMaterial {
-		Vector4 color; // 色 (RGBA)
-	};
+	
 
 	// 頂点データ構造体
 	struct VertexPos
@@ -106,14 +107,13 @@ public: // 静的メンバ関数
 private: // 静的メンバ変数
 	// デバイス
 	static ComPtr <ID3D12Device> device;
-	// デスクリプタサイズ
-	static UINT descriptorHandleIncrementSize;
 	// コマンドリスト
 	static ComPtr <ID3D12GraphicsCommandList> cmdList;
 	// ルートシグネチャ
 	static ComPtr<ID3D12RootSignature> rootsignature;
 	// パイプラインステートオブジェクト
 	static ComPtr<ID3D12PipelineState> pipelinestate;
+
 	// デスクリプタヒープ
 	static ComPtr<ID3D12DescriptorHeap> descHeap;
 	// 頂点バッファ
@@ -124,6 +124,8 @@ private: // 静的メンバ変数
 	static CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
 	// シェーダリソースビューのハンドル(CPU)
 	static CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	// デスクリプタサイズ
+	static UINT descriptorHandleIncrementSize;
 		
 	// 頂点バッファビュー
 	static D3D12_VERTEX_BUFFER_VIEW vbView;
@@ -133,6 +135,8 @@ private: // 静的メンバ変数
 	static Matrix4 matBillboard;
 	//Y軸回りビルボード行列
 	static Matrix4 matBillboardY;
+	// 定数バッファ
+	static ComPtr<ID3D12Resource> constBuff;
 	//パーティクル配列
 	std::forward_list<Particle>particles;
 
@@ -187,11 +191,11 @@ public: // メンバ関数
 
 	static void SetCamera(Camera* camera) {ParticleManager::camera = camera; }
 
+	static ConstBufferDataMaterial* constMapMaterial;
 private: // メンバ変数
-	ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	static Camera* camera;
 	// ローカルスケール
 	Vector3 scale = { 1,1,1 };
 
-	ConstBufferDataMaterial* constMapMaterial = nullptr;
+	
 };
