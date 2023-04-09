@@ -8,6 +8,7 @@
 
 
 #include "GameScene.h"
+#include "ParticleManager_2.h"
 #include "PadInput.h"
 
 
@@ -57,7 +58,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	Object3d::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
 	//パーティクル静的初期化
 	ParticleManager::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
-	
+	ParticleManager_2::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
 
 #pragma endregion
 

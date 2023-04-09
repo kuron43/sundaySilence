@@ -92,24 +92,20 @@ void SpriteCommon::Initialize(DirectXCommon* dxcommon)
 	// ラスタライザの設定
 	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE; // カリングしない
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
-	//pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME; // ワイヤーフレーム
-	
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
-	
 
-	// レンダーターゲットのブレンド設定
-	D3D12_RENDER_TARGET_BLEND_DESC blenddesc{};
+	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = pipelineDesc.BlendState.RenderTarget[0];
 	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;// RBGA全てのチャンネルを描画
+
 	blenddesc.BlendEnable = true;                   // ブレンドを有効にする
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;    // 加算
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;      // ソースの値を100% 使う
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;    // デストの値を  0% 使う
 
 	// 半透明合成
 	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;             // 加算
 	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;         // ソースのアルファ値
 	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
-
-	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;    // 加算
-	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;      // ソースの値を100% 使う
-	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;    // デストの値を  0% 使う
 
 	// ブレンドステートの設定
 	pipelineDesc.BlendState.RenderTarget[0] = blenddesc;
@@ -249,7 +245,7 @@ void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
 
 	// リソース設定
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	textureResourceDesc.Format =  MakeSRGB(metadata.format);
+	textureResourceDesc.Format = MakeSRGB(metadata.format);
 	textureResourceDesc.Width = metadata.width;
 	textureResourceDesc.Height = (UINT)metadata.height;
 	textureResourceDesc.DepthOrArraySize = (UINT16)metadata.arraySize;
@@ -301,7 +297,7 @@ void SpriteCommon::SetTextureCommands(uint32_t index)
 	//プリミティブ形状の設定コマンド
 	dxcommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);//三角リスト
 	// SRVヒープの設定コマンド
-	dxcommon_->GetCommandList()->SetDescriptorHeaps(1,srvHeap.GetAddressOf());
+	dxcommon_->GetCommandList()->SetDescriptorHeaps(1, srvHeap.GetAddressOf());
 	// SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
 	// SRVヒープの先頭にあるSRVをルートパラメータ1番に設定

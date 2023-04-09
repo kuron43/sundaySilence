@@ -9,24 +9,24 @@ GAME1Scene::GAME1Scene(SceneManager* controller) {
 }
 
 GAME1Scene::~GAME1Scene() {
-	delete skydome, skydomeMD;
+	delete obj2, obj2MD;
 }
 
 void GAME1Scene::Initialize(DirectXCommon* dxCommon) {
 
-	skydomeMD = Model::LoadFromOBJ("skydome");
+	obj2MD = Model::LoadFromOBJ("skydome");
 
-	skydome = Object3d::Create();
+	obj2 = Object3d::Create();
 
-	skydome->SetModel(skydomeMD);
-	skydome->wtf.scale = (Vector3{ 1000, 1000, 1000 });
-	skydome->Update();
+	obj2->SetModel(obj2MD);
+	obj2->wtf.scale = (Vector3{ 1000, 1000, 1000 });
+	obj2->Update();
 
 }
 
 void GAME1Scene::Update(Input* input) {
 
-	skydome->Update();
+	obj2->Update();
 	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
 		_controller->ChangeScene(new EndScene(_controller));
 	}
@@ -37,7 +37,7 @@ void GAME1Scene::Draw(DirectXCommon* dxCommon) {
 	//3Dオブジェクト描画前処理
 	Object3d::PreDraw(dxCommon->GetCommandList());
 
-	skydome->Draw();
+	obj2->Draw();
 
 	//3Dオブジェクト描画後処理
 	Object3d::PostDraw();

@@ -37,7 +37,7 @@ public:
 	};
 public:
 	//初期化
-	void Initialize(SpriteCommon* spritecommon_);
+	void Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex = UINT32_MAX);
 
 	void Draw();
 
@@ -63,7 +63,7 @@ public:
 
 	Vector2 GetAnchorPoint() { return anchorPoint; }
 
-	void SetTextureIndex(uint32_t texNmb) { textureIndex_ = texNmb; }
+	void SetTextureIndex(uint32_t texNmb) { textureIndex_ = texNmb; AdjustTextureSize(); }
 
 	uint32_t GetTextureIndex() { return textureIndex_; }
 
@@ -82,6 +82,9 @@ public:
 	void SetIsFlipX(bool isFlipX);
 
 private:
+	//テクスチャサイズをイメージに合わせる
+	void AdjustTextureSize();
+
 	SpriteCommon* spritecomon;
 	HRESULT result;
 	// 頂点データ
@@ -145,4 +148,3 @@ private:
 	// 上下反転
 	bool isFlipY = false;
 };
-

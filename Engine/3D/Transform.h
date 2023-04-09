@@ -9,6 +9,7 @@ public:
 	Transform();
 	~Transform();
 	void Initialize();
+	void UpdateMat();
 public:
 	// ローカルスケール
 	Vector3 scale = { 1,1,1 };

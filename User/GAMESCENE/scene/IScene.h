@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "SceneManager.h"
 #include "ParticleManager.h"
+#include "ParticleManager_2.h"
 
 #include "DirectXCommon.h"
 #include "Input.h"

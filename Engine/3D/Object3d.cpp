@@ -316,7 +316,7 @@ void Object3d::Update()
 	// スケール、回転、平行移動行列の計算
 	matScale = Affin::matScale(wtf.scale.x, wtf.scale.y, wtf.scale.z);
 	matRot = Affin::matUnit();
-	matRot *= Affin::matRotation(wtf.rotation);
+	matRot = Affin::matRotation(wtf.rotation);
 	matTrans = Affin::matTrans(wtf.position.x, wtf.position.y, wtf.position.z);
 
 	// ワールド行列の合成
