@@ -31,6 +31,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 	this->dxCommon = dxCommon;
 	this->input = input;
 
+	cam_TF.Initialize();
+	cam_TF.position = { 0.0f, 3.0f, -8.0f };
 	// ƒJƒƒ‰¶¬
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 	//FBXObject3d::SetCamera(camera);
@@ -47,6 +49,21 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 /// –ˆƒtƒŒ[ƒ€ˆ—
 /// </summary>
 void GameScene::Update() {
+
+	if (input->KeyboardPush(DIK_UP)) {
+		cam_TF.position.y += 1;
+	}
+	if (input->KeyboardPush(DIK_DOWN)) {
+		cam_TF.position.y -= 1;
+	}
+	if (input->KeyboardPush(DIK_LEFT)) {
+		cam_TF.position.x -= 1;
+	}
+	if (input->KeyboardPush(DIK_RIGHT)) {
+		cam_TF.position.x += 1;
+	}
+	cam_TF.UpdateMat();
+	camera->SetEye(cam_TF.position);
 	camera->Update();
 	/*if (input->Pad_X_ButtonInput(B)) {
 		input->Pad_X_ShakeController(1.0f, 10);

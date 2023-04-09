@@ -100,7 +100,7 @@ void Object3d::InitializeCamera(int window_width, int window_height)
 	matView.MakeLookL(eye, target, up, matView);
 	matProjection.MakePerspectiveL(focalLengs,
 		(float)1280 / 720
-		, 0.1f, 100000.0f,
+		, 0.1f, 1000.0f,
 		matProjection);
 
 }

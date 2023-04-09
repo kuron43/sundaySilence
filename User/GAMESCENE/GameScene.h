@@ -66,6 +66,7 @@ private: // ƒƒ“ƒo•Ï” (ŒÅ’è)
 
 	SpriteCommon* spriteCommon = nullptr;
 	Camera* camera = nullptr;
+	Transform cam_TF;
 	Audio* audio = nullptr;
 
 	SceneManager* sceneManager = nullptr;

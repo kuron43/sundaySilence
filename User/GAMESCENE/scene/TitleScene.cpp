@@ -55,24 +55,22 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 
 	
 	obj2MD = Model::LoadFromOBJ("ene");
+	model = Model::LoadFromOBJ("REX");
+
 	obj2 = Object3d::Create();
 	obj2->SetModel(obj2MD);
-	obj2->wtf.scale = (Vector3{ 100, 100, 100 });
+	obj2->wtf.scale = (Vector3{ 1000, 1000, 1000 });
 	obj2->Update();
 
-	model = Model::LoadFromOBJ("REX");
 	obj = Object3d::Create();
 	obj->SetModel(model);
+	obj->wtf.position = (Vector3{ 5, 1, 5 });
 	obj->wtf.scale = (Vector3{ 100, 100, 100 });
 	obj->Update();
 
 }
 
 void TitleScene::Update(Input* input) {
-
-
-
-
 
 	obj->Update();
 	obj2->Update();
