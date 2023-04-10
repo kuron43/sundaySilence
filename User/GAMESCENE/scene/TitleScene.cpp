@@ -13,22 +13,24 @@ TitleScene::~TitleScene() {
 	delete sprite;
 	delete sprite2;
 
-	delete particleManager;
-	delete particleManager2;
-
 	delete obj2, obj2MD;
 	delete obj, model;
 }
 
 void TitleScene::Initialize(DirectXCommon* dxCommon) {
 
-	// パーティクル生成
-	particleManager = ParticleManager::Create();
-	particleManager->LoadTexture("1.png");
-	particleManager->Update();
-	particleManager2 = ParticleManager_2::Create();
-	particleManager2->LoadTexture("1_2.png");
-	particleManager2->Update();
+	//パーティクルのセット
+	particleManager_ = std::make_unique<ParticleManager>();
+	particleManager_.get()->Initialize();
+	//パーティクル用素材
+	particleManager_->LoadTexture("inu.png");
+	particleManager_->Update();
+	//パーティクルのセット
+	particleManager2_ = std::make_unique<ParticleManager>();
+	particleManager2_.get()->Initialize();
+	//パーティクル用素材
+	particleManager2_->LoadTexture("1.png");
+	particleManager2_->Update();
 
 	//スプライト共通部分の初期化
 	spriteCommon = new SpriteCommon;
@@ -49,7 +51,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 
 	spriteCommon->LoadTexture(0, "title.png");
 	sprite->SetTextureIndex(0);
-	spriteCommon->LoadTexture(1, "title.png");
+	spriteCommon->LoadTexture(1, "end.png");
 	sprite2->SetTextureIndex(1);
 	
 
@@ -75,49 +77,23 @@ void TitleScene::Update(Input* input) {
 	obj->Update();
 	obj2->Update();
 
-	particleManager->Update();
-	particleManager2->Update();
+	particleManager_->Update();
+	particleManager2_->Update();
 
-	// パーティクル起動( P 押し)
+	// パーティクル起動
 	{
-
 		if (input->KeyboardTrigger(DIK_E)) {
-			particleManager2->LoadTexture("1_2.png");
-			//パーティクル範囲
-			for (int j = 0; j < 50; j++) {
-				//X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
-				const float rnd_pos = 0.03f;
-				//const float rnd_posX = 1.0f;
-				Vector3 pos{};
-				pos.x += (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-				pos.y += (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-				pos.z += ((float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f) + 10;
+			particleManager_->SetTransform(obj->wtf);
+			particleManager2_->SetTransform(obj2->wtf);
 
-				//速度
-				//X,Y,Z全て[-0.05f,+0.05f]でランダムに分布
-				const float rnd_vel = 0.5f;
-				Vector3 vel{};
-				vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-				vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-				//vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-				//重力に見立ててYのみ[-0.001f,0]でランダムに分布
-				const float rnd_acc = -0.01f;
-				const float rnd_acc_v = -0.01f;
-				Vector3 acc{};
-				acc.x = ((float)rand() / RAND_MAX * rnd_acc) * ((float)rand() / RAND_MAX * rnd_acc_v);
-				acc.y = ((float)rand() / RAND_MAX * rnd_acc) * ((float)rand() / RAND_MAX * rnd_acc_v);
-				//acc.z = (float)rand() / RAND_MAX * rnd_acc;
-
-				//追加
-				particleManager->Add(100, pos+acc, vel + vel, acc, 1.0f, 0.0f);
-				particleManager2->Add(100, pos, vel, acc, 1.0f, 0.0f);
-			}
+			//追加
+			particleManager_->RandParticle();
+			particleManager2_->RandParticle();
 		}
 	}
 
 	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
-		//_controller->ChangeScene(new EndScene(_controller));
-		
+		//_controller->ChangeScene(new EndScene(_controller));		
 	}
 }
 
@@ -138,6 +114,6 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	//3Dオブジェクト描画後処理
 	Object3d::PostDraw();
 	
-	particleManager->Draw(dxCommon->GetCommandList());
-	particleManager2->Draw(dxCommon->GetCommandList());
+	particleManager_->Draw();
+	particleManager2_->Draw();
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "Matrix4.h"
 #include "Vector3.h"
+#include "Vector4.h"
 #include "ConvertXM.h"
 
 //#include "WorldTransform.h"
