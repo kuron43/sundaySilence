@@ -187,9 +187,6 @@
     <ClCompile Include="Engine\INPUT\Keyboard_Input.cpp">
       <Filter>Engine\ソースファイル\INPUT</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\Particle\ParticleManager_2.cpp">
-      <Filter>Engine\ソースファイル\3D\Particle</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -275,9 +272,6 @@
     </ClInclude>
     <ClInclude Include="Engine\INPUT\Keyboard_Input.h">
       <Filter>Engine\ヘッダーファイル\INPUT</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Particle\ParticleManager_2.h">
-      <Filter>Engine\ヘッダーファイル\3D\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

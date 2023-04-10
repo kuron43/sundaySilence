@@ -19,8 +19,8 @@ private:
 
 public:
 	//パーティクルクラスの初期化 
-	ParticleManager* particleManager = nullptr;
-	ParticleManager_2* particleManager2 = nullptr;
+	std::unique_ptr<ParticleManager> particleManager_;
+	std::unique_ptr<ParticleManager> particleManager2_;
 
 
 	SpriteCommon* spriteCommon = nullptr;

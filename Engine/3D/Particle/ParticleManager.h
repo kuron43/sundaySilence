@@ -1,201 +1,204 @@
-ï»¿#pragma once
+#pragma once
 
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <forward_list>
+#include "Affin.h"
+#include "Transform.h"
 
 #include "Camera.h"
+#include <array>
 
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix4.h"
-#include "Affin.h"
-
-// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ï¼ˆãƒãƒ†ãƒªã‚¢ãƒ«ï¼‰
-	struct ConstBufferDataMaterial {
-		Vector4 color; // è‰² (RGBA)
-	};
 /// <summary>
-/// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+/// 3DƒIƒuƒWƒFƒNƒg
 /// </summary>
 class ParticleManager
 {
-private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
-	// Microsoft::WRL::ã‚’çœç•¥
+private: // ƒGƒCƒŠƒAƒX
+	// Microsoft::WRL::‚ğÈ—ª
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	
 
-public: // ã‚µãƒ–ã‚¯ãƒ©ã‚¹
-	
+public: // ƒTƒuƒNƒ‰ƒX
+	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ìiƒ}ƒeƒŠƒAƒ‹j
+	struct ConstBufferDataMaterial {
+		Vector4 color; // F (RGBA)
+	};
 
-	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
+	// ’¸“_ƒf[ƒ^\‘¢‘Ì
 	struct VertexPos
 	{
-		Vector3 pos; // xyzåº§æ¨™
+		Vector3 pos; // xyzÀ•W
 		float scale;
 	};
 
-	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
+	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
 	struct ConstBufferData
 	{
 		Matrix4 mat;
-		Matrix4 matBillboard;	// ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
+		Matrix4 matBillboard;	// ƒrƒ‹ƒ{[ƒhs—ñ
 	};
 
-	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ä¸€ç²’
+	//ƒp[ƒeƒBƒNƒ‹ˆê—±
 	struct Particle {
-
-		//åº§æ¨™
+		
+		//À•W
 		Vector3 position = {};
-		//é€Ÿåº¦
+		//‘¬“x
 		Vector3 velocity = {};
-		//åŠ é€Ÿåº¦
+		//‰Á‘¬“x
 		Vector3 accel = {};
-		//ç¾åœ¨ãƒ•ãƒ¬ãƒ¼ãƒ 
+		//Œ»İƒtƒŒ[ƒ€
 		int frame = 0;
-		//éå»ãƒ•ãƒ¬ãƒ¼ãƒ 
+		//‰ß‹ƒtƒŒ[ƒ€
 		int num_frame = 0;
 
-		//ã‚¹ã‚±ãƒ¼ãƒ«
+		//ƒXƒP[ƒ‹
 		float scale = 1.0f;
-		//åˆæœŸå€¤
+		//‰Šú’l
 		float s_scale = 1.0f;
-		//æœ€çµ‚å€¤
+		//ÅI’l
 		float e_scale = 0.0f;
 
-		Vector4 color; // è‰² (RGBA)
+		Vector4 color; // F (RGBA)
+
+		void Update() {
+			//Œo‰ßƒtƒŒ[ƒ€”‚ğƒJƒEƒ“ƒg
+			frame++;
+			//‘¬“x‚É‰Á‘¬“x‚ğ‰ÁZ
+			velocity = velocity + accel;
+			//‘¬“x‚É‚æ‚éˆÚ“®
+			position = position + velocity;
+
+			//is“x‚ğ0~1‚Ì”ÍˆÍ‚ÉŠ·Z
+			float f = (float)frame / num_frame;
+			//ƒXƒP[ƒ‹‚ÌüŒ`•âŠ®
+			scale = (e_scale - s_scale) * f;
+			scale += s_scale;
+		}
 	};
 
-private: // å®šæ•°
-	static const int division = 50;					// åˆ†å‰²æ•°
-	static const float radius;				// åº•é¢ã®åŠå¾„
-	static const float prizmHeight;			// æŸ±ã®é«˜ã•
-	static const int planeCount = division * 2 + division * 2;		// é¢ã®æ•°
-	//static const int vertexCount = 30;//é ‚ç‚¹æ•°
-	static const int vertexCount = 1024;
+private: // ’è”
+	//const int division = 50;					// •ªŠ„”
+	//const float radius;				// ’ê–Ê‚Ì”¼Œa
+	//const float prizmHeight;			// ’Œ‚Ì‚‚³
+	//const int planeCount = division * 2 + division * 2;		// –Ê‚Ì”
+	//static const int vertexCount = 30;//’¸“_”
+	const int vertexCount = 1024;
 
-public: // é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
+public: // Ã“Iƒƒ“ƒoŠÖ”
 	/// <summary>
-	/// é™çš„åˆæœŸåŒ–
+	/// Ã“I‰Šú‰»
 	/// </summary>
-	/// <param name="device">ãƒ‡ãƒã‚¤ã‚¹</param>
-	/// <param name="window_width">ç”»é¢å¹…</param>
-	/// <param name="window_height">ç”»é¢é«˜ã•</param>
-	static void StaticInitialize(ID3D12Device* device, int window_width, int window_height);
-
-	/// <summary>
-	/// æç”»å‰å‡¦ç†
-	/// </summary>
-	/// <param name="cmdList">æç”»ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
-	static void PreDraw(ID3D12GraphicsCommandList* cmdList);
+	/// <param name="device">ƒfƒoƒCƒX</param>
+	/// <param name="window_width">‰æ–Ê•</param>
+	/// <param name="window_height">‰æ–Ê‚‚³</param>
+	static void StaticInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* cmdList);
 
 	/// <summary>
-	/// æç”»å¾Œå‡¦ç†
+	/// ƒOƒ‰ƒtƒBƒbƒNƒpƒCƒvƒ‰ƒCƒ“¶¬
 	/// </summary>
-	static void PostDraw();
-
-	/// <summary>
-	/// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
-	/// </summary>
-	/// <returns></returns>
-	static ParticleManager* Create();
-
-	
-
-private: // é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
-	// ãƒ‡ãƒã‚¤ã‚¹
-	static ComPtr <ID3D12Device> device;
-	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
-	static ComPtr <ID3D12GraphicsCommandList> cmdList;
-	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
-	static ComPtr<ID3D12RootSignature> rootsignature;
-	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
-	static ComPtr<ID3D12PipelineState> pipelinestate;
-
-	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
-	static ComPtr<ID3D12DescriptorHeap> descHeap;
-	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
-	static ComPtr<ID3D12Resource> vertBuff;
-	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
-	static ComPtr<ID3D12Resource> texbuff;
-	// ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«(CPU)
-	static CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
-	// ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«(CPU)
-	static CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
-	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã‚µã‚¤ã‚º
-	static UINT descriptorHandleIncrementSize;
-		
-	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
-	static D3D12_VERTEX_BUFFER_VIEW vbView;
-	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
-	static VertexPos vertices[vertexCount];
-	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
-	static Matrix4 matBillboard;
-	//Yè»¸å›ã‚Šãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
-	static Matrix4 matBillboardY;
-	// å®šæ•°ãƒãƒƒãƒ•ã‚¡
-	static ComPtr<ID3D12Resource> constBuff;
-	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é…åˆ—
-	std::forward_list<Particle>particles;
-
-private:// é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
-	/// <summary>
-	/// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®åˆæœŸåŒ–
-	/// </summary>
-	static void InitializeDescriptorHeap();
-
-	/// <summary>
-	/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
-	/// </summary>
-	/// <returns>æˆå¦</returns>
+	/// <returns>¬”Û</returns>
 	static void InitializeGraphicsPipeline();
 
-	/// <summary>
-	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
-	/// </summary>
-	static void LoadTexture();
+private: // Ã“Iƒƒ“ƒo•Ï”
+	
+	// ƒfƒoƒCƒX
+	static Microsoft::WRL::ComPtr<ID3D12Device> device;
+	// ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	static Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList;
+	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	static ComPtr<ID3D12RootSignature> rootsignature;
+	// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒg
+	static ComPtr<ID3D12PipelineState> pipelinestate;
+
+	// ƒfƒXƒNƒŠƒvƒ^ƒTƒCƒY
+	UINT descriptorHandleIncrementSize;
+	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	ComPtr<ID3D12DescriptorHeap> descHeap;
+	// ’¸“_ƒoƒbƒtƒ@
+	ComPtr<ID3D12Resource> vertBuff;
+	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	ComPtr<ID3D12Resource>texbuff;
+	// ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìƒnƒ“ƒhƒ‹(CPU)
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
+	// ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìƒnƒ“ƒhƒ‹(CPU)
+	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	
+	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	D3D12_VERTEX_BUFFER_VIEW vbView;
+	// ’¸“_ƒf[ƒ^”z—ñ
+	VertexPos vertices[1024];
+	// ’è”ƒoƒbƒtƒ@
+	ComPtr<ID3D12Resource> constBuff; 
+
+	//ƒp[ƒeƒBƒNƒ‹”z—ñ
+	std::forward_list<Particle>particles;
+
+private:// ƒƒ“ƒoŠÖ”
 
 	/// <summary>
-	/// ãƒ¢ãƒ‡ãƒ«ä½œæˆ
+	/// 3DƒIƒuƒWƒFƒNƒg¶¬
 	/// </summary>
-	static void CreateModel();
+	/// <returns></returns>
+	ParticleManager* Create();
 
+	/// <summary>
+	/// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì‰Šú‰»
+	/// </summary>
+	void InitializeDescriptorHeap();
 
-public: // ãƒ¡ãƒ³ãƒé–¢æ•°
-	static void LoadTexture(const std::string& fileName);
+	/// <summary>
+	/// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	/// </summary>
+	void LoadTexture();
+
+	/// <summary>
+	/// ƒ‚ƒfƒ‹ì¬
+	/// </summary>
+	void CreateModel();
+
+public: // ƒƒ“ƒoŠÖ”
 
 	ParticleManager();
 	~ParticleManager();
 
+	void LoadTexture(const std::string& fileName);
 	bool Initialize();
 	/// <summary>
-	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
+	/// –ˆƒtƒŒ[ƒ€ˆ—
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// æç”»
+	/// •`‰æ
 	/// </summary>
-	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void Draw();
 
 	/// <summary>
-	/// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®è¿½åŠ 
+	/// ƒ}ƒl[ƒWƒƒ[‚ÌÀ•W‚ğ‚à‚Æ‚Éƒ‰ƒ“ƒ_ƒ€‚É•úo‚·‚é
 	/// </summary>
-	///	<param name="life">ç”Ÿå­˜æ™‚é–“</param>
-	///	<param name="position">åˆæœŸåº§æ¨™</param>
-	///	<param name="velocity">é€Ÿåº¦</param>
-	///	<param name="accel">åŠ é€Ÿåº¦</param>
+	void RandParticle();
+
+	/// <summary>
+	/// ƒp[ƒeƒBƒNƒ‹‚Ì’Ç‰Á
+	/// </summary>
+	///	<param name="life">¶‘¶ŠÔ</param>
+	///	<param name="position">‰ŠúÀ•W</param>
+	///	<param name="velocity">‘¬“x</param>
+	///	<param name="accel">‰Á‘¬“x</param>
 	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale);
 
-	static void SetCamera(Camera* camera) {ParticleManager::camera = camera; }
+	static void SetCamera(Camera* camera) { ParticleManager::camera = camera; }
 
-	static ConstBufferDataMaterial* constMapMaterial;
-private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	void SetTransform(Transform wtf) { wtf_ = wtf; };
+
+private: // ƒƒ“ƒo•Ï”
 	static Camera* camera;
-	// ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
-	Vector3 scale = { 1,1,1 };
+	// ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	Transform wtf_;
 
-	
+	ConstBufferDataMaterial* constMapMaterial = nullptr;
 };

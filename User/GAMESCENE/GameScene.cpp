@@ -41,7 +41,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 	//FBXObject3d::SetCamera(camera);
 	ParticleManager::SetCamera(camera);
-	ParticleManager_2::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
 	sceneManager = new SceneManager(dxCommon);
