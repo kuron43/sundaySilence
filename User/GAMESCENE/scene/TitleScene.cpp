@@ -1,7 +1,7 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
 
-#include "EndScene.h"
+//#include "EndScene.h"
 
 
 
@@ -23,13 +23,13 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_.get()->Initialize();
 	//パーティクル用素材
-	particleManager_->LoadTexture("inu.png");
+	particleManager_->LoadTexture("1.png");
 	particleManager_->Update();
 	//パーティクルのセット
 	particleManager2_ = std::make_unique<ParticleManager>();
 	particleManager2_.get()->Initialize();
 	//パーティクル用素材
-	particleManager2_->LoadTexture("1.png");
+	particleManager2_->LoadTexture("inu.png");
 	particleManager2_->Update();
 
 	//スプライト共通部分の初期化
@@ -82,7 +82,7 @@ void TitleScene::Update(Input* input) {
 
 	// パーティクル起動
 	{
-		if (input->KeyboardTrigger(DIK_E)) {
+		if (input->KeyboardPush(DIK_E)) {
 			particleManager_->SetTransform(obj->wtf);
 			particleManager2_->SetTransform(obj2->wtf);
 
