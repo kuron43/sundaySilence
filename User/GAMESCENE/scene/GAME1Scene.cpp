@@ -1,7 +1,8 @@
 #include "GAME1Scene.h"
 #include "SceneManager.h"
 
-#include "EndScene.h"
+//#include "EndScene.h"
+#include "TitleScene.h"
 
 
 GAME1Scene::GAME1Scene(SceneManager* controller) {
@@ -28,7 +29,7 @@ void GAME1Scene::Update(Input* input) {
 
 	obj2->Update();
 	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
-		_controller->ChangeScene(new EndScene(_controller));
+		_controller->ChangeScene(new TitleScene(_controller));
 	}
 }
 

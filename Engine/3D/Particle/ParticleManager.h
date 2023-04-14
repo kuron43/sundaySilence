@@ -64,20 +64,6 @@ public: // サブクラス
 
 		Vector4 color; // 色 (RGBA)
 
-		void Update() {
-			//経過フレーム数をカウント
-			frame++;
-			//速度に加速度を加算
-			velocity = velocity + accel;
-			//速度による移動
-			position = position + velocity;
-
-			//進行度を0~1の範囲に換算
-			float f = (float)frame / num_frame;
-			//スケールの線形補完
-			scale = (e_scale - s_scale) * f;
-			scale += s_scale;
-		}
 	};
 
 private: // 定数
@@ -86,7 +72,7 @@ private: // 定数
 	//const float prizmHeight;			// 柱の高さ
 	//const int planeCount = division * 2 + division * 2;		// 面の数
 	//static const int vertexCount = 30;//頂点数
-	const int vertexCount = 1024;
+	const int vertexCount = _countof(vertices);
 
 public: // 静的メンバ関数
 	/// <summary>
@@ -130,7 +116,7 @@ private: // 静的メンバ変数
 	// 頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView;
 	// 頂点データ配列
-	VertexPos vertices[1024];
+	VertexPos vertices[2024];
 	// 定数バッファ
 	ComPtr<ID3D12Resource> constBuff; 
 
@@ -195,6 +181,7 @@ public: // メンバ関数
 
 	void SetTransform(Transform wtf) { wtf_ = wtf; };
 
+	void Setposition(Vector3 position) { wtf_.position = position; };
 private: // メンバ変数
 	static Camera* camera;
 	// ローカルスケール

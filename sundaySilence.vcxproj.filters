@@ -175,17 +175,14 @@
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp">
       <Filter>user\シーン\scene</Filter>
     </ClCompile>
-    <ClCompile Include="User\GAMESCENE\scene\GAME1Scene.cpp">
-      <Filter>user\シーン\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp">
-      <Filter>user\シーン\scene</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\INPUT\PadInput.cpp">
       <Filter>Engine\ソースファイル\INPUT</Filter>
     </ClCompile>
     <ClCompile Include="Engine\INPUT\Keyboard_Input.cpp">
       <Filter>Engine\ソースファイル\INPUT</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\scene\GAME1Scene.cpp">
+      <Filter>user\シーン\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -261,17 +258,14 @@
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h">
       <Filter>user\シーン\scene</Filter>
     </ClInclude>
-    <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h">
-      <Filter>user\シーン\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="User\GAMESCENE\scene\EndScene.h">
-      <Filter>user\シーン\scene</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\INPUT\PadInput.h">
       <Filter>Engine\ヘッダーファイル\INPUT</Filter>
     </ClInclude>
     <ClInclude Include="Engine\INPUT\Keyboard_Input.h">
       <Filter>Engine\ヘッダーファイル\INPUT</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h">
+      <Filter>user\シーン\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

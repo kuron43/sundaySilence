@@ -6,7 +6,7 @@
 // シーンのインクルード
 #include "TitleScene.h"
 #include "GAME1Scene.h"
-#include "EndScene.h"
+//#include "EndScene.h"
 
 SceneManager::SceneManager(DirectXCommon* dxCommon) {
 	_dxCommon = dxCommon;
