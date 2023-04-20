@@ -248,21 +248,17 @@ void FBXObject3d::Update()
 	std::vector<FBXModel::Bone>& bones = fbxmodel->GetBones();
 
 	//アニメーション
-	if (isAnim == true) {
-		if (isPlay) {
-			//1フレーム進める
-			currentTime += frameTime;
-			//最後まで進めたら先頭に戻る
-			if (currentTime > endTime) {
-				currentTime = startTime;
-				if (animRot == true) {
-					currentTime = endTime;
-				}
+	if (isPlay) {
+		//1フレーム進める
+		currentTime += frameTime;
+		//最後まで進めたら先頭に戻る
+		if (currentTime > endTime) {
+			currentTime = startTime;
+			if (animRot == true) {
+				currentTime = endTime;
 			}
 		}
 	}
-
-
 
 	//定数バッファへのデータ転送
 	ConstBufferDataSkin* constMapSkin = nullptr;
