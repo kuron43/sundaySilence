@@ -25,7 +25,7 @@ void SpriteCommon::Initialize(DirectXCommon* dxcommon)
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Engine/SHADER/SpriteVS.hlsl", // シェーダファイル名
+		L"Resources/SHADER/SpriteVS.hlsl", // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "vs_5_0", // エントリーポイント名、シェーダーモデル指定
@@ -47,7 +47,7 @@ void SpriteCommon::Initialize(DirectXCommon* dxcommon)
 	}
 	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Engine/SHADER/SpritePS.hlsl", // シェーダファイル名
+		L"Resources/SHADER/SpritePS.hlsl", // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "ps_5_0", // エントリーポイント名、シェーダーモデル指定
