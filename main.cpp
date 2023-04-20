@@ -10,10 +10,12 @@
 #include "GameScene.h"
 #include "PadInput.h"
 
+#include "fbxsdk.h"
+
 
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
-
+	FbxManager* fbxManager = FbxManager::Create();
 #pragma region WindowsAPI‰Šú‰»ˆ—
 
 

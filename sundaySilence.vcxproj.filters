@@ -184,6 +184,9 @@
     <ClCompile Include="User\GAMESCENE\scene\GAME1Scene.cpp">
       <Filter>user\シーン\scene</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp" />
+    <ClCompile Include="Engine\3D\Fbx\FBXModel.cpp" />
+    <ClCompile Include="Engine\3D\Fbx\FBXObject3d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -267,38 +270,50 @@
     <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h">
       <Filter>user\シーン\scene</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\3D\Fbx\FBXLoader.h" />
+    <ClInclude Include="Engine\3D\Fbx\FBXModel.h" />
+    <ClInclude Include="Engine\3D\Fbx\FBXObject3d.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Engine\SHADER\Sprite.hlsli">
+    <None Include="Resources\SHADER\FBX.hlsli">
       <Filter>Engine\シェーダーファイル</Filter>
     </None>
-    <None Include="Engine\SHADER\OBJShaderHeader.hlsli">
+    <None Include="Resources\SHADER\OBJShaderHeader.hlsli">
       <Filter>Engine\シェーダーファイル</Filter>
     </None>
-    <None Include="Engine\SHADER\Particle.hlsli">
+    <None Include="Resources\SHADER\Particle.hlsli">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </None>
+    <None Include="Resources\SHADER\Sprite.hlsli">
       <Filter>Engine\シェーダーファイル</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Engine\SHADER\SpritePS.hlsl">
+    <FxCompile Include="Resources\SHADER\FBXPS.hlsl">
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Engine\SHADER\SpriteVS.hlsl">
+    <FxCompile Include="Resources\SHADER\FBXVS.hlsl">
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Engine\SHADER\OBJPixelShader.hlsl">
+    <FxCompile Include="Resources\SHADER\OBJPixelShader.hlsl">
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Engine\SHADER\OBJVertexShader.hlsl">
+    <FxCompile Include="Resources\SHADER\OBJVertexShader.hlsl">
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Engine\SHADER\ParticleGS.hlsl">
+    <FxCompile Include="Resources\SHADER\ParticleGS.hlsl">
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Engine\SHADER\ParticlePS.hlsl">
+    <FxCompile Include="Resources\SHADER\ParticlePS.hlsl">
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Engine\SHADER\ParticleVS.hlsl">
+    <FxCompile Include="Resources\SHADER\ParticleVS.hlsl">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\SpritePS.hlsl">
+      <Filter>Engine\シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\SpriteVS.hlsl">
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
   </ItemGroup>
