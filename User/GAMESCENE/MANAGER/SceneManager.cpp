@@ -53,12 +53,7 @@ void SceneManager::ObjectInitialize() {
 	////パーティクル用素材
 	//particleManager_->LoadTexture("effect.png");
 	//particleManager_->Update();
-	////パーティクルのセット
-	//particleManager2_ = std::make_unique<ParticleManager>();
-	//particleManager2_.get()->Initialize();
-	////パーティクル用素材
-	//particleManager2_->LoadTexture("inu.png");
-	//particleManager2_->Update();
+	
 }
 
 void SceneManager::SceneInitialize() {
