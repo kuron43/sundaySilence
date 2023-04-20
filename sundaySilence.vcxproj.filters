@@ -273,6 +273,7 @@
     <ClInclude Include="Engine\3D\Fbx\FBXLoader.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXModel.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXObject3d.h" />
+    <ClInclude Include="User\GAMESCENE\MANAGER\SceneIntegrate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

@@ -13,7 +13,7 @@ GAME1Scene::~GAME1Scene() {
 	delete obj2, obj2MD;
 }
 
-void GAME1Scene::Initialize(DirectXCommon* dxCommon) {
+void GAME1Scene::Initialize(DirectXCommon* dxCommon, Camera* _camera) {
 
 	obj2MD = Model::LoadFromOBJ("skydome");
 
@@ -25,7 +25,7 @@ void GAME1Scene::Initialize(DirectXCommon* dxCommon) {
 
 }
 
-void GAME1Scene::Update(Input* input) {
+void GAME1Scene::Update(Input* input, Camera* _camera) {
 
 	obj2->Update();
 	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {

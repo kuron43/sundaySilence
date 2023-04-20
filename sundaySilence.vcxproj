@@ -150,6 +150,7 @@
     <ClInclude Include="Engine\MATH\Vector3.h" />
     <ClInclude Include="Engine\MATH\Vector4.h" />
     <ClInclude Include="User\GAMESCENE\GameScene.h" />
+    <ClInclude Include="User\GAMESCENE\MANAGER\SceneIntegrate.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneManager.h" />
     <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h" />
     <ClInclude Include="User\GAMESCENE\scene\IScene.h" />

@@ -43,7 +43,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 	ParticleManager::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
-	sceneManager = new SceneManager(dxCommon);
+	sceneManager = new SceneManager(dxCommon,camera);
+	sceneManager->ObjectInitialize();
 	sceneManager->SceneInitialize();	
 
 }

@@ -14,8 +14,8 @@ public:
 	~GAME1Scene() override;
 
 	//void Cleate(SceneManager& controller) override;
-	void Initialize(DirectXCommon* dxCommon) override;
-	void Update(Input* input) override;
+	void Initialize(DirectXCommon* dxCommon, Camera* _camera) override;
+	void Update(Input* input, Camera* _camera) override;
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:

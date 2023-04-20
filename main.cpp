@@ -60,6 +60,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	//パーティクル静的初期化
 	ParticleManager::StaticInitialize(dxCommon->GetDevice(),dxCommon->GetCommandList());
 
+	FbxLoader::GetInstance()->Initialize(dxCommon->GetDevice());
+
 #pragma endregion
 
 #pragma region 描画初期化処理
