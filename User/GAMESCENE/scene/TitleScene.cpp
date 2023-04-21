@@ -21,7 +21,6 @@ void TitleScene::Update(Input* input, Camera* camera) {
 
 	
 	{
-
 		if (input->KeyboardTrigger(DIK_0)) {
 			_controller->bossFbxO_->PlayAnimation(0);
 		}
