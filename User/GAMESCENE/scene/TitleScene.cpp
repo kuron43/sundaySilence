@@ -18,7 +18,6 @@ void TitleScene::Update(Input* input, Camera* camera) {
 	Vector3 a = { 0,0,0 };
 
 	_controller->bossFbxO_->Update();
-
 	
 	{
 		if (input->KeyboardTrigger(DIK_0)) {
