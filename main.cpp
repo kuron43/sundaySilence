@@ -39,18 +39,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	//入力の初期化　
 	input = new Input();
 	input->Initialize(winApp);
-
 	PadInput = new Pad_X_Input();
-
-
 
 	// ImGuiの初期化
 	imgui = new ImGuiManager();
 	imgui->Initialize(winApp,dxCommon);
-
-
-
-
 
 #pragma endregion
 
@@ -59,7 +52,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	Object3d::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
 	//パーティクル静的初期化
 	ParticleManager::StaticInitialize(dxCommon->GetDevice(),dxCommon->GetCommandList());
-
+	// FBX静的初期化
 	FbxLoader::GetInstance()->Initialize(dxCommon->GetDevice());
 
 #pragma endregion

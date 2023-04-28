@@ -14,9 +14,7 @@
 #include "Matrix4.h"
 #include "Camera.h"
 
-
-//#include "FBX/FBXObject3d.h"
-//#include "FBX/FbxLoader.h"
+#include "JsonLoader.h"
 
 
 /// <summary>
@@ -62,15 +60,25 @@ public:
 private: // ƒƒ“ƒo•Ï” (ŒÅ’è)
 	DirectXCommon* dxCommon = nullptr;
 	Input* input = nullptr;
-
 	SpriteCommon* spriteCommon = nullptr;
 	Camera* camera = nullptr;
-	Transform cam_TF;
 	Audio* audio = nullptr;
-
 	SceneManager* sceneManager = nullptr;
 
+	LevelData* leveData = nullptr;
+
+	Model* modelcube = nullptr;
+	Model* modelREX = nullptr;
+
+	std::map<std::string, Model*> models;
+	std::vector<Object3d*> objects;
+
+
 private:	//ƒƒ“ƒo•Ï”
+	Transform cam_TF;
+	Vector3 eye = { 0.0f, 10.0f, -10.0f };
+	Vector3 tar = { 0.0f, 0.0f, 0.0f };
+
 
 };
 

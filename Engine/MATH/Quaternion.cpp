@@ -72,7 +72,7 @@ Quaternion Quaternion::Normalize()
 
 		return result;
 	}
-
+	return result;
 }
 
 Quaternion Quaternion::Inverse()
