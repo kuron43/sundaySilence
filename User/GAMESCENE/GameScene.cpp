@@ -1,6 +1,8 @@
 #include "GameScene.h"
 
+
 #include<sstream>
+#include<fstream>
 #include<iomanip>
 #include"imgui.h"
 
@@ -34,18 +36,60 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 
 	this->dxCommon = dxCommon;
 	this->input = input;
-
+	
 	cam_TF.Initialize();
-	cam_TF.position = { 0.0f, 3.0f, -8.0f };
+	cam_TF.position = { 0.0f, 10.0f, -10.0f };
+
+	eye = { 0.0f, 100.0f, 0.0f };
+	tar = { 0.0f, 0.0f, 0.0f };
+
+
 	// カメラ生成
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 	//FBXObject3d::SetCamera(camera);
 	ParticleManager::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
-	sceneManager = new SceneManager(dxCommon,camera);
+	/*sceneManager = new SceneManager(dxCommon,camera);
 	sceneManager->ObjectInitialize();
-	sceneManager->SceneInitialize();	
+	sceneManager->SceneInitialize();*/	
+	leveData = JsonLoader::LoadJsonFile("Test");
+
+	// モデル読み込み
+	modelcube = Model::LoadFromOBJ("cube");
+	modelREX = Model::LoadFromOBJ("REX");
+
+	models.insert(std::make_pair("cube", modelcube));
+	models.insert(std::make_pair("REX", modelREX));
+
+	{
+
+
+		for (auto& objectData : leveData->objects) {
+			//ファイル名から登録済みモデルを検索
+			Model* model = nullptr;
+			decltype(models)::iterator it = models.find(objectData.fileName);
+			if (it != models.end()) { model = it->second; }
+			// 座標
+			Object3d* newObject = Object3d::Create();
+			newObject->SetModel(model);
+			//座標
+			Vector3 pos;
+			pos = objectData.translation;
+			newObject->wtf.position = pos;
+			//回転
+			Vector3 rot;
+			rot = objectData.rotation;
+			newObject->wtf.rotation = rot;
+			//拡縮
+			Vector3 sca;
+			sca = objectData.scaling;
+			newObject->wtf.scale = sca;
+			//
+			objects.push_back(newObject);
+
+		}
+	}
 
 }
 
@@ -53,34 +97,28 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 /// 毎フレーム処理
 /// </summary>
 void GameScene::Update() {
-
-	if (input->KeyboardPush(DIK_UP)) {
-		cam_TF.position.y += 1;
-	}
-	if (input->KeyboardPush(DIK_DOWN)) {
-		cam_TF.position.y -= 1;
-	}
-	if (input->KeyboardPush(DIK_LEFT)) {
-		cam_TF.position.x -= 1;
-	}
-	if (input->KeyboardPush(DIK_RIGHT)) {
-		cam_TF.position.x += 1;
-	}
 	cam_TF.UpdateMat();
-	camera->SetEye(cam_TF.position);
+	camera->SetEye(eye);
+	camera->SetTarget(tar);
 	camera->Update();
-	/*if (input->Pad_X_ButtonInput(B)) {
-		input->Pad_X_ShakeController(1.0f, 10);
-	}*/
-	sceneManager->SceneUpdate(input);
 
+	for (auto& object : objects) {
+		object->Update();
+	}
+	//sceneManager->SceneUpdate(input);
 }
 
 /// <summary>
 /// 描画
 /// </summary>
 void GameScene::Draw() {
-	sceneManager->SceneDraw();
+	//sceneManager->SceneDraw();
+
+	Object3d::PreDraw(dxCommon->GetCommandList());
+	for (auto& object : objects) {
+		object->Draw();
+	}
+	Object3d::PostDraw();
 
 	ImGui::Begin("Info");
 	ImGui::Text("E : particle");

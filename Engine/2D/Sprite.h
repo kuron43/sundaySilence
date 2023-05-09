@@ -36,6 +36,7 @@ public:
 		RT,//‰Eã
 	};
 public:
+
 	//‰Šú‰»
 	void Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex = UINT32_MAX);
 

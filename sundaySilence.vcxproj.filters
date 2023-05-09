@@ -187,6 +187,8 @@
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXModel.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXObject3d.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect.cpp" />
+    <ClCompile Include="Engine\3D\Json\JsonLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -274,6 +276,9 @@
     <ClInclude Include="Engine\3D\Fbx\FBXModel.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXObject3d.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneIntegrate.h" />
+    <ClInclude Include="Engine\2D\PostEffect.h" />
+    <ClInclude Include="Engine\3D\Json\JsonLoader.h" />
+    <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

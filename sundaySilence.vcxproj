@@ -57,7 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -91,6 +91,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\2D\PostEffect.cpp" />
     <ClCompile Include="Engine\2D\Sprite.cpp" />
     <ClCompile Include="Engine\2D\SpriteCommon.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp" />
@@ -116,6 +117,7 @@
     <ClCompile Include="Engine\MATH\Vector2.cpp" />
     <ClCompile Include="Engine\MATH\Vector3.cpp" />
     <ClCompile Include="Engine\MATH\Vector4.cpp" />
+    <ClCompile Include="Engine\3D\Json\JsonLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="User\GAMESCENE\GameScene.cpp" />
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneManager.cpp" />
@@ -124,11 +126,14 @@
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
+    <ClInclude Include="Engine\2D\PostEffect.h" />
     <ClInclude Include="Engine\2D\Sprite.h" />
     <ClInclude Include="Engine\2D\SpriteCommon.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXLoader.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXModel.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXObject3d.h" />
+    <ClInclude Include="Engine\3D\Json\JsonLoader.h" />
     <ClInclude Include="Engine\3D\Model.h" />
     <ClInclude Include="Engine\3D\Object3d.h" />
     <ClInclude Include="Engine\3D\Particle\ParticleManager.h" />
