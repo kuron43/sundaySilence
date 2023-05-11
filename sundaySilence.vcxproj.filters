@@ -189,6 +189,10 @@
     <ClCompile Include="Engine\3D\Fbx\FBXObject3d.cpp" />
     <ClCompile Include="Engine\2D\PostEffect.cpp" />
     <ClCompile Include="Engine\3D\Json\JsonLoader.cpp" />
+    <ClCompile Include="Engine\LIGHT\DirectionalLight.cpp" />
+    <ClCompile Include="Engine\LIGHT\CircleShadow.cpp" />
+    <ClCompile Include="Engine\LIGHT\LightGroup.cpp" />
+    <ClCompile Include="Engine\LIGHT\PointLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -279,6 +283,11 @@
     <ClInclude Include="Engine\2D\PostEffect.h" />
     <ClInclude Include="Engine\3D\Json\JsonLoader.h" />
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
+    <ClInclude Include="Engine\LIGHT\DirectionalLight.h" />
+    <ClInclude Include="Engine\LIGHT\CircleShadow.h" />
+    <ClInclude Include="Engine\LIGHT\LightGroup.h" />
+    <ClInclude Include="Engine\LIGHT\PointLight.h" />
+    <ClInclude Include="Engine\LIGHT\SpotLight.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

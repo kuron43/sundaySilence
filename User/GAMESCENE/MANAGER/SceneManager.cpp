@@ -41,8 +41,8 @@ void SceneManager::ObjectInitialize() {
 		bossFbxO_->SetCamera(_camera);
 		bossFbxO_->Initialize();
 		bossFbxO_->SetModel(bossFbxM_.get());
-		bossFbxO_->SetPosition({ 0,0,10 });
-		bossFbxO_->SetScale({ 0.5,0.5,0.5 });
+		bossFbxO_->SetPosition({ 0,0,0 });
+		bossFbxO_->SetScale({ 1,1,1 });
 		bossFbxO_->PlayAnimation(1);
 		bossFbxO_->AnimIsRotateChange();
 	}
@@ -54,6 +54,26 @@ void SceneManager::ObjectInitialize() {
 	//particleManager_->LoadTexture("effect.png");
 	//particleManager_->Update();
 	
+	//ライトの生成
+	lightGroup = std::make_unique< LightGroup>();
+	lightGroup->Initialize();
+
+	//lightGroup->SetDirLightActive(0, true);
+	//lightGroup->SetDirLightActive(1, true);
+	//lightGroup->SetDirLightActive(2, true);
+
+	lightGroup->SetDirLightActive(0, true);
+	/*lightGroup->SetDirLightActive(1, false);
+	lightGroup->SetDirLightActive(2, false);
+	lightGroup->SetPointLightActive(0, true);*/
+	pointLightPos[0] = 0.0f;
+	pointLightPos[1] = 5.0f;
+	pointLightPos[2] = 0.0f;
+
+	/*lightGroup->SetCircleShadowActive(0, true);*/
+
+	//3Dオブジェクトにライトをセット
+	Object3d::SetLight(lightGroup.get());
 }
 
 void SceneManager::SceneInitialize() {
@@ -62,8 +82,17 @@ void SceneManager::SceneInitialize() {
 }
 
 void SceneManager::SceneUpdate(Input* input) {
+	lightGroup->Update();
+	{
+		lightGroup->SetDirLightDir(0, Vector4(1, -1, 1, 0));
+		lightGroup->SetDirLightColor(0, Vector3(1, 0, 0));
+		/*
+		lightGroup->SetPointLightPos(0, XMFLOAT3(pointLightPos));
+		lightGroup->SetPointLightColor(0, XMFLOAT3(pointLightColor));
+		lightGroup->SetPointLightAtten(0, XMFLOAT3(pointLightAtten));
+		*/
+	}
 	_scene.get()->Update(input, _camera);
-
 }
 
 void SceneManager::SceneDraw() {

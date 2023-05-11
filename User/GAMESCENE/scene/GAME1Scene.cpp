@@ -15,20 +15,32 @@ GAME1Scene::~GAME1Scene() {
 
 void GAME1Scene::Initialize(DirectXCommon* dxCommon, Camera* _camera) {
 
-	obj2MD = Model::LoadFromOBJ("skydome");
+	obj2MD = Model::LoadFromOBJ("sphere");
 
 	obj2 = Object3d::Create();
 
 	obj2->SetModel(obj2MD);
-	obj2->wtf.scale = (Vector3{ 1000, 1000, 1000 });
+	obj2->wtf.scale = (Vector3{ 10, 10, 10 });
 	obj2->Update();
 
 }
 
 void GAME1Scene::Update(Input* input, Camera* _camera) {
 
+	obj2->wtf.position.y = -5;
+
 	obj2->Update();
-	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
+
+	if (input->KeyboardPush(DIK_1)) {
+		obj2->wtf.rotation.y += 0.1;
+	}
+	if (input->KeyboardPush(DIK_2)) {
+		obj2->wtf.rotation.x += 0.1;
+	}
+	if (input->KeyboardPush(DIK_3)) {
+		obj2->wtf.rotation.z += 0.1;
+	}
+	if (input->KeyboardTrigger(DIK_RETURN) || input->Pad_X_ButtonTrigger(LB)) {
 		_controller->ChangeScene(new TitleScene(_controller));
 	}
 }

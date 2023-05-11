@@ -54,6 +54,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	ParticleManager::StaticInitialize(dxCommon->GetDevice(),dxCommon->GetCommandList());
 	// FBX静的初期化
 	FbxLoader::GetInstance()->Initialize(dxCommon->GetDevice());
+	//ライト静的初期化
+	LightGroup::StaticInitialize(dxCommon->GetDevice());
 
 #pragma endregion
 

@@ -120,8 +120,8 @@ private:
 		//コンストラクタ
 		Material() {
 			ambient = { 0.3f,0.3f,0.3f };
-			diffuse = { 0.0f,0.0f,0.0f };
-			specular = { 0.0f,0.0f,0.0f };
+			diffuse = { 0.8f,0.8f,0.8f };
+			specular = { 0.5f,0.5f,0.5f };
 			alpha = 1.0f;
 		}
 	};
