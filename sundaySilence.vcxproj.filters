@@ -193,6 +193,8 @@
     <ClCompile Include="Engine\LIGHT\CircleShadow.cpp" />
     <ClCompile Include="Engine\LIGHT\LightGroup.cpp" />
     <ClCompile Include="Engine\LIGHT\PointLight.cpp" />
+    <ClCompile Include="Engine\3D\Material.cpp" />
+    <ClCompile Include="Engine\3D\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -288,6 +290,8 @@
     <ClInclude Include="Engine\LIGHT\LightGroup.h" />
     <ClInclude Include="Engine\LIGHT\PointLight.h" />
     <ClInclude Include="Engine\LIGHT\SpotLight.h" />
+    <ClInclude Include="Engine\3D\Material.h" />
+    <ClInclude Include="Engine\3D\Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

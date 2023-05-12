@@ -70,6 +70,8 @@ void SceneManager::ObjectInitialize() {
 	pointLightPos[1] = 5.0f;
 	pointLightPos[2] = 0.0f;
 
+		lightGroup->SetDirLightColor(0, Vector3(1, 1, 1));
+		lightGroup->SetDirLightDir(0, Vector4(1, -1, 0, 0));
 	/*lightGroup->SetCircleShadowActive(0, true);*/
 
 	//3Dオブジェクトにライトをセット
@@ -84,8 +86,6 @@ void SceneManager::SceneInitialize() {
 void SceneManager::SceneUpdate(Input* input) {
 	lightGroup->Update();
 	{
-		lightGroup->SetDirLightDir(0, Vector4(1, -1, 1, 0));
-		lightGroup->SetDirLightColor(0, Vector3(1, 0, 0));
 		/*
 		lightGroup->SetPointLightPos(0, XMFLOAT3(pointLightPos));
 		lightGroup->SetPointLightColor(0, XMFLOAT3(pointLightColor));

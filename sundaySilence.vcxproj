@@ -97,6 +97,8 @@
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXModel.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXObject3d.cpp" />
+    <ClCompile Include="Engine\3D\Material.cpp" />
+    <ClCompile Include="Engine\3D\Mesh.cpp" />
     <ClCompile Include="Engine\3D\Model.cpp" />
     <ClCompile Include="Engine\3D\Object3d.cpp" />
     <ClCompile Include="Engine\3D\Particle\ParticleManager.cpp" />
@@ -138,6 +140,8 @@
     <ClInclude Include="Engine\3D\Fbx\FBXModel.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXObject3d.h" />
     <ClInclude Include="Engine\3D\Json\JsonLoader.h" />
+    <ClInclude Include="Engine\3D\Material.h" />
+    <ClInclude Include="Engine\3D\Mesh.h" />
     <ClInclude Include="Engine\3D\Model.h" />
     <ClInclude Include="Engine\3D\Object3d.h" />
     <ClInclude Include="Engine\3D\Particle\ParticleManager.h" />

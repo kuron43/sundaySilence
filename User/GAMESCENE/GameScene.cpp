@@ -38,9 +38,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	this->input = input;
 
 	cam_TF.Initialize();
-	cam_TF.position = { 0.0f, 10.0f, 0.0f };
+	cam_TF.position = { 0.0f, 0.0f, -100.0f };
 
-	eye = { 0.0f, 100.0f, 0.0f };
+	////eye = { 0.0f, 0.0f, -100.0f };
 	tar = { 0.0f, 0.0f, 0.0f };
 
 
@@ -101,9 +101,22 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 /// </summary>
 void GameScene::Update() {
 	cam_TF.UpdateMat();
-	camera->SetEye(eye);
+	camera->SetEye(Affin::GetWorldTrans(cam_TF.matWorld));
 	camera->SetTarget(tar);
 	camera->Update();
+
+	if (input->KeyboardPush(DIK_RIGHT)) {
+
+	}
+	if (input->KeyboardPush(DIK_LEFT)) {
+
+	}
+	if (input->KeyboardPush(DIK_UP)) {
+
+	}
+	if (input->KeyboardPush(DIK_DOWN)) {
+		
+	}
 
 	for (auto& object : objects) {
 		object->Update();
