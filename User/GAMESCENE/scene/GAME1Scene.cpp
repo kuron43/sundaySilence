@@ -64,7 +64,7 @@ void GAME1Scene::Update(Input* input, Camera* _camera) {
 	
 
 	if (input->KeyboardTrigger(DIK_RETURN) || input->Pad_X_ButtonTrigger(LB)) {
-		//_controller->ChangeScene(new TitleScene(_controller));
+		_controller->ChangeScene(new TitleScene(_controller));
 	}
 }
 
