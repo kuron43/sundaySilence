@@ -29,7 +29,7 @@ float4 main(VSOutput input) :sv_TARGET
 	//シェーディングによる色
 	float4 shadecolor = float4 (ambientColor * ambient,m_alpha);
     float4 ambientColor = float4(m_ambient, 1);
-    float4 diffColor = float4(1,1,1,1);
+    float4 diffColor = float4(0.5,0.5,0.5,1);
     float4 specColor = float4(1,1,1, 1);
 	
 	float3 light = normalize(float3(1, -1, 1)); // 右下奥　向きのライト
@@ -66,7 +66,7 @@ float4 main(VSOutput input) :sv_TARGET
             float4 _ambient = texcolor * ambientColor * LightColor;
 
             float intensty = saturate(dot(normalize(input.normal), lightDir));
-            float4 diffuse = texcolor * step(0.05,intensty) * diffColor;
+            float4 diffuse = texcolor * smoothstep(0.05,0.1,intensty) * diffColor;
 
 			float3 eyeDir = normalize(cameraPos - input.worldpos.xyz);
 			input.normal = normalize(input.normal);
@@ -80,8 +80,8 @@ float4 main(VSOutput input) :sv_TARGET
 
 
 			//全て加算する
-			//shadecolor = (1 - Rim) * (_ambient + diffuse + specular) + Rim * _RimColor;
-			shadecolor = (diffuse + _ambient + specular);
+			shadecolor = (1 - Rim) * (_ambient + diffuse + specular) + Rim * _RimColor;
+			//shadecolor = (diffuse + _ambient + specular);
         }
 	}
 	////点光源

@@ -105,18 +105,7 @@ void GameScene::Update() {
 	camera->SetTarget(tar);
 	camera->Update();
 
-	if (input->KeyboardPush(DIK_RIGHT)) {
-
-	}
-	if (input->KeyboardPush(DIK_LEFT)) {
-
-	}
-	if (input->KeyboardPush(DIK_UP)) {
-
-	}
-	if (input->KeyboardPush(DIK_DOWN)) {
-		
-	}
+	
 
 	for (auto& object : objects) {
 		object->Update();
@@ -138,7 +127,7 @@ void GameScene::Draw() {
 		Object3d::PostDraw();
 	}
 	ImGui::Begin("Info");
-	ImGui::Text("E : particle");
-	ImGui::Text("arrowkey : camera");
+	//ImGui::Text("E : particle");
+	ImGui::Text("WASD : ball rotate");
 	ImGui::End();
 }
