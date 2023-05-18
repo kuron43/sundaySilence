@@ -38,10 +38,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	this->input = input;
 
 	cam_TF.Initialize();
-	cam_TF.position = { 0.0f, 0.0f, -100.0f };
-
-	////eye = { 0.0f, 0.0f, -100.0f };
-	tar = { 0.0f, 0.0f, 0.0f };
+	cam_TF.position = { 0.0f, 2.5f, 8.0f };
+	tar = { 0.0f, 2.5f, 0.0f };
 
 
 	// ÉJÉÅÉâê∂ê¨

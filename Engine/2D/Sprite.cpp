@@ -1,5 +1,27 @@
 #include"Sprite.h"
 
+//Sprite::Sprite(
+//	size_t texNum,
+//	Vector2 pos,
+//	Vector2 size,
+//	Vector4 color_,
+//	Vector2 anchorP,
+//	bool flipX,
+//	bool flipY) {
+//	size_ = size;
+//	position = pos;
+//	color = color_;
+//	anchorPoint = anchorP;
+//	//テクスチャ番号
+//	textureIndex_ = texNum;
+//	// アンカーポイント
+//	anchorpoint = anchorP;
+//	// 左右反転
+//	isFlipX = flipX;
+//	// 上下反転
+//	isFlipY = flipY;
+//}
+
 void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
 {
 	spritecomon = spritecommon_;
@@ -147,6 +169,7 @@ void Sprite::Draw()
 	spritecomon->GetDxCommon()->GetCommandList()->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
 	// 描画コマンド
 	spritecomon->GetDxCommon()->GetCommandList()->DrawInstanced(_countof(vertices), 1, 0, 0); // 全ての頂点を使って描画
+
 }
 
 void Sprite::Update()

@@ -9,6 +9,7 @@
 
 #include "GameScene.h"
 #include "PadInput.h"
+#include "PostEffect.h"
 
 #include "fbxsdk.h"
 
@@ -26,6 +27,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	Input* input = nullptr;
 	Pad_X_Input* PadInput = nullptr;
 	GameScene* gameScene = nullptr;
+	PostEffect* postEffect = nullptr;
 
 	ImGuiManager* imgui = nullptr;
 
@@ -40,6 +42,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	input = new Input();
 	input->Initialize(winApp);
 	PadInput = new Pad_X_Input();
+
+	postEffect = new PostEffect();
+	postEffect->InitializeGraphicsPipeline(dxCommon);
+	postEffect->LoadTexture(100, "inu.png");
+	postEffect->Initialize(100);
 
 	// ImGuiの初期化
 	imgui = new ImGuiManager();
@@ -113,6 +120,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		//4.描画コマンドここから
 		dxCommon->PreDraw();
+		//ポストエフェクトの描画
+		postEffect->Draw(dxCommon->GetCommandList());
 
 		// Imgui受付開始
 		imgui->Begin();
@@ -120,7 +129,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		ImGui::ShowDemoWindow();
 
 		// ゲームシーンの描画
-		gameScene->Draw();
+		//gameScene->Draw();
 
 
 		// Imgui受付終了
@@ -149,6 +158,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	}*/
 
 	delete gameScene;
+	delete postEffect;
 
 	imgui->Finalize();
 	//WindowsAPIの終了処理
