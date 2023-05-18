@@ -29,18 +29,18 @@ GameScene::~GameScene() {
 /// <summary>
 /// èâä˙âª
 /// </summary>
-void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
+void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	// nullÉ`ÉFÉbÉN
 	assert(dxCommon);
 	assert(input);
 
 	this->dxCommon = dxCommon;
 	this->input = input;
-	
-	cam_TF.Initialize();
-	cam_TF.position = { 0.0f, 10.0f, -10.0f };
 
-	eye = { 0.0f, 100.0f, 0.0f };
+	cam_TF.Initialize();
+	cam_TF.position = { 0.0f, 0.0f, -100.0f };
+
+	////eye = { 0.0f, 0.0f, -100.0f };
 	tar = { 0.0f, 0.0f, 0.0f };
 
 
@@ -50,45 +50,48 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 	ParticleManager::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
-	/*sceneManager = new SceneManager(dxCommon,camera);
+	sceneManager = new SceneManager(dxCommon, camera);
 	sceneManager->ObjectInitialize();
-	sceneManager->SceneInitialize();*/	
-	leveData = JsonLoader::LoadJsonFile("Test");
-
-	// ÉÇÉfÉãì«Ç›çûÇ›
-	modelcube = Model::LoadFromOBJ("cube");
-	modelREX = Model::LoadFromOBJ("REX");
-
-	models.insert(std::make_pair("cube", modelcube));
-	models.insert(std::make_pair("REX", modelREX));
-
+	sceneManager->SceneInitialize();
+	// Json
 	{
+		//leveData = JsonLoader::LoadJsonFile("Test");
+
+		//// ÉÇÉfÉãì«Ç›çûÇ›
+		//modelcube = Model::LoadFromOBJ("cube");
+		//modelREX = Model::LoadFromOBJ("REX");
+
+		//models.insert(std::make_pair("cube", modelcube));
+		//models.insert(std::make_pair("REX", modelREX));
+
+		//{
 
 
-		for (auto& objectData : leveData->objects) {
-			//ÉtÉ@ÉCÉãñºÇ©ÇÁìoò^çœÇ›ÉÇÉfÉãÇåüçı
-			Model* model = nullptr;
-			decltype(models)::iterator it = models.find(objectData.fileName);
-			if (it != models.end()) { model = it->second; }
-			// ç¿ïW
-			Object3d* newObject = Object3d::Create();
-			newObject->SetModel(model);
-			//ç¿ïW
-			Vector3 pos;
-			pos = objectData.translation;
-			newObject->wtf.position = pos;
-			//âÒì]
-			Vector3 rot;
-			rot = objectData.rotation;
-			newObject->wtf.rotation = rot;
-			//ägèk
-			Vector3 sca;
-			sca = objectData.scaling;
-			newObject->wtf.scale = sca;
-			//
-			objects.push_back(newObject);
+		//	for (auto& objectData : leveData->objects) {
+		//		//ÉtÉ@ÉCÉãñºÇ©ÇÁìoò^çœÇ›ÉÇÉfÉãÇåüçı
+		//		Model* model = nullptr;
+		//		decltype(models)::iterator it = models.find(objectData.fileName);
+		//		if (it != models.end()) { model = it->second; }
+		//		// ç¿ïW
+		//		Object3d* newObject = Object3d::Create();
+		//		newObject->SetModel(model);
+		//		//ç¿ïW
+		//		Vector3 pos;
+		//		pos = objectData.translation;
+		//		newObject->wtf.position = pos;
+		//		//âÒì]
+		//		Vector3 rot;
+		//		rot = objectData.rotation;
+		//		newObject->wtf.rotation = rot;
+		//		//ägèk
+		//		Vector3 sca;
+		//		sca = objectData.scaling;
+		//		newObject->wtf.scale = sca;
+		//		//
+		//		objects.push_back(newObject);
 
-		}
+		//	}
+		//}
 	}
 
 }
@@ -98,30 +101,33 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input){
 /// </summary>
 void GameScene::Update() {
 	cam_TF.UpdateMat();
-	camera->SetEye(eye);
+	camera->SetEye(Affin::GetWorldTrans(cam_TF.matWorld));
 	camera->SetTarget(tar);
 	camera->Update();
+
+	
 
 	for (auto& object : objects) {
 		object->Update();
 	}
-	//sceneManager->SceneUpdate(input);
+	sceneManager->SceneUpdate(input);
 }
 
 /// <summary>
 /// ï`âÊ
 /// </summary>
 void GameScene::Draw() {
-	//sceneManager->SceneDraw();
-
-	Object3d::PreDraw(dxCommon->GetCommandList());
-	for (auto& object : objects) {
-		object->Draw();
+	sceneManager->SceneDraw();
+	// Json
+	{
+		Object3d::PreDraw(dxCommon->GetCommandList());
+		for (auto& object : objects) {
+			object->Draw();
+		}
+		Object3d::PostDraw();
 	}
-	Object3d::PostDraw();
-
 	ImGui::Begin("Info");
-	ImGui::Text("E : particle");
-	ImGui::Text("arrowkey : camera");
+	//ImGui::Text("E : particle");
+	ImGui::Text("WASD : ball rotate");
 	ImGui::End();
 }

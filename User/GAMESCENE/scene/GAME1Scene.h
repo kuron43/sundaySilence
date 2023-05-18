@@ -25,5 +25,8 @@ public:
 	Object3d* obj2 = nullptr;
 	Model* obj2MD = nullptr;
 
+	Object3d* obj3 = nullptr;
+	Model* obj3MD = nullptr;
+
 };
 

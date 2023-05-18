@@ -7,6 +7,7 @@
 #include <d3dx12.h>
 #include <string.h>
 #include "Model.h"
+#include "LightGroup.h"
 
 
 #include "Vector3.h"
@@ -31,11 +32,13 @@ private: // エイリアス
 	// 定数バッファ用データ構造体
 	struct ConstBufferDataB0
 	{
-		//XMFLOAT4 color;	// 色 (RGBA)
-		Matrix4 mat;	// ３Ｄ変換行列
+		/*XMMATRIX mat;*/	// ３Ｄ変換行列
+		Matrix4 veiwproj;  //ビュープロジェクション行列
+		Matrix4 world;		//ワールド行列
+		Vector3 cameraPos;	//カメラ座標 (ワールド座標)
 	};
 
-	
+
 
 private: // 定数
 	static const int division = 50;					// 分割数
@@ -70,14 +73,14 @@ public: // 静的メンバ関数
 	/// <returns></returns>
 	static Object3d* Create();
 
-	
 
-	
+
+
 
 private: // 静的メンバ変数
 	// デバイス
 	static ComPtr<ID3D12Device> device;
-	
+
 	// コマンドリスト
 	static ComPtr<ID3D12GraphicsCommandList> cmdList;
 	// ルートシグネチャ
@@ -86,7 +89,8 @@ private: // 静的メンバ変数
 	static ComPtr<ID3D12PipelineState> pipelinestate;
 
 
-	
+	//ライト
+	static LightGroup* lightGroup;
 
 	// ビュー行列
 	static Matrix4 matView;
@@ -126,7 +130,7 @@ public: // メンバ関数
 
 	Object3d();
 	~Object3d();
-	
+
 	bool Initialize();
 	/// <summary>
 	/// 毎フレーム処理
@@ -138,22 +142,26 @@ public: // メンバ関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();	
+	void Draw();
 
 	Object3d* GetParent() const { return parent; }
 
 	void SetParent(Object3d* parent) { this->parent = parent; }
 	static void SetCamera(Camera* camera) { Object3d::camera = camera; }
 
+	static void SetLight(LightGroup* lightGroup) {
+		Object3d::lightGroup = lightGroup;
+	}
+
 	//setter
 	void SetModel(Model* model) { this->model = model; }
 
 private: // メンバ変数
-	public:
+public:
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 
 	// 色
-	Vector4 color ={ 1,1,1,1 };	
+	Vector4 color = { 1,1,1,1 };
 
 	// 親オブジェクト
 	Object3d* parent = nullptr;
