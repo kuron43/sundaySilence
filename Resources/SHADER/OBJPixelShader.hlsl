@@ -80,8 +80,8 @@ float4 main(VSOutput input) :sv_TARGET
 
 
 			//全て加算する
-			shadecolor = (1 - Rim) * (_ambient + diffuse + specular) + Rim * _RimColor;
-			//shadecolor = (diffuse + _ambient + specular);
+			//shadecolor = (1 - Rim) * (_ambient + diffuse + specular) + Rim * _RimColor;
+			shadecolor = (diffuse + _ambient + specular);
         }
 	}
 	////点光源

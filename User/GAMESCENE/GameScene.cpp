@@ -107,9 +107,9 @@ void GameScene::Update() {
 
 	
 
-	for (auto& object : objects) {
+	/*for (auto& object : objects) {
 		object->Update();
-	}
+	}*/
 	sceneManager->SceneUpdate(input);
 }
 
@@ -120,11 +120,11 @@ void GameScene::Draw() {
 	sceneManager->SceneDraw();
 	// Json
 	{
-		Object3d::PreDraw(dxCommon->GetCommandList());
+		/*Object3d::PreDraw(dxCommon->GetCommandList());
 		for (auto& object : objects) {
 			object->Draw();
 		}
-		Object3d::PostDraw();
+		Object3d::PostDraw();*/
 	}
 	ImGui::Begin("Info");
 	//ImGui::Text("E : particle");
