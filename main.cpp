@@ -110,7 +110,14 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		// Imgui受付開始
 		imgui->Begin();
 		// ゲームシーンの毎フレーム処理
-		gameScene->Update();		
+		gameScene->Update();
+
+		if (input->KeyboardTrigger(DIK_0)) {
+			postEffect->SetShadeNumber(0);
+		}
+		if (input->KeyboardTrigger(DIK_1)) {
+			postEffect->SetShadeNumber(3);
+		}
 
 		//////////////////////////////////////////////
 		//-------DireceX毎フレーム処理　ここまで--------//
