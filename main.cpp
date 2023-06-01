@@ -47,7 +47,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	postEffect->Initialize(dxCommon);
 	postEffect->SetKernelSize(10);
 	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1, 1);
-	postEffect->SetShadeNumber(1);
+	postEffect->SetShadeNumber(2);
 
 	// ImGui‚Ì‰Šú‰»
 	imgui = new ImGuiManager();
