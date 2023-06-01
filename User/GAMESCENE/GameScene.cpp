@@ -124,8 +124,8 @@ void GameScene::Draw() {
 		}
 		Object3d::PostDraw();*/
 	}
-	ImGui::Begin("Info");
-	//ImGui::Text("E : particle");
-	ImGui::Text("WASD : ball rotate");
-	ImGui::End();
+	//ImGui::Begin("Info");
+	////ImGui::Text("E : particle");
+	//ImGui::Text("WASD : ball rotate");
+	//ImGui::End();
 }

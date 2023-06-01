@@ -44,9 +44,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	PadInput = new Pad_X_Input();
 
 	postEffect = new PostEffect();
-	postEffect->InitializeGraphicsPipeline(dxCommon);
-	postEffect->LoadTexture(100, "inu.png");
-	postEffect->Initialize(100);
+	postEffect->Initialize(dxCommon);
+	postEffect->SetKernelSize(10);
+	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1, 1);
+	postEffect->SetShadeNumber(0);
 
 	// ImGuiの初期化
 	imgui = new ImGuiManager();
@@ -89,9 +90,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		if (winApp->ProcessMessage()) {
 			break;
 		}
-		if (input->KeyboardPush(DIK_ESCAPE)) {
+		/*if (input->KeyboardPush(DIK_ESCAPE)) {
 			break;
-		}
+		}*/
 
 
 		fps->FpsControlBegin();
@@ -106,7 +107,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		//入力の更新
 		input->Update();
 		PadInput->Update();
-
+		// Imgui受付開始
+		imgui->Begin();
 		// ゲームシーンの毎フレーム処理
 		gameScene->Update();		
 
@@ -118,19 +120,20 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 #pragma region グラフィックスコマンド
 
+		// ゲームシーンの描画
+		postEffect->PreDrawScene(dxCommon->GetCommandList());
+		gameScene->Draw();
+		postEffect->PostDrawScene();
 		//4.描画コマンドここから
 		dxCommon->PreDraw();
-		//ポストエフェクトの描画
-		postEffect->Draw(dxCommon->GetCommandList());
 
-		// Imgui受付開始
-		imgui->Begin();
+		
 		// デモウィンドウの表示オン
 		ImGui::ShowDemoWindow();
 
-		// ゲームシーンの描画
-		//gameScene->Draw();
 
+		//ポストエフェクトの描画
+		postEffect->Draw(dxCommon->GetCommandList());
 
 		// Imgui受付終了
 		imgui->End();
@@ -158,6 +161,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	}*/
 
 	delete gameScene;
+
+	postEffect->Finalize();
 	delete postEffect;
 
 	imgui->Finalize();

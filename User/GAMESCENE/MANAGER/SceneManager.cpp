@@ -36,7 +36,7 @@ void SceneManager::ObjectInitialize() {
 		bossFbxO_->Initialize();
 		bossFbxO_->SetModel(bossFbxM_.get());
 		bossFbxO_->SetPosition({ 0,0,0 });
-		bossFbxO_->SetScale({ 1,1,1 });
+		bossFbxO_->SetScale({ 0.5,0.5,0.5 });
 		bossFbxO_->PlayAnimation(1);
 		bossFbxO_->AnimIsRotateChange();
 	}

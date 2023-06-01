@@ -7,6 +7,8 @@
 
 using namespace Microsoft::WRL;
 
+DirectXCommon* DirectXCommon::dXCommon_ = nullptr;
+
 void DirectXCommon::Initialize(WinApp* winApp)
 {
 	//NULL検知
@@ -32,6 +34,15 @@ void DirectXCommon::Initialize(WinApp* winApp)
 	//フェンスの初期化
 	InitializeFence();
 
+}
+
+DirectXCommon* DirectXCommon::GetInstance() {
+	if (dXCommon_ == nullptr)
+	{
+		dXCommon_ = new DirectXCommon();
+	}
+
+	return dXCommon_;
 }
 
 void DirectXCommon::InitializeDevice()

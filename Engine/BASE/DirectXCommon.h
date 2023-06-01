@@ -3,11 +3,7 @@
 #include <dxgi1_6.h>
 #include <wrl.h>
 #include "WinApp.h"
-//#include <DirectXTex.h>
 #include <vector>
-
-// Microsoft::WRL::を省略
-//template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 //DirectX基盤
 class DirectXCommon
@@ -44,6 +40,13 @@ public://メンバ関数
 	//バックバッファの数を取得
 	size_t GetBackBufferCount() const { return backBuffers.size(); }
 
+	ID3D12DescriptorHeap* GetdsvHeap() { return dsvHeap.Get(); }
+
+	ID3D12Resource* GetbackBuffers() { return depthBuff.Get(); }
+
+	// シングルトンインスタンスの取得
+	static DirectXCommon* GetInstance();
+
 private:
 	//DirectX12デバイス
 	Microsoft::WRL::ComPtr<ID3D12Device> device;
@@ -71,4 +74,6 @@ private:
 	D3D12_RESOURCE_BARRIER barrierDesc{};
 	UINT64 fenceVal = 0;
 	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
+
+	static DirectXCommon* dXCommon_;
 };
