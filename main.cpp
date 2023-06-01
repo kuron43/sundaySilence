@@ -47,7 +47,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	postEffect->Initialize(dxCommon);
 	postEffect->SetKernelSize(10);
 	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1, 1);
-	postEffect->SetShadeNumber(0);
+	postEffect->SetShadeNumber(1);
 
 	// ImGuiの初期化
 	imgui = new ImGuiManager();
@@ -124,9 +124,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		postEffect->PreDrawScene(dxCommon->GetCommandList());
 		gameScene->Draw();
 		postEffect->PostDrawScene();
+
 		//4.描画コマンドここから
 		dxCommon->PreDraw();
-
 		
 		// デモウィンドウの表示オン
 		ImGui::ShowDemoWindow();
