@@ -306,6 +306,7 @@
     <None Include="Resources\SHADER\Sprite.hlsli">
       <Filter>Engine\シェーダーファイル</Filter>
     </None>
+    <None Include="Resources\SHADER\PostEffect.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\SHADER\FBXPS.hlsl">
@@ -335,5 +336,7 @@
     <FxCompile Include="Resources\SHADER\SpriteVS.hlsl">
       <Filter>Engine\シェーダーファイル</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\SHADER\PostEffectPS.hlsl" />
+    <FxCompile Include="Resources\SHADER\PostEffectVS.hlsl" />
   </ItemGroup>
 </Project>

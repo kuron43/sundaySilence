@@ -38,10 +38,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	this->input = input;
 
 	cam_TF.Initialize();
-	cam_TF.position = { 0.0f, 0.0f, -100.0f };
-
-	////eye = { 0.0f, 0.0f, -100.0f };
-	tar = { 0.0f, 0.0f, 0.0f };
+	cam_TF.position = { 0.0f, 2.5f, 8.0f };
+	tar = { 0.0f, 2.5f, 0.0f };
 
 
 	// ƒJƒƒ‰¶¬
@@ -107,9 +105,9 @@ void GameScene::Update() {
 
 	
 
-	for (auto& object : objects) {
+	/*for (auto& object : objects) {
 		object->Update();
-	}
+	}*/
 	sceneManager->SceneUpdate(input);
 }
 
@@ -120,14 +118,14 @@ void GameScene::Draw() {
 	sceneManager->SceneDraw();
 	// Json
 	{
-		Object3d::PreDraw(dxCommon->GetCommandList());
+		/*Object3d::PreDraw(dxCommon->GetCommandList());
 		for (auto& object : objects) {
 			object->Draw();
 		}
-		Object3d::PostDraw();
+		Object3d::PostDraw();*/
 	}
-	ImGui::Begin("Info");
-	//ImGui::Text("E : particle");
-	ImGui::Text("WASD : ball rotate");
-	ImGui::End();
+	//ImGui::Begin("Info");
+	////ImGui::Text("E : particle");
+	//ImGui::Text("WASD : ball rotate");
+	//ImGui::End();
 }
