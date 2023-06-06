@@ -102,7 +102,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\BASE\FPS.cpp">
       <Filter>Engine\ソースファイル\BASE</Filter>
     </ClCompile>
@@ -195,6 +194,7 @@
     <ClCompile Include="Engine\LIGHT\PointLight.cpp" />
     <ClCompile Include="Engine\3D\Material.cpp" />
     <ClCompile Include="Engine\3D\Mesh.cpp" />
+    <ClCompile Include="Engine\BASE\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
