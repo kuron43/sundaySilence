@@ -19,6 +19,11 @@ float4 main(VSOutput input) : SV_TARGET
 
     if (shadeNumber == 0)
     {
+        float4 texcolor = tex0.Sample(smp, input.uv);
+        return float4(texcolor.rgb, 1);
+    }
+    else if (shadeNumber == 1)
+    {
         float4 colortex0 = tex0.Sample(smp, input.uv);
         float4 colortex1 = tex1.Sample(smp, input.uv);
 
@@ -51,7 +56,7 @@ float4 main(VSOutput input) : SV_TARGET
         }
         return float4(color.rgb, 1);
     }
-    else if (shadeNumber == 1)
+    else if (shadeNumber == 2)
     {
         float2 uv = input.uv;
         float2 direction = uv - center;
@@ -70,7 +75,7 @@ float4 main(VSOutput input) : SV_TARGET
         result /= totalWeight;
         return result;
     }
-    else if (shadeNumber == 2)
+    else if (shadeNumber == 3)
     {
         float totalWeight = 0, _Sigma = 0.005, _StepWidth = 0.001;
         float4 col = float4(0, 0, 0, 1);

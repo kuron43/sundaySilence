@@ -102,7 +102,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\BASE\FPS.cpp">
       <Filter>Engine\ソースファイル\BASE</Filter>
     </ClCompile>
@@ -195,6 +194,9 @@
     <ClCompile Include="Engine\LIGHT\PointLight.cpp" />
     <ClCompile Include="Engine\3D\Material.cpp" />
     <ClCompile Include="Engine\3D\Mesh.cpp" />
+    <ClCompile Include="Engine\BASE\main.cpp" />
+    <ClCompile Include="Engine\Framework\MyGame.cpp" />
+    <ClCompile Include="Engine\Framework\Framework.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -292,6 +294,8 @@
     <ClInclude Include="Engine\LIGHT\SpotLight.h" />
     <ClInclude Include="Engine\3D\Material.h" />
     <ClInclude Include="Engine\3D\Mesh.h" />
+    <ClInclude Include="Engine\Framework\MyGame.h" />
+    <ClInclude Include="Engine\Framework\Framework.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
