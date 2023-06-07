@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;$(SolutionDir)External\imgui;$(SolutionDir)External\DirectXTex;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;$(SolutionDir)External\imgui;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;C:\k021g1261\my\1\sundaySilence\External\lib\libignore\fbx_sdk\include;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\Framework;$(SolutionDir)External\imgui;$(SolutionDir)External\DirectXTex;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -112,6 +112,8 @@
     <ClCompile Include="Engine\BASE\WinApp.cpp" />
     <ClCompile Include="Engine\CAMERA\Camera.cpp" />
     <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp" />
+    <ClCompile Include="Engine\Framework\Framework.cpp" />
+    <ClCompile Include="Engine\Framework\MyGame.cpp" />
     <ClCompile Include="Engine\INPUT\Input.cpp" />
     <ClCompile Include="Engine\INPUT\Keyboard_Input.cpp" />
     <ClCompile Include="Engine\INPUT\PadInput.cpp" />
@@ -154,6 +156,8 @@
     <ClInclude Include="Engine\BASE\WinApp.h" />
     <ClInclude Include="Engine\CAMERA\Camera.h" />
     <ClInclude Include="Engine\DEBUG\ImGuiManager.h" />
+    <ClInclude Include="Engine\Framework\Framework.h" />
+    <ClInclude Include="Engine\Framework\MyGame.h" />
     <ClInclude Include="Engine\INPUT\Input.h" />
     <ClInclude Include="Engine\INPUT\Keyboard_Input.h" />
     <ClInclude Include="Engine\INPUT\PadInput.h" />
