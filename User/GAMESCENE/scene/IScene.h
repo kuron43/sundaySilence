@@ -1,10 +1,6 @@
 #pragma once
-#include "Object3d.h"
-#include "SpriteCommon.h"
-#include "Sprite.h"
-#include "Model.h"
-#include "Audio.h"
 #include "SceneManager.h"
+#include "SceneObjects.h"
 #include "ParticleManager.h"
 #include "DirectXCommon.h"
 #include "Input.h"
@@ -20,6 +16,7 @@ class IScene
 protected:
 
 	SceneManager* _controller;
+	SceneObjects* _objects;
 
 public:
 
@@ -28,13 +25,13 @@ public:
 
 	//virtual Scene Create(SceneManager& controller) = 0;
 	/// シーンの更新を行う
-	virtual void Initialize(DirectXCommon* dxCommon,Camera* _camera) = 0;
+	virtual void Initialize() = 0;
 
 	/// シーンの更新を行う
-	virtual void Update(Input* input, Camera* _camera) = 0;
+	virtual void Update(Input* input) = 0;
 
 	/// シーンの描画を行う
-	virtual void Draw(DirectXCommon* dxCommon) = 0;
+	virtual void Draw() = 0;
 
 };
 

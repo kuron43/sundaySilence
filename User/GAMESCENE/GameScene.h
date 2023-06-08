@@ -3,15 +3,10 @@
 #include "DirectXCommon.h"
 #include <string>
 #include "Input.h"
-#include "Object3d.h"
 #include "SpriteCommon.h"
-#include "Sprite.h"
-#include "Model.h"
-#include "Audio.h"
 #include "SceneManager.h"
-#include "ParticleManager.h"
-
-#include "Matrix4.h"
+#include "SceneObjects.h"
+#include "Affin.h"
 #include "Camera.h"
 
 #include "JsonLoader.h"
@@ -53,8 +48,6 @@ public: // メンバ関数
 	void Draw();
 
 public:
-	//音を止める関数
-	IXAudio2SourceVoice* pSourceVoice[10] = { 0 };
 
 	
 private: // メンバ変数 (固定)
@@ -62,16 +55,15 @@ private: // メンバ変数 (固定)
 	Input* input = nullptr;
 	SpriteCommon* spriteCommon = nullptr;
 	Camera* camera = nullptr;
-	Audio* audio = nullptr;
 	SceneManager* sceneManager = nullptr;
+	std::unique_ptr<SceneObjects> sceneObjects;
 
 	LevelData* leveData = nullptr;
-
 	Model* modelcube = nullptr;
 	Model* modelREX = nullptr;
 
 	std::map<std::string, Model*> models;
-	std::vector<Object3d*> objects;
+	std::vector<Object3d*> JsonObjects;
 
 
 private:	//メンバ変数
