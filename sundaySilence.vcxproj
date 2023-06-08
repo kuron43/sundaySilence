@@ -131,6 +131,8 @@
     <ClCompile Include="Engine\3D\Json\JsonLoader.cpp" />
     <ClCompile Include="User\GAMESCENE\GameScene.cpp" />
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneManager.cpp" />
+    <ClCompile Include="User\GAMESCENE\MANAGER\SceneObjects.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\GAME1Scene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\IScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
@@ -176,6 +178,8 @@
     <ClInclude Include="User\GAMESCENE\GameScene.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneIntegrate.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneManager.h" />
+    <ClInclude Include="User\GAMESCENE\MANAGER\SceneObjects.h" />
+    <ClInclude Include="User\GAMESCENE\scene\EndScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h" />
     <ClInclude Include="User\GAMESCENE\scene\IScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />

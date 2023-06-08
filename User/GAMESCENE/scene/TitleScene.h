@@ -5,15 +5,15 @@ class TitleScene :public IScene
 {
 protected:
 	SceneManager* _controller;
-
+	SceneObjects* _objects;
 public:
 	
-	TitleScene(SceneManager* controller);
+	TitleScene(SceneManager* controller, SceneObjects* objects);
 	~TitleScene() override;
 
-	void Initialize(DirectXCommon* dxCommon, Camera* _camera) override;
-	void Update(Input* input, Camera* _camera) override;
-	void Draw(DirectXCommon* dxCommon) override;
+	void Initialize() override;
+	void Update(Input* input) override;
+	void Draw() override;
 private:
 
 

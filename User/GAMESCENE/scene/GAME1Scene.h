@@ -8,25 +8,20 @@ class GAME1Scene :
 {
 protected:
 	SceneManager* _controller;
-
+	SceneObjects* _objects;
 public:
-	GAME1Scene(SceneManager* controller);
+	GAME1Scene(SceneManager* controller, SceneObjects* objects);
 	~GAME1Scene() override;
 
 	//void Cleate(SceneManager& controller) override;
-	void Initialize(DirectXCommon* dxCommon, Camera* _camera) override;
-	void Update(Input* input, Camera* _camera) override;
-	void Draw(DirectXCommon* dxCommon) override;
+	void Initialize() override;
+	void Update(Input* input) override;
+	void Draw() override;
 
 private:
 
 
 public:
-	Object3d* obj2 = nullptr;
-	Model* obj2MD = nullptr;
-
-	Object3d* obj3 = nullptr;
-	Model* obj3MD = nullptr;
 
 };
 

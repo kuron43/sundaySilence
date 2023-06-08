@@ -51,9 +51,9 @@ LevelData* JsonLoader::LoadJsonFile(const std::string& fileName) {
 		// MESH
 		if (type.compare("MESH") == 0) {
 			// 要素追加
-			levelData->objects.emplace_back(LevelData::ObjectData{});
+			levelData->JsonObjects.emplace_back(LevelData::ObjectData{});
 			// 今追加した要素の参照を得る
-			LevelData::ObjectData& objectData = levelData->objects.back();
+			LevelData::ObjectData& objectData = levelData->JsonObjects.back();
 
 			if (object.contains("file_name")) {
 				// ファイル名

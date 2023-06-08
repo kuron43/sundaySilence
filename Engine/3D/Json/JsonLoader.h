@@ -27,7 +27,7 @@ struct LevelData {
 	};
 
 	// オブジェクト配列
-	std::vector<ObjectData> objects;
+	std::vector<ObjectData> JsonObjects;
 };
 
 class JsonLoader

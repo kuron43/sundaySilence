@@ -7,15 +7,15 @@ class EndScene :
 {
 protected:
 	SceneManager* _controller;
-
+	SceneObjects* _objects;
 public:
-	EndScene(SceneManager* controller);
+	EndScene(SceneManager* controller, SceneObjects* objects);
 	~EndScene() override;
 
 	//void Cleate(SceneManager& controller) override;
-	void Initialize(DirectXCommon* dxCommon) override;
+	void Initialize() override;
 	void Update(Input* input) override;
-	void Draw(DirectXCommon* dxCommon) override;
+	void Draw() override;
 
 
 private:

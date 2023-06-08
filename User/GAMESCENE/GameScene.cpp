@@ -44,13 +44,17 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 
 	// ƒJƒƒ‰¶¬
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
-	//FBXObject3d::SetCamera(camera);
+	FBXObject3d::SetCamera(camera);
 	ParticleManager::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
-	sceneManager = new SceneManager(dxCommon, camera);
-	sceneManager->ObjectInitialize();
+	sceneObjects = std::make_unique<SceneObjects>(dxCommon, camera);
+	sceneObjects->Initialize();
+
+	sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
+	//sceneManager->SetSceneObjects(sceneObjects.get());
 	sceneManager->SceneInitialize();
+
 	// Json
 	{
 		//leveData = JsonLoader::LoadJsonFile("Test");
@@ -108,6 +112,7 @@ void GameScene::Update() {
 	/*for (auto& object : objects) {
 		object->Update();
 	}*/
+	sceneObjects->lightGroup->Update();
 	sceneManager->SceneUpdate(input);
 }
 
