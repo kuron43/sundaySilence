@@ -48,13 +48,13 @@ float4 main(VSOutput input) : SV_TARGET
         float kernelArea = (2 * kernelSize + 1) * (2 * kernelSize + 1);
         float4 averageColor = sum / kernelArea;
 
-        float4 color = averageColor;
+        float4 col = averageColor;
 
         if (fmod(input.uv.y, 0.1f) < 0.05f)
         {
-            color = colortex1;
+            col = colortex1;
         }
-        return float4(color.rgb, 1);
+        return float4(col.rgb, 1);
     }
     else if (shadeNumber == 2)
     {
@@ -62,18 +62,18 @@ float4 main(VSOutput input) : SV_TARGET
         float2 direction = uv - center;
         float2 step = direction / float(samples);
 
-        float4 result = tex0.Sample(smp, uv);
+        float4 col = tex0.Sample(smp, uv);
         float totalWeight = 1.0;
         for (int i = 1; i < samples; ++i)
         {
             float weight = (float(samples) - float(i)) / float(samples);
             float2 sampleUV = uv - step * float(i) * intensity;
-            result += tex0.Sample(smp, sampleUV) * weight;
+            col += tex0.Sample(smp, sampleUV) * weight;
             totalWeight += weight;
         }
 
-        result /= totalWeight;
-        return result;
+        col /= totalWeight;
+        return col;
     }
     else if (shadeNumber == 3)
     {

@@ -19,6 +19,24 @@ void Framework::Run() {
 
 void Framework::Initialize() {
 
+	fps = new FPS();
+
+	//windowsAPI‚Ì‰Šú‰»
+	winApp = new WinApp();
+	winApp->Initialize();
+
+	dxCommon = new DirectXCommon();
+	dxCommon->Initialize(winApp);
+
+	//“ü—Í‚Ì‰Šú‰»@
+	input = new Input();
+	input->Initialize(winApp);
+	PadInput = new Pad_X_Input();
+
+	//FPS•Ï‚¦‚½‚¢‚Æ‚«
+	fps->SetFrameRate(60);
+
+	endRequest_ = false;
 }
 
 void Framework::Finalize() {
