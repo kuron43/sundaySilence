@@ -5,7 +5,7 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 //デフォルトテクスチャ格納ディレクトリ
-std::string SpriteCommon::kDefaultTextureDirectoryPath = "Resources/";
+std::string SpriteCommon::kDefaultTextureDirectoryPath = "Resources/PIC/";
 
 void SpriteCommon::Initialize(DirectXCommon* dxcommon)
 {

@@ -51,9 +51,6 @@ void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int wind
 
 	// パイプライン初期化
 	InitializeGraphicsPipeline();
-
-
-
 }
 
 void Object3d::PreDraw(ID3D12GraphicsCommandList* cmdList)
@@ -342,6 +339,7 @@ void Object3d::Update()
 	constMap->cameraPos = camera->GetEye();
 	constMap->world = wtf.matWorld;
 	constMap->veiwproj = camera->GetViewProjectionMatrix();
+	constMap->color = Vector4(0, 0, 0, 0);
 	constBuffB0->Unmap(0, nullptr);
 
 }
