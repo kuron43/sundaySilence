@@ -12,7 +12,7 @@
 SceneManager::SceneManager(DirectXCommon* dxCommon, Camera* camera,SceneObjects* objects) {
 	_dxCommon = dxCommon;
 	_objects = objects;
-	_scene.reset(new TitleScene(&*this,_objects));
+	_scene.emplace(new TitleScene(&*this,_objects));
 	_camera = camera;
 
 }
@@ -21,23 +21,32 @@ SceneManager::~SceneManager() {
 }
 
 void SceneManager::SceneInitialize() {
-	_scene.get()->Initialize();
+	_scene.top().get()->Initialize();
 
 }
 
 void SceneManager::SceneUpdate(Input* input) {
 
 
-	_scene.get()->Update(input);
+	_scene.top().get()->Update(input);
 }
 
 void SceneManager::SceneDraw() {
-	_scene.get()->Draw();
+	_scene.top().get()->Draw();
 
 }
 
 void SceneManager::ChangeScene(IScene* scene) {
-	_scene.reset(scene);
+	_scene.pop();
+	_scene.emplace(scene);
 	SceneInitialize();
 
+}
+
+void SceneManager::PushScene(IScene* scene) {
+	_scene.emplace(scene);
+}
+void SceneManager::PopScene() {
+	_scene.pop();
+	assert(!_scene.empty());
 }
