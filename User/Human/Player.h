@@ -19,6 +19,8 @@ public:
 	/// ƒV[ƒ“‚Ì•`‰æ‚ğs‚¤
 	void Draw(DirectXCommon* dxCommon)override;
 
+	void Move(Input* input);
+
 private:
 	Model* model_;
 	Object3d* object_;

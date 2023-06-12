@@ -38,8 +38,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	this->input = input;
 
 	cam_TF.Initialize();
-	cam_TF.position = { 0.0f, 2.5f, 8.0f };
-	tar = { 0.0f, 2.5f, 0.0f };
+	cam_TF.position = { 0.0f, 100, -0.01};
+	tar = { 0.0f, 0.0f, 0.0f };
 
 
 	// ƒJƒƒ‰¶¬
@@ -52,7 +52,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	sceneObjects->Initialize();
 
 	sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
-	//sceneManager->SetSceneObjects(sceneObjects.get());
 	sceneManager->SceneInitialize();
 
 	// Json
@@ -102,18 +101,17 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 /// –ˆƒtƒŒ[ƒ€ˆ—
 /// </summary>
 void GameScene::Update() {
-	cam_TF.UpdateMat();
+	/*cam_TF.UpdateMat();
 	camera->SetEye(Affin::GetWorldTrans(cam_TF.matWorld));
-	camera->SetTarget(tar);
-	camera->Update();
-
-	
+	camera->SetTarget(tar);	*/
 
 	/*for (auto& object : objects) {
 		object->Update();
 	}*/
 	sceneObjects->lightGroup->Update();
 	sceneManager->SceneUpdate(input);
+
+	camera->Update();
 }
 
 /// <summary>
@@ -129,8 +127,8 @@ void GameScene::Draw() {
 		}
 		Object3d::PostDraw();*/
 	}
-	//ImGui::Begin("Info");
-	////ImGui::Text("E : particle");
-	//ImGui::Text("WASD : ball rotate");
-	//ImGui::End();
+	/*ImGui::Begin("Info");
+	ImGui::Text("E : particle");
+	ImGui::Text("WASD : ball rotate");
+	ImGui::End();*/
 }

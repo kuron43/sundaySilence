@@ -176,26 +176,17 @@ void Matrix4::MakeOrthogonalL(float left, float right, float bottom, float top, 
 void Matrix4::MakePerspectiveL(float fovAngleY, float aspect, float near_, float far_, Matrix4& matrix)
 {
 
-	float sinFov = 0.0f;
-	float cosFov = 0.0f;
-	Affin::SinCos(sinFov, cosFov, 0.5f * fovAngleY);
+	float h = 1 / tan(fovAngleY * 0.5);
+	float w = h / aspect;
+	float a = far_ / (far_ - near_);
+	float b = (-near_ * far_) / (far_ - near_);
 
-	float range = far_ / (far_ - near_);
-	float height = cosFov / sinFov;
-
-	matrix.m[0][0] = height / aspect;
-
-	matrix.m[1][1] = cosFov / sinFov;
-
-	matrix.m[2][2] = range;
-	matrix.m[2][3] = 1.0f;
-
-	matrix.m[3][2] = -range * near_;
-
-	matrix.m[0][1] = matrix.m[0][2] = matrix.m[0][3] =
-		matrix.m[1][0] = matrix.m[1][2] = matrix.m[1][3] =
-		matrix.m[2][0] = matrix.m[2][1] =
-		matrix.m[3][0] = matrix.m[3][1] = matrix.m[3][3] = 0.0f;
+	matrix = {
+		w , 0 , 0 , 0 ,
+		0 , h , 0 , 0 ,
+		0 , 0 , a , 1 ,
+		0 , 0 , b , 0
+	};
 }
 void Matrix4::MakeLookL(const Vector3& eye, const Vector3& target, const Vector3& up, Matrix4& mat)
 {
