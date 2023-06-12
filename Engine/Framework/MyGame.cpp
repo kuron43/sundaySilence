@@ -4,30 +4,13 @@
 // 初期化
 void MyGame::Initialize() {
 
-	fps = new FPS;
 	fbxManager = FbxManager::Create();
-
-	//windowsAPIの初期化
-	winApp = new WinApp();
-	winApp->Initialize();
-
-	dxCommon = new DirectXCommon();
-	dxCommon->Initialize(winApp);
-
-	//入力の初期化　
-	input = new Input();
-	input->Initialize(winApp);
-	PadInput = new Pad_X_Input();
 
 	postEffect = new PostEffect();
 	postEffect->Initialize(dxCommon);
 	postEffect->SetKernelSize(10);
-	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1, 1);
-	postEffect->SetShadeNumber(2);
-
-	// ImGuiの初期化
-	imgui = new ImGuiManager();
-	imgui->Initialize(winApp, dxCommon);
+	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 1, 1);
+	postEffect->SetShadeNumber(1);
 
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -38,10 +21,6 @@ void MyGame::Initialize() {
 	//ライト静的初期化
 	LightGroup::StaticInitialize(dxCommon->GetDevice());
 
-	//FPS変えたいとき
-	fps->SetFrameRate(60);
-
-	endRequest_ = false;
 
 	////////////////////////////
 	Framework::Initialize();
@@ -49,8 +28,6 @@ void MyGame::Initialize() {
 	// ゲームシーンの初期化
 	gameScene = new GameScene();
 	gameScene->Initialize(dxCommon, input);
-
-
 }
 // 終了
 void MyGame::Finalize() {
@@ -64,6 +41,7 @@ void MyGame::Finalize() {
 
 	Framework::Finalize();
 }
+
 // 毎フレーム更新
 void MyGame::Update() {
 
@@ -80,6 +58,7 @@ void MyGame::Update() {
 	}
 
 }
+
 // 描画のフレームワークのポストエフェクトの扱いわからん
 // 描画
 void MyGame::Draw() {
