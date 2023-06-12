@@ -205,7 +205,7 @@ void Model::LoadFromOBJInternal(const std::string& modelname)
 	/*file.open("Resources/triangle2/triangle2.obj");*/
 	//const string modelname = "as"; //triangle_mat
 	const string filename = modelname + ".obj"; //triangle_mat.obj
-	const string directoryPath = "Resources/" + modelname + "/"; //Resources/triangle_mat/
+	const string directoryPath = "Resources/OBJ/" + modelname + "/"; //Resources/triangle_mat/
 	file.open(directoryPath + filename); //Resources/triangle_mat/triangle_mat.obj
 
 	// ファイルオープン失敗をチェック

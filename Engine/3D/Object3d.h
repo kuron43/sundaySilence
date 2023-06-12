@@ -9,12 +9,7 @@
 #include "Model.h"
 #include "LightGroup.h"
 
-
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix4.h"
 #include "Affin.h"
-
 #include "Transform.h"
 #include "Camera.h"
 
@@ -36,6 +31,7 @@ private: // エイリアス
 		Matrix4 veiwproj;  //ビュープロジェクション行列
 		Matrix4 world;		//ワールド行列
 		Vector3 cameraPos;	//カメラ座標 (ワールド座標)
+		Vector4 color;
 	};
 
 

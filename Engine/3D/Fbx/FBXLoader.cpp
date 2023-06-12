@@ -8,8 +8,8 @@ using namespace DirectX;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-const std::string FbxLoader::baseDirectory = "Resources/";
-const std::string FbxLoader::defaultTextureFileName = "white1x1.png";
+const std::string FbxLoader::baseDirectory = "Resources/FBX/";
+const std::string FbxLoader::defaultTextureFileName = "Resources/PIC/white1x1.png";
 
 FbxLoader* FbxLoader::GetInstance()
 {
@@ -413,7 +413,7 @@ void FbxLoader::ParseMaterial(FBXModel* fbxmodel, FbxNode* fbxNode)
 
         // テクスチャがない場合は白テクスチャを貼る
         if (!textureLoaded) {
-            LoadTexture(fbxmodel, baseDirectory + defaultTextureFileName);
+            LoadTexture(fbxmodel,defaultTextureFileName);
         }
     }
 }

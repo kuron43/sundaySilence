@@ -12,26 +12,11 @@ using namespace Microsoft::WRL;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-//const float ParticleManager::radius = 5.0f;				// 底面の半径
-//const float ParticleManager::prizmHeight = 8.0f;			// 柱の高さ
 Microsoft::WRL::ComPtr<ID3D12Device> ParticleManager::device;
 Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> ParticleManager::cmdList;
-//UINT ParticleManager::descriptorHandleIncrementSize = 0;
-//ID3D12GraphicsCommandList* ParticleManager::cmdList = nullptr;
 ComPtr<ID3D12RootSignature> ParticleManager::rootsignature;
 ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate;
-//ComPtr<ID3D12DescriptorHeap> ParticleManager::descHeap;
-//ComPtr<ID3D12Resource> ParticleManager::vertBuff;
-////<ID3D12Resource> ParticleManager::texbuff;
-//CD3DX12_CPU_DESCRIPTOR_HANDLE ParticleManager::cpuDescHandleSRV;
-//CD3DX12_GPU_DESCRIPTOR_HANDLE ParticleManager::gpuDescHandleSRV;
-//
-//D3D12_VERTEX_BUFFER_VIEW ParticleManager::vbView{};
-//ParticleManager::VertexPos ParticleManager::vertices[vertexCount];
-//
 Camera* ParticleManager::camera = nullptr;
-//
-//std::array<ComPtr<ID3D12Resource>, 2050> ParticleManager::texbuff;
 
 ParticleManager::ParticleManager() {
 
@@ -291,7 +276,7 @@ void ParticleManager::LoadTexture()
 	ScratchImage scratchImg{};
 
 	// WICテクスチャのロード
-	result = LoadFromWICFile(L"Resources/1.png", WIC_FLAGS_NONE, &metadata, scratchImg);
+	result = LoadFromWICFile(L"Resources/PIC/1.png", WIC_FLAGS_NONE, &metadata, scratchImg);
 	assert(SUCCEEDED(result));
 
 	ScratchImage mipChain{};
@@ -355,7 +340,7 @@ void ParticleManager::LoadTexture()
 
 }
 
-std::string kDefaultTextureDirectoryPath = "Resources/";
+std::string kDefaultTextureDirectoryPath = "Resources/PIC/";
 void ParticleManager::LoadTexture(const std::string& fileName)
 {
 	HRESULT result = S_FALSE;
