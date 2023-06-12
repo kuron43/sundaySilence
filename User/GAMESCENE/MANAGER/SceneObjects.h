@@ -10,6 +10,9 @@
 #include "Object3d.h"
 #include "ParticleManager.h"
 
+#include "Human.h"
+#include "Player.h"
+
 // ゲーム使用のオブジェクト一括宣言クラス
 class SceneObjects
 {
@@ -36,6 +39,8 @@ public:
 	//FBXモデル
 	std::unique_ptr<FBXModel> bossFbxM_;
 	std::unique_ptr<FBXObject3d> bossFbxO_;
+
+	std::unique_ptr<Human> human_;
 
 
 private:

@@ -19,6 +19,7 @@ void TitleScene::Update(Input* input) {
 	Vector3 a = { 0,0,0 };
 
 	_objects->bossFbxO_->Update();
+	_objects->human_->Update(input);
 	
 	{
 		if (input->KeyboardTrigger(DIK_0)) {
@@ -54,5 +55,6 @@ void TitleScene::Update(Input* input) {
 
 void TitleScene::Draw() {
 
-	_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
+	//_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
+	_objects->human_->Draw(_controller->_dxCommon);
 }

@@ -30,6 +30,11 @@ void SceneObjects::Initialize() {
 		bossFbxO_->AnimIsRotateChange();
 	}
 
+	{
+		human_ = std::make_unique<Player>();
+		human_->Initialize();
+	}
+
 	//ƒ‰ƒCƒg‚Ì¶¬
 	lightGroup = std::make_unique< LightGroup>();
 	lightGroup->Initialize();

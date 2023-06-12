@@ -199,6 +199,8 @@
     <ClCompile Include="Engine\Framework\Framework.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp" />
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneObjects.cpp" />
+    <ClCompile Include="User\Human\Human.cpp" />
+    <ClCompile Include="User\Human\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -300,6 +302,8 @@
     <ClInclude Include="Engine\Framework\Framework.h" />
     <ClInclude Include="User\GAMESCENE\scene\EndScene.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneObjects.h" />
+    <ClInclude Include="User\Human\Human.h" />
+    <ClInclude Include="User\Human\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
