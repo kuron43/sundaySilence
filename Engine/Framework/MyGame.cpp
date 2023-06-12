@@ -3,6 +3,8 @@
 
 // ‰Šú‰»
 void MyGame::Initialize() {
+	////////////////////////////
+	Framework::Initialize();
 
 	fbxManager = FbxManager::Create();
 
@@ -22,8 +24,7 @@ void MyGame::Initialize() {
 	LightGroup::StaticInitialize(dxCommon->GetDevice());
 
 
-	////////////////////////////
-	Framework::Initialize();
+	
 
 	// ƒQ[ƒ€ƒV[ƒ“‚Ì‰Šú‰»
 	gameScene = new GameScene();

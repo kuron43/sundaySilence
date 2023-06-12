@@ -36,6 +36,9 @@ void Framework::Initialize() {
 	//FPS変えたいとき
 	fps->SetFrameRate(60);
 
+	imgui = new ImGuiManager();
+	imgui->Initialize(winApp, dxCommon);
+
 	endRequest_ = false;
 }
 
@@ -61,7 +64,7 @@ void Framework::Update() {
 
 	//アプリケーションが終わる時にmessageがWM_QUITになる
 	if (winApp->ProcessMessage()) {
-		Framework::endRequest_ = true;
+		endRequest_ = true;
 	}
 
 	fps->FpsControlBegin();

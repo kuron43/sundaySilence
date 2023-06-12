@@ -12,7 +12,7 @@ class SceneObjects;
 class SceneManager
 {
 public:
-	std::shared_ptr<IScene> _scene;
+	std::stack<std::shared_ptr<IScene>> _scene;
 	DirectXCommon* _dxCommon;
 	Camera* _camera;
 	SceneObjects* _objects;
@@ -32,8 +32,8 @@ public:
 	// シーンを変更する
 	void ChangeScene(IScene*);
 
-	// 各シーンに渡す用のオブジェクトのポインタを取得
-	//void SetSceneObjects(SceneObjects* objects) { _objects = objects; };
+	void PushScene(IScene*);
+	void PopScene();
 };
 
 //	参照元
