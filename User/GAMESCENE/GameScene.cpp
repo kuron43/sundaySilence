@@ -56,43 +56,43 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 
 	// Json
 	{
-		//leveData = JsonLoader::LoadJsonFile("Test");
+		leveData = JsonLoader::LoadJsonFile("gameOne");
 
-		//// ƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
-		//modelcube = Model::LoadFromOBJ("cube");
+		// ƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
+		modelcube = Model::LoadFromOBJ("cube");
 		//modelREX = Model::LoadFromOBJ("REX");
 
-		//models.insert(std::make_pair("cube", modelcube));
+		models.insert(std::make_pair("cube", modelcube));
 		//models.insert(std::make_pair("REX", modelREX));
 
-		//{
+		{
 
 
-		//	for (auto& objectData : leveData->objects) {
-		//		//ƒtƒ@ƒCƒ‹–¼‚©‚ç“o˜^Ï‚Ýƒ‚ƒfƒ‹‚ðŒŸõ
-		//		Model* model = nullptr;
-		//		decltype(models)::iterator it = models.find(objectData.fileName);
-		//		if (it != models.end()) { model = it->second; }
-		//		// À•W
-		//		Object3d* newObject = Object3d::Create();
-		//		newObject->SetModel(model);
-		//		//À•W
-		//		Vector3 pos;
-		//		pos = objectData.translation;
-		//		newObject->wtf.position = pos;
-		//		//‰ñ“]
-		//		Vector3 rot;
-		//		rot = objectData.rotation;
-		//		newObject->wtf.rotation = rot;
-		//		//Šgk
-		//		Vector3 sca;
-		//		sca = objectData.scaling;
-		//		newObject->wtf.scale = sca;
-		//		//
-		//		objects.push_back(newObject);
+			for (auto& objectData : leveData->JsonObjects) {
+				//ƒtƒ@ƒCƒ‹–¼‚©‚ç“o˜^Ï‚Ýƒ‚ƒfƒ‹‚ðŒŸõ
+				Model* model = nullptr;
+				decltype(models)::iterator it = models.find(objectData.fileName);
+				if (it != models.end()) { model = it->second; }
+				// À•W
+				Object3d* newObject = Object3d::Create();
+				newObject->SetModel(model);
+				//À•W
+				Vector3 pos;
+				pos = objectData.translation;
+				newObject->wtf.position = pos;
+				//‰ñ“]
+				Vector3 rot;
+				rot = objectData.rotation;
+				newObject->wtf.rotation = rot;
+				//Šgk
+				Vector3 sca;
+				sca = objectData.scaling;
+				newObject->wtf.scale = sca;
+				//
+				JsonObjects.push_back(newObject);
 
-		//	}
-		//}
+			}
+		}
 	}
 
 }
@@ -105,9 +105,9 @@ void GameScene::Update() {
 	camera->SetEye(Affin::GetWorldTrans(cam_TF.matWorld));
 	camera->SetTarget(tar);	*/
 
-	/*for (auto& object : objects) {
+	for (auto& object : JsonObjects) {
 		object->Update();
-	}*/
+	}
 	sceneObjects->lightGroup->Update();
 	sceneManager->SceneUpdate(input);
 
@@ -121,11 +121,11 @@ void GameScene::Draw() {
 	sceneManager->SceneDraw();
 	// Json
 	{
-		/*Object3d::PreDraw(dxCommon->GetCommandList());
-		for (auto& object : objects) {
+		Object3d::PreDraw(dxCommon->GetCommandList());
+		for (auto& object : JsonObjects) {
 			object->Draw();
 		}
-		Object3d::PostDraw();*/
+		Object3d::PostDraw();
 	}
 	/*ImGui::Begin("Info");
 	ImGui::Text("E : particle");

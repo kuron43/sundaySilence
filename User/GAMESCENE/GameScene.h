@@ -60,7 +60,7 @@ private: // ƒƒ“ƒo•Ï” (ŒÅ’è)
 
 	LevelData* leveData = nullptr;
 	Model* modelcube = nullptr;
-	Model* modelREX = nullptr;
+	//Model* modelREX = nullptr;
 
 	std::map<std::string, Model*> models;
 	std::vector<Object3d*> JsonObjects;
