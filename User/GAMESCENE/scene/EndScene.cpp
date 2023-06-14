@@ -18,7 +18,9 @@ void EndScene::Initialize() {
 
 void EndScene::Update(Input* input) {
 
-	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
+	if (input->KeyboardTrigger(DIK_NUMPAD9) || input->Pad_X_ButtonTrigger(LB)) {
+		_controller->PopScene();
+	}else if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
 		_controller->ChangeScene(new TitleScene(_controller,_objects));
 	}
 }
