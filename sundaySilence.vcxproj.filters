@@ -201,6 +201,7 @@
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneObjects.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
     <ClCompile Include="User\Human\Player.cpp" />
+    <ClCompile Include="User\Human\Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -304,6 +305,7 @@
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneObjects.h" />
     <ClInclude Include="User\Human\Human.h" />
     <ClInclude Include="User\Human\Player.h" />
+    <ClInclude Include="User\Human\Bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

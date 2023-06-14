@@ -136,6 +136,7 @@
     <ClCompile Include="User\GAMESCENE\scene\GAME1Scene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\IScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
+    <ClCompile Include="User\Human\Bullet.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
     <ClCompile Include="User\Human\Player.cpp" />
   </ItemGroup>
@@ -185,6 +186,7 @@
     <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h" />
     <ClInclude Include="User\GAMESCENE\scene\IScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />
+    <ClInclude Include="User\Human\Bullet.h" />
     <ClInclude Include="User\Human\Human.h" />
     <ClInclude Include="User\Human\Player.h" />
   </ItemGroup>

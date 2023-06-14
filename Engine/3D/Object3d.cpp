@@ -339,7 +339,7 @@ void Object3d::Update()
 	constMap->cameraPos = camera->GetEye();
 	constMap->world = wtf.matWorld;
 	constMap->veiwproj = camera->GetViewProjectionMatrix();
-	constMap->color = Vector4(0, 0, 0, 0);
+	constMap->color = color;
 	constBuffB0->Unmap(0, nullptr);
 
 }

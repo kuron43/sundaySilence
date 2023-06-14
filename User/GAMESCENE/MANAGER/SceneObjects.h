@@ -13,7 +13,7 @@
 #include "Human.h"
 #include "Player.h"
 
-// ゲーム使用のオブジェクト一括宣言クラス
+// 繧ｲ繝ｼ繝菴ｿ逕ｨ縺ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝井ｸ諡ｬ螳｣險繧ｯ繝ｩ繧ｹ
 class SceneObjects
 {
 private:
@@ -24,6 +24,7 @@ public:
 	~SceneObjects();
 
 	void Initialize();
+	void Reset();
 
 public:
 	std::unique_ptr <LightGroup> lightGroup;
@@ -36,7 +37,7 @@ public:
 	std::unique_ptr <Object3d> object3d;
 	std::unique_ptr <Model> model;
 
-	//FBXモデル
+	//FBX繝｢繝�繝ｫ
 	std::unique_ptr<FBXModel> bossFbxM_;
 	std::unique_ptr<FBXObject3d> bossFbxO_;
 
@@ -46,7 +47,7 @@ public:
 private:
 	float ambientColor0[3] = { 1,1,1 };
 
-	//光線方向初期値
+	//蜈臥ｷ壽婿蜷大�晄悄蛟､
 	float lightDir0[3] = { 0,0,1 };
 	float lightColor0[3] = { 1,1,1 };
 	float lightDir1[3] = { 0,1,0 };
