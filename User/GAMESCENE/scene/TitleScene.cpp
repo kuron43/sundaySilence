@@ -53,7 +53,7 @@ void TitleScene::Update(Input* input) {
 	}
 
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
-		_controller->PushScene(new EndScene(_controller, _objects));
+		_controller->PushScene(new PauseScene(_controller, _objects));
 	}else if (input->KeyboardTrigger(DIK_RETURN)) {
 		_controller->ChangeScene(new GAME1Scene(_controller, _objects));
 	}

@@ -202,6 +202,7 @@
     <ClCompile Include="User\Human\Human.cpp" />
     <ClCompile Include="User\Human\Player.cpp" />
     <ClCompile Include="User\Weapon\Bullet.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\PauseScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -306,6 +307,7 @@
     <ClInclude Include="User\Human\Human.h" />
     <ClInclude Include="User\Human\Player.h" />
     <ClInclude Include="User\Weapon\Bullet.h" />
+    <ClInclude Include="User\GAMESCENE\scene\PauseScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

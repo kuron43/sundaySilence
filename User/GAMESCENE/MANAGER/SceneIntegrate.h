@@ -5,3 +5,5 @@
 #include "TitleScene.h"
 #include "GAME1Scene.h"
 #include "EndScene.h"
+#include "PauseScene.h"
+ 
