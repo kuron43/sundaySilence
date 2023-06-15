@@ -38,7 +38,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	this->input = input;
 
 	cam_TF.Initialize();
-	cam_TF.position = { 0.0f, 100, -0.01};
+	cam_TF.position = { 0.0f, 100, -0.01f};
 	tar = { 0.0f, 0.0f, 0.0f };
 	//FBX	(テスト)
 	// デバイスをセット

@@ -1,6 +1,11 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4828)
 #include <memory>
 #include <stack>
+
+#pragma warning(pop)
 
 class Input;
 class IScene;
@@ -8,7 +13,7 @@ class DirectXCommon;
 class Camera;
 class SceneObjects;
 
-// ƒV[ƒ“ŠÇ—ƒNƒ‰ƒX
+// ã‚·ãƒ¼ãƒ³ç®¡ç†ã‚¯ãƒ©ã‚¹
 class SceneManager
 {
 public:
@@ -22,19 +27,19 @@ public:
 	SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects* objects);
 	~SceneManager();
 
-	// ŠeƒV[ƒ“‚ÌInitialize‚ğŒÄ‚Ño‚·
+	// å„ã‚·ãƒ¼ãƒ³ã®Initializeã‚’å‘¼ã³å‡ºã™
 	void SceneInitialize();
-	// ŠeƒV[ƒ“‚ÌUpdate‚ğŒÄ‚Ño‚·
+	// å„ã‚·ãƒ¼ãƒ³ã®Updateã‚’å‘¼ã³å‡ºã™
 	void SceneUpdate(Input* input);
-	// ŠeƒV[ƒ“‚ÌDraw‚ğŒÄ‚Ño‚·
+	// å„ã‚·ãƒ¼ãƒ³ã®Drawã‚’å‘¼ã³å‡ºã™
 	void SceneDraw();
 
-	// ƒV[ƒ“‚ğ•ÏX‚·‚é
+	// ã‚·ãƒ¼ãƒ³ã‚’å¤‰æ›´ã™ã‚‹
 	void ChangeScene(IScene*);
 
 	void PushScene(IScene*);
 	void PopScene();
 };
 
-//	QÆŒ³
-//	https://qiita.com/tsuchinokoman/items/390a22a20abe2a6daa6d <-‚â‚è•û‚í‚©‚ç‚ñ
+//	å‚ç…§å…ƒ
+//	https://qiita.com/tsuchinokoman/items/390a22a20abe2a6daa6d <-ã‚„ã‚Šæ–¹ã‚ã‹ã‚‰ã‚“
