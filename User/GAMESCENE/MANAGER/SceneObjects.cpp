@@ -11,13 +11,9 @@ void SceneObjects::Initialize() {
 
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
-	// fbx ƒeƒXƒg
+	// fbx ãƒ†ã‚¹ãƒˆ
 	{
-		//FBX	(ƒeƒXƒg)
-		// ƒfƒoƒCƒX‚ğƒZƒbƒg
-		FBXObject3d::SetDevice(_dxCommon->GetDevice());
-		// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“¶¬
-		FBXObject3d::CreateGraphicsPipeline();
+
 
 		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("boss_prot4"));
 		bossFbxO_ = std::make_unique<FBXObject3d>();
@@ -35,7 +31,7 @@ void SceneObjects::Initialize() {
 		human_->Initialize();
 	}
 
-	//ƒ‰ƒCƒg‚Ì¶¬
+	//ãƒ©ã‚¤ãƒˆã®ç”Ÿæˆ
 	lightGroup = std::make_unique< LightGroup>();
 	lightGroup->Initialize();
 
@@ -47,6 +43,6 @@ void SceneObjects::Initialize() {
 	lightGroup->SetDirLightColor(0, Vector3(1, 1, 1));
 	lightGroup->SetDirLightDir(0, Vector4(1, -1, 0, 0));
 
-	//3DƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	Object3d::SetLight(lightGroup.get());
 }
