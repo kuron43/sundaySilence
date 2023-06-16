@@ -6,27 +6,30 @@
 
 #include "DirectXCommon.h"
 
-// 基底クラス
+// 蝓ｺ蠎輔け繝ｩ繧ｹ
 class Human
 {
 
 protected:
 	Input* input;
 
-	bool Slow = false;
+	bool isSlow = false;
 public:
 
 	Human();
 	virtual ~Human();
 
-	/// シーンの更新を行う
+	/// 譖ｴ譁ｰ繧定｡後≧
 	virtual void Initialize() = 0;
 
-	/// シーンの更新を行う
+	/// 譖ｴ譁ｰ繧定｡後≧
 	virtual void Update(Input* input) = 0;
 
-	/// シーンの描画を行う
+	/// 謠冗判繧定｡後≧
 	virtual void Draw(DirectXCommon* dxCommon) = 0;
+
+	/// 繝ｪ繧ｻ繝�繝医ｒ陦後≧
+	virtual void Reset() = 0;
 
 };
 

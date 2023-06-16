@@ -38,8 +38,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	this->input = input;
 
 	cam_TF.Initialize();
-	cam_TF.position = { 0.0f, 100, -0.01f};
-	tar = { 0.0f, 0.0f, 0.0f };
+	cam_TF.position = { 100.0f, 100, -0.01f };
+	tar = { 100.0f, 0.0f, 0.0f };
 	//FBX	(テスト)
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDevice());
@@ -60,43 +60,43 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("gameOne");
+		//leveData = JsonLoader::LoadJsonFile("gameOne");
 
-		// モデル読み込み
-		modelcube = Model::LoadFromOBJ("cube");
-		//modelREX = Model::LoadFromOBJ("REX");
+		//// モデル読み込み
+		//modelcube = Model::LoadFromOBJ("cube");
+		////modelREX = Model::LoadFromOBJ("REX");
 
-		models.insert(std::make_pair("cube", modelcube));
-		//models.insert(std::make_pair("REX", modelREX));
+		//models.insert(std::make_pair("cube", modelcube));
+		////models.insert(std::make_pair("REX", modelREX));
 
-		{
+		//{
 
 
-			for (auto& objectData : leveData->JsonObjects) {
-				//ファイル名から登録済みモデルを検索
-				Model* model = nullptr;
-				decltype(models)::iterator it = models.find(objectData.fileName);
-				if (it != models.end()) { model = it->second; }
-				// 座標
-				Object3d* newObject = Object3d::Create();
-				newObject->SetModel(model);
-				//座標
-				Vector3 pos;
-				pos = objectData.translation;
-				newObject->wtf.position = pos;
-				//回転
-				Vector3 rot;
-				rot = objectData.rotation;
-				newObject->wtf.rotation = rot;
-				//拡縮
-				Vector3 sca;
-				sca = objectData.scaling;
-				newObject->wtf.scale = sca;
-				//
-				JsonObjects.push_back(newObject);
+		//	for (auto& objectData : leveData->JsonObjects) {
+		//		//ファイル名から登録済みモデルを検索
+		//		Model* model = nullptr;
+		//		decltype(models)::iterator it = models.find(objectData.fileName);
+		//		if (it != models.end()) { model = it->second; }
+		//		// 座標
+		//		Object3d* newObject = Object3d::Create();
+		//		newObject->SetModel(model);
+		//		//座標
+		//		Vector3 pos;
+		//		pos = objectData.translation;
+		//		newObject->wtf.position = pos;
+		//		//回転
+		//		Vector3 rot;
+		//		rot = objectData.rotation;
+		//		newObject->wtf.rotation = rot;
+		//		//拡縮
+		//		Vector3 sca;
+		//		sca = objectData.scaling;
+		//		newObject->wtf.scale = sca;
+		//		//
+		//		JsonObjects.push_back(newObject);
 
-			}
-		}
+		//	}
+		//}
 	}
 
 }
@@ -108,9 +108,10 @@ void GameScene::Update() {
 	/*cam_TF.UpdateMat();
 	camera->SetEye(Affin::GetWorldTrans(cam_TF.matWorld));
 	camera->SetTarget(tar);	*/
-
-	for (auto& object : JsonObjects) {
-		object->Update();
+	{// JSON
+		/*for (auto& object : JsonObjects) {
+			object->Update();
+		}*/
 	}
 	sceneObjects->lightGroup->Update();
 	sceneManager->SceneUpdate(input);
@@ -125,12 +126,13 @@ void GameScene::Draw() {
 	sceneManager->SceneDraw();
 	// Json
 	{
-		Object3d::PreDraw(dxCommon->GetCommandList());
+		/*Object3d::PreDraw(dxCommon->GetCommandList());
 		for (auto& object : JsonObjects) {
 			object->Draw();
 		}
-		Object3d::PostDraw();
+		Object3d::PostDraw();*/
 	}
+
 	/*ImGui::Begin("Info");
 	ImGui::Text("E : particle");
 	ImGui::Text("WASD : ball rotate");

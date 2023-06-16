@@ -1,5 +1,6 @@
 #pragma once
 #include "Human.h"
+#include "Weapon.h"
 
 
 class Player :
@@ -10,23 +11,26 @@ public:
 	~Player()override;
 
 
-	/// シーンの更新を行う
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ繧定｡後≧
 	void Initialize()override;
 
-	/// シーンの更新を行う
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ繧定｡後≧
 	void Update(Input* input)override;
 
-	/// シーンの描画を行う
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ謠冗判繧定｡後≧
 	void Draw(DirectXCommon* dxCommon)override;
+
+	/// 繝ｪ繧ｻ繝�繝医ｒ陦後≧
+	 void Reset() override;
 
 	void Move(Input* input);
 
 private:
 	Model* model_;
 	Object3d* object_;
-	//移動速度
+	//遘ｻ蜍暮溷ｺｦ
 	const float kMoveSpeed_ = 0.5;
-	//移動ベクトル
+	//遘ｻ蜍輔�吶け繝医Ν
 	Vector3 velocity_;
 	Vector3 faceAngle_;
 
