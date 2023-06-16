@@ -63,10 +63,10 @@ LevelData* JsonLoader::LoadJsonFile(const std::string& fileName) {
 			// トランスフォームのパラメータ読み込み
 			nlohmann::json& transform = object["transform"];
 			// 平行移動
-			objectData.translation.x = (float)transform["translation"][1];
-			objectData.translation.y = (float)transform["translation"][2];
-			objectData.translation.z = (float)transform["translation"][0]; // -
-			objectData.translation.z = - objectData.translation.z;			
+			objectData.translation.x = -(float)transform["translation"][0];
+			objectData.translation.y = (float)transform["translation"][1];
+			objectData.translation.z = (float)transform["translation"][2]; // -
+			//objectData.translation.z = - objectData.translation.z;			
 			// 回転角
 			objectData.rotation.x = (float)transform["rotation"][1]; // -
 			objectData.rotation.x = - objectData.rotation.x;

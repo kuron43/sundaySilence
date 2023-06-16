@@ -1,8 +1,9 @@
 #pragma once
-// ƒV[ƒ“‚ğ‘I‘ğ‚µ‚â‚·‚¢‚æ‚¤‚ÉƒV[ƒ“‚ÌˆêŠ‡ƒCƒ“ƒNƒ‹[ƒh
-// —v‚ç‚È‚¢‚È‚çÁ‚µ‚Ä‚¨k
+// ã‚·ãƒ¼ãƒ³ã‚’é¸æŠã—ã‚„ã™ã„ã‚ˆã†ã«ã‚·ãƒ¼ãƒ³ã®ä¸€æ‹¬ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
+// è¦ã‚‰ãªã„ãªã‚‰æ¶ˆã—ã¦ãŠk
 
 #include "TitleScene.h"
 #include "GAME1Scene.h"
-/*
-#include "EndScene.h"*/
+#include "EndScene.h"
+#include "PauseScene.h"
+ 

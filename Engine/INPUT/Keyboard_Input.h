@@ -1,10 +1,10 @@
 #pragma once
 #include <windows.h>
 #include <wrl.h>
-#include <dinput.h>
 #include "WinApp.h"
 
-#define DIRECTINPUT_VERSION 0x0800 // DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
+#define DIRECTINPUT_VERSION 0x0800 // DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
+#include <dinput.h>
 
 class Keyboard_Input
 {
@@ -12,45 +12,45 @@ public:
 	// namespace
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public: // ƒƒ“ƒoŠÖ”
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	Keyboard_Input();
 	~Keyboard_Input();
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Initialize(WinApp* winApp);
 
-	// XV
+	// æ›´æ–°
 	void Update();
 
 	/// <summary>
-	/// ƒL[‚Ì‰Ÿ‰º‚ğƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®æŠ¼ä¸‹ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "keyNumber">ƒL[”Ô†(DIK_0 “™)</param>
-	/// <returns>‰Ÿ‚³‚ê‚Ä‚¢‚é‚©</returns>
+	/// <param name = "keyNumber">ã‚­ãƒ¼ç•ªå·(DIK_0 ç­‰)</param>
+	/// <returns>æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹</returns>
 	bool PushKey(BYTE keyNumber);
 
 	/// <summary>
-	/// ƒL[‚ÌƒgƒŠƒK[‚ğƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// </param name="keyNumber">ƒL[”Ô†( DIK_0 “™)</param>
-	/// <reutrns>ƒgƒŠƒK[‚©</params>
+	/// </param name="keyNumber">ã‚­ãƒ¼ç•ªå·( DIK_0 ç­‰)</param>
+	/// <reutrns>ãƒˆãƒªã‚¬ãƒ¼ã‹</params>
 	bool TriggerKey(BYTE keyNumber);
 
 	/// <summary>
-	/// ƒL[‚ÌƒgƒŠƒK[‚ğƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// </param name="keyNumber">ƒL[”Ô†( DIK_0 “™)</param>
-	/// <reutrns>—£‚³‚ê‚½‚©</params>
+	/// </param name="keyNumber">ã‚­ãƒ¼ç•ªå·( DIK_0 ç­‰)</param>
+	/// <reutrns>é›¢ã•ã‚ŒãŸã‹</params>
 	bool ReleaseKey(BYTE keyNumber);
 
-private: // ƒƒ“ƒo•Ï”
-	// ƒL[ƒ{[ƒh‚ÌƒfƒoƒCƒX
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ãƒ‡ãƒã‚¤ã‚¹
 	ComPtr<IDirectInputDevice8> keyboard;
-	// DirectInput‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+	// DirectInputã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	ComPtr<IDirectInput8> directInput;
-	// ‘SƒL[‚Ìó‘Ô
+	// å…¨ã‚­ãƒ¼ã®çŠ¶æ…‹
 	BYTE key[256] = {};
-	// ‘O‰ñ‚Ì‘SƒL[‚Ìó‘Ô
+	// å‰å›ã®å…¨ã‚­ãƒ¼ã®çŠ¶æ…‹
 	BYTE keyPre[256] = {};
 	//windwsAPI
 	WinApp* winApp_ = nullptr;

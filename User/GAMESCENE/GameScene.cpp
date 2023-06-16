@@ -7,17 +7,17 @@
 #include"imgui.h"
 
 /// <summary>
-	/// ƒRƒ“ƒXƒgƒNƒ‰ƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆã‚¯ãƒ©ã‚¿
 	/// </summary>
 GameScene::GameScene() {
 
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 GameScene::~GameScene() {
-	//ƒI[ƒfƒBƒI‰ğ•ú
+	//ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªè§£æ”¾
 	//audio->Finalize();
 	//delete audio;
 
@@ -27,10 +27,10 @@ GameScene::~GameScene() {
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
-	// nullƒ`ƒFƒbƒN
+	// nullãƒã‚§ãƒƒã‚¯
 	assert(dxCommon);
 	assert(input);
 
@@ -38,11 +38,15 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	this->input = input;
 
 	cam_TF.Initialize();
-	cam_TF.position = { 0.0f, 2.5f, 8.0f };
-	tar = { 0.0f, 2.5f, 0.0f };
+	cam_TF.position = { 0.0f, 100, -0.01f};
+	tar = { 0.0f, 0.0f, 0.0f };
+	//FBX	(ãƒ†ã‚¹ãƒˆ)
+	// ãƒ‡ãƒã‚¤ã‚¹ã‚’ã‚»ãƒƒãƒˆ
+	FBXObject3d::SetDevice(dxCommon->GetDevice());
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
+	FBXObject3d::CreateGraphicsPipeline();
 
-
-	// ƒJƒƒ‰¶¬
+	// ã‚«ãƒ¡ãƒ©ç”Ÿæˆ
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 	FBXObject3d::SetCamera(camera);
 	ParticleManager::SetCamera(camera);
@@ -52,85 +56,83 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	sceneObjects->Initialize();
 
 	sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
-	//sceneManager->SetSceneObjects(sceneObjects.get());
 	sceneManager->SceneInitialize();
 
 	// Json
 	{
-		//leveData = JsonLoader::LoadJsonFile("Test");
+		leveData = JsonLoader::LoadJsonFile("gameOne");
 
-		//// ƒ‚ƒfƒ‹“Ç‚İ‚İ
-		//modelcube = Model::LoadFromOBJ("cube");
+		// ãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
+		modelcube = Model::LoadFromOBJ("cube");
 		//modelREX = Model::LoadFromOBJ("REX");
 
-		//models.insert(std::make_pair("cube", modelcube));
+		models.insert(std::make_pair("cube", modelcube));
 		//models.insert(std::make_pair("REX", modelREX));
 
-		//{
+		{
 
 
-		//	for (auto& objectData : leveData->objects) {
-		//		//ƒtƒ@ƒCƒ‹–¼‚©‚ç“o˜^Ï‚İƒ‚ƒfƒ‹‚ğŒŸõ
-		//		Model* model = nullptr;
-		//		decltype(models)::iterator it = models.find(objectData.fileName);
-		//		if (it != models.end()) { model = it->second; }
-		//		// À•W
-		//		Object3d* newObject = Object3d::Create();
-		//		newObject->SetModel(model);
-		//		//À•W
-		//		Vector3 pos;
-		//		pos = objectData.translation;
-		//		newObject->wtf.position = pos;
-		//		//‰ñ“]
-		//		Vector3 rot;
-		//		rot = objectData.rotation;
-		//		newObject->wtf.rotation = rot;
-		//		//Šgk
-		//		Vector3 sca;
-		//		sca = objectData.scaling;
-		//		newObject->wtf.scale = sca;
-		//		//
-		//		objects.push_back(newObject);
+			for (auto& objectData : leveData->JsonObjects) {
+				//ãƒ•ã‚¡ã‚¤ãƒ«åã‹ã‚‰ç™»éŒ²æ¸ˆã¿ãƒ¢ãƒ‡ãƒ«ã‚’æ¤œç´¢
+				Model* model = nullptr;
+				decltype(models)::iterator it = models.find(objectData.fileName);
+				if (it != models.end()) { model = it->second; }
+				// åº§æ¨™
+				Object3d* newObject = Object3d::Create();
+				newObject->SetModel(model);
+				//åº§æ¨™
+				Vector3 pos;
+				pos = objectData.translation;
+				newObject->wtf.position = pos;
+				//å›è»¢
+				Vector3 rot;
+				rot = objectData.rotation;
+				newObject->wtf.rotation = rot;
+				//æ‹¡ç¸®
+				Vector3 sca;
+				sca = objectData.scaling;
+				newObject->wtf.scale = sca;
+				//
+				JsonObjects.push_back(newObject);
 
-		//	}
-		//}
+			}
+		}
 	}
 
 }
 
 /// <summary>
-/// –ˆƒtƒŒ[ƒ€ˆ—
+/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 /// </summary>
 void GameScene::Update() {
-	cam_TF.UpdateMat();
+	/*cam_TF.UpdateMat();
 	camera->SetEye(Affin::GetWorldTrans(cam_TF.matWorld));
-	camera->SetTarget(tar);
-	camera->Update();
+	camera->SetTarget(tar);	*/
 
-	
-
-	/*for (auto& object : objects) {
+	for (auto& object : JsonObjects) {
 		object->Update();
-	}*/
+	}
 	sceneObjects->lightGroup->Update();
 	sceneManager->SceneUpdate(input);
+
+	camera->Update();
 }
 
 /// <summary>
-/// •`‰æ
+/// æç”»
 /// </summary>
 void GameScene::Draw() {
 	sceneManager->SceneDraw();
 	// Json
 	{
-		/*Object3d::PreDraw(dxCommon->GetCommandList());
-		for (auto& object : objects) {
+		Object3d::PreDraw(dxCommon->GetCommandList());
+		for (auto& object : JsonObjects) {
 			object->Draw();
 		}
-		Object3d::PostDraw();*/
+		Object3d::PostDraw();
 	}
-	//ImGui::Begin("Info");
-	////ImGui::Text("E : particle");
-	//ImGui::Text("WASD : ball rotate");
-	//ImGui::End();
+	/*ImGui::Begin("Info");
+	ImGui::Text("E : particle");
+	ImGui::Text("WASD : ball rotate");
+	ImGui::End();*/
 }
