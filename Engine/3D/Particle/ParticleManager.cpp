@@ -16,7 +16,7 @@ Microsoft::WRL::ComPtr<ID3D12Device> ParticleManager::device;
 Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> ParticleManager::cmdList;
 ComPtr<ID3D12RootSignature> ParticleManager::rootsignature;
 ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate;
-Camera* ParticleManager::camera = nullptr;
+Camera* ParticleManager::camera_ = nullptr;
 
 ParticleManager::ParticleManager() {
 
@@ -557,8 +557,8 @@ void ParticleManager::Update()
 	
 	wtf_.UpdateMat();
 
-	constMap->mat = (wtf_.matWorld * camera->GetViewProjectionMatrix());
-	constMap->matBillboard = (camera->GetBillboardMatrix());	// 行列の合成
+	constMap->mat = (wtf_.matWorld * camera_->GetViewProjectionMatrix());
+	constMap->matBillboard = (camera_->GetBillboardMatrix());	// 行列の合成
 	constBuff->Unmap(0, nullptr);
 }
 

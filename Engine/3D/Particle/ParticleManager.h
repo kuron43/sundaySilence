@@ -177,13 +177,13 @@ public: // メンバ関数
 	///	<param name="accel">加速度</param>
 	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale);
 
-	static void SetCamera(Camera* camera) { ParticleManager::camera = camera; }
+	static void SetCamera(Camera* camera) { ParticleManager::camera_ = camera; }
 
 	void SetTransform(Transform wtf) { wtf_ = wtf; };
 
 	void Setposition(Vector3 position) { wtf_.position = position; };
 private: // メンバ変数
-	static Camera* camera;
+	static Camera* camera_;
 	// ローカルスケール
 	Transform wtf_;
 

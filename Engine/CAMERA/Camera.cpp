@@ -26,11 +26,11 @@ void Camera::Update()
 void Camera::UpdateViewMatrix()
 {
 	// 視点座標
-	Vector3 eyePosition = eye;
+	Vector3 eyePosition = eye_;
 	// 注視点座標
-	Vector3 targetPosition = target;
+	Vector3 targetPosition = target_;
 	// （仮の）上方向
-	Vector3 upVector = up;
+	Vector3 upVector = up_;
 
 	// カメラZ軸（視線方向）
 	Vector3 cameraAxisZ = targetPosition - eyePosition;
@@ -187,6 +187,6 @@ void Camera::MoveVector(const Vector3& move)
 
 float Camera::FieldOfViewY() {
 
-	return 2 * atan(sensor / (2 * focalLengs));
+	return float(2 * atan(sensor_ / (2 * focalLengs_)));
 
 }

@@ -30,27 +30,27 @@ public://サブクラス
 public:
 
 	inline void SetLightPos(const XMFLOAT3& lightpos) {
-		this->lightpos = lightpos;
+		lightpos_ = lightpos;
 	}
-	inline const XMFLOAT3& GetLightPos() { return lightpos; }
+	inline const XMFLOAT3& GetLightPos() { return lightpos_; }
 	inline void SetLightColor(const XMFLOAT3& lightcolor) {
-		this->lightcolor = lightcolor;
+		lightcolor_ = lightcolor;
 	}
-	inline const XMFLOAT3& GetLightColor() { return lightcolor; }
+	inline const XMFLOAT3& GetLightColor() { return lightcolor_; }
 	inline void SetLightAtten(const XMFLOAT3& lightAtten) {
-		this->lightAtten = lightAtten;
+		lightAtten_ = lightAtten;
 	}
-	inline const XMFLOAT3& GetLightAtten() { return lightAtten; }
-	inline void SetActive(bool active) { this->active = active; }
-	inline bool IsActive() { return active; }
+	inline const XMFLOAT3& GetLightAtten() { return lightAtten_; }
+	inline void SetActive(bool active) { active_ = active; }
+	inline bool IsActive() { return active_; }
 
 
 
 private:
 
-	XMFLOAT3 lightpos = { 0,0,0 };
-	XMFLOAT3 lightcolor = { 1,1,1 };
-	XMFLOAT3 lightAtten = { 1.0f,1.0f,1.0f };
-	bool active = false;
+	XMFLOAT3 lightpos_ = { 0,0,0 };
+	XMFLOAT3 lightcolor_ = { 1,1,1 };
+	XMFLOAT3 lightAtten_ = { 1.0f,1.0f,1.0f };
+	bool active_ = false;
 
 };

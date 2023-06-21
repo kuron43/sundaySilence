@@ -77,7 +77,7 @@ Matrix4 Matrix4::MakeInverse(const Matrix4* mat)
 	for (int i = 0; i < 4; i++)
 	{
 		//最大の絶対値を注目対角成分の絶対値と仮定
-		float max = fabs(sweep[i][i]);
+		float max = float(fabs(sweep[i][i]));
 		int maxIndex = i;
 
 		//i列目が最大の絶対値となる行を探す
@@ -85,7 +85,7 @@ Matrix4 Matrix4::MakeInverse(const Matrix4* mat)
 		{
 			if (fabs(sweep[j][i]) > max)
 			{
-				max = fabs(sweep[j][i]);
+				max = float(fabs(sweep[j][i]));
 				maxIndex = j;
 			}
 		}
@@ -176,7 +176,7 @@ void Matrix4::MakeOrthogonalL(float left, float right, float bottom, float top, 
 void Matrix4::MakePerspectiveL(float fovAngleY, float aspect, float near_, float far_, Matrix4& matrix)
 {
 
-	float h = 1 / tan(fovAngleY * 0.5);
+	float h = float(1 / tan(fovAngleY * 0.5f));
 	float w = h / aspect;
 	float a = far_ / (far_ - near_);
 	float b = (-near_ * far_) / (far_ - near_);

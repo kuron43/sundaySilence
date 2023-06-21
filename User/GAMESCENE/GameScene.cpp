@@ -34,8 +34,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	assert(dxCommon);
 	assert(input);
 
-	this->dxCommon = dxCommon;
-	this->input = input;
+	dxCommon_ = dxCommon;
+	input_ = input;
 
 	cam_TF.Initialize();
 	cam_TF.position = { 100.0f, 100, -0.01f };
@@ -114,7 +114,7 @@ void GameScene::Update() {
 		}*/
 	}
 	sceneObjects->lightGroup->Update();
-	sceneManager->SceneUpdate(input);
+	sceneManager->SceneUpdate(input_);
 
 	camera->Update();
 }

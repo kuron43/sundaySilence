@@ -23,7 +23,7 @@ void FbxLoader::Initialize(ID3D12Device* device)
     assert(fbxManager == nullptr);
 
     // 引数からメンバ変数に代入
-    this->device = device;
+    device_ = device;
 
     // FBXマネージャの生成
     fbxManager = FbxManager::Create();
@@ -75,7 +75,7 @@ FBXModel* FbxLoader::LoadModelFromFile(const string& modelName)
     // FBXシーン解放
     fbxmodel->fbxScene = fbxScene;
     // バッファ生成
-    fbxmodel->CreateBuffers(device);
+    fbxmodel->CreateBuffers(device_);
 
     return fbxmodel;
 }

@@ -77,7 +77,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <returns>座標</returns>
 	inline const Vector3& GetEye() {
-		return eye;
+		return eye_;
 	}
 
 	/// <summary>
@@ -85,7 +85,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="eye">座標</param>
 	inline void SetEye(Vector3 eye) {
-		this->eye = eye; viewDirty = true;
+		eye_ = eye; viewDirty = true;
 	}
 
 	/// <summary>
@@ -93,7 +93,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <returns>座標</returns>
 	inline const Vector3& GetTarget() {
-		return target;
+		return target_;
 	}
 
 	/// <summary>
@@ -101,7 +101,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="target">座標</param>
 	inline void SetTarget(Vector3 target) {
-		this->target = target; viewDirty = true;
+		target_ = target; viewDirty = true;
 	}
 
 	/// <summary>
@@ -109,7 +109,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <returns>上方向ベクトル</returns>
 	inline const Vector3& GetUp() {
-		return up;
+		return up_;
 	}
 
 	/// <summary>
@@ -117,22 +117,22 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="up">上方向ベクトル</param>
 	inline void SetUp(Vector3 up) {
-		this->up = up; viewDirty = true;
+		up_ = up; viewDirty = true;
 	}
 
 	// sensor
 	inline const float& GetSensor() {
-		return sensor;
+		return sensor_;
 	}
 	inline void SetSensor(float sensor) {
-		this->sensor = sensor; viewDirty = true;
+		sensor_ = sensor; viewDirty = true;
 	}
 	// FL
 	inline const float& GetForcalLengs() {
-		return focalLengs;
+		return focalLengs_;
 	}
 	inline void SetFocalLengs(float focalLengs) {
-		this->focalLengs = focalLengs; viewDirty = true;
+		focalLengs_ = focalLengs; viewDirty = true;
 	}
 
 
@@ -166,15 +166,15 @@ protected: // メンバ変数
 	// 射影行列ダーティフラグ
 	bool projectionDirty = false;
 	// 視点座標
-	Vector3 eye = {0, 0, -1};
+	Vector3 eye_ = {0, 0, -1};
 	// 注視点座標
-	Vector3 target = {0, 0, 0};
+	Vector3 target_ = {0, 0, 0};
 	// 上方向ベクトル
-	Vector3 up = {0, 1, 0};
+	Vector3 up_ = {0, 1, 0};
 	// アスペクト比
 	float aspectRatio = 1.0f;
 
-	float focalLengs = 50 ;
-	float sensor = 35;
+	float focalLengs_ = 50 ;
+	float sensor_ = 35;
 };
 

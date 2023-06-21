@@ -5,17 +5,17 @@ using namespace DirectX;
 /// <summary>
 ///静的メンバ変数の実態
 /// </summary>
-ID3D12Device* LightGroup::device = nullptr;
+ID3D12Device* LightGroup::device_ = nullptr;
 
 void LightGroup::StaticInitialize(ID3D12Device* device)
 {
 	//最初期化チェック
-	assert(!LightGroup::device);
+	assert(!LightGroup::device_);
 
 	//nullチェック
 	assert(device);
 
-	LightGroup::device = device;
+	LightGroup::device_ = device;
 
 }
 
@@ -54,7 +54,7 @@ bool LightGroup::Initialize()
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	/*ID3D12Resource* constBuff = nullptr;*/
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&cbHeapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc, // リソース設定

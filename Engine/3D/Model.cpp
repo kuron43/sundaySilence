@@ -11,7 +11,7 @@ using namespace Microsoft::WRL;
 using namespace std;
 
 //静的メンバ変数の実体
-ComPtr<ID3D12Device> Model::device ;
+ComPtr<ID3D12Device> Model::device_ ;
 
 
 Model* Model::LoadFromOBJ(const std::string& modelname)
@@ -158,7 +158,7 @@ void Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 		CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
 
 	// テクスチャ用バッファの生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&heapProps, D3D12_HEAP_FLAG_NONE, &texresDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ, // テクスチャ用指定
 		nullptr, IID_PPV_ARGS(&texbuff));
@@ -189,7 +189,7 @@ void Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = 1;
 
-	device->CreateShaderResourceView(texbuff.Get(), //ビューと関連付けるバッファ
+	device_->CreateShaderResourceView(texbuff.Get(), //ビューと関連付けるバッファ
 		&srvDesc, //テクスチャ設定情報
 		cpuDescHandleSRV
 	);
@@ -197,7 +197,7 @@ void Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 
 void Model::LoadFromOBJInternal(const std::string& modelname)
 {
-	HRESULT result = S_FALSE;
+	//HRESULT result = S_FALSE;
 
 	//ファイルストリーム
 	ifstream file;
@@ -305,7 +305,7 @@ void Model::LoadFromOBJInternal(const std::string& modelname)
 
 void Model::InitializeDescriptorHeap()
 {
-	assert(device);
+	assert(device_);
 
 	HRESULT result = S_FALSE;
 
@@ -314,13 +314,13 @@ void Model::InitializeDescriptorHeap()
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダから見えるように
 	descHeapDesc.NumDescriptors = 1; // シェーダーリソースビュー1つ
-	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeap));//生成
+	result = device_->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeap));//生成
 	if (FAILED(result)) {
 		assert(0);
 	}
 
 	// デスクリプタサイズを取得
-	descriptorHandleIncrementSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	descriptorHandleIncrementSize = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
 void Model::CreateBuffers()
@@ -341,7 +341,7 @@ void Model::CreateBuffers()
 	CD3DX12_RESOURCE_DESC resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeVB);
 
 	// 頂点バッファ生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
@@ -366,7 +366,7 @@ void Model::CreateBuffers()
 	resourceDesc.Width = sizeIB;
 
 	// インデックスバッファ生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&indexBuff));
 
@@ -395,7 +395,7 @@ void Model::CreateBuffers()
 	CD3DX12_RESOURCE_DESC resourceDesc1 = CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
 
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&heapProps,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc1,

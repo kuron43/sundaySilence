@@ -51,8 +51,8 @@ public:
 
 	
 private: // メンバ変数 (固定)
-	DirectXCommon* dxCommon = nullptr;
-	Input* input = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
+	Input* input_ = nullptr;
 	SpriteCommon* spriteCommon = nullptr;
 	Camera* camera = nullptr;
 	SceneManager* sceneManager = nullptr;

@@ -60,7 +60,7 @@ public://静的メンバ関数
 	void LoadTexture(const std::string& directoryPath, const std::string& filename);
 
 	//setter
-	static void SetDevice(ID3D12Device* device) { Model::device = device; }
+	static void SetDevice(ID3D12Device* device) { Model::device_ = device; }
 
 	
 
@@ -82,7 +82,7 @@ private:
 	ComPtr<ID3D12Resource> constBuffB1; // 定数バッファ	
 
 	// デバイス
-	static ComPtr<ID3D12Device> device;
+	static ComPtr<ID3D12Device> device_;
 	// テクスチャバッファ
 	ComPtr<ID3D12Resource> texbuff;
 	// シェーダリソースビューのハンドル(CPU)

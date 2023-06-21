@@ -11,7 +11,6 @@ class Human
 {
 
 protected:
-	Input* input;
 
 	bool isSlow = false;
 	float slowSpeed = 0.25f;

@@ -18,8 +18,8 @@ using namespace std;
 /// </summary>
 const float Object3d::radius = 5.0f;				// 底面の半径
 const float Object3d::prizmHeight = 8.0f;			// 柱の高さ
-ComPtr<ID3D12Device> Object3d::device;
-ComPtr<ID3D12GraphicsCommandList> Object3d::cmdList;
+ComPtr<ID3D12Device> Object3d::device_;
+ComPtr<ID3D12GraphicsCommandList> Object3d::cmdList_;
 ComPtr<ID3D12RootSignature> Object3d::rootsignature;
 ComPtr<ID3D12PipelineState> Object3d::pipelinestate;
 Matrix4 Object3d::matView = Affin::matUnit();
@@ -28,24 +28,24 @@ Vector3 Object3d::eye = { 0, 0, -50.0f };
 Vector3 Object3d::target = { 0, 0, 0 };
 Vector3 Object3d::up = { 0, 1, 0 };
 float Object3d::focalLengs = 50.0f;
-LightGroup* Object3d::lightGroup = nullptr;
+LightGroup* Object3d::lightGroup_ = nullptr;
 
 
-Camera* Object3d::camera = nullptr;
+Camera* Object3d::camera_ = nullptr;
 
 Object3d::Object3d() {
 
 }
 Object3d::~Object3d() {
-	delete model;
+	delete model_;
 }
 
-void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
+void Object3d::StaticInitialize(ID3D12Device* device)
 {
 	// nullptrチェック
 	assert(device);
 
-	Object3d::device = device;
+	Object3d::device_ = device;
 
 	Model::SetDevice(device);
 
@@ -56,10 +56,10 @@ void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int wind
 void Object3d::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	// PreDrawとPostDrawがペアで呼ばれていなければエラー
-	assert(Object3d::cmdList == nullptr);
+	assert(Object3d::cmdList_ == nullptr);
 
 	// コマンドリストをセット
-	Object3d::cmdList = cmdList;
+	Object3d::cmdList_ = cmdList;
 
 	// パイプラインステートの設定
 	cmdList->SetPipelineState(pipelinestate.Get());
@@ -72,7 +72,7 @@ void Object3d::PreDraw(ID3D12GraphicsCommandList* cmdList)
 void Object3d::PostDraw()
 {
 	// コマンドリストを解除
-	Object3d::cmdList = nullptr;
+	Object3d::cmdList_ = nullptr;
 }
 
 Object3d* Object3d::Create()
@@ -100,7 +100,7 @@ void Object3d::InitializeCamera(int window_width, int window_height)
 	//ビュー行列の算出
 	matView.MakeLookL(eye, target, up, matView);
 	matProjection.MakePerspectiveL(focalLengs,
-		(float)1280 / 720
+		(float)window_width / window_height
 		, 0.1f, 1000.0f,
 		matProjection);
 
@@ -244,7 +244,7 @@ void Object3d::InitializeGraphicsPipeline()
 	result = D3DX12SerializeVersionedRootSignature(
 		&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	// ルートシグネチャの生成
-	result = device->CreateRootSignature(
+	result = device_->CreateRootSignature(
 		0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
 		IID_PPV_ARGS(&rootsignature));
 	assert(SUCCEEDED(result));
@@ -253,7 +253,7 @@ void Object3d::InitializeGraphicsPipeline()
 
 	// グラフィックスパイプラインの生成
 	result =
-		device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelinestate));
+		device_->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelinestate));
 	assert(SUCCEEDED(result));
 
 }
@@ -280,7 +280,7 @@ void Object3d::UpdateViewMatrix()
 bool Object3d::Initialize()
 {
 	// nullptrチェック
-	assert(device);
+	assert(device_);
 
 	// ヒーププロパティ
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
@@ -291,7 +291,7 @@ bool Object3d::Initialize()
 	HRESULT result;
 
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&heapProps, // アップロード可能
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
@@ -327,18 +327,18 @@ void Object3d::Update()
 	wtf.matWorld *= matTrans; // ワールド行列に平行移動を反映
 
 	// 親オブジェクトがあれば
-	if (parent != nullptr) {
+	if (parent_ != nullptr) {
 		// 親オブジェクトのワールド行列を掛ける
-		wtf.matWorld *= parent->wtf.matWorld;
+		wtf.matWorld *= parent_->wtf.matWorld;
 	}
 
 	// 定数バッファへデータ転送
 	ConstBufferDataB0* constMap = nullptr;
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
-	resultMat = wtf.matWorld * camera->GetViewProjectionMatrix();	// 行列の合成
-	constMap->cameraPos = camera->GetEye();
+	resultMat = wtf.matWorld * camera_->GetViewProjectionMatrix();	// 行列の合成
+	constMap->cameraPos = camera_->GetEye();
 	constMap->world = wtf.matWorld;
-	constMap->veiwproj = camera->GetViewProjectionMatrix();
+	constMap->veiwproj = camera_->GetViewProjectionMatrix();
 	constMap->color = color;
 	constBuffB0->Unmap(0, nullptr);
 
@@ -347,20 +347,20 @@ void Object3d::Update()
 void Object3d::Draw()
 {
 	// nullptrチェック
-	assert(device);
+	assert(device_);
 	//assert(Object3d::cmdList);
 	
 	//モデルがセットされてなければ描画をスキップ
-	if (model == nullptr) return;
+	if (model_ == nullptr) return;
 
 	// 定数バッファビューをセット
-	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
+	cmdList_->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
 
 	//ライトの描画
-	lightGroup->Draw(cmdList.Get(), 3);
+	lightGroup_->Draw(cmdList_.Get(), 3);
 
 	//モデルを描画
-	model->Draw(cmdList.Get(), 1);
+	model_->Draw(cmdList_.Get(), 1);
 }
 
 

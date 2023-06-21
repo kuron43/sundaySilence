@@ -8,7 +8,7 @@
 class DirectionalLight {
 private: //静的メンバ変数
 	//デバイス
-	static ID3D12Device* device;
+	static ID3D12Device* device_;
 
 private://エイリアス
 	////Microsoft::WRL::を省略
@@ -71,17 +71,17 @@ public://静的メイバ関数
 	/// 有効フラグをセット
 	/// </summary>
 	/// <param name="active">有効フラグ</param>
-	inline void SetActive(bool active) { this->active = active; }
+	inline void SetActive(bool active) { active_ = active; }
 
 
 	/// <summary>
 	/// 有効チェック
 	/// </summary>
 	/// <returns>有効フラグ</returns>
-	inline bool IsActive() { return active; }
+	inline bool IsActive() { return active_; }
 
-	Vector4 GetLightDir() { return lightdir; }
-	Vector3 GetLightColor() { return lightcolor; }
+	Vector4 GetLightDir() { return lightdir_; }
+	Vector3 GetLightColor() { return lightcolor_; }
 
 	/// <summary>
 	/// インスタンス生成
@@ -91,13 +91,13 @@ private://メンバ変数
 	//定数バッファ
 	ComPtr<ID3D12Resource> constBuff;
 	//ライト光線方向
-	Vector4 lightdir = { 1,0,0,0 };
+	Vector4 lightdir_ = { 1,0,0,0 };
 	//ライト色
-	Vector3 lightcolor = { 1,1,1, };
+	Vector3 lightcolor_ = { 1,1,1, };
 	//ダーティフラグ
 	bool dirty = false;
 
 	//有効フラグ
-	bool active = false;
+	bool active_ = false;
 };
 

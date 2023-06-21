@@ -50,7 +50,7 @@ public: // 静的メンバ関数
 	/// <param name="device">デバイス</param>
 	/// <param name="window_width">画面幅</param>
 	/// <param name="window_height">画面高さ</param>
-	static void StaticInitialize(ID3D12Device* device, int window_width, int window_height);
+	static void StaticInitialize(ID3D12Device* device);
 
 	/// <summary>
 	/// 描画前処理
@@ -75,10 +75,10 @@ public: // 静的メンバ関数
 
 private: // 静的メンバ変数
 	// デバイス
-	static ComPtr<ID3D12Device> device;
+	static ComPtr<ID3D12Device> device_;
 
 	// コマンドリスト
-	static ComPtr<ID3D12GraphicsCommandList> cmdList;
+	static ComPtr<ID3D12GraphicsCommandList> cmdList_;
 	// ルートシグネチャ
 	static ComPtr<ID3D12RootSignature> rootsignature;
 	// パイプラインステートオブジェクト
@@ -86,7 +86,7 @@ private: // 静的メンバ変数
 
 
 	//ライト
-	static LightGroup* lightGroup;
+	static LightGroup* lightGroup_;
 
 	// ビュー行列
 	static Matrix4 matView;
@@ -140,17 +140,17 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-	Object3d* GetParent() const { return parent; }
+	Object3d* GetParent() const { return parent_; }
 
-	void SetParent(Object3d* parent) { this->parent = parent; }
-	static void SetCamera(Camera* camera) { Object3d::camera = camera; }
+	void SetParent(Object3d* parent) { parent_ = parent; }
+	static void SetCamera(Camera* camera) { Object3d::camera_ = camera; }
 
 	static void SetLight(LightGroup* lightGroup) {
-		Object3d::lightGroup = lightGroup;
+		Object3d::lightGroup_ = lightGroup;
 	}
 
 	//setter
-	void SetModel(Model* model) { this->model = model; }
+	void SetModel(Model* model) { model_ = model; }
 	void SetColor(Vector4 color_) { color = color_; }
 
 private: // メンバ変数
@@ -161,10 +161,10 @@ public:
 	Vector4 color = { 1,1,1,1 };
 
 	// 親オブジェクト
-	Object3d* parent = nullptr;
+	Object3d* parent_ = nullptr;
 	//モデル
-	Model* model = nullptr;
-	static Camera* camera;
+	Model* model_ = nullptr;
+	static Camera* camera_;
 
 	static float win_wi, win_hi;
 public:

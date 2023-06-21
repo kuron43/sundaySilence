@@ -9,8 +9,8 @@ using namespace DirectX;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-ID3D12Device* FBXObject3d::device = nullptr;
-Camera* FBXObject3d::camera = nullptr;
+ID3D12Device* FBXObject3d::device_ = nullptr;
+Camera* FBXObject3d::camera_ = nullptr;
 ComPtr<ID3D12RootSignature> FBXObject3d::rootsignature;
 ComPtr<ID3D12PipelineState> FBXObject3d::pipelinestate;
 
@@ -22,7 +22,7 @@ void FBXObject3d::CreateGraphicsPipeline()
 	ComPtr<ID3DBlob> psBlob;    // ピクセルシェーダオブジェクト
 	ComPtr<ID3DBlob> errorBlob; // エラーオブジェクト
 
-	assert(device);
+	assert(device_);
 
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
@@ -166,13 +166,13 @@ void FBXObject3d::CreateGraphicsPipeline()
 	// バージョン自動判定のシリアライズ
 	result = D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	// ルートシグネチャの生成
-	result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(rootsignature.ReleaseAndGetAddressOf()));
+	result = device_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(rootsignature.ReleaseAndGetAddressOf()));
 	if (FAILED(result)) { assert(0); }
 
 	gpipeline.pRootSignature = rootsignature.Get();
 
 	// グラフィックスパイプラインの生成
-	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipelinestate.ReleaseAndGetAddressOf()));
+	result = device_->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipelinestate.ReleaseAndGetAddressOf()));
 	if (FAILED(result)) { assert(0); }
 
 }
@@ -185,7 +185,7 @@ bool FBXObject3d::Initialize()
 	CD3DX12_RESOURCE_DESC unt7 = CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataTransform) + 0xff) & ~0xff);
 
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&unt6,
 		D3D12_HEAP_FLAG_NONE,
 		&unt7,
@@ -196,7 +196,7 @@ bool FBXObject3d::Initialize()
 	CD3DX12_HEAP_PROPERTIES unt8 = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	CD3DX12_RESOURCE_DESC unt9 = CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataSkin) + 0xff) & ~0xff);
 
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&unt8,
 		D3D12_HEAP_FLAG_NONE,
 		&unt9,
@@ -228,11 +228,11 @@ void FBXObject3d::Update()
 	wtf.matWorld *= matTrans; // ワールド行列に平行移動を反映
 
 	// ビュープロジェクション行列
-	const Matrix4& matViewProjection = camera->GetViewProjectionMatrix();
+	const Matrix4& matViewProjection = camera_->GetViewProjectionMatrix();
 	// モデルのメッシュトランスフォーム
-	const XMMATRIX& modelTransform = fbxmodel->GetModelTransform();
+	const XMMATRIX& modelTransform = fbxmodel_->GetModelTransform();
 	// カメラ座標
-	const Vector3& cameraPos = camera->GetEye();
+	const Vector3& cameraPos = camera_->GetEye();
 
 	HRESULT result;
 	// 定数バッファへデータ転送
@@ -245,7 +245,7 @@ void FBXObject3d::Update()
 		constBuffTransform->Unmap(0, nullptr);
 	}
 
-	std::vector<FBXModel::Bone>& bones = fbxmodel->GetBones();
+	std::vector<FBXModel::Bone>& bones = fbxmodel_->GetBones();
 
 	//アニメーション
 	if (isPlay) {
@@ -290,7 +290,7 @@ void FBXObject3d::Update()
 void FBXObject3d::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	// モデルの割り当てがなければ描画しない
-	if (fbxmodel == nullptr) {
+	if (fbxmodel_ == nullptr) {
 		return;
 	}
 
@@ -305,7 +305,7 @@ void FBXObject3d::Draw(ID3D12GraphicsCommandList* cmdList)
 	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(2, constBuffSkin->GetGPUVirtualAddress());
 	// モデル描画
-	fbxmodel->Draw(cmdList);
+	fbxmodel_->Draw(cmdList);
 }
 
 std::unique_ptr<FBXObject3d> FBXObject3d::Create()
@@ -359,7 +359,7 @@ void FBXObject3d::AnimIsRotateChange()
 
 Camera FBXObject3d::GetCamera()
 {
-	return *this->camera;
+	return *this->camera_;
 }
 
 FbxTime FBXObject3d::GetCurrentTimer()
@@ -414,7 +414,7 @@ void FBXObject3d::SetIsBonesWorldMatCalc(bool isCalc)
 
 void FBXObject3d::PlayAnimation(int animationNum)
 {
-	FbxScene* fbxScene = fbxmodel->GetFbxScene();
+	FbxScene* fbxScene = fbxmodel_->GetFbxScene();
 	//0番のアニメーションを取得
 	FbxAnimStack* animstack = fbxScene->GetSrcObject<FbxAnimStack>(animationNum);
 	// 取得したアニメーションに変更

@@ -15,7 +15,7 @@ void MyGame::Initialize() {
 	postEffect->SetShadeNumber(1);*/
 
 	// 3Dオブジェクト静的初期化
-	Object3d::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
+	Object3d::StaticInitialize(dxCommon->GetDevice());
 	//パーティクル静的初期化
 	ParticleManager::StaticInitialize(dxCommon->GetDevice(), dxCommon->GetCommandList());
 	// FBX静的初期化

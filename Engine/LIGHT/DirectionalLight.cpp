@@ -5,14 +5,14 @@ using namespace DirectX;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-ID3D12Device* DirectionalLight::device = nullptr;
+ID3D12Device* DirectionalLight::device_ = nullptr;
 
 void DirectionalLight::StaticInitialize(ID3D12Device* device)
 {
 	//再初期化チェック
-	assert(!DirectionalLight::device);
+	assert(!DirectionalLight::device_);
 	//静的メンバ変数のセット
-	DirectionalLight::device = device;
+	DirectionalLight::device_ = device;
 }
 
 bool DirectionalLight::Initialize()
@@ -31,7 +31,7 @@ bool DirectionalLight::Initialize()
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	/*ID3D12Resource* constBuff = nullptr;*/
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&cbHeapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc, // リソース設定
@@ -52,8 +52,8 @@ void DirectionalLight::TransferConstBuffer()
 	ConstBufferData* constMap = nullptr;
 	result = constBuff->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) {
-		constMap->lightv = -lightdir;
-		constMap->lightcolor = lightcolor;
+		constMap->lightv = -lightdir_;
+		constMap->lightcolor = lightcolor_;
 		constBuff->Unmap(0, nullptr);
 	}
 }
@@ -61,13 +61,13 @@ void DirectionalLight::TransferConstBuffer()
 void DirectionalLight::SetLightDir(const Vector4& lightdir)
 {
 	//正規化してセット
-	this->lightdir = lightdir.Normalization();
+	lightdir_ = lightdir.Normalization();
 	dirty = true;
 }
 
 void DirectionalLight::SetLightColor(const Vector3& lightcolor)
 {
-	this->lightcolor = lightcolor;
+	lightcolor_ = lightcolor;
 	dirty = true;
 }
 

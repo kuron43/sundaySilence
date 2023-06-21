@@ -54,15 +54,15 @@ public: // 静的メンバ関数
 	/// グラフィックパイプラインの生成
 	/// </summary>
 	// setter
-	static void SetDevice(ID3D12Device* device) { FBXObject3d::device = device; }
-	static void SetCamera(Camera* camera) { FBXObject3d::camera = camera; }
+	static void SetDevice(ID3D12Device* device) { FBXObject3d::device_ = device; }
+	static void SetCamera(Camera* camera) { FBXObject3d::camera_ = camera; }
 
 
 private: // 静的メンバ変数
 	// デバイス
-	static ID3D12Device* device;
+	static ID3D12Device* device_;
 	// カメラ
-	static Camera* camera;
+	static Camera* camera_;
 	// ルートシグネチャ
 	static ComPtr<ID3D12RootSignature> rootsignature;
 	// パイプラインステートオブジェクト
@@ -95,25 +95,25 @@ public: // メンバ関数
 	/// 大きさの設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetScale(const Vector3& scale) { this->wtf.scale = scale; }
+	void SetScale(const Vector3& scale) { wtf.scale = scale; }
 
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetPosition(const Vector3& position) { this->wtf.position = position; }
+	void SetPosition(const Vector3& position) { wtf.position = position; }
 
 	/// <summary>
 	/// 回転の設定
 	/// </summary>
 	/// <param name="rotate"></param>
-	void SetRotate(const Vector3& rotate) { this->wtf.rotation = rotate; }
+	void SetRotate(const Vector3& rotate) { wtf.rotation = rotate; }
 
 	/// <summary>
 	/// モデルをセット
 	/// </summary>
 	/// <param name="fbxmodel"></param>
-	void SetModel(FBXModel* fbxmodel) { this->fbxmodel = fbxmodel; }
+	void SetModel(FBXModel* fbxmodel) { fbxmodel_ = fbxmodel; }
 
 	/// <summary>
 	/// フレームカウント指定
@@ -186,7 +186,7 @@ protected: // メンバ変数
 	//// ローカルワールド変換行列
 	//XMMATRIX matWorld;
 	// モデル
-	FBXModel* fbxmodel = nullptr;
+	FBXModel* fbxmodel_ = nullptr;
 
 	//1フレームの時間
 	FbxTime frameTime;

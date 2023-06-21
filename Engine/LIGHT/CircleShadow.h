@@ -33,17 +33,17 @@ public:
 public:
 	//メンバ関数
 
-	inline void SetDir(const XMVECTOR& dir) { this->dir = DirectX::XMVector3Normalize(dir); }
-	inline const XMVECTOR& GetDir() { return dir; }
+	inline void SetDir(const XMVECTOR& dir) { dir_ = DirectX::XMVector3Normalize(dir); }
+	inline const XMVECTOR& GetDir() { return dir_; }
 
-	inline void SetCasterPos(const XMFLOAT3& casterPos) { this->casterPos = casterPos; }
-	inline const XMFLOAT3& GetCasterPos() { return casterPos; }
+	inline void SetCasterPos(const XMFLOAT3& casterPos) { casterPos_ = casterPos; }
+	inline const XMFLOAT3& GetCasterPos() { return casterPos_; }
 
-	inline void SetDistanceCasterLight(float distanceCasterLight) { this->distanceCasterLight = distanceCasterLight; }
-	inline float GetDistanceCasterLight() { return distanceCasterLight; }
+	inline void SetDistanceCasterLight(float distanceCasterLight) { distanceCasterLight_ = distanceCasterLight; }
+	inline float GetDistanceCasterLight() { return distanceCasterLight_; }
 
-	inline void SetAtten(const XMFLOAT3& atten) { this->atten = atten; }
-	inline const XMFLOAT3& GetAtten() { return atten; }
+	inline void SetAtten(const XMFLOAT3& atten) { atten_ = atten; }
+	inline const XMFLOAT3& GetAtten() { return atten_; }
 
 	inline void SetFactorAngle(const XMFLOAT2& factorAngle) {
 		this->factorAngleCos.x = cosf(DirectX::XMConvertToRadians(factorAngle.x));
@@ -51,21 +51,21 @@ public:
 	}
 
 	inline const XMFLOAT2& GetFactorAngleCos() { return factorAngleCos; }
-	inline void SetActive(bool active) { this->active = active; }
-	inline bool IsActive() { return active; }
+	inline void SetActive(bool active) { active_ = active; }
+	inline bool IsActive() { return active_; }
 
 private:
 	//方向
-	XMVECTOR dir = { 1,0,0,0 };
+	XMVECTOR dir_ = { 1,0,0,0 };
 
-	float distanceCasterLight = 100.0f;
+	float distanceCasterLight_ = 100.0f;
 
-	XMFLOAT3 casterPos = { 0,0,0 };
+	XMFLOAT3 casterPos_ = { 0,0,0 };
 
-	XMFLOAT3 atten = { 0.5f,0.6f,0.0f };
+	XMFLOAT3 atten_ = { 0.5f,0.6f,0.0f };
 
 	XMFLOAT2 factorAngleCos = { 0.2f,0.5f };
 
-	bool active = false;
+	bool active_ = false;
 
 };
