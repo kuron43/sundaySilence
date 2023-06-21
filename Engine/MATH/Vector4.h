@@ -16,6 +16,7 @@ public:
 
 
 	float Length()const;//ノルムを求める
+	Vector4 Normalization()const;//正規化する
 	Vector4& Normalize();//正規化する
 	float Dot(const Vector4& v)const;//内積を求める
 	Vector4 Cross(const Vector4& v)const;//外積を求める

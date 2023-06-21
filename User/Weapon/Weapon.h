@@ -5,6 +5,9 @@ class DirectXCommon;
 
 class Weapon
 {
+protected:
+	
+
 public:
 	Weapon();
 	virtual ~Weapon();

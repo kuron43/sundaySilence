@@ -9,26 +9,26 @@
 
 class PostEffect
 {
-protected: // ƒGƒCƒŠƒAƒX
-    // Microsoft::WRL::‚ğÈ—ª
+protected: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+    // Microsoft::WRL::ã‚’çœç•¥
     template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-    // DirectX::‚ğÈ—ª
+    // DirectX::ã‚’çœç•¥
 
 public:
     /// <summary>
-    /// ’¸“_ƒf[ƒ^\‘¢‘Ì
+    /// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
     /// </summary>
     struct VertexPosUv {
-        Vector3 pos; // xyzÀ•W
-        Vector2 uv;  // uvÀ•W
+        Vector3 pos; // xyzåº§æ¨™
+        Vector2 uv;  // uvåº§æ¨™
     };
 
     /// <summary>
-    /// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+    /// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
     /// </summary>
     struct ConstBufferData {
-        Vector4 color; // F (RGBA)
-        Matrix4 mat;   // ‚R‚c•ÏŠ·s—ñ
+        Vector4 color; // è‰² (RGBA)
+        Matrix4 mat;   // ï¼“ï¼¤å¤‰æ›è¡Œåˆ—
     };
 
     //GPU
@@ -40,7 +40,7 @@ public:
         int samples;
     };
 
-    //ƒfƒtƒHƒ‹ƒgƒeƒNƒXƒ`ƒƒŠi”[ƒfƒBƒŒƒNƒgƒŠ
+    //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ†ã‚¯ã‚¹ãƒãƒ£æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
     std::string kDefaultTextureDirectoryPath = "Resources/";
     HRESULT result;
 public:
@@ -50,25 +50,25 @@ public:
     static void Finalize();
 
     /// <summary>
-    /// ƒpƒCƒvƒ‰ƒCƒ“¶¬
+    /// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
     /// </summary>
     static void CreatGraphicsPipeline();
 
     /// <summary>
-    /// ƒV[ƒ“•`‰æ‘Oˆ—
+    /// ã‚·ãƒ¼ãƒ³æç”»å‰å‡¦ç†
     /// </summary>
-    /// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+    /// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
     static void PreDrawScene(ID3D12GraphicsCommandList* cmdList);
 
     /// <summary>
-    /// ƒV[ƒ“•`‰æˆ—
+    /// ã‚·ãƒ¼ãƒ³æç”»å‡¦ç†
     /// </summary>
     static void Draw(ID3D12GraphicsCommandList* cmdList);
 
     /// <summary>
-    /// ƒV[ƒ“•`‰æŒãˆ—
+    /// ã‚·ãƒ¼ãƒ³æç”»å¾Œå‡¦ç†
     /// </summary>
-    /// <param name="cmdList">ƒRƒ}ƒ“ƒhˆ—</param>
+    /// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰å‡¦ç†</param>
     static void PostDrawScene();
 
     static void SetShadeNumber(int SetShadeNumber);
@@ -77,7 +77,7 @@ public:
 
     static void SetRadialBlur(Vector2 senter, float intensity, int sample);
 
-private://Ã“Iƒƒ“ƒo•Ï”
+private://é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
     static const float clearColor[4];
 
     static ID3D12Device* device_;
@@ -88,26 +88,26 @@ private://Ã“Iƒƒ“ƒo•Ï”
 
     static VertexPosUv* vertMap;
 
-    static ComPtr<ID3D12Resource> vertBuff;	//’¸“_ƒoƒbƒtƒ@
+    static ComPtr<ID3D12Resource> vertBuff;	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 
-    //’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+    //é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
     static D3D12_VERTEX_BUFFER_VIEW vbView;
     static ComPtr<ID3D12Resource> texBuff[2];
 
     static ComPtr<ID3D12DescriptorHeap> descHeapSRV;
-    //[“xƒoƒbƒtƒ@
+    //æ·±åº¦ãƒãƒƒãƒ•ã‚¡
     static ComPtr<ID3D12Resource> depthBuff;
-    //RTV—p‚ÌƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+    //RTVç”¨ã®ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
     static ComPtr<ID3D12DescriptorHeap> descHeapRTV;
-    //DSV—p‚ÌƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+    //DSVç”¨ã®ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
     static ComPtr<ID3D12DescriptorHeap> descHeapDSV;
 
     static ComPtr<ID3D12PipelineState> pipelineState;
     static ComPtr<ID3D12RootSignature> rootSignature;
 private:
-    // ’è”ƒoƒbƒtƒ@
+    // å®šæ•°ãƒãƒƒãƒ•ã‚¡
     static ComPtr<ID3D12Resource> constDataBuff_;
-    // ƒ}ƒbƒsƒ“ƒOÏ‚İƒAƒhƒŒƒX
+    // ãƒãƒƒãƒ”ãƒ³ã‚°æ¸ˆã¿ã‚¢ãƒ‰ãƒ¬ã‚¹
     static SendDataGPU* dataMap;
 };
 

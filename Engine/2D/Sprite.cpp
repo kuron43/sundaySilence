@@ -12,13 +12,13 @@
 //	position = pos;
 //	color = color_;
 //	anchorPoint = anchorP;
-//	//ƒeƒNƒXƒ`ƒƒ”Ô†
+//	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
 //	textureIndex_ = texNum;
-//	// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+//	// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 //	anchorpoint = anchorP;
-//	// ¶‰E”½“]
+//	// å·¦å³åè»¢
 //	isFlipX = flipX;
-//	// ã‰º”½“]
+//	// ä¸Šä¸‹åè»¢
 //	isFlipY = flipY;
 //}
 
@@ -26,86 +26,86 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
 {
 	spritecomon = spritecommon_;
 
-	//ƒeƒNƒXƒ`ƒƒƒTƒCƒY‚ğƒCƒ[ƒW‚É‡‚í‚¹‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚ºã‚’ã‚¤ãƒ¡ãƒ¼ã‚¸ã«åˆã‚ã›ã‚‹
 	if (textureIndex != UINT32_MAX) {
 		textureIndex_ = textureIndex;
 		AdjustTextureSize();
-		//ƒeƒNƒXƒ`ƒƒƒTƒCƒY‚ğƒXƒvƒ‰ƒCƒg‚ÌƒTƒCƒY‚É“K—p
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚ºã‚’ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ã‚µã‚¤ã‚ºã«é©ç”¨
 		size_ = textureSize;
 	}
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-	D3D12_HEAP_PROPERTIES heapProp{}; // ƒq[ƒvİ’è
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ö‚Ì“]‘——p
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	D3D12_HEAP_PROPERTIES heapProp{}; // ãƒ’ãƒ¼ãƒ—è¨­å®š
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUã¸ã®è»¢é€ç”¨
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = spritecomon->GetDxCommon()->GetDevice()->CreateCommittedResource(
-		&heapProp, // ƒq[ƒvİ’è
+		&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&spritecomon->GetResourceDesc(), // ƒŠƒ\[ƒXİ’è
+		&spritecomon->GetResourceDesc(), // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
 
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
-	// ‘S’¸“_‚É‘Î‚µ‚Ä
+	// å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 	for (int i = 0; i < _countof(vertices); i++) {
-		vertMap[i] = vertices[i]; // À•W‚ğƒRƒs[
+		vertMap[i] = vertices[i]; // åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
 	}
-	// Œq‚ª‚è‚ğ‰ğœ
+	// ç¹‹ãŒã‚Šã‚’è§£é™¤
 	vertBuff->Unmap(0, nullptr);
 
-	// GPU‰¼‘zƒAƒhƒŒƒX
+	// GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-	// ’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 	vbView.SizeInBytes = spritecomon->GetSizeVB();
-	// ’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+	// é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
 	Update();
 
 	{
-		// ƒq[ƒvİ’è
+		// ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_PROPERTIES cbHeapProp{};
-		cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;                   // GPU‚Ö‚Ì“]‘——p
-		// ƒŠƒ\[ƒXİ’è
+		cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;                   // GPUã¸ã®è»¢é€ç”¨
+		// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_DESC cbResourceDesc{};
 		cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-		cbResourceDesc.Width = (sizeof(ConstBufferDataTransform) + 0xff) & ~0xff;   // 256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+		cbResourceDesc.Width = (sizeof(ConstBufferDataTransform) + 0xff) & ~0xff;   // 256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 		cbResourceDesc.Height = 1;
 		cbResourceDesc.DepthOrArraySize = 1;
 		cbResourceDesc.MipLevels = 1;
 		cbResourceDesc.SampleDesc.Count = 1;
 		cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-		// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 		result = spritecomon->GetDxCommon()->GetDevice()->CreateCommittedResource(
-			&cbHeapProp, // ƒq[ƒvİ’è
+			&cbHeapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 			D3D12_HEAP_FLAG_NONE,
-			&cbResourceDesc, // ƒŠƒ\[ƒXİ’è
+			&cbResourceDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&constBuffTransform));
 		assert(SUCCEEDED(result));
 
-		// ’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
-		result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform); // ƒ}ƒbƒsƒ“ƒO
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒãƒ”ãƒ³ã‚°
+		result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform); // ãƒãƒƒãƒ”ãƒ³ã‚°
 		assert(SUCCEEDED(result));
 	}
 
-	//•Às“Š‰es—ñ‚ÌŒvZ
+	//ä¸¦è¡ŒæŠ•å½±è¡Œåˆ—ã®è¨ˆç®—
 	constMapTransform->mat = Affin::matUnit();
 
-	// ƒq[ƒvİ’è
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
-	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;                   // GPU‚Ö‚Ì“]‘——p
-	// ƒŠƒ\[ƒXİ’è
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;                   // GPUã¸ã®è»¢é€ç”¨
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	cbResourceDesc.Width = (sizeof(ConstBufferDataMaterial) + 0xff) & ~0xff;   // 256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	cbResourceDesc.Width = (sizeof(ConstBufferDataMaterial) + 0xff) & ~0xff;   // 256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 	cbResourceDesc.Height = 1;
 	cbResourceDesc.DepthOrArraySize = 1;
 	cbResourceDesc.MipLevels = 1;
@@ -113,46 +113,46 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 
-	// Ë‰es—ñŒvZ
+	// å°„å½±è¡Œåˆ—è¨ˆç®—
 	matProjection.MakeOrthogonalL(
 		0.0f, (float)WinApp::window_width,
 		(float)WinApp::window_height, 0.0f,
 		0.0f, 1.0f, matProjection);
 
 
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = spritecomon->GetDxCommon()->GetDevice()->CreateCommittedResource(
-		&cbHeapProp, // ƒq[ƒvİ’è
+		&cbHeapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc, // ƒŠƒ\[ƒXİ’è
+		&cbResourceDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuffMaterial));
 	assert(SUCCEEDED(result));
 
-	// ’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
-	result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial); // ƒ}ƒbƒsƒ“ƒO
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒãƒ”ãƒ³ã‚°
+	result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial); // ãƒãƒƒãƒ”ãƒ³ã‚°
 	assert(SUCCEEDED(result));
 
-	// ’l‚ğ‘‚«‚Ş‚Æ©“®“I‚É“]‘—‚³‚ê‚é
-	constMapMaterial->color = Vector4(1, 1, 1, 1);              // RGBA‚Å”¼“§–¾‚ÌÔ
+	// å€¤ã‚’æ›¸ãè¾¼ã‚€ã¨è‡ªå‹•çš„ã«è»¢é€ã•ã‚Œã‚‹
+	constMapMaterial->color = Vector4(1, 1, 1, 1);              // RGBAã§åŠé€æ˜ã®èµ¤
 }
 
 void Sprite::Draw()
 {
 	matRot = Affin::matUnit();
-	matRot *= Affin::matRotateZ(XMConvertToRadians(rotation));//Z²ü‚è‚É0“x‰ñ“]‚µ‚Ä‚©‚ç
-	matTrans = Affin::matTrans(position.x, position.y, 0.0f);//(-50,0,0)•½sˆÚ“®
+	matRot *= Affin::matRotateZ(XMConvertToRadians(rotation));//Zè»¸å‘¨ã‚Šã«0åº¦å›è»¢ã—ã¦ã‹ã‚‰
+	matTrans = Affin::matTrans(position.x, position.y, 0.0f);//(-50,0,0)å¹³è¡Œç§»å‹•
 
-	matWorld = Affin::matUnit();//•ÏŒ`‚ğƒŠƒZƒbƒg
-	matWorld *= matRot;//ƒ[ƒ‹ƒhs—ñ‚ÉƒXƒP[ƒŠƒ“ƒO‚ğ”½‰f
+	matWorld = Affin::matUnit();//å¤‰å½¢ã‚’ãƒªã‚»ãƒƒãƒˆ
+	matWorld *= matRot;//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’åæ˜ 
 	matWorld *= matTrans;
 
 
-	// ’è”ƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 	HRESULT result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
 	if (SUCCEEDED(result)) {
-		constMapTransform->mat = matWorld * matProjection;	// s—ñ‚Ì‡¬	
+		constMapTransform->mat = matWorld * matProjection;	// è¡Œåˆ—ã®åˆæˆ	
 	}
 	result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);
 	if (SUCCEEDED(result)) {
@@ -161,14 +161,14 @@ void Sprite::Draw()
 
 	spritecomon->SetTextureCommands(textureIndex_);
 
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	spritecomon->GetDxCommon()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
-	// ’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	spritecomon->GetDxCommon()->GetCommandList()->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
-	// ’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	spritecomon->GetDxCommon()->GetCommandList()->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
-	// •`‰æƒRƒ}ƒ“ƒh
-	spritecomon->GetDxCommon()->GetCommandList()->DrawInstanced(_countof(vertices), 1, 0, 0); // ‘S‚Ä‚Ì’¸“_‚ğg‚Á‚Ä•`‰æ
+	// æç”»ã‚³ãƒãƒ³ãƒ‰
+	spritecomon->GetDxCommon()->GetCommandList()->DrawInstanced(_countof(vertices), 1, 0, 0); // å…¨ã¦ã®é ‚ç‚¹ã‚’ä½¿ã£ã¦æç”»
 
 }
 
@@ -182,32 +182,32 @@ void Sprite::Update()
 	float bottom = (1.0f - anchorpoint.x) * size_.y;
 
 	if (isFlipX)
-	{// ¶‰E“ü‚ê‘Ö‚¦
+	{// å·¦å³å…¥ã‚Œæ›¿ãˆ
 		left = -left;
 		right = -right;
 	}
 
 	if (isFlipY)
-	{// ã‰º“ü‚ê‘Ö‚¦
+	{// ä¸Šä¸‹å…¥ã‚Œæ›¿ãˆ
 		top = -top;
 		bottom = -bottom;
 	}
 
-	vertices[LB].pos = { left,	bottom,	0.0f }; // ¶‰º
-	vertices[LT].pos = { left,	top,	0.0f }; // ¶ã
-	vertices[RB].pos = { right,	bottom,	0.0f }; // ‰E‰º
-	vertices[RT].pos = { right,	top,	0.0f }; // ‰Eã
+	vertices[LB].pos = { left,	bottom,	0.0f }; // å·¦ä¸‹
+	vertices[LT].pos = { left,	top,	0.0f }; // å·¦ä¸Š
+	vertices[RB].pos = { right,	bottom,	0.0f }; // å³ä¸‹
+	vertices[RT].pos = { right,	top,	0.0f }; // å³ä¸Š
 
-	//w’è”Ô†‚Ì‰æ‘œ‚ª“Ç‚İ‚İÏ‚İ‚È‚ç
+	//æŒ‡å®šç•ªå·ã®ç”»åƒãŒèª­ã¿è¾¼ã¿æ¸ˆã¿ãªã‚‰
 	if (textureBuffer) {
-		//ƒeƒNƒXƒ`ƒƒî•ñæ“¾
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£æƒ…å ±å–å¾—
 		D3D12_RESOURCE_DESC resDesc = textureBuffer->GetDesc();
 
 		float tex_left = textureLeftTop.x / resDesc.Width;
 		float tex_right = (textureLeftTop.x + textureSize.x) / resDesc.Width;
 		float tex_top = textureLeftTop.y / resDesc.Height;
 		float texbottom = (textureLeftTop.y + textureSize.y) / resDesc.Height;
-		//’¸“_UV‚É”½‰f‚·‚é
+		//é ‚ç‚¹UVã«åæ˜ ã™ã‚‹
 		vertices[LB].uv = { tex_left,texbottom };
 		vertices[LT].uv = { tex_left,tex_top };
 		vertices[RB].uv = { tex_right,texbottom };
@@ -259,7 +259,7 @@ void Sprite::AdjustTextureSize()
 	ComPtr<ID3D12Resource> textureBuffer = spritecomon->GetTextureBuffer(textureIndex_);
 	assert(textureBuffer);
 
-	//ƒeƒNƒXƒ`ƒƒî•ñæ“¾
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£æƒ…å ±å–å¾—
 	D3D12_RESOURCE_DESC resDesc = textureBuffer->GetDesc();
 
 	textureSize.x = static_cast<float>(resDesc.Width);

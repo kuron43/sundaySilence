@@ -8,7 +8,7 @@ Player::~Player() {
 	delete model_;
 }
 
-/// シーンの更新を行う
+///
 void Player::Initialize() {
 	model_ = Model::LoadFromOBJ("cube");
 
@@ -18,13 +18,13 @@ void Player::Initialize() {
 
 }
 
-/// シーンの更新を行う
+///
 void Player::Update(Input* input) {
 	Move(input);
 	object_->Update();
 }
 
-/// シーンの描画を行う
+///
 void Player::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
 	object_->Draw();
@@ -38,7 +38,7 @@ void Player::Reset() {
 
 void Player::Move(Input* input) {
 	
-	float speed=1;
+	float speed = kMoveSpeed_;
 	if (input->KeyboardPush(DIK_R)) {
 		isSlow = true;
 	}
@@ -47,10 +47,10 @@ void Player::Move(Input* input) {
 	}
 
 	if (isSlow == true) {
-		speed = speed / 3;
+		speed = speed * 0.25f;
 	}
 	else {
-		speed = 1;
+		speed = kMoveSpeed_;
 	}
 
 	if (input->KeyboardPush(DIK_D)) {

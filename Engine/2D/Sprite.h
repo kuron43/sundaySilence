@@ -8,32 +8,32 @@
 #include "Affin.h"
 
 
-// ’¸“_ƒf[ƒ^\‘¢‘Ì
+// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 struct Vertex
 {
-	Vector3 pos; // xyzÀ•W
-	Vector2 uv;  // uvÀ•W
+	Vector3 pos; // xyzåº§æ¨™
+	Vector2 uv;  // uvåº§æ¨™
 };
-//ƒXƒvƒ‰ƒCƒg
+//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 class Sprite {
 public:
-	// Microsoft::WRL::‚ğÈ—ª
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ìiƒ}ƒeƒŠƒAƒ‹j
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ï¼ˆãƒãƒ†ãƒªã‚¢ãƒ«ï¼‰
 	struct ConstBufferDataMaterial {
-		Vector4 color; // F (RGBA)
+		Vector4 color; // è‰² (RGBA)
 	};
-	//’è”ƒoƒbƒtƒ@—p\‘¢‘Ìi‚RD•ÏŠ·s—ñj
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨æ§‹é€ ä½“ï¼ˆï¼“Då¤‰æ›è¡Œåˆ—ï¼‰
 	struct ConstBufferDataTransform {
-		Matrix4 mat;	//3D•ÏŠ·s—ñ
+		Matrix4 mat;	//3Då¤‰æ›è¡Œåˆ—
 	};
 
-	//’¸“_”Ô†
+	//é ‚ç‚¹ç•ªå·
 	enum VertexNumber {
-		LB,//¶‰º
-		LT,//¶ã
-		RB,//‰E‰º
-		RT,//‰Eã
+		LB,//å·¦ä¸‹
+		LT,//å·¦ä¸Š
+		RB,//å³ä¸‹
+		RT,//å³ä¸Š
 	};
 public:
 
@@ -45,7 +45,7 @@ public:
 		bool swapLR,
 		bool swapUD);
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex = UINT32_MAX);
 
 	void Draw();
@@ -84,37 +84,37 @@ public:
 
 	void SetSize(Vector2 size);
 
-	/// ã‰º”½“]‚Ìİ’è
+	/// ä¸Šä¸‹åè»¢ã®è¨­å®š
 	void SetIsFlipY(bool isFlipY);
 
-	/// ¶‰E”½“]‚Ìİ’è
+	/// å·¦å³åè»¢ã®è¨­å®š
 	void SetIsFlipX(bool isFlipX);
 
 private:
 protected:
-	//ƒeƒNƒXƒ`ƒƒƒTƒCƒY‚ğƒCƒ[ƒW‚É‡‚í‚¹‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚ºã‚’ã‚¤ãƒ¡ãƒ¼ã‚¸ã«åˆã‚ã›ã‚‹
 	void AdjustTextureSize();
 
 	SpriteCommon* spritecomon;
 	HRESULT result;
-	// ’¸“_ƒf[ƒ^
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	Vertex vertices[4] = {
 		// x      y     z       u     v
-		{{-0.4f, -0.7f, 0.0f}, {0.0f, 1.0f}}, // ¶‰º
-		{{-0.4f, +0.7f, 0.0f}, {0.0f, 0.0f}}, // ¶ã
-		{{+0.4f, -0.7f, 0.0f}, {1.0f, 1.0f}}, // ‰E‰º
-		{{+0.4f, +0.7f, 0.0f}, {1.0f, 0.0f}}, // ‰Eã
+		{{-0.4f, -0.7f, 0.0f}, {0.0f, 1.0f}}, // å·¦ä¸‹
+		{{-0.4f, +0.7f, 0.0f}, {0.0f, 0.0f}}, // å·¦ä¸Š
+		{{+0.4f, -0.7f, 0.0f}, {1.0f, 1.0f}}, // å³ä¸‹
+		{{+0.4f, +0.7f, 0.0f}, {1.0f, 0.0f}}, // å³ä¸Š
 	};
 
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-	Matrix4 matScale;//ƒXƒP[ƒŠƒ“ƒOs—ñ
+	Matrix4 matScale;//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—
 	Matrix4 matWorld;
-	Matrix4 matRot;//‰ñ“]s—ñ
-	Matrix4  matTrans;//•½sˆÚ“®s—ñ
+	Matrix4 matRot;//å›è»¢è¡Œåˆ—
+	Matrix4  matTrans;//å¹³è¡Œç§»å‹•è¡Œåˆ—
 
-	//À•W
+	//åº§æ¨™
 	Vector3 scale{ 0.5f, 0.5f, 1.0f };
 
 	Vector2 size_ = { 100.0f,100.0f };
@@ -137,24 +137,24 @@ protected:
 
 	Vertex* vertMap = nullptr;
 
-	//ƒeƒNƒXƒ`ƒƒ”Ô†
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
 	uint32_t textureIndex_ = 0;
 
-	//ƒeƒNƒXƒ`ƒƒ¶ãÀ•W
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£å·¦ä¸Šåº§æ¨™
 	Vector2 textureLeftTop = { 0.0f,0.0f };
-	//ƒeƒNƒXƒ`ƒƒØ‚èo‚µƒTƒCƒY
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åˆ‡ã‚Šå‡ºã—ã‚µã‚¤ã‚º
 	Vector2 textureSize = { 100.0f,100.0f };
 
 	Matrix4 matProjection;
 
-	// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+	// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 	Vector2 anchorpoint = { 0, 0 };
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> vertBuff = nullptr;
 
-	// ¶‰E”½“]
+	// å·¦å³åè»¢
 	bool isFlipX = false;
-	// ã‰º”½“]
+	// ä¸Šä¸‹åè»¢
 	bool isFlipY = false;
 };
