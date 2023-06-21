@@ -6,119 +6,119 @@
 
 
 
-// “ü—Í
+// å…¥åŠ›
 class Input
 {
 public:
 	// namespace
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public: // ƒƒ“ƒoŠÖ”
-	// ‰Šú‰»
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
+	// åˆæœŸåŒ–
 	void Initialize(WinApp* winApp);
 
-	// XV
+	// æ›´æ–°
 	void Update();
-#pragma region ƒL[ƒ{[ƒh—pŠÖ”
+#pragma region ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ç”¨é–¢æ•°
 
 	/// <summary>
-	/// ƒL[‚Ì‰Ÿ‰º‚ðƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®æŠ¼ä¸‹ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "keyNumber">ƒL[”Ô†(DIK_0 “™)</param>
-	/// <returns>‰Ÿ‚³‚ê‚Ä‚¢‚é‚©</returns>
+	/// <param name = "keyNumber">ã‚­ãƒ¼ç•ªå·(DIK_0 ç­‰)</param>
+	/// <returns>æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹</returns>
 	bool KeyboardPush(BYTE keyNumber);
 
 	/// <summary>
-	/// ƒL[‚ÌƒgƒŠƒK[‚ðƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// </param name="keyNumber">ƒL[”Ô†( DIK_0 “™)</param>
-	/// <reutrns>ƒgƒŠƒK[‚©</params>
+	/// </param name="keyNumber">ã‚­ãƒ¼ç•ªå·( DIK_0 ç­‰)</param>
+	/// <reutrns>ãƒˆãƒªã‚¬ãƒ¼ã‹</params>
 	bool KeyboardTrigger(BYTE keyNumber);
 
 	/// <summary>
-	/// ƒL[‚ÌƒgƒŠƒK[‚ðƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// </param name="keyNumber">ƒL[”Ô†( DIK_0 “™)</param>
-	/// <reutrns>—£‚³‚ê‚½‚©</params>
+	/// </param name="keyNumber">ã‚­ãƒ¼ç•ªå·( DIK_0 ç­‰)</param>
+	/// <reutrns>é›¢ã•ã‚ŒãŸã‹</params>
 	bool KeyboardRelease(BYTE keyNumber);
 
-#pragma endregion ƒL[ƒ{[ƒh—pŠÖ”
+#pragma endregion ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ç”¨é–¢æ•°
 
-#pragma region Xbox Pad—pŠÖ”
+#pragma region Xbox Padç”¨é–¢æ•°
 
 	/// <summary>
-	/// ƒRƒ“ƒgƒ[ƒ‰[ƒ{ƒ^ƒ“‚ÌƒgƒŠƒK[“ü—Í
+	/// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ãƒœã‚¿ãƒ³ã®ãƒˆãƒªã‚¬ãƒ¼å…¥åŠ›
 	/// </summary>
-	/// <param name="button">ƒ`ƒFƒbƒN‚µ‚½‚¢ƒ{ƒ^ƒ“</param>
-	/// <returns>‰Ÿ‚µ‚½‚©</returns>
+	/// <param name="button">ãƒã‚§ãƒƒã‚¯ã—ãŸã„ãƒœã‚¿ãƒ³</param>
+	/// <returns>æŠ¼ã—ãŸã‹</returns>
 	bool Pad_X_ButtonTrigger(ControllerButton button);
 
 	/// <summary>
-	/// ƒRƒ“ƒgƒ[ƒ‰[ƒXƒeƒBƒbƒN‚ÌƒgƒŠƒK[“ü—Í
+	/// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®ãƒˆãƒªã‚¬ãƒ¼å…¥åŠ›
 	/// </summary>
-	/// <param name="stickInput">ƒRƒ“ƒgƒ[ƒ‰[ƒXƒeƒBƒbƒN•ûŒü</param>
-	/// <param name="deadRange">ƒfƒbƒhƒ][ƒ“‚Ì”ÍˆÍ</param>
-	/// <param name="deadRate">ƒfƒbƒhƒ][ƒ“”»’è‚Ì“x‡‚¢‰Šú’l1.0f</param>
-	/// <returns>“|‚µ‚½‚©‚Ç‚¤‚©</returns>
+	/// <param name="stickInput">ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚¹ãƒ†ã‚£ãƒƒã‚¯æ–¹å‘</param>
+	/// <param name="deadRange">ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³ã®ç¯„å›²</param>
+	/// <param name="deadRate">ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³åˆ¤å®šã®åº¦åˆã„åˆæœŸå€¤1.0f</param>
+	/// <returns>å€’ã—ãŸã‹ã©ã†ã‹</returns>
 	bool Pad_X_StickTrigger(ControllerStick stickInput, const float& deadRange, const Vector2& deadRate);
 
 	/// <summary>
-	/// ƒRƒ“ƒgƒ[ƒ‰[ƒ{ƒ^ƒ“‚Ì“ü—Í
+	/// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ãƒœã‚¿ãƒ³ã®å…¥åŠ›
 	/// </summary>
-	/// <param name="button">ƒ`ƒFƒbƒN‚µ‚½‚¢ƒ{ƒ^ƒ“</param>
-	/// <returns>‰Ÿ‚µ‚½‚©</returns>
+	/// <param name="button">ãƒã‚§ãƒƒã‚¯ã—ãŸã„ãƒœã‚¿ãƒ³</param>
+	/// <returns>æŠ¼ã—ãŸã‹</returns>
 	bool Pad_X_ButtonInput(ControllerButton button);
 
 	/// <summary>
-	/// ƒRƒ“ƒgƒ[ƒ‰[ƒXƒeƒBƒbƒN‚Ì“ü—Í
+	/// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›
 	/// </summary>
-	/// <param name="stickInput">ƒRƒ“ƒgƒ[ƒ‰[ƒXƒeƒBƒbƒN•ûŒü</param>
-	/// <param name="deadRange">ƒfƒbƒhƒ][ƒ“‚Ì”ÍˆÍ</param>
-	/// <param name="deadRate">ƒfƒbƒhƒ][ƒ“”»’è‚Ì“x‡‚¢‰Šú’l1.0f</param>
-	/// <returns>“|‚µ‚½‚©‚Ç‚¤‚©</returns>
+	/// <param name="stickInput">ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚¹ãƒ†ã‚£ãƒƒã‚¯æ–¹å‘</param>
+	/// <param name="deadRange">ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³ã®ç¯„å›²</param>
+	/// <param name="deadRate">ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³åˆ¤å®šã®åº¦åˆã„åˆæœŸå€¤1.0f</param>
+	/// <returns>å€’ã—ãŸã‹ã©ã†ã‹</returns>
 	bool Pad_X_StickInput(ControllerStick stickInput, const float& deadRange, const Vector2& deadRate);
 
 	/// <summary>
-	/// ƒRƒ“ƒgƒ[ƒ‰[ƒ{ƒ^ƒ“‚Ì—£‚µ‚½uŠÔ
+	/// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ãƒœã‚¿ãƒ³ã®é›¢ã—ãŸçž¬é–“
 	/// </summary>
-	/// <param name="button">ƒ`ƒFƒbƒN‚µ‚½‚¢ƒ{ƒ^ƒ“</param>
-	/// <returns>—£‚µ‚½‚©</returns>
+	/// <param name="button">ãƒã‚§ãƒƒã‚¯ã—ãŸã„ãƒœã‚¿ãƒ³</param>
+	/// <returns>é›¢ã—ãŸã‹</returns>
 	bool Pad_X_ButtonOffTrigger(ControllerButton button);
 
 	/// <summary>
-	/// ƒRƒ“ƒgƒ[ƒ‰[ƒXƒeƒBƒbƒN‚Ì—£‚µ‚½uŠÔ
+	/// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®é›¢ã—ãŸçž¬é–“
 	/// </summary>
-	/// <param name="stickInput">ƒRƒ“ƒgƒ[ƒ‰[ƒXƒeƒBƒbƒN•ûŒü</param>
-	/// <param name="deadRange">ƒfƒbƒhƒ][ƒ“‚Ì”ÍˆÍ‰Šú’l0.3f</param>
-	/// <param name="deadRate">ƒfƒbƒhƒ][ƒ“”»’è‚Ì“x‡‚¢‰Šú’l1.0f</param>
-	/// <returns>—£‚µ‚½‚©</returns>
+	/// <param name="stickInput">ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚¹ãƒ†ã‚£ãƒƒã‚¯æ–¹å‘</param>
+	/// <param name="deadRange">ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³ã®ç¯„å›²åˆæœŸå€¤0.3f</param>
+	/// <param name="deadRate">ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³åˆ¤å®šã®åº¦åˆã„åˆæœŸå€¤1.0f</param>
+	/// <returns>é›¢ã—ãŸã‹</returns>
 	bool Pad_X_StickOffTrigger(ControllerStick stickInput, const float& deadRang, const Vector2& deadRate);
 
 
 	/// <summary>
-	/// ƒRƒ“ƒgƒ[ƒ‰[‚Ì¶ƒXƒeƒBƒbƒN‚ÌƒxƒNƒgƒ‹
+	/// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®ãƒ™ã‚¯ãƒˆãƒ«
 	/// </summary>
-	/// <param name="deadRate">ƒfƒbƒhƒ][ƒ“”»’è‚Ì“x‡‚¢‰Šú’l1.0f</param>
-	/// <returns>ƒxƒNƒgƒ‹</returns>
+	/// <param name="deadRate">ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³åˆ¤å®šã®åº¦åˆã„åˆæœŸå€¤1.0f</param>
+	/// <returns>ãƒ™ã‚¯ãƒˆãƒ«</returns>
 	Vector2 Pad_X_GetLeftStickVec(const Vector2& deadRate);
 
 	/// <summary>
-	/// ƒRƒ“ƒgƒ[ƒ‰[‚Ì‰EƒXƒeƒBƒbƒN‚ÌƒxƒNƒgƒ‹
+	/// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®ãƒ™ã‚¯ãƒˆãƒ«
 	/// </summary>
-	/// <param name="deadRate">ƒfƒbƒhƒ][ƒ“”»’è‚Ì“x‡‚¢‰Šú’l1.0f</param>
-	/// <returns>ƒxƒNƒgƒ‹</returns>
+	/// <param name="deadRate">ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³åˆ¤å®šã®åº¦åˆã„åˆæœŸå€¤1.0f</param>
+	/// <returns>ãƒ™ã‚¯ãƒˆãƒ«</returns>
 	Vector2 Pad_X_GetRightStickVec(const Vector2& deadRate);
 
 	/// <summary>
-	/// ƒRƒ“ƒgƒ[ƒ‰[‚ðU“®‚³‚¹‚é
+	/// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚’æŒ¯å‹•ã•ã›ã‚‹
 	/// </summary>
-	/// <param name="power">U“®‚Ì‹­‚³0.0f`1.0f</param>
-	/// <param name="span">U“®‚ÌŽžŠÔƒtƒŒ[ƒ€</param>
+	/// <param name="power">æŒ¯å‹•ã®å¼·ã•0.0fï½ž1.0f</param>
+	/// <param name="span">æŒ¯å‹•ã®æ™‚é–“ãƒ•ãƒ¬ãƒ¼ãƒ </param>
 	void Pad_X_ShakeController(const float& power, const int& span);
 
-#pragma endregion Xbox Pad—pŠÖ”
+#pragma endregion Xbox Padç”¨é–¢æ•°
 
-private: // ƒƒ“ƒo•Ï”
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 	
 	Keyboard_Input* keybord_;
 	Pad_X_Input* Xpad_;

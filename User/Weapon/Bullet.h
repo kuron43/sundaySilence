@@ -4,13 +4,32 @@
 class Bullet
 {
 public:
-	bool isSlow;
 	int tribe;
 	int weapon;
+	bool isTeam;
+	bool isDead;
 
 	
-public:
+	std::unique_ptr<Object3d> bulletObj_;
+	static Model* bulletModel_;
 
+	Vector3 moveVec;
+
+public:
+	//~Bullet();
+	void Initialize(const Vector3& position, Vector3 move);
+
+	void Update();
+
+	void Draw();
+
+	void OnColision();
+
+	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bulletObj_->wtf.matWorld); };
+
+	bool IsDead() const { return isDead; }
+
+	void SetBullModel(Model* model) { Bullet::bulletModel_ = model; }
 
 
 };

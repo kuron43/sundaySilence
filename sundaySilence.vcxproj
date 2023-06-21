@@ -60,6 +60,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)User\Weapon;$(SolutionDir)User\Human;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\Framework;$(SolutionDir)External\imgui;$(SolutionDir)External\DirectXTex;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -138,9 +139,12 @@
     <ClCompile Include="User\GAMESCENE\scene\IScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\PauseScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
+    <ClCompile Include="User\Human\Enemy.cpp" />
+    <ClCompile Include="User\Weapon\Assault.cpp" />
     <ClCompile Include="User\Weapon\Bullet.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
     <ClCompile Include="User\Human\Player.cpp" />
+    <ClCompile Include="User\Weapon\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
@@ -189,9 +193,12 @@
     <ClInclude Include="User\GAMESCENE\scene\IScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\PauseScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />
+    <ClInclude Include="User\Human\Enemy.h" />
+    <ClInclude Include="User\Weapon\Assault.h" />
     <ClInclude Include="User\Weapon\Bullet.h" />
     <ClInclude Include="User\Human\Human.h" />
     <ClInclude Include="User\Human\Player.h" />
+    <ClInclude Include="User\Weapon\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli" />

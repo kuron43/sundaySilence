@@ -9,10 +9,10 @@
 
 class LightGroup
 {
-private://ƒGƒCƒŠƒAƒX
-	//Microsoft::WRL::‚ğÈ—ª
+private://ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//Microsoft::WRL::ã‚’çœç•¥
 	template <class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//DirecX::‚ğÈ—ª
+	//DirecX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
@@ -22,72 +22,72 @@ private://ƒGƒCƒŠƒAƒX
 public: 
 	static const int DirLightNum = 1;
 
-	//“_ŒõŒ¹‚Ì”
+	//ç‚¹å…‰æºã®æ•°
 	static const int PointLightNum = 3;
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚Ì”
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®æ•°
 	static const int SpotLightNum = 3;
 
-	//ŠÛ‰e‚Ì”
+	//ä¸¸å½±ã®æ•°
 	static const int CircleShadowNum = 1;
 
-public://ƒTƒuƒNƒ‰ƒX
+public://ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 	struct ConstBufferData
 	{
 		XMFLOAT3 ambientColor;
 		float pad1;
 
-		//•½sŒõŒ¹
+		//å¹³è¡Œå…‰æº
 		DirectionalLight::ConstBufferData dirLights[DirLightNum];
-		//“_ŒõŒ¹—p
+		//ç‚¹å…‰æºç”¨
 		PointLight::ConstBufferData pointLights[PointLightNum];
-		//ƒXƒ|ƒbƒgƒ‰ƒCƒg—p
+		//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆç”¨
 		SpotLight::ConstBufferData spotLights[SpotLightNum];
-		//ŠÛ‰e—p
+		//ä¸¸å½±ç”¨
 		CircleShadow::ConstBufferData circleShadows[CircleShadowNum];
 	};
 	HRESULT result;
 
-private://Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
-	static ID3D12Device* device;
+private://é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
+	static ID3D12Device* device_;
 
 public:
-	//Ã“Iƒƒ“ƒoŠÖ”
+	//é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	static void StaticInitialize(ID3D12Device* device);
 
 public:
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ì¶¬
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ç”Ÿæˆ
 	/// </summary>
 	/// <returns></returns>
 	static LightGroup* Create();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	bool Initialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ’è”ƒoƒbƒtƒ@“]‘—
+	/// å®šæ•°ãƒãƒƒãƒ•ã‚¡è»¢é€
 	/// </summary>
 	void TransferConstBuffer();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterIndex);
 
-	//•W€ƒ‰ƒCƒg
+	//æ¨™æº–ãƒ©ã‚¤ãƒˆ
 	void DefaultLightSetting();
 
-	//•½s
+	//å¹³è¡Œ
 	void SetAmbientColor(const XMFLOAT3& color) {
 		ambientColor = color;
 		dirty = true;
@@ -109,7 +109,7 @@ public:
 		dirty = true;
 	}
 
-	//“_ŒõŒ¹
+	//ç‚¹å…‰æº
 	void SetPointLightActive(int index, bool active) {
 		assert(0 <= index && index < PointLightNum);
 		pointLights[index].SetActive(active);
@@ -133,7 +133,7 @@ public:
 		dirty = true;
 	}
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 	void SetSpotLightActive(int index, bool active) {
 		assert(0 <= index && index < SpotLightNum);
 		spotLights[index].SetActive(active);
@@ -165,7 +165,7 @@ public:
 	}
 
 
-	//ƒVƒƒƒhƒE
+	//ã‚·ãƒ£ãƒ‰ã‚¦
 	void SetCircleShadowActive(int index, bool active) {
 		assert(0 <= index && index < CircleShadowNum);
 		circleShadows[index].SetActive(active);
@@ -204,22 +204,22 @@ public:
 
 
 private:
-	//ƒƒ“ƒo•Ï”
-	//’è”ƒoƒbƒtƒ@
+	//ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuff;
-	//ŠÂ‹«Œõ‚ÌF
+	//ç’°å¢ƒå…‰ã®è‰²
 	XMFLOAT3 ambientColor = { 1,1,1 };
 
-	//•½sŒõŒ¹‚Ì”z—ñ
+	//å¹³è¡Œå…‰æºã®é…åˆ—
 	DirectionalLight dirLights[DirLightNum];
-	//“_ŒõŒ¹‚Ì”z—ñ
+	//ç‚¹å…‰æºã®é…åˆ—
 	PointLight pointLights[PointLightNum];
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg”z—ñ
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆé…åˆ—
 	SpotLight spotLights[SpotLightNum];
-	//ŠÛ‰e‚Ì”z—ñ
+	//ä¸¸å½±ã®é…åˆ—
 	CircleShadow circleShadows[CircleShadowNum];
 
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool dirty = false;
 
 };

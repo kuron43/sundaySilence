@@ -8,8 +8,8 @@
 
 class SceneManager;
 
-// シーン管理のための基底クラス
-// (純粋基底クラス)
+// 繧ｷ繝ｼ繝ｳ邂｡逅�縺ｮ縺溘ａ縺ｮ蝓ｺ蠎輔け繝ｩ繧ｹ
+// (邏皮ｲ句渕蠎輔け繝ｩ繧ｹ)
 
 class IScene
 {
@@ -24,13 +24,13 @@ public:
 	virtual ~IScene();
 
 	//virtual Scene Create(SceneManager& controller) = 0;
-	/// シーンの更新を行う
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ繧定｡後≧
 	virtual void Initialize() = 0;
 
-	/// シーンの更新を行う
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ繧定｡後≧
 	virtual void Update(Input* input) = 0;
 
-	/// シーンの描画を行う
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ謠冗判繧定｡後≧
 	virtual void Draw() = 0;
 
 };

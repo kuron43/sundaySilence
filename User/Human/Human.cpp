@@ -8,16 +8,16 @@ Human::~Human() {
 
 }
 
-/// シーンの更新を行う
+/// 繧ｷ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ繧定｡後≧
 void Human::Initialize() {
 
 }
 
-/// シーンの更新を行う
+/// 繧ｷ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ繧定｡後≧
 void Human::Update(Input* input) {
 
 }
 
-/// シーンの描画を行う
+/// 繧ｷ繝ｼ繝ｳ縺ｮ謠冗判繧定｡後≧
 void Human::Draw(DirectXCommon* dxCommon) {
 }

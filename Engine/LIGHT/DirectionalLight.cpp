@@ -3,44 +3,44 @@
 using namespace DirectX;
 
 /// <summary>
-/// Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ì
+/// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®å®Ÿä½“
 /// </summary>
-ID3D12Device* DirectionalLight::device = nullptr;
+ID3D12Device* DirectionalLight::device_ = nullptr;
 
 void DirectionalLight::StaticInitialize(ID3D12Device* device)
 {
-	//Ä‰Šú‰»ƒ`ƒFƒbƒN
-	assert(!DirectionalLight::device);
-	//Ã“Iƒƒ“ƒo•Ï”‚ÌƒZƒbƒg
-	DirectionalLight::device = device;
+	//å†åˆæœŸåŒ–ãƒã‚§ãƒƒã‚¯
+	assert(!DirectionalLight::device_);
+	//é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®ã‚»ãƒƒãƒˆ
+	DirectionalLight::device_ = device;
 }
 
 bool DirectionalLight::Initialize()
 {
-	// ƒq[ƒvİ’è
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
-	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;                   // GPU‚Ö‚Ì“]‘——p
-	// ƒŠƒ\[ƒXİ’è
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;                   // GPUã¸ã®è»¢é€ç”¨
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	cbResourceDesc.Width = (sizeof(ConstBufferData) + 0xff) & ~0xff;   // 256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	cbResourceDesc.Width = (sizeof(ConstBufferData) + 0xff) & ~0xff;   // 256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 	cbResourceDesc.Height = 1;
 	cbResourceDesc.DepthOrArraySize = 1;
 	cbResourceDesc.MipLevels = 1;
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	/*ID3D12Resource* constBuff = nullptr;*/
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
-	result = device->CreateCommittedResource(
-		&cbHeapProp, // ƒq[ƒvİ’è
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
+	result = device_->CreateCommittedResource(
+		&cbHeapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc, // ƒŠƒ\[ƒXİ’è
+		&cbResourceDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuff));
 	assert(SUCCEEDED(result));
 
-	//’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	TransferConstBuffer();
 
 	return true;
@@ -48,32 +48,32 @@ bool DirectionalLight::Initialize()
 
 void DirectionalLight::TransferConstBuffer()
 {
-	//’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	ConstBufferData* constMap = nullptr;
 	result = constBuff->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) {
-		constMap->lightv = -lightdir;
-		constMap->lightcolor = lightcolor;
+		constMap->lightv = -lightdir_;
+		constMap->lightcolor = lightcolor_;
 		constBuff->Unmap(0, nullptr);
 	}
 }
 
 void DirectionalLight::SetLightDir(const Vector4& lightdir)
 {
-	//³‹K‰»‚µ‚ÄƒZƒbƒg
-	this->lightdir = lightdir.Normalization();
+	//æ­£è¦åŒ–ã—ã¦ã‚»ãƒƒãƒˆ
+	lightdir_ = lightdir.Normalization();
 	dirty = true;
 }
 
 void DirectionalLight::SetLightColor(const Vector3& lightcolor)
 {
-	this->lightcolor = lightcolor;
+	lightcolor_ = lightcolor;
 	dirty = true;
 }
 
 void DirectionalLight::Update()
 {
-	//’l‚ÌXV‚ª‚ ‚Á‚½‚¾‚¯’è”ƒoƒbƒtƒ@‚É“]‘—‚·‚é
+	//å€¤ã®æ›´æ–°ãŒã‚ã£ãŸæ™‚ã ã‘å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«è»¢é€ã™ã‚‹
 	if (dirty) {
 		TransferConstBuffer();
 		dirty = false;
@@ -82,20 +82,20 @@ void DirectionalLight::Update()
 
 void DirectionalLight::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterIndex)
 {
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğƒZƒbƒg
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	cmdList->SetGraphicsRootConstantBufferView(rootParameterIndex,
 		constBuff->GetGPUVirtualAddress());
 }
 
 DirectionalLight* DirectionalLight::Create()
 {
-	//3DƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	DirectionalLight* instance = new DirectionalLight();
 	if (instance == nullptr) {
 		return nullptr;
 	}
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!instance->Initialize()) {
 		delete instance;
 		assert(0);

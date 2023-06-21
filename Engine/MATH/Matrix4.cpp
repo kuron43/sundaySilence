@@ -22,7 +22,7 @@ Matrix4::Matrix4(float num) {
 
 }
 
-// ¬•ª‚ğw’è‚µ‚Ä‚Ì¶¬
+// æˆåˆ†ã‚’æŒ‡å®šã—ã¦ã®ç”Ÿæˆ
 Matrix4::Matrix4(
 	float m00, float m01, float m02, float m03,
 	float m10, float m11, float m12, float m13,
@@ -52,51 +52,51 @@ Matrix4 Matrix4::MakeInverse(const Matrix4* mat)
 {
 	assert(mat);
 
-	//‘|‚«o‚µ–@‚ğs‚¤s—ñ
+	//æƒãå‡ºã—æ³•ã‚’è¡Œã†è¡Œåˆ—
 	float sweep[4][8]{};
-	//’è””{—p
+	//å®šæ•°å€ç”¨
 	float constTimes = 0.0f;
-	//‹–—e‚·‚éŒë·
+	//è¨±å®¹ã™ã‚‹èª¤å·®
 	float MAX_ERR = 1e-10f;
-	//–ß‚è’l—p
+	//æˆ»ã‚Šå€¤ç”¨
 	Matrix4 retMat;
 
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			//weep‚Ì¶‘¤‚É‹ts—ñ‚ğ‹‚ß‚és—ñ‚ğƒZƒbƒg
+			//weepã®å·¦å´ã«é€†è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹è¡Œåˆ—ã‚’ã‚»ãƒƒãƒˆ
 			sweep[i][j] = mat->m[i][j];
 
-			//sweep‚Ì‰E‘¤‚É’PˆÊs—ñ‚ğƒZƒbƒg
+			//sweepã®å³å´ã«å˜ä½è¡Œåˆ—ã‚’ã‚»ãƒƒãƒˆ
 			sweep[i][4 + j] = MakeIdentity().m[i][j];
 		}
 	}
 
-	//‘S‚Ä‚Ì—ñ‚Ì‘ÎŠp¬•ª‚É‘Î‚·‚éŒJ‚è•Ô‚µ
+	//å…¨ã¦ã®åˆ—ã®å¯¾è§’æˆåˆ†ã«å¯¾ã™ã‚‹ç¹°ã‚Šè¿”ã—
 	for (int i = 0; i < 4; i++)
 	{
-		//Å‘å‚Ìâ‘Î’l‚ğ’–Ú‘ÎŠp¬•ª‚Ìâ‘Î’l‚Æ‰¼’è
-		float max = fabs(sweep[i][i]);
+		//æœ€å¤§ã®çµ¶å¯¾å€¤ã‚’æ³¨ç›®å¯¾è§’æˆåˆ†ã®çµ¶å¯¾å€¤ã¨ä»®å®š
+		float max = float(fabs(sweep[i][i]));
 		int maxIndex = i;
 
-		//i—ñ–Ú‚ªÅ‘å‚Ìâ‘Î’l‚Æ‚È‚és‚ğ’T‚·
+		//iåˆ—ç›®ãŒæœ€å¤§ã®çµ¶å¯¾å€¤ã¨ãªã‚‹è¡Œã‚’æ¢ã™
 		for (int j = i + 1; j < 4; j++)
 		{
 			if (fabs(sweep[j][i]) > max)
 			{
-				max = fabs(sweep[j][i]);
+				max = float(fabs(sweep[j][i]));
 				maxIndex = j;
 			}
 		}
 
 		if (fabs(sweep[maxIndex][i]) <= MAX_ERR)
 		{
-			//‹ts—ñ‚Í‹‚ß‚ç‚ê‚È‚¢
+			//é€†è¡Œåˆ—ã¯æ±‚ã‚ã‚‰ã‚Œãªã„
 			return MakeIdentity();
 		}
 
-		//‘€ì(1):is–Ú‚ÆmaxIndexs–Ú‚ğ“ü‚ê‘Ö‚¦‚é
+		//æ“ä½œ(1):iè¡Œç›®ã¨maxIndexè¡Œç›®ã‚’å…¥ã‚Œæ›¿ãˆã‚‹
 		if (i != maxIndex)
 		{
 			for (int j = 0; j < 8; j++)
@@ -107,38 +107,38 @@ Matrix4 Matrix4::MakeInverse(const Matrix4* mat)
 			}
 		}
 
-		//sweep[i][i]‚ÉŠ|‚¯‚é‚Æ1‚É‚È‚é’l‚ğ‹‚ß‚é
+		//sweep[i][i]ã«æ›ã‘ã‚‹ã¨1ã«ãªã‚‹å€¤ã‚’æ±‚ã‚ã‚‹
 		constTimes = 1 / sweep[i][i];
 
-		//‘€ì(2):ps–Ú‚ğa”{‚·‚é
+		//æ“ä½œ(2):pè¡Œç›®ã‚’aå€ã™ã‚‹
 		for (int j = 0; j < 8; j++)
 		{
-			//‚±‚ê‚É‚æ‚èsweep[i][i]‚ª1‚É‚È‚é
+			//ã“ã‚Œã«ã‚ˆã‚Šsweep[i][i]ãŒ1ã«ãªã‚‹
 			sweep[i][j] *= constTimes;
 		}
 
-		//‘€ì(3)‚É‚æ‚èis–ÚˆÈŠO‚Ìs‚Ìi—ñ–Ú‚ğ0‚É‚·‚é
+		//æ“ä½œ(3)ã«ã‚ˆã‚Šiè¡Œç›®ä»¥å¤–ã®è¡Œã®iåˆ—ç›®ã‚’0ã«ã™ã‚‹
 		for (int j = 0; j < 4; j++)
 		{
 			if (j == i)
 			{
-				//is–Ú‚Í‚»‚Ì‚Ü‚Ü
+				//iè¡Œç›®ã¯ãã®ã¾ã¾
 				continue;
 			}
 
-			//is–Ú‚ÉŠ|‚¯‚é’l‚ğ‹‚ß‚é
+			//iè¡Œç›®ã«æ›ã‘ã‚‹å€¤ã‚’æ±‚ã‚ã‚‹
 			constTimes = -sweep[j][i];
 
 			for (int k = 0; k < 8; k++)
 			{
-				//js–Ú‚Éis–Ú‚ğa”{‚µ‚½s‚ğ‘«‚·
-				//‚±‚ê‚É‚æ‚èsweep[j][i]‚ª0‚É‚È‚é
+				//jè¡Œç›®ã«iè¡Œç›®ã‚’aå€ã—ãŸè¡Œã‚’è¶³ã™
+				//ã“ã‚Œã«ã‚ˆã‚Šsweep[j][i]ãŒ0ã«ãªã‚‹
 				sweep[j][k] += sweep[i][k] * constTimes;
 			}
 		}
 	}
 
-	//sweep‚Ì‰E”¼•ª‚ªmat‚Ì‹ts—ñ
+	//sweepã®å³åŠåˆ†ãŒmatã®é€†è¡Œåˆ—
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -176,7 +176,7 @@ void Matrix4::MakeOrthogonalL(float left, float right, float bottom, float top, 
 void Matrix4::MakePerspectiveL(float fovAngleY, float aspect, float near_, float far_, Matrix4& matrix)
 {
 
-	float h = 1 / tan(fovAngleY * 0.5);
+	float h = float(1 / tan(fovAngleY * 0.5f));
 	float w = h / aspect;
 	float a = far_ / (far_ - near_);
 	float b = (-near_ * far_) / (far_ - near_);
@@ -242,13 +242,13 @@ Matrix4& operator*=(Matrix4& m1, const Matrix4& m2) {
 
 
 
-// 2€‰‰ZqƒI[ƒo[ƒ[ƒh ( s—ñ‚Æs—ñ‚ÌÏ )
+// 2é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ ( è¡Œåˆ—ã¨è¡Œåˆ—ã®ç© )
 const Matrix4 operator*(const Matrix4& m1, const Matrix4& m2) {
 	Matrix4 result = m1;
 
 	return result *= m2;
 }
-//2€‰‰ZqƒI[ƒo[ƒ[ƒh ( ƒxƒNƒgƒ‹‚Æs—ñ‚ÌÏ )
+//2é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ ( ãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®ç© )
 const Vector3 operator*(const Vector3& v, const Matrix4& m2) {
 	Matrix4 mat = Affin::matUnit();
 	Vector3 result = mat.transform(v, m2);

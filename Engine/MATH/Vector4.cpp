@@ -17,6 +17,20 @@ float Vector4::Length()const {
 	return std::sqrt(x * x + y * y + z * z + w * w);
 }
 
+Vector4 Vector4::Normalization() const
+{
+	Vector4 tmp(*this);
+
+	float len = Length();
+	if (len != 0)
+	{
+		return tmp /= len;
+
+	}
+
+	return tmp;
+}
+
 Vector4& Vector4::Normalize() {
 	float len = Length();
 	if (len != 0) {

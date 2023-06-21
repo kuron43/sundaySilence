@@ -6,98 +6,98 @@
 #include "Affin.h"
 
 class DirectionalLight {
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
-	static ID3D12Device* device;
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
+	static ID3D12Device* device_;
 
-private://ƒGƒCƒŠƒAƒX
-	////Microsoft::WRL::‚ğÈ—ª
+private://ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	////Microsoft::WRL::ã‚’çœç•¥
 	template <class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
-	////DirecX::‚ğÈ—ª
+	////DirecX::ã‚’çœç•¥
 	//using XMFLOAT2 = DirectX::XMFLOAT2;
 	//using XMFLOAT3 = DirectX::XMFLOAT3;
 	//using XMFLOAT4 = DirectX::XMFLOAT4;
 	//using XMVECTOR = DirectX::XMVECTOR;
 	//using XMMATRIX = DirectX::XMMATRIX;
 
-public://ƒTƒuƒNƒ‰ƒX@
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢
+public://ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã€€
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ 
 	struct ConstBufferData
 	{
-		Vector4 lightv; //ƒ‰ƒCƒg‚Ö‚Ì•ûŒü‚ğ•\‚·ƒxƒNƒgƒ‹
-		Vector3 lightcolor; //ƒ‰ƒCƒg‚ÌF
+		Vector4 lightv; //ãƒ©ã‚¤ãƒˆã¸ã®æ–¹å‘ã‚’è¡¨ã™ãƒ™ã‚¯ãƒˆãƒ«
+		Vector3 lightcolor; //ãƒ©ã‚¤ãƒˆã®è‰²
 		unsigned int active;
 	};
 
 	HRESULT result;
 
-public://Ã“IƒƒCƒoŠÖ”
+public://é™çš„ãƒ¡ã‚¤ãƒé–¢æ•°
 	/// <summary>
-	/// Ã“I‰Šú‰»
+	/// é™çš„åˆæœŸåŒ–
 	/// </summary>
 	static void StaticInitialize(ID3D12Device* device);
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	bool Initialize();
 
 	/// <summary>
-	/// ’è”ƒoƒbƒtƒ@“]‘—
+	/// å®šæ•°ãƒãƒƒãƒ•ã‚¡è»¢é€
 	/// </summary>
 	void TransferConstBuffer();
 
 	/// <summary>
-	/// ƒ‰ƒCƒg•ûŒü‚ğƒZƒbƒg
+	/// ãƒ©ã‚¤ãƒˆæ–¹å‘ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
 	void SetLightDir(const Vector4& lightdir);
 
 	/// <summary>
-	/// ƒ‰ƒCƒgF‚ğƒZƒbƒg
+	/// ãƒ©ã‚¤ãƒˆè‰²ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
 	void SetLightColor(const Vector3& lightcolor);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterIndex);
 
 	/// <summary>
-	/// —LŒøƒtƒ‰ƒO‚ğƒZƒbƒg
+	/// æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="active">—LŒøƒtƒ‰ƒO</param>
-	inline void SetActive(bool active) { this->active = active; }
+	/// <param name="active">æœ‰åŠ¹ãƒ•ãƒ©ã‚°</param>
+	inline void SetActive(bool active) { active_ = active; }
 
 
 	/// <summary>
-	/// —LŒøƒ`ƒFƒbƒN
+	/// æœ‰åŠ¹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <returns>—LŒøƒtƒ‰ƒO</returns>
-	inline bool IsActive() { return active; }
+	/// <returns>æœ‰åŠ¹ãƒ•ãƒ©ã‚°</returns>
+	inline bool IsActive() { return active_; }
 
-	Vector4 GetLightDir() { return lightdir; }
-	Vector3 GetLightColor() { return lightcolor; }
+	Vector4 GetLightDir() { return lightdir_; }
+	Vector3 GetLightColor() { return lightcolor_; }
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	/// </summary>
 	static DirectionalLight* Create();
-private://ƒƒ“ƒo•Ï”
-	//’è”ƒoƒbƒtƒ@
+private://ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuff;
-	//ƒ‰ƒCƒgŒõü•ûŒü
-	Vector4 lightdir = { 1,0,0,0 };
-	//ƒ‰ƒCƒgF
-	Vector3 lightcolor = { 1,1,1, };
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ©ã‚¤ãƒˆå…‰ç·šæ–¹å‘
+	Vector4 lightdir_ = { 1,0,0,0 };
+	//ãƒ©ã‚¤ãƒˆè‰²
+	Vector3 lightcolor_ = { 1,1,1, };
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool dirty = false;
 
-	//—LŒøƒtƒ‰ƒO
-	bool active = false;
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
+	bool active_ = false;
 };
 

@@ -8,51 +8,51 @@
 //#include "WorldTransform.h"
 
 /// <summary>
-/// ƒAƒtƒBƒ“s—ñ iŠp“xw’èF“x”–@j
+/// ã‚¢ãƒ•ã‚£ãƒ³è¡Œåˆ— ï¼ˆè§’åº¦æŒ‡å®šï¼šåº¦æ•°æ³•ï¼‰
 /// </summary>
 namespace Affin {
 
-	//‰~ü—¦
+	//å††å‘¨ç‡
 	const float PI = 3.141592654f;
-	// “x”–@ -> ƒ‰ƒWƒAƒ“•ÏŠ·
+	// åº¦æ•°æ³• -> ãƒ©ã‚¸ã‚¢ãƒ³å¤‰æ›
 	float radConvert(float value);
-	// ƒ‰ƒWƒAƒ“ -> “x”–@•ÏŠ·
+	// ãƒ©ã‚¸ã‚¢ãƒ³ -> åº¦æ•°æ³•å¤‰æ›
 	float degConvert(float value);
 
-	// ’PˆÊs—ñ set
+	// å˜ä½è¡Œåˆ— set
 	Matrix4 matUnit();
 
-	// ƒxƒNƒgƒ‹‚Æs—ñ‚ÌŠ|‚¯Z
+	// ãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®æ›ã‘ç®—
 	Vector3 VecMat(Vector3 vec, Matrix4 mat);
 
-	// •½sˆÚ“®
+	// å¹³è¡Œç§»å‹•
 	Matrix4 matTrans(float moveX, float moveY, float moveZ);
 	Matrix4 matTrans(Vector3 move);
 
-	// ‰ñ“]
+	// å›è»¢
 	Matrix4 matRotateX(float rotationX);
 	Matrix4 matRotateY(float rotationY);
 	Matrix4 matRotateZ(float rotationZ);
 	Matrix4 matRotation(float rotateX, float rotateY, float rotateZ);
 	Matrix4 matRotation(Vector3 rotate);
 
-	//Šgk
+	//æ‹¡ç¸®
 	Matrix4 matScale(float scaleX, float scaleY, float scaleZ);
 	Matrix4 matScale(Vector3 scale);
 
-	//Šgk -> ‰ñ“] -> ˆÚ“®
+	//æ‹¡ç¸® -> å›è»¢ -> ç§»å‹•
 	Matrix4 matWorld(Vector3 move, Vector3 rotate, Vector3 scale);
 
-	//	ƒ[ƒ‹ƒhÀ•Wæ“¾
+	//	ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™å–å¾—
 	Vector3 GetWorldTrans(Matrix4 matrix);
 
-	// W œZ
+	// W é™¤ç®—
 	Vector3 wDivision(Vector3 vector, Matrix4 matrix);
 
-	// ƒxƒNƒgƒ‹‚Æs—ñ‚ÌŠ|‚¯Z
+	// ãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®æ›ã‘ç®—
 	Vector3 VecMat3D(Vector3 vec, Matrix4 mat);
 
-	//sinAcos‚ğ—¼•ûo‚·
+	//sinã€cosã‚’ä¸¡æ–¹å‡ºã™
 	void SinCos(float& sin_, float& cos_, float angle);
 
 } // namespace Affin

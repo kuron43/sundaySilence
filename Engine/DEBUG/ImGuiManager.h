@@ -2,33 +2,33 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 
-// Imgui ‚ÌŠÇ—
+// Imgui ã®ç®¡ç†
 class ImGuiManager
 {
 public:
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(WinApp* winApp, DirectXCommon* dxCommon);
 
 	/// <summary>
-	/// I—¹
+	/// çµ‚äº†
 	/// </summary>
 	void Finalize();
 
 	/// <summary>
-	/// Imguió•tŠJn
+	/// Imguiå—ä»˜é–‹å§‹
 	/// </summary>
 	void Begin();
 	
 	/// <summary>
-	/// Imguió•tI—¹
+	/// Imguiå—ä»˜çµ‚äº†
 	/// </summary>
 	void End();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
@@ -36,7 +36,7 @@ public:
 private:
 	DirectXCommon* dxCommon_;
 
-	// SRV—pƒfƒXƒNƒŠƒvƒ^[ƒq[ƒv
+	// SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¼ãƒ’ãƒ¼ãƒ—
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_;
 
 public:

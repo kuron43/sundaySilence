@@ -1,14 +1,11 @@
 #pragma once
 #include "Human.h"
-#include "Weapon.h"
-
-
-class Player :
+class Enemy :
     public Human
 {
 public:
-	Player();
-	~Player()override;
+	Enemy();
+	~Enemy()override;
 
 
 	/// シーンの更新を行う
@@ -21,19 +18,12 @@ public:
 	void Draw(DirectXCommon* dxCommon)override;
 
 	/// リセットを行う
-	 void Reset() override;
-
-	void Move(Input* input);
+	void Reset() override;
 
 private:
 	Model* model_;
 	Object3d* object_;
-	//移動速度
-	const float kMoveSpeed_ = 0.5;
-	//移動ベクトル
-	Vector3 velocity_;
 	Vector3 faceAngle_;
-
 
 };
 

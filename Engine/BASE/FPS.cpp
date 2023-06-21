@@ -1,24 +1,24 @@
 #include "FPS.h"
 
 void FPS::FpsControlBegin() {
-	//ü”g”æ“¾
+	//å‘¨æ³¢æ•°å–å¾—
 	QueryPerformanceFrequency(&cpuClock);
-	//Œv‘ªŠJnŠÔ‚Ì‰Šú‰»
+	//è¨ˆæ¸¬é–‹å§‹æ™‚é–“ã®åˆæœŸåŒ–
 	QueryPerformanceCounter(&timeStart);
 }
 
 void FPS::FpsControlEnd() {
-	//¡‚ÌŠÔ‚ğæ“¾
+	//ä»Šã®æ™‚é–“ã‚’å–å¾—
 	QueryPerformanceCounter(&timeEnd);
-	//Œo‰ßŠÔ
+	//çµŒéæ™‚é–“
 	float elapsedFrame = static_cast<float>(timeEnd.QuadPart - timeStart.QuadPart) /
 		static_cast<float>(cpuClock.QuadPart);
-	//—]—T‚ª‚ ‚é‚Æ‚«‚Í‘Ò‚Â
+	//ä½™è£•ãŒã‚ã‚‹ã¨ãã¯å¾…ã¤
 	if (elapsedFrame < frameTime) {
-		// sleepŠÔ
+		// sleepæ™‚é–“
 		DWORD sleepTime = static_cast<DWORD>((frameTime - elapsedFrame) * 1000.0f);
 		timeBeginPeriod(1);
-		//Q‚é
+		//å¯ã‚‹
 		Sleep(sleepTime);
 		timeEndPeriod(1);
 	}
