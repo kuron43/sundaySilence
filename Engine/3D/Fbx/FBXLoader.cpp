@@ -191,14 +191,14 @@ void FbxLoader::ParseSkin(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 
 }
 
-void FbxLoader::ParseNodeRecursive(FBXModel* fbxmodel, FbxNode* fbxNode, Node* parent)
+void FbxLoader::ParseNodeRecursive(FBXModel* fbxmodel, FbxNode* fbxNode, FBXNode* parent)
 {
     // ノード名を取得
     string name = fbxNode->GetName();
 
     // モデルにノードを追加
     fbxmodel->nodes.emplace_back();
-    Node& node = fbxmodel->nodes.back();
+    FBXNode& node = fbxmodel->nodes.back();
     // ノード名を取得
     node.name = fbxNode->GetName();
 

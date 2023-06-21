@@ -150,7 +150,7 @@ void Sprite::Draw()
 
 
 	// 定数バッファにデータ転送
-	HRESULT result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
+	result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
 	if (SUCCEEDED(result)) {
 		constMapTransform->mat = matWorld * matProjection;	// 行列の合成	
 	}
@@ -181,13 +181,13 @@ void Sprite::Update()
 	float top = (0.0f - anchorpoint.x) * size_.y;
 	float bottom = (1.0f - anchorpoint.x) * size_.y;
 
-	if (isFlipX)
+	if (isFlipX_)
 	{// 左右入れ替え
 		left = -left;
 		right = -right;
 	}
 
-	if (isFlipY)
+	if (isFlipY_)
 	{// 上下入れ替え
 		top = -top;
 		bottom = -bottom;
@@ -242,14 +242,14 @@ void Sprite::SetSize(Vector2 size)
 
 void Sprite::SetIsFlipY(bool isFlipY)
 {
-	this->isFlipY = isFlipY;
+	isFlipY_ = isFlipY;
 
 	Update();
 }
 
 void Sprite::SetIsFlipX(bool isFlipX)
 {
-	this->isFlipX = isFlipX;
+	isFlipX_ = isFlipX;
 
 	Update();
 }

@@ -19,6 +19,7 @@ void Enemy::Initialize() {
 
 ///
 void Enemy::Update(Input* input) {
+	assert(input);
 	object_->Update();
 }
 
