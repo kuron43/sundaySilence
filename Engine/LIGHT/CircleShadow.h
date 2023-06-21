@@ -3,14 +3,14 @@
 #include<DirectXMath.h>
 
 /// <summary>
-/// ŠÛ‰e
+/// ä¸¸å½±
 /// </summary>
 class CircleShadow {
 
-private://ƒGƒCƒŠƒAƒX
-	//Microsoft::WRL::‚ğÈ—ª
+private://ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//Microsoft::WRL::ã‚’çœç•¥
 	template <class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//DirecX::‚ğÈ—ª
+	//DirecX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
@@ -18,7 +18,7 @@ private://ƒGƒCƒŠƒAƒX
 	using XMMATRIX = DirectX::XMMATRIX;
 
 public:
-	//ƒTƒuƒNƒ‰ƒX
+	//ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 	struct ConstBufferData {
 		XMVECTOR dir;
 		XMFLOAT3 casterPos;
@@ -31,7 +31,7 @@ public:
 	};
 	
 public:
-	//ƒƒ“ƒoŠÖ”
+	//ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	inline void SetDir(const XMVECTOR& dir) { this->dir = DirectX::XMVector3Normalize(dir); }
 	inline const XMVECTOR& GetDir() { return dir; }
@@ -55,7 +55,7 @@ public:
 	inline bool IsActive() { return active; }
 
 private:
-	//•ûŒü
+	//æ–¹å‘
 	XMVECTOR dir = { 1,0,0,0 };
 
 	float distanceCasterLight = 100.0f;

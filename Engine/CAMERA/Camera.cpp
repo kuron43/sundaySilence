@@ -1,4 +1,4 @@
-﻿#include "Camera.h"
+#include "Camera.h"
 
 using namespace DirectX;
 

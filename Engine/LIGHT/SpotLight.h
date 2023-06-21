@@ -3,13 +3,13 @@
 #include <DirectXMath.h>
 
 /// <summary>
-/// ƒXƒ|ƒbƒgƒ‰ƒCƒg
+/// ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 /// </summary>
 class SpotLight {
-private://ƒGƒCƒŠƒAƒX
-	//Microsoft::WRL::‚ğÈ—ª
+private://ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//Microsoft::WRL::ã‚’çœç•¥
 	template <class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//DirecX::‚ğÈ—ª
+	//DirecX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
@@ -17,7 +17,7 @@ private://ƒGƒCƒŠƒAƒX
 	using XMMATRIX = DirectX::XMMATRIX;
 
 
-public://ƒTƒuƒNƒ‰ƒX
+public://ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 	struct ConstBufferData
 	{
 		XMVECTOR lightv;
@@ -34,7 +34,7 @@ public://ƒTƒuƒNƒ‰ƒX
 	};
 
 public:
-	//ƒƒ“ƒoŠÖ”
+	//ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	inline void SetLightDir(const XMVECTOR& lightdir) { this->lightdir = DirectX::XMVector3Normalize(lightdir); }
 	inline const XMVECTOR& GetLightDir() { return lightdir; }
@@ -55,17 +55,17 @@ public:
 
 private:
 
-	//ƒ‰ƒCƒg‚Ì•ûŒü
+	//ãƒ©ã‚¤ãƒˆã®æ–¹å‘
 	XMVECTOR lightdir = { 1,0,0,0 };
-	//ƒ‰ƒCƒgÀ•W
+	//ãƒ©ã‚¤ãƒˆåº§æ¨™
 	XMFLOAT3 lightpos = { 0,0,0 };
-	//ƒ‰ƒCƒg‚ÌF
+	//ãƒ©ã‚¤ãƒˆã®è‰²
 	XMFLOAT3 lightcolor = { 1,1,1 };
-	//ƒ‰ƒCƒg‚Ì‹——£Œ¸ŠŒW”
+	//ãƒ©ã‚¤ãƒˆã®è·é›¢æ¸›è¡°ä¿‚æ•°
 	XMFLOAT3 lightAtten = { 1.0f,1.0f,1.0f };
-	//ƒ‰ƒCƒgŒ¸ŠŠp“x
+	//ãƒ©ã‚¤ãƒˆæ¸›è¡°è§’åº¦
 	XMFLOAT2 lightFactorAngleCos = { 0.5f,0.2f };
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool active = false;
 
 

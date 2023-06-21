@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include "SceneObjects.h"
 
-// ƒV[ƒ“‚ÌƒCƒ“ƒNƒ‹[ƒh
+// ã‚·ãƒ¼ãƒ³ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 #include "SceneIntegrate.h"
 
 

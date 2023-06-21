@@ -10,84 +10,84 @@
 
 
 /// <summary>
-/// ƒI[ƒfƒBƒI
+/// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ª
 /// </summary>
 class Audio
 {
-private: // ƒGƒCƒŠƒAƒX
-// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 public:
-	//ƒ`ƒƒƒ“ƒNƒwƒbƒ_
+	//ãƒãƒ£ãƒ³ã‚¯ãƒ˜ãƒƒãƒ€
 	struct ChunkHeader {
-		char id[4];		//ƒ`ƒƒƒ“ƒN–ˆ‚ÌID
-		int32_t size;	//ƒ`ƒƒƒ“ƒNƒTƒCƒY
+		char id[4];		//ãƒãƒ£ãƒ³ã‚¯æ¯ã®ID
+		int32_t size;	//ãƒãƒ£ãƒ³ã‚¯ã‚µã‚¤ã‚º
 	};
-	//RIFFƒwƒbƒ_ƒ`ƒƒƒ“ƒN
+	//RIFFãƒ˜ãƒƒãƒ€ãƒãƒ£ãƒ³ã‚¯
 	struct RiffHeader {
 		ChunkHeader chunk;	//"RIFF"
 		char type[4];		//"WAVE"
 	};
-	//FMTƒ`ƒƒƒ“ƒN
+	//FMTãƒãƒ£ãƒ³ã‚¯
 	struct FormatChunk {
 		ChunkHeader chunk;	//"fmt"
-		WAVEFORMATEX fmt;	//”gŒ`ƒtƒH[ƒ}ƒbƒg
+		WAVEFORMATEX fmt;	//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	};
-	//‰¹ºƒf[ƒ^
+	//éŸ³å£°ãƒ‡ãƒ¼ã‚¿
 	struct SoundData {
-		//”gŒ`ƒtƒH[ƒ}ƒbƒg
+		//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		WAVEFORMATEX wfex;
-		//ƒoƒbƒtƒ@‚Ìæ“ªƒAƒhƒŒƒX
+		//ãƒãƒƒãƒ•ã‚¡ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 		BYTE* pBuffer;
-		//ƒoƒbƒtƒ@ƒTƒCƒY
+		//ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
 		unsigned int bufferSize;
 	};
 
-	// Ä¶ƒf[ƒ^
+	// å†ç”Ÿãƒ‡ãƒ¼ã‚¿
 	struct Voice {
 		uint32_t handle = 0u;
 		IXAudio2SourceVoice* sourceVoice = nullptr;
 	};
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(const std::string& directoryPath = "Resources/");
 
 	/// <summary>
-	/// I—¹ˆ—
+	/// çµ‚äº†å‡¦ç†
 	/// </summary>
 	void Finalize();
 
 	/// <summary>
-	/// //‰¹ºƒf[ƒ^‚Ì“Ç‚İ‚İ
+	/// //éŸ³å£°ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
 	/// </summary>
 	void LoadWave(const std::string& filename);
 
 	/// <summary>
-	/// //‰¹º‚Ì‰ğ•ú
+	/// //éŸ³å£°ã®è§£æ”¾
 	/// </summary>
 	void Unload(SoundData* soundData);
 
 	/// <summary>
-	/// //‰¹ºÄ¶
+	/// //éŸ³å£°å†ç”Ÿ
 	/// </summary>
 	IXAudio2SourceVoice* PlayWave(const std::string& filename);
 
 	/// <summary>
-	/// ‰¹º’â~
+	/// éŸ³å£°åœæ­¢
 	/// </summary>
-	/// <param name="voiceHandle">Ä¶ƒnƒ“ƒhƒ‹</param>
+	/// <param name="voiceHandle">å†ç”Ÿãƒãƒ³ãƒ‰ãƒ«</param>
 	void StopWave(IXAudio2SourceVoice* pSourceVoice);
 
 private:
-	//ƒTƒEƒ“ƒhÄ¶
+	//ã‚µã‚¦ãƒ³ãƒ‰å†ç”Ÿ
 	ComPtr<IXAudio2> xAudio2_;
-	// Ä¶’†ƒf[ƒ^ƒRƒ“ƒeƒi
+	// å†ç”Ÿä¸­ãƒ‡ãƒ¼ã‚¿ã‚³ãƒ³ãƒ†ãƒŠ
 	std::set<Voice*> voices_;
-	//ƒTƒEƒ“ƒhƒf[ƒ^‚Ì˜A‘z”z—ñ
+	//ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®é€£æƒ³é…åˆ—
 	std::map<std::string, SoundData> soundDates_;
-	//ƒTƒEƒ“ƒhŠi”[ƒfƒBƒŒƒNƒgƒŠ
+	//ã‚µã‚¦ãƒ³ãƒ‰æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 	std::string directoryPath_;
 };
 

@@ -1,7 +1,7 @@
 #include "MyGame.h"
 
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void MyGame::Initialize() {
 	////////////////////////////
 	Framework::Initialize();
@@ -14,23 +14,23 @@ void MyGame::Initialize() {
 	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 1, 1);
 	postEffect->SetShadeNumber(1);*/
 
-	// 3DƒIƒuƒWƒFƒNƒgÃ“I‰Šú‰»
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé™çš„åˆæœŸåŒ–
 	Object3d::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
-	//ƒp[ƒeƒBƒNƒ‹Ã“I‰Šú‰»
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é™çš„åˆæœŸåŒ–
 	ParticleManager::StaticInitialize(dxCommon->GetDevice(), dxCommon->GetCommandList());
-	// FBXÃ“I‰Šú‰»
+	// FBXé™çš„åˆæœŸåŒ–
 	FbxLoader::GetInstance()->Initialize(dxCommon->GetDevice());
-	//ƒ‰ƒCƒgÃ“I‰Šú‰»
+	//ãƒ©ã‚¤ãƒˆé™çš„åˆæœŸåŒ–
 	LightGroup::StaticInitialize(dxCommon->GetDevice());
 
 
 	
 
-	// ƒQ[ƒ€ƒV[ƒ“‚Ì‰Šú‰»
+	// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
 	gameScene = new GameScene();
 	gameScene->Initialize(dxCommon, input);
 }
-// I—¹
+// çµ‚äº†
 void MyGame::Finalize() {
 
 	delete gameScene;
@@ -43,12 +43,12 @@ void MyGame::Finalize() {
 	Framework::Finalize();
 }
 
-// –ˆƒtƒŒ[ƒ€XV
+// æ¯Žãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 void MyGame::Update() {
 
 	Framework::Update();
 
-	// ƒQ[ƒ€ƒV[ƒ“‚Ì–ˆƒtƒŒ[ƒ€ˆ—
+	// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®æ¯Žãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	gameScene->Update();
 
 	//if (input->KeyboardTrigger(DIK_0)) {
@@ -60,33 +60,33 @@ void MyGame::Update() {
 
 }
 
-// •`‰æ‚ÌƒtƒŒ[ƒ€ƒ[ƒN‚Ìƒ|ƒXƒgƒGƒtƒFƒNƒg‚Ìˆµ‚¢‚í‚©‚ç‚ñ
-// •`‰æ
+// æç”»ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ã®ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®æ‰±ã„ã‚ã‹ã‚‰ã‚“
+// æç”»
 void MyGame::Draw() {
 
 
-	// ƒ|ƒXƒgƒGƒtƒFƒNƒg—pƒQ[ƒ€ƒV[ƒ“‚Ì•`‰æ
+	// ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆç”¨ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®æç”»
 	/*postEffect->PreDrawScene(dxCommon->GetCommandList());
 	gameScene->Draw();
 	postEffect->PostDrawScene();*/
 
-	//4.•`‰æƒRƒ}ƒ“ƒh‚±‚±‚©‚ç
+	//4.æç”»ã‚³ãƒžãƒ³ãƒ‰ã“ã“ã‹ã‚‰
 	dxCommon->PreDraw();
 
-	// ƒQ[ƒ€ƒV[ƒ“‚Ì•`‰æ
+	// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®æç”»
 	gameScene->Draw();
 
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg‚Ì•`‰æ
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®æç”»
 	//postEffect->Draw(dxCommon->GetCommandList());
 
-	// ImguiŽó•tI—¹
+	// Imguiå—ä»˜çµ‚äº†
 	imgui->End();
-	// Imgui•`‰æ
+	// Imguiæç”»
 	imgui->Draw();
 
-	// •`‰æI—¹
+	// æç”»çµ‚äº†
 	dxCommon->PostDraw();
 
 	fps->FpsControlEnd();
-	//4.•`‰æƒRƒ}ƒ“ƒh‚±‚±‚Ü‚Å
+	//4.æç”»ã‚³ãƒžãƒ³ãƒ‰ã“ã“ã¾ã§
 }

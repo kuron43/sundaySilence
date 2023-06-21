@@ -13,44 +13,44 @@
 
 
 /// <summary>
-/// ƒQ[ƒ€ƒV[ƒ“
+/// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³
 /// </summary>
 class GameScene
 {
-private: // Ã“Iƒƒ“ƒo•Ï”
+private: // é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
 	//static const int debugTextTexNumber = 0;
 
-public: // ƒƒ“ƒoŠÖ”
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒNƒ‰ƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆã‚¯ãƒ©ã‚¿
 	/// </summary>
 	GameScene();
 
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	~GameScene();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(DirectXCommon* dxCommon, Input* input);
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 public:
 
 	
-private: // ƒƒ“ƒo•Ï” (ŒÅ’è)
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•° (å›ºå®š)
 	DirectXCommon* dxCommon = nullptr;
 	Input* input = nullptr;
 	SpriteCommon* spriteCommon = nullptr;
@@ -66,7 +66,7 @@ private: // ƒƒ“ƒo•Ï” (ŒÅ’è)
 	std::vector<Object3d*> JsonObjects;
 
 
-private:	//ƒƒ“ƒo•Ï”
+private:	//ãƒ¡ãƒ³ãƒå¤‰æ•°
 	Transform cam_TF;
 	Vector3 eye = { 0.0f, 10.0f, -10.0f };
 	Vector3 tar = { 0.0f, 0.0f, 0.0f };

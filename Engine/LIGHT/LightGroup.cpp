@@ -3,16 +3,16 @@
 using namespace DirectX;
 
 /// <summary>
-///Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ô
+///é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®å®Ÿæ…‹
 /// </summary>
 ID3D12Device* LightGroup::device = nullptr;
 
 void LightGroup::StaticInitialize(ID3D12Device* device)
 {
-	//Å‰Šú‰»ƒ`ƒFƒbƒN
+	//æœ€åˆæœŸåŒ–ãƒã‚§ãƒƒã‚¯
 	assert(!LightGroup::device);
 
-	//nullƒ`ƒFƒbƒN
+	//nullãƒã‚§ãƒƒã‚¯
 	assert(device);
 
 	LightGroup::device = device;
@@ -27,7 +27,7 @@ LightGroup* LightGroup::Create()
 		return nullptr;
 	}
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!instance->Initialize()) {
 		delete instance;
 		assert(0);
@@ -40,24 +40,24 @@ LightGroup* LightGroup::Create()
 bool LightGroup::Initialize()
 {
 	DefaultLightSetting();
-	// ƒq[ƒvİ’è
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
-	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;                   // GPU‚Ö‚Ì“]‘——p
-	// ƒŠƒ\[ƒXİ’è
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;                   // GPUã¸ã®è»¢é€ç”¨
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	cbResourceDesc.Width = (sizeof(ConstBufferData) + 0xff) & ~0xff;   // 256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	cbResourceDesc.Width = (sizeof(ConstBufferData) + 0xff) & ~0xff;   // 256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 	cbResourceDesc.Height = 1;
 	cbResourceDesc.DepthOrArraySize = 1;
 	cbResourceDesc.MipLevels = 1;
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	/*ID3D12Resource* constBuff = nullptr;*/
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = device->CreateCommittedResource(
-		&cbHeapProp, // ƒq[ƒvİ’è
+		&cbHeapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc, // ƒŠƒ\[ƒXİ’è
+		&cbResourceDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuff));
@@ -78,7 +78,7 @@ void LightGroup::Update()
 
 void LightGroup::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterIndex)
 {
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğƒZƒbƒg
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	cmdList->SetGraphicsRootConstantBufferView(rootParameterIndex,
 		constBuff->GetGPUVirtualAddress());
 }
@@ -86,15 +86,15 @@ void LightGroup::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterInde
 void LightGroup::TransferConstBuffer()
 {
 	HRESULT result;
-	//’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	ConstBufferData* constMap = nullptr;
 	result = constBuff->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) {
 		constMap->ambientColor = ambientColor;
 
-		//•½sƒ‰ƒCƒg
+		//å¹³è¡Œãƒ©ã‚¤ãƒˆ
 		for (int i = 0; i < DirLightNum; i++) {
-			//ƒ‰ƒCƒg‚ª—LŒø‚È‚çİ’è‚ğ“]‘—
+			//ãƒ©ã‚¤ãƒˆãŒæœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (dirLights[i].IsActive()) {
 				constMap->dirLights[i].active = 1;
 				constMap->dirLights[i].lightv = -dirLights[i].GetLightDir();
@@ -105,7 +105,7 @@ void LightGroup::TransferConstBuffer()
 			}
 
 		}
-		//“_ƒ‰ƒCƒg
+		//ç‚¹ãƒ©ã‚¤ãƒˆ
 		for (int i = 0; i < PointLightNum; i++) {
 			if (pointLights[i].IsActive()) {
 				constMap->pointLights[i].active = 1;
@@ -117,9 +117,9 @@ void LightGroup::TransferConstBuffer()
 				constMap->pointLights[i].active = 0;
 			}
 		}
-		//ƒXƒ|ƒbƒgƒ‰ƒCƒg
+		//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 		for (int i = 0; i < SpotLightNum; i++) {
-			//ƒ‰ƒCƒg‚ª—LŒø‚È‚çİ’è‚ğ“]‘—
+			//ãƒ©ã‚¤ãƒˆãŒæœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (spotLights[i].IsActive()) {
 				constMap->spotLights[i].active = 1;
 				constMap->spotLights[i].lightv = -spotLights[i].GetLightDir();
@@ -128,13 +128,13 @@ void LightGroup::TransferConstBuffer()
 				constMap->spotLights[i].lightatten = spotLights[i].GetLightAtten();
 				constMap->spotLights[i].lightfactoranglecos = spotLights[i].GetLightFactorAngleCos();
 			}
-			else {//ƒ‰ƒCƒg‚ª–³Œø‚È‚çƒ‰ƒCƒg‚ğ0‚É
+			else {//ãƒ©ã‚¤ãƒˆãŒç„¡åŠ¹ãªã‚‰ãƒ©ã‚¤ãƒˆã‚’0ã«
 				constMap->spotLights[i].active = 0;
 			}
 		}
-		//ŠÛ‰e
+		//ä¸¸å½±
 		for (int i = 0; i < CircleShadowNum; i++) {
-			//—LŒø‚È‚çİ’è‚ğ“]‘—
+			//æœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (circleShadows[i].IsActive()) {
 				constMap->circleShadows[i].active = 1;
 				constMap->circleShadows[i].dir = -circleShadows[i].GetDir();

@@ -1,39 +1,39 @@
 #include "Transform.h"
 
 Transform::Transform() {
-	// ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	// ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	scale = { 1,1,1 };
-	// X,Y,ZŽ²‰ñ‚è‚Ìƒ[ƒJƒ‹‰ñ“]Šp
+	// X,Y,Zè»¸å›žã‚Šã®ãƒ­ãƒ¼ã‚«ãƒ«å›žè»¢è§’
 	rotation = { 0,0,0 };
-	// ƒ[ƒJƒ‹À•W
+	// ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
 	position = { 0,0,0 };
-	// ƒ[ƒJƒ‹ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	// ãƒ­ãƒ¼ã‚«ãƒ«ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	matWorld = Affin::matUnit();
 }
 Transform::~Transform() {}
 
 void Transform::Initialize() {
-	// ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	// ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	scale = { 1,1,1 };
-	// X,Y,ZŽ²‰ñ‚è‚Ìƒ[ƒJƒ‹‰ñ“]Šp
+	// X,Y,Zè»¸å›žã‚Šã®ãƒ­ãƒ¼ã‚«ãƒ«å›žè»¢è§’
 	rotation = { 0,0,0 };
-	// ƒ[ƒJƒ‹À•W
+	// ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
 	position = { 0,0,0 };
-	// ƒ[ƒJƒ‹ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	// ãƒ­ãƒ¼ã‚«ãƒ«ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	matWorld = Affin::matUnit();
 }
 
 void Transform::UpdateMat() {
 	Matrix4 matScale, matRot, matTrans;
-	// ƒXƒP[ƒ‹A‰ñ“]A•½sˆÚ“®s—ñ‚ÌŒvŽZ
+	// ã‚¹ã‚±ãƒ¼ãƒ«ã€å›žè»¢ã€å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	matScale = Affin::matScale(scale.x, scale.y, scale.z);
 	matRot = Affin::matUnit();
 	matRot = Affin::matRotation(rotation);
 	matTrans = Affin::matTrans(position.x, position.y, position.z);
 
-	// ƒ[ƒ‹ƒhs—ñ‚Ì‡¬
-	matWorld = Affin::matUnit(); // •ÏŒ`‚ðƒŠƒZƒbƒg
-	matWorld *= matScale; // ƒ[ƒ‹ƒhs—ñ‚ÉƒXƒP[ƒŠƒ“ƒO‚ð”½‰f
-	matWorld *= matRot; // ƒ[ƒ‹ƒhs—ñ‚É‰ñ“]‚ð”½‰f
-	matWorld *= matTrans; // ƒ[ƒ‹ƒhs—ñ‚É•½sˆÚ“®‚ð”½‰f
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæˆ
+	matWorld = Affin::matUnit(); // å¤‰å½¢ã‚’ãƒªã‚»ãƒƒãƒˆ
+	matWorld *= matScale; // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’åæ˜ 
+	matWorld *= matRot; // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å›žè»¢ã‚’åæ˜ 
+	matWorld *= matTrans; // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å¹³è¡Œç§»å‹•ã‚’åæ˜ 
 }

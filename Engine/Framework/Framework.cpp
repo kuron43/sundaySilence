@@ -21,19 +21,19 @@ void Framework::Initialize() {
 
 	fps = new FPS();
 
-	//windowsAPI‚Ì‰Šú‰»
+	//windowsAPIã®åˆæœŸåŒ–
 	winApp = new WinApp();
 	winApp->Initialize();
 
 	dxCommon = new DirectXCommon();
 	dxCommon->Initialize(winApp);
 
-	//“ü—Í‚Ì‰Šú‰»@
+	//å…¥åŠ›ã®åˆæœŸåŒ–ã€€
 	input = new Input();
 	input->Initialize(winApp);
 	PadInput = new Pad_X_Input();
 
-	//FPS•Ï‚¦‚½‚¢‚Æ‚«
+	//FPSå¤‰ãˆãŸã„ã¨ã
 	fps->SetFrameRate(60);
 
 	imgui = new ImGuiManager();
@@ -45,14 +45,14 @@ void Framework::Initialize() {
 void Framework::Finalize() {
 
 	imgui->Finalize();
-	//WindowsAPI‚ÌI—¹ˆ—
+	//WindowsAPIã®çµ‚äº†å‡¦ç†
 	winApp->Finalize();
 	delete imgui;
 
-	//“ü—ÍŠJ•ú
+	//å…¥åŠ›é–‹æ”¾
 	delete input;
 	delete PadInput;
-	//WindowsAPIŠJ•ú
+	//WindowsAPIé–‹æ”¾
 	delete winApp;
 	delete dxCommon;
 	delete fps;
@@ -60,9 +60,9 @@ void Framework::Finalize() {
 
 void Framework::Update() {
 
-#pragma region ƒEƒBƒ“ƒhƒEƒƒbƒZ[ƒWˆ—
+#pragma region ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†
 
-	//ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ªI‚í‚é‚Émessage‚ªWM_QUIT‚É‚È‚é
+	//ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒçµ‚ã‚ã‚‹æ™‚ã«messageãŒWM_QUITã«ãªã‚‹
 	if (winApp->ProcessMessage()) {
 		endRequest_ = true;
 	}
@@ -71,10 +71,10 @@ void Framework::Update() {
 
 #pragma endregion
 
-	//“ü—Í‚ÌXV
+	//å…¥åŠ›ã®æ›´æ–°
 	input->Update();
 	PadInput->Update();
-	// Imguió•tŠJn
+	// Imguiå—ä»˜é–‹å§‹
 	imgui->Begin();
 
 }

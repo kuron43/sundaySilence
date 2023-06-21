@@ -5,13 +5,13 @@
 #include "WinApp.h"
 #include <vector>
 
-//DirectXŠî”Õ
+//DirectXåŸºç›¤
 class DirectXCommon
 {
-public://ƒƒ“ƒoŠÖ”
-	// Microsoft::WRL::‚ğÈ—ª
+public://ãƒ¡ãƒ³ãƒé–¢æ•°
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize(WinApp* winApp);
 
 	void InitializeDevice();
@@ -26,33 +26,33 @@ public://ƒƒ“ƒoŠÖ”
 
 	void InitializeFence();
 
-	//•`‰æ‘Oˆ—
+	//æç”»å‰å‡¦ç†
 	void PreDraw();
-	//•`‰æŒãˆ—
+	//æç”»å¾Œå‡¦ç†
 	void PostDraw();
 
-	//ƒfƒoƒCƒXæ“¾
+	//ãƒ‡ãƒã‚¤ã‚¹å–å¾—
 	ID3D12Device* GetDevice() const { return device.Get(); }
 
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒgæ“¾
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆå–å¾—
 	ID3D12GraphicsCommandList* GetCommandList()const { return commandList.Get(); }
 
-	//ƒoƒbƒNƒoƒbƒtƒ@‚Ì”‚ğæ“¾
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®æ•°ã‚’å–å¾—
 	size_t GetBackBufferCount() const { return backBuffers.size(); }
 
 	ID3D12DescriptorHeap* GetdsvHeap() { return dsvHeap.Get(); }
 
 	ID3D12Resource* GetbackBuffers() { return depthBuff.Get(); }
 
-	// ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾
+	// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å–å¾—
 	static DirectXCommon* GetInstance();
 
 private:
-	//DirectX12ƒfƒoƒCƒX
+	//DirectX12ãƒ‡ãƒã‚¤ã‚¹
 	Microsoft::WRL::ComPtr<ID3D12Device> device;
-	//DXGIƒtƒ@ƒNƒgƒŠ
+	//DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒª
 	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory;
-	//ƒoƒbƒNƒoƒbƒtƒ@
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers;
 
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};

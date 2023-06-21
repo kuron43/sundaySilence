@@ -1,4 +1,4 @@
-﻿#include "FBXLoader.h"
+#include "FBXLoader.h"
 
 #include <cassert>
 

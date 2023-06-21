@@ -7,20 +7,20 @@
 
 class MyGame : public Framework
 {
-public:	// ƒƒ“ƒoŠÖ”
+public:	// ãƒ¡ãƒ³ãƒé–¢æ•°
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Initialize() override;
-	// I—¹
+	// çµ‚äº†
 	void Finalize() override;
-	// –ˆƒtƒŒ[ƒ€XV
+	// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 	void Update() override;
-	// •`‰æ
+	// æç”»
 	void Draw() override;
 
 protected:
 
-	//ƒ|ƒCƒ“ƒ^
+	//ãƒã‚¤ãƒ³ã‚¿
 	FbxManager* fbxManager = nullptr;
 	GameScene* gameScene = nullptr;
 	PostEffect* postEffect = nullptr;

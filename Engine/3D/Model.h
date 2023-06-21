@@ -15,47 +15,47 @@
 
 class Model
 {
-private: // ƒGƒCƒŠƒAƒX
-// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 
-public: // ƒTƒuƒNƒ‰ƒX
-// ’¸“_ƒf[ƒ^\‘¢‘Ì
+public: // ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct VertexPosNormalUv
 	{
-		Vector3 pos; // xyzÀ•W
-		Vector3 normal; // –@üƒxƒNƒgƒ‹
-		Vector2 uv;  // uvÀ•W
+		Vector3 pos; // xyzåº§æ¨™
+		Vector3 normal; // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+		Vector2 uv;  // uvåº§æ¨™
 	};
 
 	struct ConstBufferDataB1 {
-		Vector3 ambient;	//ƒAƒ“ƒrƒGƒ“ƒgŒW”
-		float pad1;			//ƒpƒeƒBƒ“ƒO
-		Vector3 diffuse;	//ƒfƒBƒt[ƒYŒW”
-		float pad2;			//ƒpƒeƒBƒ“ƒO
-		Vector3 specular;	//ƒXƒyƒLƒ…ƒ‰[ŒW”
-		float alpha;		//ƒAƒ‹ƒtƒ@
+		Vector3 ambient;	//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+		float pad1;			//ãƒ‘ãƒ†ã‚£ãƒ³ã‚°
+		Vector3 diffuse;	//ãƒ‡ã‚£ãƒ•ãƒ¼ã‚ºä¿‚æ•°
+		float pad2;			//ãƒ‘ãƒ†ã‚£ãƒ³ã‚°
+		Vector3 specular;	//ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
+		float alpha;		//ã‚¢ãƒ«ãƒ•ã‚¡
 	};
 
 
 
-public://Ã“Iƒƒ“ƒoŠÖ”
-	//OBJƒtƒ@ƒCƒ‹‚©‚ç3Dƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
+public://é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
+	//OBJãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰3Dãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 	static Model* LoadFromOBJ(const std::string& modelname);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
 
 	/// <summary>
-	//ƒ}ƒeƒŠƒAƒ‹“Ç‚İ‚İ
+	//ãƒãƒ†ãƒªã‚¢ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	/// </summary>
 	void LoadTexture(const std::string& directoryPath, const std::string& filename);
 
@@ -64,60 +64,60 @@ public://Ã“Iƒƒ“ƒoŠÖ”
 
 	
 
-private://ƒƒ“ƒo•Ï”
+private://ãƒ¡ãƒ³ãƒå¤‰æ•°
 	
-	//OBJƒtƒ@ƒCƒ‹‚©‚ç3Dƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş(”ñŒöŠJ)
+	//OBJãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰3Dãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã‚€(éå…¬é–‹)
 	void LoadFromOBJInternal(const std::string& modelname);
 		
 	/// <summary>
-	/// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì‰Šú‰»
+	/// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®åˆæœŸåŒ–
 	/// </summary>
 	void InitializeDescriptorHeap();
 		
-	//Šeíƒoƒbƒtƒ@¶¬
+	//å„ç¨®ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	void CreateBuffers();
 
 private:
 
-	ComPtr<ID3D12Resource> constBuffB1; // ’è”ƒoƒbƒtƒ@	
+	ComPtr<ID3D12Resource> constBuffB1; // å®šæ•°ãƒãƒƒãƒ•ã‚¡	
 
-	// ƒfƒoƒCƒX
+	// ãƒ‡ãƒã‚¤ã‚¹
 	static ComPtr<ID3D12Device> device;
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> texbuff;
-	// ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìƒnƒ“ƒhƒ‹(CPU)
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«(CPU)
 	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
-	// ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìƒnƒ“ƒhƒ‹(GPU)
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«(GPU)
 	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
-	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeap;
-	// ƒfƒXƒNƒŠƒvƒ^ƒTƒCƒY
+	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã‚µã‚¤ã‚º
 	UINT descriptorHandleIncrementSize;
-	// ’¸“_ƒoƒbƒtƒ@
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff;
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> indexBuff;
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView;
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_INDEX_BUFFER_VIEW ibView;
 
 
-	// ’¸“_ƒf[ƒ^”z—ñ
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
 	std::vector<VertexPosNormalUv> vertices;
-	// ’¸“_ƒCƒ“ƒfƒbƒNƒX”z—ñ
+	// é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
 	std::vector<unsigned short> indices;
 
-	//ƒ}ƒeƒŠƒAƒ‹
+	//ãƒãƒ†ãƒªã‚¢ãƒ«
 	struct Material
 	{
-		std::string name; //ƒ}ƒeƒŠƒAƒ‹–¼
-		Vector3 ambient; //ƒAƒ“ƒrƒGƒ“ƒg‰e‹¿“x
-		Vector3 diffuse; //ƒfƒBƒtƒ…[ƒY‰e‹¿“x
-		Vector3 specular; //ƒXƒyƒLƒ…ƒ‰[‰e‹¿“x
-		float alpha; //ƒAƒ‹ƒtƒ@
-		std::string textureFilename; //ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-		//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		std::string name; //ãƒãƒ†ãƒªã‚¢ãƒ«å
+		Vector3 ambient; //ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆå½±éŸ¿åº¦
+		Vector3 diffuse; //ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºå½±éŸ¿åº¦
+		Vector3 specular; //ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼å½±éŸ¿åº¦
+		float alpha; //ã‚¢ãƒ«ãƒ•ã‚¡
+		std::string textureFilename; //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+		//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		Material() {
 			ambient = { 0.3f,0.3f,0.3f };
 			diffuse = { 0.8f,0.8f,0.8f };

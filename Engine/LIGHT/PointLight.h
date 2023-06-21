@@ -4,17 +4,17 @@
 
 class PointLight
 {
-private://エイリアス
-	//Microsoft::WRL::を省略
+private://繧ｨ繧､繝ｪ繧｢繧ｹ
+	//Microsoft::WRL::繧堤怐逡･
 	template <class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//DirecX::を省略
+	//DirecX::繧堤怐逡･
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public://サブクラス
+public://繧ｵ繝悶け繝ｩ繧ｹ
 	struct ConstBufferData
 	{
 		XMFLOAT3 lightpos;

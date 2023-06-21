@@ -17,191 +17,191 @@
 
 class FBXObject3d
 {
-protected: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+protected: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public: // ƒTƒuƒNƒ‰ƒX
-	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘ÌiÀ•W•ÏŠ·s—ñ—pj
+public: // ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ï¼ˆåº§æ¨™å¤‰æ›è¡Œåˆ—ç”¨ï¼‰
 	struct ConstBufferDataTransform
 	{
-		XMMATRIX viewproj;    // ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		XMMATRIX world; // ƒ[ƒ‹ƒhs—ñ
-		XMFLOAT3 cameraPos; // ƒJƒƒ‰À•Wiƒ[ƒ‹ƒhÀ•Wj
+		XMMATRIX viewproj;    // ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		XMMATRIX world; // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+		XMFLOAT3 cameraPos; // ã‚«ãƒ¡ãƒ©åº§æ¨™ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ï¼‰
 	};
-	//ƒ{[ƒ“‚ÌÅ‘å”
+	//ãƒœãƒ¼ãƒ³ã®æœ€å¤§æ•°
 	static const int MAX_BONES = 320;
 
-	//’è”ƒoƒbƒtƒ@—p‚Ìƒf[ƒ^\‘¢‘Ì(ƒXƒLƒjƒ“ƒO)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ã®ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“(ã‚¹ã‚­ãƒ‹ãƒ³ã‚°)
 	struct ConstBufferDataSkin
 	{
 		XMMATRIX bones[MAX_BONES];
 	};
 
 
-public: // Ã“Iƒƒ“ƒoŠÖ”
+public: // é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒOƒ‰ƒtƒBƒbƒNƒpƒCƒvƒ‰ƒCƒ“‚Ì¶¬
+	/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®ç”Ÿæˆ
 	/// </summary>
 	static void CreateGraphicsPipeline();
 
 	/// <summary>
-	/// ƒOƒ‰ƒtƒBƒbƒNƒpƒCƒvƒ‰ƒCƒ“‚Ì¶¬
+	/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®ç”Ÿæˆ
 	/// </summary>
 	// setter
 	static void SetDevice(ID3D12Device* device) { FBXObject3d::device = device; }
 	static void SetCamera(Camera* camera) { FBXObject3d::camera = camera; }
 
 
-private: // Ã“Iƒƒ“ƒo•Ï”
-	// ƒfƒoƒCƒX
+private: // é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* device;
-	// ƒJƒƒ‰
+	// ã‚«ãƒ¡ãƒ©
 	static Camera* camera;
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	static ComPtr<ID3D12RootSignature> rootsignature;
-	// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒg
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	static ComPtr<ID3D12PipelineState> pipelinestate;
 
 
-public: // ƒƒ“ƒoŠÖ”
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	bool Initialize();
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	/// </summary>
 	static std::unique_ptr<FBXObject3d>Create();
 
 
 	/// <summary>
-	/// ‘å‚«‚³‚Ìİ’è
+	/// å¤§ãã•ã®è¨­å®š
 	/// </summary>
-	/// <param name="position">À•W</param>
+	/// <param name="position">åº§æ¨™</param>
 	void SetScale(const Vector3& scale) { this->wtf.scale = scale; }
 
 	/// <summary>
-	/// À•W‚Ìİ’è
+	/// åº§æ¨™ã®è¨­å®š
 	/// </summary>
-	/// <param name="position">À•W</param>
+	/// <param name="position">åº§æ¨™</param>
 	void SetPosition(const Vector3& position) { this->wtf.position = position; }
 
 	/// <summary>
-	/// ‰ñ“]‚Ìİ’è
+	/// å›è»¢ã®è¨­å®š
 	/// </summary>
 	/// <param name="rotate"></param>
 	void SetRotate(const Vector3& rotate) { this->wtf.rotation = rotate; }
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹‚ğƒZƒbƒg
+	/// ãƒ¢ãƒ‡ãƒ«ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
 	/// <param name="fbxmodel"></param>
 	void SetModel(FBXModel* fbxmodel) { this->fbxmodel = fbxmodel; }
 
 	/// <summary>
-	/// ƒtƒŒ[ƒ€ƒJƒEƒ“ƒgw’è
+	/// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆæŒ‡å®š
 	/// </summary>
 	/// <param name="flame"></param>
 	void SetFlame(int flame);
 
 	/// <summary>
-	/// ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶—p
+	/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿç”¨
 	/// </summary>
 	void AnimPlay();
 	void AnimStop();
 	void AnimIsRotateChange();
 
 	/// <summary>
-	/// ƒJƒƒ‰‚ÌƒQƒbƒ^[
+	/// ã‚«ãƒ¡ãƒ©ã®ã‚²ãƒƒã‚¿ãƒ¼
 	/// </summary>
 	/// <returns></returns>
 	Camera GetCamera();
 
 	/// <summary>
-	/// ƒAƒjƒ[ƒVƒ‡ƒ“ƒ^ƒCƒ€ƒQƒbƒ^[
+	/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒ ã‚²ãƒƒã‚¿ãƒ¼
 	/// </summary>
 	/// <returns></returns>
 	FbxTime GetCurrentTimer();
 	FbxTime GetEndTime();
 	bool GetIsAnimRot();
-	int ConvertFbxTimeToInt(FbxTime time);	//FbxTimeŒ^•Ï”‚ğint‚É•ÏŠ·
+	int ConvertFbxTimeToInt(FbxTime time);	//FbxTimeå‹å¤‰æ•°ã‚’intã«å¤‰æ›
 
 	/// <summary>
-	/// ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€æ“¾
+	/// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ å–å¾—
 	/// </summary>
 	/// <returns></returns>
 	Transform GetWorldTransform();
 	Transform* GetWorldTransformPtr();
 
 	/// <summary>
-	/// ƒ{[ƒ“—p
+	/// ãƒœãƒ¼ãƒ³ç”¨
 	/// </summary>
 	std::vector<Matrix4> bonesMat;
-	void ResizeBonesMat(std::vector<FBXModel::Bone> bones);	//ƒ{[ƒ“‚ÌƒTƒCƒY‚ğƒNƒ‰ƒXƒ^[ƒ{[ƒ“‚É‡‚í‚¹‚é
-	bool isBonesWorldMatCalc = false;	//ƒ{[ƒ“‚Ìƒ[ƒ‹ƒhÀ•Wã‚Å‚ÌŒvZ‚ğ‚·‚é‚©‚Ç‚¤‚©
+	void ResizeBonesMat(std::vector<FBXModel::Bone> bones);	//ãƒœãƒ¼ãƒ³ã®ã‚µã‚¤ã‚ºã‚’ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ãƒœãƒ¼ãƒ³ã«åˆã‚ã›ã‚‹
+	bool isBonesWorldMatCalc = false;	//ãƒœãƒ¼ãƒ³ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ä¸Šã§ã®è¨ˆç®—ã‚’ã™ã‚‹ã‹ã©ã†ã‹
 
-	std::vector<Matrix4>* GetBonesMatPtr();	//ƒ{[ƒ“‚Ìƒ[ƒ‹ƒhs—ñƒ|ƒCƒ“ƒ^‚ğ“n‚·
-	void SetIsBonesWorldMatCalc(bool isCalc);	//ƒ{[ƒ“ŒvZƒtƒ‰ƒO‚ÌƒZƒbƒ^[
+	std::vector<Matrix4>* GetBonesMatPtr();	//ãƒœãƒ¼ãƒ³ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ãƒã‚¤ãƒ³ã‚¿ã‚’æ¸¡ã™
+	void SetIsBonesWorldMatCalc(bool isCalc);	//ãƒœãƒ¼ãƒ³è¨ˆç®—ãƒ•ãƒ©ã‚°ã®ã‚»ãƒƒã‚¿ãƒ¼
 
 	/// <summary>
-	/// ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
+	/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹
 	/// </summary>
 	void PlayAnimation(int animationNum);
 
-	//•âŠÔƒAƒjƒ[ƒVƒ‡ƒ“ƒJƒEƒ“ƒg
+	//è£œé–“ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚«ã‚¦ãƒ³ãƒˆ
 	void AnimFlameInter(FbxTime nowCount, FbxTime maxCount);
 
 	Transform wtf;
 	
 	ID3D12Resource* GetConstBuff() { return constBuffTransform.Get(); };
 
-protected: // ƒƒ“ƒo•Ï”
-	// ’è”ƒoƒbƒtƒ@
+protected: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuffTransform;
-	// ’è”ƒoƒbƒtƒ@(ƒXƒLƒ“)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡(ã‚¹ã‚­ãƒ³)
 	ComPtr<ID3D12Resource> constBuffSkin;
-	//// ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	//// ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	//XMFLOAT3 scale = { 1,1,1 };
-	//// X,Y,Z²‰ñ‚è‚Ìƒ[ƒJƒ‹‰ñ“]Šp
+	//// X,Y,Zè»¸å›ã‚Šã®ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢è§’
 	//XMFLOAT3 rotation = { 0,0,0 };
-	//// ƒ[ƒJƒ‹À•W
+	//// ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
 	//XMFLOAT3 position = { 0,0,0 };
-	//// ƒ[ƒJƒ‹ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	//// ãƒ­ãƒ¼ã‚«ãƒ«ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	//XMMATRIX matWorld;
-	// ƒ‚ƒfƒ‹
+	// ãƒ¢ãƒ‡ãƒ«
 	FBXModel* fbxmodel = nullptr;
 
-	//1ƒtƒŒ[ƒ€‚ÌŠÔ
+	//1ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ™‚é–“
 	FbxTime frameTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ŠJnŠÔ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹æ™‚é–“
 	FbxTime startTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“I—¹ŠÔ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚é–“
 	FbxTime endTime;
-	//Œ»İŠÔ(ƒAƒjƒ[ƒVƒ‡ƒ“)
+	//ç¾åœ¨æ™‚é–“(ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³)
 	FbxTime currentTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶’†
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿä¸­
 	bool isPlay = false;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€w’èƒtƒ‰ƒO
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ãƒ¬ãƒ¼ãƒ æŒ‡å®šæ™‚ãƒ•ãƒ©ã‚°
 	bool isChangeFlame = false;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒ‰ƒO
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ãƒ©ã‚°
 	bool isAnim = true;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ŒJ‚è•Ô‚·‚©
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç¹°ã‚Šè¿”ã™ã‹
 	bool animRot = true;
 };

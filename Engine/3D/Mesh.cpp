@@ -1,4 +1,4 @@
-﻿#include "Mesh.h"
+#include "Mesh.h"
 #include <cassert>
 #include <d3dcompiler.h>
 

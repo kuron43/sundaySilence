@@ -10,7 +10,7 @@
 
 class Framework
 {
-public: // メンバ関数
+public: // 繝｡繝ｳ繝宣未謨ｰ
 
 	virtual ~Framework() = default;
 
@@ -29,7 +29,7 @@ public: // メンバ関数
 protected:
 	bool endRequest_;
 
-	//ポインタ
+	//繝昴う繝ｳ繧ｿ
 	WinApp* winApp = nullptr;
 	DirectXCommon* dxCommon = nullptr;
 	FPS* fps = nullptr;
