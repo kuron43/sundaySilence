@@ -79,7 +79,7 @@ private:
 	/// <param name="model">読み込み先モデルオブジェクト</param>
 	/// <param name="fbxNode">解析対象のノード</param>
 	/// <param name="parent">親ノード</param>
-	void ParseNodeRecursive(FBXModel* fbxmodel, FbxNode* fbxNode, Node* parent = nullptr);
+	void ParseNodeRecursive(FBXModel* fbxmodel, FbxNode* fbxNode, FBXNode* parent = nullptr);
 
 	/// <summary>
 	/// メッシュ読み取り

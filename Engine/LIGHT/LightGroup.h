@@ -46,7 +46,6 @@ public://サブクラス
 		//丸影用
 		CircleShadow::ConstBufferData circleShadows[CircleShadowNum];
 	};
-	HRESULT result;
 
 private://静的メンバ変数
 	//デバイス

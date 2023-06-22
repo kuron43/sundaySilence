@@ -54,6 +54,7 @@ bool LightGroup::Initialize()
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	/*ID3D12Resource* constBuff = nullptr;*/
 	// 定数バッファの生成
+	HRESULT result;
 	result = device_->CreateCommittedResource(
 		&cbHeapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,

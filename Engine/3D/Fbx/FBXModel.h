@@ -13,7 +13,7 @@
 
 
 // ノード
-struct Node
+struct FBXNode
 {
 	// 名前
 	std::string name;
@@ -28,7 +28,7 @@ struct Node
 	// グローバル変形行列
 	DirectX::XMMATRIX globalTransform;
 	// 親ノード
-	Node* parent = nullptr;
+	FBXNode* parent = nullptr;
 	
 };
 
@@ -103,9 +103,9 @@ private:
 	// モデル名
 	std::string name;
 	// ノード配列
-	std::vector<Node> nodes;
+	std::vector<FBXNode> nodes;
 	// メッシュを持つノード
-	Node* meshNode = nullptr;
+	FBXNode* meshNode = nullptr;
 	// 頂点データ配列
 	std::vector<VertexPosNormalUv> vertices;
 	// 頂点インデックス配列

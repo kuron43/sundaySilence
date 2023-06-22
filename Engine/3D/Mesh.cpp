@@ -8,22 +8,22 @@ using namespace DirectX;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-ID3D12Device* Mesh::device = nullptr;
+ID3D12Device* Mesh::device_ = nullptr;
 
 void Mesh::StaticInitialize(ID3D12Device* device) {
-	Mesh::device = device;
+	Mesh::device_ = device;
 
 	// マテリアルの静的初期化
 	Material::StaticInitialize(device);
 }
 
-void Mesh::SetName(const std::string& name) { this->name = name; }
+void Mesh::SetName(const std::string& name) { name_ = name; }
 
 void Mesh::AddVertex(const VertexPosNormalUv& vertex) { vertices.emplace_back(vertex); }
 
 void Mesh::AddIndex(unsigned short index) { indices.emplace_back(index); }
 
-void Mesh::SetMaterial(Material* material) { this->material = material; }
+void Mesh::SetMaterial(Material* material) { material_ = material; }
 
 void Mesh::CreateBuffers() {
 	HRESULT result;
@@ -36,7 +36,7 @@ void Mesh::CreateBuffers() {
 	CD3DX12_RESOURCE_DESC resourceDescVertexBuffer = CD3DX12_RESOURCE_DESC::Buffer(sizeVB);
 
 	// 頂点バッファ生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&heapPropsVertexBuffer, D3D12_HEAP_FLAG_NONE, &resourceDescVertexBuffer,
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
@@ -61,7 +61,7 @@ void Mesh::CreateBuffers() {
 	CD3DX12_RESOURCE_DESC resourceDescIndexBuffer = CD3DX12_RESOURCE_DESC::Buffer(sizeIB);
 
 	// インデックスバッファ生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&heapPropsIndexBuffer, D3D12_HEAP_FLAG_NONE, &resourceDescIndexBuffer,
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&indexBuff));
 	assert(SUCCEEDED(result));
@@ -86,10 +86,10 @@ void Mesh::Draw(ID3D12GraphicsCommandList* cmdList) {
 	cmdList->IASetIndexBuffer(&ibView);
 
 	// シェーダリソースビューをセット
-	cmdList->SetGraphicsRootDescriptorTable(2, material->GetGpuHandle());
+	cmdList->SetGraphicsRootDescriptorTable(2, material_->GetGpuHandle());
 
 	// マテリアルの定数バッファをセット
-	ID3D12Resource* constBuff = material->GetConstantBuffer();
+	ID3D12Resource* constBuff = material_->GetConstantBuffer();
 	cmdList->SetGraphicsRootConstantBufferView(1, constBuff->GetGPUVirtualAddress());
 
 	// 描画コマンド

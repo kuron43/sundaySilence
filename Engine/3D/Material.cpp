@@ -8,9 +8,9 @@ using namespace std;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-ID3D12Device* Material::device = nullptr;
+ID3D12Device* Material::device_ = nullptr;
 
-void Material::StaticInitialize(ID3D12Device* device) { Material::device = device; }
+void Material::StaticInitialize(ID3D12Device* device) { Material::device_ = device; }
 
 Material* Material::Create() {
 	Material* instance = new Material;
@@ -35,7 +35,7 @@ void Material::CreateConstantBuffer() {
 	  CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
 
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 	  &heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 	  IID_PPV_ARGS(&constBuff));
 	assert(SUCCEEDED(result));
@@ -94,7 +94,7 @@ void Material::LoadTexture(
 	  CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
 
 	// テクスチャ用バッファの生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 	  &heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 	  IID_PPV_ARGS(&texbuff));
 	assert(SUCCEEDED(result));
@@ -121,7 +121,7 @@ void Material::LoadTexture(
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D; // 2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = 1;
 
-	device->CreateShaderResourceView(
+	device_->CreateShaderResourceView(
 	  texbuff.Get(), //ビューと関連付けるバッファ
 	  &srvDesc,      //テクスチャ設定情報
 	  cpuDescHandleSRV);

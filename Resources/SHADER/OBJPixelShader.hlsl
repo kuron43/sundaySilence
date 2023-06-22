@@ -1,7 +1,7 @@
 #include "OBJShaderHeader.hlsli"
 
-Texture2D<float4> tex : register(t0);  // 0番スロットに設定されたテクスチャ
-SamplerState smp : register(s0);      // 0番スロットに設定されたサンプラー
+Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
+SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
 //float4 main(VSOutput input) : SV_TARGET
 //{
@@ -14,26 +14,26 @@ SamplerState smp : register(s0);      // 0番スロットに設定されたサ�
 //	return float4(texcolor.rgb * shade_color, texcolor.a * m_alpha);
 //} //バックアップ用
 
-float4 main(VSOutput input) :sv_TARGET
+float4 main(VSOutput input) : sv_TARGET
 {
 	//テクスチャマッピング
-	float4 texcolor = tex.Sample(smp,input.uv);
+    float4 texcolor = tex.Sample(smp, input.uv);
 	//光沢度
-	const float shininess = 4.0f;
+    const float shininess = 4.0f;
 	//頂点から視点への方向ベクトル
-	float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
+    float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 
 	//環境反射光
-	float3 ambient = m_ambient;
+    float3 ambient = m_ambient;
 
 	//シェーディングによる色
-	float4 shadecolor = float4 (ambientColor * ambient,m_alpha);
+    float4 shadecolor = float4(ambientColor * ambient, m_alpha);
     float4 ambientColor = float4(m_ambient, 1);
-    float4 diffColor = float4(0.5,0.5,0.5,1);
-    float4 specColor = float4(1,1,1, 1);
+    float4 diffColor = float4(0.5, 0.5, 0.5, 1);
+    float4 specColor = float4(1, 1, 1, 1);
 	
-	float3 light = normalize(float3(1, -1, 1)); // 右下奥　向きのライト
-	float4 _RimColor = float4 (1, 0, 1, 1);
+    float3 light = normalize(float3(1, -1, 1)); // 右下奥　向きのライト
+    float4 _RimColor = float4(1, 0, 1, 1);
 	{
 		////全て加算する
 		//for (int i = 0; i < DIR_LIGHT_NUM; i++) {
@@ -53,37 +53,39 @@ float4 main(VSOutput input) :sv_TARGET
 		//		shadecolor.rgb += (diffuse + specular) * dirLights[i].lightcolor;
 		//	}
 		//}
-	}
+    }
 	
 	
 	
 	//全て加算する // hennkouyou 
-	for (int i = 0; i < DIR_LIGHT_NUM; i++) {
-		if (dirLights[i].active) {
-			float4 LightColor = float4 (dirLights[i].lightcolor, 1);
-			float3 lightDir = normalize(dirLights[i].lightv);
+    for (int i = 0; i < DIR_LIGHT_NUM; i++)
+    {
+        if (dirLights[i].active)
+        {
+            float4 LightColor = float4(dirLights[i].lightcolor, 1);
+            float3 lightDir = normalize(dirLights[i].lightv);
 			
             float4 _ambient = texcolor * ambientColor * LightColor;
 
             float intensty = saturate(dot(normalize(input.normal), lightDir));
-            float4 diffuse = texcolor * smoothstep(0.05,0.1,intensty) * diffColor;
+            float4 diffuse = texcolor * smoothstep(0.05, 0.1, intensty) * diffColor;
 
-			float3 eyeDir = normalize(cameraPos - input.worldpos.xyz);
-			input.normal = normalize(input.normal);
+            float3 eyeDir = normalize(cameraPos - input.worldpos.xyz);
+            input.normal = normalize(input.normal);
 
-			float3 reflectDir = -lightDir + 2 * input.normal * dot(input.normal, lightDir);
-			float4 speclar = pow(saturate(dot(reflectDir, eyeDir)), 20) * specColor;
-			float4 specular = speclar;
-			float4 ads = _ambient + diffuse + specular;
+            float3 reflectDir = -lightDir + 2 * input.normal * dot(input.normal, lightDir);
+            float4 speclar = pow(saturate(dot(reflectDir, eyeDir)), 20) * specColor;
+            float4 specular = speclar;
+            float4 ads = _ambient + diffuse + specular;
 			
-			float Rim = step(0.7, 1 - saturate(dot(input.normal, eyeDir)));
+            float Rim = step(0.7, 1 - saturate(dot(input.normal, eyeDir)));
 
 
 			//全て加算する
 			//shadecolor = (1 - Rim) * (_ambient + diffuse + specular) + Rim * _RimColor;
-			shadecolor = (diffuse + _ambient + specular);
+            shadecolor = (diffuse + _ambient + specular);
         }
-	}
+    }
 	////点光源
 	//for (int i = 0; i < POINTLIGHT_NUM; i++) {
 	//	if (pointLights[i].active) {
@@ -170,5 +172,5 @@ float4 main(VSOutput input) :sv_TARGET
 	//}
 
 	//シェーディングによる色で描画
-	return shadecolor;
+    return shadecolor;
 }

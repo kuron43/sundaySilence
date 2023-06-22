@@ -154,7 +154,7 @@ protected:
 	ComPtr<ID3D12Resource> vertBuff = nullptr;
 
 	// 左右反転
-	bool isFlipX = false;
+	bool isFlipX_ = false;
 	// 上下反転
-	bool isFlipY = false;
+	bool isFlipY_ = false;
 };

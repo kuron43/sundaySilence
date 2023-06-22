@@ -41,7 +41,7 @@ class Material {
 
   private: // 静的メンバ変数
 	// デバイス
-	static ID3D12Device* device;
+	static ID3D12Device* device_;
 
   public:
 	std::string name;            // マテリアル名
