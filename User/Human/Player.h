@@ -4,7 +4,7 @@
 
 
 class Player :
-    public Human
+	public Human
 {
 public:
 	Player();
@@ -21,7 +21,7 @@ public:
 	void Draw(DirectXCommon* dxCommon)override;
 
 	/// リセットを行う
-	 void Reset() override;
+	void Reset() override;
 
 	void Move(Input* input);
 
@@ -34,6 +34,8 @@ private:
 	Vector3 velocity_;
 	Vector3 faceAngle_;
 
+	Weapon* weapon_[2];
+	bool isWeaponOn = true;
 
 };
 
