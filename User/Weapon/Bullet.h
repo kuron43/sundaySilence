@@ -19,7 +19,7 @@ public:
 	//~Bullet();
 	void Initialize(const Vector3& position, Vector3 move);
 
-	void Update();
+	void Update(float speed);
 
 	void Draw();
 

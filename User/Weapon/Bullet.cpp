@@ -16,10 +16,10 @@ void Bullet::Initialize( const Vector3& position, Vector3 move)
 	bulletObj_->wtf.position = position;
 }
 
-void Bullet::Update()
+void Bullet::Update(float speed)
 {
 
-	bulletObj_->wtf.position += (moveVec * 1.5f);
+	bulletObj_->wtf.position += (moveVec * speed);
 	//行列の再計算
 	bulletObj_->Update();
 }
