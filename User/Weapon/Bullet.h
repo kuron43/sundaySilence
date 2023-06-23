@@ -16,8 +16,9 @@ public:
 	Vector3 moveVec;
 
 public:
-	//~Bullet();
-	void Initialize(const Vector3& position, Vector3 move);
+	Bullet();
+	~Bullet();
+	void Initialize(Model* model,const Vector3& position, Vector3 move);
 
 	void Update(float speed);
 

@@ -2,17 +2,24 @@
 
 Model* Bullet::bulletModel_ = nullptr;
 
-void Bullet::Initialize( const Vector3& position, Vector3 move)
+
+Bullet::Bullet() {
+
+}
+Bullet::~Bullet() {
+
+}
+void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move)
 {
 	//NULLチェック
-	assert(bulletModel_);
+	assert(model);
 
+	bulletObj_ = std::make_unique<Object3d>();
 	bulletObj_->Initialize();
-	bulletObj_->wtf.Initialize();
-	bulletObj_->SetModel(bulletModel_);
+	bulletObj_->SetModel(model);
 	moveVec = move;
 
-	bulletObj_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
+	bulletObj_->wtf.scale = Vector3(0.8f, 0.8f, 0.8f);
 	bulletObj_->wtf.position = position;
 }
 

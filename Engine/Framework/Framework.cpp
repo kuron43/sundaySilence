@@ -9,6 +9,9 @@ void Framework::Run() {
 		if (IsEndRequest()) {
 			break;
 		}
+		if (input->KeyboardPush(DIK_ESCAPE)) {
+			break;
+		}
 		Draw();
 	}
 
