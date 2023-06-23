@@ -42,17 +42,20 @@ void Assault::Update(Input* input, bool isSlow) {
 	{
 		speed_ = nomalSpeed;
 	}
-
 	for (std::unique_ptr<Bullet>& bullet : bullets_) {
 		bullet->Update(speed_);
 	}
+	//デスフラグの立った弾を削除
+	bullets_.remove_if([](std::unique_ptr<Bullet>& bullet) { return bullet->IsDead(); });
 }
 
 /// 描画を行う
 void Assault::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
 	for (std::unique_ptr<Bullet>& bullet : bullets_) {
-		bullet->Draw();
+		if (bullet->IsDead() == false) {
+			bullet->Draw();
+		}
 	}
 	Object3d::PostDraw();
 }
@@ -63,19 +66,19 @@ void Assault::Reset() {
 }
 
 // 発射を行う
-void Assault::Shot(Transform& player,Transform& reticle) {
+void Assault::Shot(Transform& player, Transform& reticle) {
 	if (mag < 30) {
 		if (coolTime <= 0) {
 			//弾を生成し、初期化
 			std::unique_ptr<Bullet> newBullet = std::make_unique<Bullet>();
-			Vector3 startPos, reticleVec,moveVec,velo;
+			Vector3 startPos, reticleVec, moveVec, velo;
 			startPos = Affin::GetWorldTrans(player.matWorld); // 発射座標
 			reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
-			velo =  reticleVec-startPos;
+			velo = reticleVec - startPos;
 			velo.nomalize();
 			moveVec = velo * speed_;
 			moveVec.nomalize();
-			newBullet->Initialize(model_,startPos, moveVec);
+			newBullet->Initialize(model_, startPos, moveVec);
 
 			//弾を登録
 			bullets_.push_back(std::move(newBullet));

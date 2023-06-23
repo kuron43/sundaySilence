@@ -21,11 +21,16 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move)
 
 	bulletObj_->wtf.scale = Vector3(0.8f, 0.8f, 0.8f);
 	bulletObj_->wtf.position = position;
+	timeCount = 0;
+	isDead = false;
 }
 
 void Bullet::Update(float speed)
 {
-
+	timeCount++;
+	if (timeCount >= deathTime) {
+		Dead();
+	}
 	bulletObj_->wtf.position += (moveVec * speed);
 	//行列の再計算
 	bulletObj_->Update();

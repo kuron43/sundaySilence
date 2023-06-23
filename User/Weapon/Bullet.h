@@ -9,6 +9,8 @@ public:
 	bool isTeam;
 	bool isDead;
 
+	const int deathTime = 50;
+	int timeCount;
 	
 	std::unique_ptr<Object3d> bulletObj_;
 	static Model* bulletModel_;
@@ -29,6 +31,7 @@ public:
 	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bulletObj_->wtf.matWorld); };
 
 	bool IsDead() const { return isDead; }
+	void Dead() { isDead = true; }
 
 	void SetBullModel(Model* model) { Bullet::bulletModel_ = model; }
 
