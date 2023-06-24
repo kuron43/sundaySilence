@@ -3,6 +3,7 @@
 
 #include "Keyboard_Input.h"
 #include "PadInput.h"
+#include "MouseInput.h"
 
 
 
@@ -12,8 +13,17 @@ class Input
 public:
 	// namespace
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+private: // メンバ変数
+	
+	Keyboard_Input* keybord_;
+	Pad_X_Input* Xpad_;
+	MouseInput* mouse_;
+	
 
 public: // メンバ関数
+	Input();
+	~Input();
+
 	// 初期化
 	void Initialize(WinApp* winApp);
 
@@ -117,11 +127,30 @@ public: // メンバ関数
 	void Pad_X_ShakeController(const float& power, const int& span);
 
 #pragma endregion Xbox Pad用関数
+#pragma region マウス用関数
 
-private: // メンバ変数
-	
-	Keyboard_Input* keybord_;
-	Pad_X_Input* Xpad_;
+	/// <summary>
+	/// マウスボタンの入力
+	/// </summary>
+	/// <param name="mouseButtons"></param>
+	bool MouseButtonPush(unsigned char mouseButtons);
+	/// <summary>
+	/// マウスボタンの押した瞬間
+	/// </summary>
+	/// <param name="mouseButtons"></param>
+	/// <returns></returns>
+	bool MouseButtonTrigger(unsigned char mouseButtons);
+	/// <summary>
+	/// マウスボタンの離した瞬間
+	/// </summary>
+	/// <param name="mouseButtons"></param>
+	/// <returns></returns>
+	bool MouseButtonRelease(unsigned char mouseButtons);
+	/// <summary>
+	/// マウスの座標取得
+	/// </summary>
+	/// <returns></returns>
+	Vector2 GetMousePosition();
 
-	
+#pragma endregion マウス用関数
 };

@@ -1,15 +1,12 @@
 #pragma once
 #include "Model.h"
 #include "DirectXCommon.h"
-
-class Input;
-//class DirectXCommon;
-class Transform;
+#include "Input.h"
+#include "Transform.h"
 
 class Weapon
 {
 protected:
-	static Model* bullet_MD;
 
 public:
 	Weapon();
@@ -31,6 +28,6 @@ public:
 	// 発射を行う
 	virtual void Shot(Transform& player, Transform& reticle) = 0;
 
-	void SetBullModel(Model* model) { Weapon::bullet_MD = model; }
+	
 };
 

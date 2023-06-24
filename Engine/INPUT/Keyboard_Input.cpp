@@ -11,7 +11,7 @@ Keyboard_Input::~Keyboard_Input(){}
 
 void Keyboard_Input::Initialize(WinApp* winApp)
 {
-	this->winApp_ = winApp;
+	winApp_ = winApp;
 
 	HRESULT result;
 

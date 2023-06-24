@@ -28,11 +28,17 @@ public:
 private:
 	Model* model_;
 	Object3d* object_;
+	Object3d* reticle;
+	float mouseSensitivity_ = 0.05;	//マウス感度
 	//移動速度
 	const float kMoveSpeed_ = 0.5;
+	//旋回速度
+	const float kTurnSpeed_ = Affin::radConvert(10);
+	bool isRun_ = false;
 	//移動ベクトル
 	Vector3 velocity_;
 	Vector3 faceAngle_;
+
 
 	Weapon* weapon_[2];
 	bool isWeaponOn = true;

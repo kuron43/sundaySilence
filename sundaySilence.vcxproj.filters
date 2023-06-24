@@ -206,6 +206,8 @@
     <ClCompile Include="User\Weapon\Weapon.cpp" />
     <ClCompile Include="User\Human\Enemy.cpp" />
     <ClCompile Include="User\Weapon\Assault.cpp" />
+    <ClCompile Include="User\Weapon\Shotgun.cpp" />
+    <ClCompile Include="Engine\INPUT\MouseInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -314,6 +316,8 @@
     <ClInclude Include="User\Weapon\Weapon.h" />
     <ClInclude Include="User\Human\Enemy.h" />
     <ClInclude Include="User\Weapon\Assault.h" />
+    <ClInclude Include="User\Weapon\Shotgun.h" />
+    <ClInclude Include="Engine\INPUT\MouseInput.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

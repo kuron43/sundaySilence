@@ -3,20 +3,29 @@
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
 
-//using namespace Microsoft::WRL;
+Input::Input() {
 
+}
+Input::~Input() {
+	delete keybord_;
+	delete Xpad_;
+}
 void Input::Initialize(WinApp* winApp)
 {
 	keybord_ = new Keyboard_Input();
 	keybord_->Initialize(winApp);
 	
 	Xpad_ = new Pad_X_Input();
+
+	mouse_ = new MouseInput();
+	mouse_->Initialize(winApp);
 }
 
 void Input::Update()
 {
 	keybord_->Update();
 	Xpad_->Update();
+	mouse_->Update();
 }
 
 bool Input::KeyboardPush(BYTE keyNumber)
@@ -80,4 +89,21 @@ void Input::Pad_X_ShakeController(
 	const float& power,
 	const int& span) {
 	return Xpad_->ShakeController(power, span);
+}
+
+
+bool Input::MouseButtonPush(unsigned char mouseButtons) {
+	return mouse_->PushMouseButton(mouseButtons);
+}
+
+bool Input::MouseButtonTrigger(unsigned char mouseButtons) {
+	return mouse_->TriggerMouseButton(mouseButtons);
+}
+
+bool Input::MouseButtonRelease(unsigned char mouseButtons) {
+	return mouse_->ReleaseMouseButton(mouseButtons);
+}
+
+Vector2 Input::GetMousePosition() {
+	return mouse_->GetMousePosition();
 }

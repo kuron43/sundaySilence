@@ -120,6 +120,7 @@
     <ClCompile Include="Engine\Framework\MyGame.cpp" />
     <ClCompile Include="Engine\INPUT\Input.cpp" />
     <ClCompile Include="Engine\INPUT\Keyboard_Input.cpp" />
+    <ClCompile Include="Engine\INPUT\MouseInput.cpp" />
     <ClCompile Include="Engine\INPUT\PadInput.cpp" />
     <ClCompile Include="Engine\LIGHT\CircleShadow.cpp" />
     <ClCompile Include="Engine\LIGHT\DirectionalLight.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="User\Weapon\Bullet.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
     <ClCompile Include="User\Human\Player.cpp" />
+    <ClCompile Include="User\Weapon\Shotgun.cpp" />
     <ClCompile Include="User\Weapon\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +175,7 @@
     <ClInclude Include="Engine\Framework\MyGame.h" />
     <ClInclude Include="Engine\INPUT\Input.h" />
     <ClInclude Include="Engine\INPUT\Keyboard_Input.h" />
+    <ClInclude Include="Engine\INPUT\MouseInput.h" />
     <ClInclude Include="Engine\INPUT\PadInput.h" />
     <ClInclude Include="Engine\LIGHT\CircleShadow.h" />
     <ClInclude Include="Engine\LIGHT\DirectionalLight.h" />
@@ -200,6 +203,7 @@
     <ClInclude Include="User\Weapon\Bullet.h" />
     <ClInclude Include="User\Human\Human.h" />
     <ClInclude Include="User\Human\Player.h" />
+    <ClInclude Include="User\Weapon\Shotgun.h" />
     <ClInclude Include="User\Weapon\Weapon.h" />
   </ItemGroup>
   <ItemGroup>

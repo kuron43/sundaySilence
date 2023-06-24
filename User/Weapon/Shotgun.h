@@ -2,28 +2,28 @@
 #include "Weapon.h"
 #include "Bullet.h"
 
-class Assault :
+class Shotgun :
     public Weapon
 {
 private:
 	std::list<std::unique_ptr<Bullet>> bullets_;
 	Model* model_;
 	bool active_ = false;
-	const int WeaponNum = 1;
+	const int WeaponNum = 2;
 
 private:
 	const float nomalSpeed = 1.5f;
 	float speed_ = nomalSpeed;
-	int coolTime = 0;
-	int mag = 0;
-	int roadingTime = 0;
+	int coolTime = 3;
+	int mag = 30;
+	int roadingTime = 50;
 
 
 public:
-	Assault();
-	~Assault();
+	Shotgun();
+	~Shotgun();
 
-	static Assault* Create();
+	static Shotgun* Create();
 	/// 更新を行う
 	bool Initialize() override;
 
@@ -39,4 +39,5 @@ public:
 	// 発射を行う
 	void Shot(Transform& player, Transform& reticle) override;
 };
+
 

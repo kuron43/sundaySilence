@@ -1,17 +1,16 @@
-#include "Assault.h"
+#include "Shotgun.h"
 
-
-Assault::Assault() {
-	//model_ = Model::LoadFromOBJ("cube");
+Shotgun::Shotgun() {
+	
 }
-Assault::~Assault() {
+Shotgun::~Shotgun() {
 
 }
 
-Assault* Assault::Create()
+Shotgun* Shotgun::Create()
 {
 	// 3Dオブジェクトのインスタンスを生成
-	Assault* instans = new Assault();
+	Shotgun* instans = new Shotgun();
 	if (instans == nullptr) {
 		return nullptr;
 	}
@@ -27,13 +26,13 @@ Assault* Assault::Create()
 }
 
 /// 更新を行う
-bool Assault::Initialize() {
-	model_ = Model::LoadFromOBJ("cube");
+bool Shotgun::Initialize() {
+	//model_ = Model::LoadFromOBJ("cube");
 	return true;
 }
 
 /// 更新を行う
-void Assault::Update(Input* input, bool isSlow) {
+void Shotgun::Update(Input* input, bool isSlow) {
 	assert(input);
 	if (isSlow) {
 		speed_ = nomalSpeed / 2;
@@ -42,31 +41,29 @@ void Assault::Update(Input* input, bool isSlow) {
 	{
 		speed_ = nomalSpeed;
 	}
+
 	for (std::unique_ptr<Bullet>& bullet : bullets_) {
 		bullet->Update(speed_);
 	}
-	//デスフラグの立った弾を削除
-	bullets_.remove_if([](std::unique_ptr<Bullet>& bullet) { return bullet->IsDead(); });
 }
 
 /// 描画を行う
-void Assault::Draw(DirectXCommon* dxCommon) {
+void Shotgun::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
 	for (std::unique_ptr<Bullet>& bullet : bullets_) {
-		if (bullet->IsDead() == false) {
-			bullet->Draw();
-		}
+		bullet->Draw();
 	}
 	Object3d::PostDraw();
 }
 
 /// リセットを行う
-void Assault::Reset() {
+void Shotgun::Reset() {
 
 }
 
 // 発射を行う
-void Assault::Shot(Transform& player, Transform& reticle) {
+void Shotgun::Shot(Transform& player, Transform& reticle) {
+	model_ = Model::LoadFromOBJ("cube");
 	if (mag < 30) {
 		if (coolTime <= 0) {
 			//弾を生成し、初期化
@@ -74,11 +71,11 @@ void Assault::Shot(Transform& player, Transform& reticle) {
 			Vector3 startPos, reticleVec, moveVec, velo;
 			startPos = Affin::GetWorldTrans(player.matWorld); // 発射座標
 			reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
-			velo = reticleVec - startPos;
+			velo = startPos - reticleVec;
 			velo.nomalize();
 			moveVec = velo * speed_;
 			moveVec.nomalize();
-			newBullet->Initialize(model_, startPos, moveVec);
+			newBullet->Initialize(model_,startPos, moveVec);
 
 			//弾を登録
 			bullets_.push_back(std::move(newBullet));

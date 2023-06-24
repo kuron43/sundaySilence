@@ -2,23 +2,34 @@
 
 Model* Bullet::bulletModel_ = nullptr;
 
-void Bullet::Initialize( const Vector3& position, Vector3 move)
+
+Bullet::Bullet() {
+
+}
+Bullet::~Bullet() {
+
+}
+void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move)
 {
 	//NULLチェック
-	assert(bulletModel_);
+	assert(model);
 
-	bulletObj_->Initialize();
-	bulletObj_->wtf.Initialize();
-	bulletObj_->SetModel(bulletModel_);
+	bulletObj_ = Object3d::Create();
+	bulletObj_->SetModel(model);
 	moveVec = move;
 
-	bulletObj_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
+	bulletObj_->wtf.scale = Vector3(0.8f, 0.8f, 0.8f);
 	bulletObj_->wtf.position = position;
+	timeCount = 0;
+	isDead = false;
 }
 
 void Bullet::Update(float speed)
 {
-
+	timeCount++;
+	if (timeCount >= deathTime) {
+		Dead();
+	}
 	bulletObj_->wtf.position += (moveVec * speed);
 	//行列の再計算
 	bulletObj_->Update();
