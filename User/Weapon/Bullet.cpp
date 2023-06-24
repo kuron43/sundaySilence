@@ -14,8 +14,7 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move)
 	//NULLチェック
 	assert(model);
 
-	bulletObj_ = std::make_unique<Object3d>();
-	bulletObj_->Initialize();
+	bulletObj_ = Object3d::Create();
 	bulletObj_->SetModel(model);
 	moveVec = move;
 

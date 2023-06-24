@@ -12,7 +12,7 @@ public:
 	const int deathTime = 50;
 	int timeCount;
 	
-	std::unique_ptr<Object3d> bulletObj_;
+	Object3d* bulletObj_;
 	static Model* bulletModel_;
 
 	Vector3 moveVec;
