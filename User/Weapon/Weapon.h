@@ -7,7 +7,7 @@
 class Weapon
 {
 protected:
-
+	bool isSlow_;
 public:
 	Weapon();
 	virtual ~Weapon();
