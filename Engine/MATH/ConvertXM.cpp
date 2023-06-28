@@ -42,3 +42,23 @@ XMFLOAT3 ConvertXM::ConvertVec3toXMFlo3(Vector3 vec3) {
 
 	return result;
 }
+
+Vector4 ConvertXM::XMVECToVec4(XMVECTOR XMVEC) {
+	Vector4 result;
+	result.x = XMVEC.m128_f32[0];
+	result.y = XMVEC.m128_f32[1];
+	result.z = XMVEC.m128_f32[2];
+	result.w = XMVEC.m128_f32[3];
+
+	return result;
+}
+
+XMVECTOR ConvertXM::Vec4ToXMVEC(Vector4 Vec4) {
+	XMVECTOR result;
+	result.m128_f32[0] = Vec4.x;
+	result.m128_f32[1] = Vec4.y;
+	result.m128_f32[2] = Vec4.z;
+	result.m128_f32[3] = Vec4.w;
+
+	return result;
+}

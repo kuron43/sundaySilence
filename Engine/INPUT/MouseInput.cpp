@@ -33,7 +33,7 @@ void MouseInput::Initialize(WinApp* winApp) {
 /// 更新
 /// </summary>
 void MouseInput::Update() {
-	HRESULT result;
+	//HRESULT result;
 
 	mouse->Acquire();
 
@@ -73,9 +73,13 @@ void MouseInput::UpdatePointPos() {
 
 	//mousePos_ = { xPos_absolute,yPos_absolute };
 
+	Vector2 mousePos;
+	mousePos.x = static_cast<float>(mousePosition.x);
+	mousePos.y = static_cast<float>(mousePosition.y);
+
 	//マウスの移動量を取得
 	mousePos_ = Vector2(0, 0);
-	mousePos_ = (Vector2(mousePosition.x, -mousePosition.y) - Vector2(windowWH.x, -windowWH.y));//座標軸で回転している関係でこうなる(XとYが入れ替え)
+	mousePos_ = (Vector2(mousePos.x, -mousePos.y) - Vector2(windowWH.x, -windowWH.y));//座標軸で回転している関係でこうなる(XとYが入れ替え)
 
 }
 

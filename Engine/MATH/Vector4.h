@@ -1,5 +1,7 @@
 #pragma once
 
+//class XMVECTOR;
+
 //4次元ベクトル
 class Vector4
 {
@@ -44,3 +46,4 @@ const Vector4 operator/(const Vector4& v, float s);
 void Vector4Lerp(const Vector4& src1, const Vector4& src2, float t, Vector4& dest);
 
 Vector4 Vector4Lerp(const Vector4& src1, const Vector4& src2, float t);
+

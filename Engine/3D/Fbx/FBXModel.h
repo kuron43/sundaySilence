@@ -9,6 +9,8 @@
 #include <d3dx12.h>
 #include <fbxsdk.h>
 
+#include "Affin.h"
+
 
 
 
@@ -18,15 +20,15 @@ struct FBXNode
 	// 名前
 	std::string name;
 	// ローカルスケール
-	DirectX::XMVECTOR scaling /*= { 1,1,1,0 }*/;
+	Vector4 scaling = { 1,1,1,0 };
 	// ローカル回転角
-	DirectX::XMVECTOR rotation/* = { 0,0,0,0 }*/;
+	Vector4 rotation = { 0,0,0,0 };
 	// ローカル移動
-	DirectX::XMVECTOR translation/* = { 0,0,0,1 }*/;
+	Vector4 translation = { 0,0,0,1 };
 	// ローカル変形行列
-	DirectX::XMMATRIX transform;
+	Matrix4 transform;
 	// グローバル変形行列
-	DirectX::XMMATRIX globalTransform;
+	Matrix4 globalTransform;
 	// 親ノード
 	FBXNode* parent = nullptr;
 	
@@ -90,7 +92,7 @@ public:
 	// 描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 	// モデルの変形行列取得
-	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
+	const Matrix4& GetModelTransform() { return meshNode->globalTransform; }
 	//getter
 	FbxScene* GetFbxScene() { return fbxScene; }
 

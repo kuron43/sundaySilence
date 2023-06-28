@@ -213,21 +213,21 @@ void FbxLoader::ParseNodeRecursive(FBXModel* fbxmodel, FbxNode* fbxNode, FBXNode
     node.translation = { (float)translation[0], (float)translation[1], (float)translation[2], 1.0f };
 
     //回転角をDegree(度)からラジアンに変換
-    node.rotation.m128_f32[0] = XMConvertToRadians(node.rotation.m128_f32[0]);
-    node.rotation.m128_f32[1] = XMConvertToRadians(node.rotation.m128_f32[1]);
-    node.rotation.m128_f32[2] = XMConvertToRadians(node.rotation.m128_f32[2]);
+    node.rotation.x = Affin::radConvert(node.rotation.x);
+    node.rotation.y = XMConvertToRadians(node.rotation.y);
+    node.rotation.z = XMConvertToRadians(node.rotation.z);
 
     // スケール、回転、平行移動行列の計算
     XMMATRIX matScaling, matRotation, matTranslation;
-    matScaling = XMMatrixScalingFromVector(node.scaling);
-    matRotation = XMMatrixRotationRollPitchYawFromVector(node.rotation);
-    matTranslation = XMMatrixTranslationFromVector(node.translation);
+    matScaling = XMMatrixScalingFromVector(ConvertXM::Vec4ToXMVEC(node.scaling));
+    matRotation = XMMatrixRotationRollPitchYawFromVector(ConvertXM::Vec4ToXMVEC(node.rotation));
+    matTranslation = XMMatrixTranslationFromVector(ConvertXM::Vec4ToXMVEC(node.translation));
 
     // ローカル変形行列の計算
-    node.transform = XMMatrixIdentity();
-    node.transform *= matScaling; // ワールド行列にスケーリングを反映
-    node.transform *= matRotation; // ワールド行列に回転を反映
-    node.transform *= matTranslation; // ワールド行列に平行移動を反映
+    node.transform = Affin::matUnit();
+    node.transform *= ConvertXM::ConvertXMMATtoMat4(matScaling); // ワールド行列にスケーリングを反映
+    node.transform *= ConvertXM::ConvertXMMATtoMat4(matRotation); // ワールド行列に回転を反映
+    node.transform *= ConvertXM::ConvertXMMATtoMat4(matTranslation); // ワールド行列に平行移動を反映
 
     //グローバル変形行列の計算
     node.globalTransform = node.transform;
@@ -349,7 +349,7 @@ void FbxLoader::ParseMeshFaces(FBXModel* fbxmodel, FbxMesh* fbxMesh)
             // 3頂点目までなら
             if (j < 3) {
                 // 1点追加し、他の2点と三角形を構築する
-                indices.push_back(index);
+                indices.push_back((unsigned short)index);
             }
             // 4頂点目
             else {
@@ -357,9 +357,9 @@ void FbxLoader::ParseMeshFaces(FBXModel* fbxmodel, FbxMesh* fbxMesh)
                 int index2 = indices[indices.size() - 1];
                 int index3 = index;
                 int index0 = indices[indices.size() - 3];
-                indices.push_back(index2);
-                indices.push_back(index3);
-                indices.push_back(index0);
+                indices.push_back((unsigned short)index2);
+                indices.push_back((unsigned short)index3);
+                indices.push_back((unsigned short)index0);
             }
         }
     }
