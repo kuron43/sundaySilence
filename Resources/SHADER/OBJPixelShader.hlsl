@@ -58,7 +58,7 @@ float4 main(VSOutput input) : sv_TARGET
 	
 	
 	//全て加算する // hennkouyou 
-    for (int i = 0; i < DIR_LIGHT_NUM; i++)
+    for (unsigned int i = 0; i < DIR_LIGHT_NUM; i++)
     {
         if (dirLights[i].active)
         {

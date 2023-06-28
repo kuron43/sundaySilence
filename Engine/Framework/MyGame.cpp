@@ -6,7 +6,7 @@ void MyGame::Initialize() {
 	////////////////////////////
 	Framework::Initialize();
 
-	fbxManager = FbxManager::Create();
+	//fbxManager = FbxManager::Create();
 
 	postEffect = new PostEffect();
 	postEffect->Initialize(dxCommon);
@@ -55,13 +55,13 @@ void MyGame::Update() {
 		postEffect->SetShadeNumber(0);
 	}
 	if (input->KeyboardTrigger(DIK_2)) {
-		postEffect->SetShadeNumber(1);
+		postEffect->SetShadeNumber(3);
 	}
 	if (input->KeyboardTrigger(DIK_3)) {
 		postEffect->SetShadeNumber(2);
 	}
 	if (input->KeyboardTrigger(DIK_4)) {
-		postEffect->SetShadeNumber(3);
+		postEffect->SetShadeNumber(1);
 	}
 
 }
@@ -73,17 +73,17 @@ void MyGame::Draw() {
 
 	// ポストエフェクト用ゲームシーンの描画
 	postEffect->PreDrawScene(dxCommon->GetCommandList());
-	//gameScene->Draw();
+	gameScene->Draw();
 	postEffect->PostDrawScene();
 
 	//4.描画コマンドここから
 	dxCommon->PreDraw();
 
 	// ゲームシーンの描画
-	gameScene->Draw();
+	//gameScene->Draw();
 
 	//ポストエフェクトの描画
-	//postEffect->Draw(dxCommon->GetCommandList());
+	postEffect->Draw(dxCommon->GetCommandList());
 
 	// Imgui受付終了
 	imgui->End();

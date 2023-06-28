@@ -29,9 +29,9 @@ private:
 	Model* model_;
 	Object3d* object_;
 	Object3d* reticle;
-	float mouseSensitivity_ = 0.099;	//マウス感度 0.05
+	float mouseSensitivity_ = 0.099f;	//マウス感度 0.05
 	//移動速度
-	const float kMoveSpeed_ = 0.5;
+	const float kMoveSpeed_ = 0.5f;
 	//旋回速度
 	const float kTurnSpeed_ = Affin::radConvert(10);
 	bool isRun_ = false;

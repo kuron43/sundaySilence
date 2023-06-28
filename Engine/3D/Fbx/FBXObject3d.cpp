@@ -230,7 +230,7 @@ void FBXObject3d::Update()
 	// ビュープロジェクション行列
 	const Matrix4& matViewProjection = camera_->GetViewProjectionMatrix();
 	// モデルのメッシュトランスフォーム
-	const XMMATRIX& modelTransform = fbxmodel_->GetModelTransform();
+	const Matrix4& modelTransform = fbxmodel_->GetModelTransform();
 	// カメラ座標
 	const Vector3& cameraPos = camera_->GetEye();
 
@@ -240,7 +240,7 @@ void FBXObject3d::Update()
 	result = constBuffTransform->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) {
 		constMap->viewproj = ConvertXM::ConvertMat4toXMMAT(matViewProjection);
-		constMap->world = modelTransform * ConvertXM::ConvertMat4toXMMAT(wtf.matWorld);
+		constMap->world = ConvertXM::ConvertMat4toXMMAT(modelTransform * wtf.matWorld);
 		constMap->cameraPos = { cameraPos.x, cameraPos.y,cameraPos.z };
 		constBuffTransform->Unmap(0, nullptr);
 	}

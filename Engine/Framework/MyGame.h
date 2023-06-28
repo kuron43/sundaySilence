@@ -21,7 +21,7 @@ public:	// メンバ関数
 protected:
 
 	//ポインタ
-	FbxManager* fbxManager = nullptr;
+	//FbxManager* fbxManager = nullptr;
 	GameScene* gameScene = nullptr;
 	PostEffect* postEffect = nullptr;
 };
