@@ -1,6 +1,5 @@
 #pragma once
 #include "Human.h"
-#include "Weapon.h"
 
 
 class Player :
@@ -15,7 +14,7 @@ public:
 	void Initialize()override;
 
 	/// シーンの更新を行う
-	void Update(Input* input)override;
+	void Update(Input* input,bool isTitle = false)override;
 
 	/// シーンの描画を行う
 	void Draw(DirectXCommon* dxCommon)override;
@@ -26,6 +25,8 @@ public:
 	void Move(Input* input);
 
 private:
+	bool nowTitle = false;
+
 	Model* model_;
 	Object3d* object_;
 	Object3d* reticle;

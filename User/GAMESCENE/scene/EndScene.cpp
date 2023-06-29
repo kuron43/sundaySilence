@@ -18,7 +18,7 @@ void EndScene::Initialize() {
 
 void EndScene::Update(Input* input) {
 
-	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
+	if (input->KeyboardTrigger(DIK_RETURN) || input->Pad_X_ButtonTrigger(LB)) {
 		_controller->ChangeScene(new TitleScene(_controller,_objects));
 	}
 }

@@ -318,6 +318,7 @@
     <ClInclude Include="User\Weapon\Assault.h" />
     <ClInclude Include="User\Weapon\Shotgun.h" />
     <ClInclude Include="Engine\INPUT\MouseInput.h" />
+    <ClInclude Include="User\Weapon\Weaponlist.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

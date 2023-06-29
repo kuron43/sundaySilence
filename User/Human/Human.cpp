@@ -14,7 +14,7 @@ void Human::Initialize() {
 }
 
 /// シーンの更新を行う
-void Human::Update(Input* input) {
+void Human::Update(Input* input,bool isTitle) {
 	assert(input);
 }
 

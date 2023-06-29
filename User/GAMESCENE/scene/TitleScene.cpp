@@ -14,16 +14,13 @@ void TitleScene::Initialize() {
 	
 }
 
-void TitleScene::Update(Input* input) {
-
-	Vector3 a = { 0,0,0 };
-	Vector3 camposEye = { 0,100,-0.01f };
-	Vector3 camposTar = { 0,0,0 };
+void TitleScene::Update(Input* input) {	
 	_controller->_camera->SetEye(camposEye);
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
+
 	_objects->bossFbxO_->Update();
-	_objects->human_->Update(input);
+	_objects->human_->Update(input,true);
 	
 	{
 		if (input->KeyboardTrigger(DIK_0)) {
@@ -54,7 +51,7 @@ void TitleScene::Update(Input* input) {
 
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
-	}else if (input->KeyboardTrigger(DIK_RETURN)) {
+	}else if (input->KeyboardTrigger(DIK_SPACE)) {
 		_controller->ChangeScene(new GAME1Scene(_controller, _objects));
 	}
 
@@ -63,6 +60,6 @@ void TitleScene::Update(Input* input) {
 
 void TitleScene::Draw() {
 
-	_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
+	//_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
 	_objects->human_->Draw(_controller->_dxCommon);
 }
