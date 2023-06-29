@@ -33,11 +33,11 @@ public:
 
     //GPU
     struct SendDataGPU {
-        int shadeNumber;
-        int kernelSize;
-        Vector2 center;
-        float intensity;
-        int samples;
+        int shadeNumber;	//SHADER番号
+        int kernelSize;		// ぼかし度
+		Vector2 center;		// 中心
+        float intensity;	// ブラーの広がりの強さ
+        int samples;		// サンプル回数
     };
 
     //デフォルトテクスチャ格納ディレクトリ

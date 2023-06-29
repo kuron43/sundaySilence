@@ -60,6 +60,6 @@ void TitleScene::Update(Input* input) {
 
 void TitleScene::Draw() {
 
-	//_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
+	_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
 	_objects->human_->Draw(_controller->_dxCommon);
 }
