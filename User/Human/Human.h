@@ -6,6 +6,8 @@
 
 #include "DirectXCommon.h"
 
+#include "Weapon.h"
+
 // 基底クラス
 class Human
 {
@@ -23,7 +25,7 @@ public:
 	virtual void Initialize() = 0;
 
 	/// 更新を行う
-	virtual void Update(Input* input) = 0;
+	virtual void Update(Input* input,bool isTitle = false) = 0;
 
 	/// 描画を行う
 	virtual void Draw(DirectXCommon* dxCommon) = 0;

@@ -25,25 +25,30 @@ void Player::Initialize() {
 }
 
 ///
-void Player::Update(Input* input) {
+void Player::Update(Input* input, bool isTitle) {
+	nowTitle = isTitle;
 	Move(input);
 	object_->Update();
 	Vector2 mousepos = input->GetMousePosition();
-	reticle->wtf.position = { mousepos.x*mouseSensitivity_,0,mousepos.y*mouseSensitivity_ };
+	reticle->wtf.position = { mousepos.x * mouseSensitivity_,0,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
-	if (input->KeyboardPush(DIK_SPACE)) {
+	if (input->MouseButtonPush(0)) {
 		weapon_[0]->Shot(object_->wtf, reticle->wtf);
 	}
-	weapon_[0]->Update(input,isSlow);
+	weapon_[0]->Update(input, isSlow);
 }
 
 ///
 void Player::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
 	object_->Draw();
-	reticle->Draw();
+	if (!nowTitle) {
+		reticle->Draw();
+	}
 	Object3d::PostDraw();
-	weapon_[0]->Draw(dxCommon);
+	if (!nowTitle) {
+		weapon_[0]->Draw(dxCommon);
+	}
 }
 
 /// リセットを行う
@@ -364,7 +369,7 @@ void Player::Move(Input* input) {
 	else {
 		speed = kMoveSpeed_;
 	}
-	
+
 	velocity_ = Affin::VecMat(velocity_, object_->wtf.matWorld);
 	object_->wtf.position += velocity_;
 

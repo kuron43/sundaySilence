@@ -16,12 +16,22 @@ void GAME1Scene::Initialize() {
 }
 
 void GAME1Scene::Update(Input* input) {
+	_controller->_camera->SetEye(camposEye);
+	_controller->_camera->SetTarget(camposTar);
+	_controller->_camera->Update();
+	_objects->human_->Update(input);
 
-	if (input->KeyboardTrigger(DIK_RETURN) || input->Pad_X_ButtonTrigger(LB)) {
-		_controller->ChangeScene(new TitleScene(_controller, _objects));
+	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
+		_controller->PushScene(new PauseScene(_controller, _objects));
+	}
+	else if (input->KeyboardTrigger(DIK_RETURN)) {
+		_controller->ChangeScene(new EndScene(_controller, _objects));
+	}
+	else if (input->KeyboardTrigger(DIK_RETURN)) {
+		_controller->ChangeScene(new EndScene(_controller, _objects));
 	}
 }
 
 void GAME1Scene::Draw() {
-
+	_objects->human_->Draw(_controller->_dxCommon);
 }
