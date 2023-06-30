@@ -23,11 +23,15 @@ void Weapon::Update(Input* input, bool isSlow) {
 	if (isSlow == false) {
 
 	}
+	if (input) {
+
+	}
 }
 
 /// 描画を行う
 void Weapon::Draw(DirectXCommon* dxCommon) {
 	assert(dxCommon);
+	dxCommon->GetDevice();
 }
 
 /// リセットを行う

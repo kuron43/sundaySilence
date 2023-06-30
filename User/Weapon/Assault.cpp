@@ -36,6 +36,9 @@ bool Assault::Initialize() {
 void Assault::Update(Input* input, bool isSlow) {
 	assert(input);
 	isSlow_ = isSlow;
+	if (input) {
+
+	}
 	if (isSlow) {
 		speed_ = nomalSpeed / 2;
 	}
