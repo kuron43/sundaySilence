@@ -85,7 +85,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;$(SolutionDir)External\imgui;$(SolutionDir)External\DirectXTex;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\2D;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\BASE;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

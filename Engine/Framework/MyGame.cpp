@@ -58,9 +58,6 @@ void MyGame::Update() {
 		postEffect->SetShadeNumber(1);
 	}
 	if (input->KeyboardTrigger(DIK_3)) {
-		postEffect->SetShadeNumber(2);
-	}
-	if (input->KeyboardTrigger(DIK_4)) {
 		postEffect->SetShadeNumber(3);
 	}
 
