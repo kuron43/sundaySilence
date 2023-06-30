@@ -1,9 +1,9 @@
 #include"PostEffect.hlsli"
 
 
-Texture2D<float4> tex0 : register(t0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-Texture2D<float4> tex1 : register(t1); // 1”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp : register(s0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰[
+Texture2D<float4> tex0 : register(t0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> tex1 : register(t1); // 1ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+SamplerState smp : register(s0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
 float Gaussian(float2 drawUV, float2 pickUV, float sigma)
 {
@@ -20,20 +20,21 @@ float4 main(VSOutput input) : SV_TARGET
     if (shadeNumber == 0)
     {
         float4 texcolor = tex0.Sample(smp, input.uv);
-        return float4(texcolor.rgb, 1);
+        //return float4(texcolor.rgb, 1);
+        return texcolor;
     }
-    else if (shadeNumber == 1)
+    else if (shadeNumber == 1)      // CG4 è©•ä¾¡èª²é¡Œç”¨
     {
         float4 colortex0 = tex0.Sample(smp, input.uv);
-        float4 colortex1 = tex1.Sample(smp, input.uv);
+        //float4 colortex1 = tex1.Sample(smp, input.uv);
 
-		//Š|‚¯‚é‹­“x
+		//æ›ã‘ã‚‹å¼·åº¦
         int kernelSize = KernelSize;
 
-		// •½‹Ï’l‚ğŒvZ‚·‚é‚½‚ß‚Ì‘˜a
+		// å¹³å‡å€¤ã‚’è¨ˆç®—ã™ã‚‹ãŸã‚ã®ç·å’Œ
         float4 sum = float4(0, 0, 0, 0);
 
-		// ƒJ[ƒlƒ‹ƒTƒCƒY‚Ì”ÍˆÍ“à‚ÅƒsƒNƒZƒ‹‚ğƒCƒeƒŒ[ƒg
+		// ã‚«ãƒ¼ãƒãƒ«ã‚µã‚¤ã‚ºã®ç¯„å›²å†…ã§ãƒ”ã‚¯ã‚»ãƒ«ã‚’ã‚¤ãƒ†ãƒ¬ãƒ¼ãƒˆ
         for (int y = -kernelSize; y <= kernelSize; ++y)
         {
             for (int x = -kernelSize; x <= kernelSize; ++x)
@@ -44,7 +45,7 @@ float4 main(VSOutput input) : SV_TARGET
             }
         }
 
-		// ‘˜a‚ğƒJ[ƒlƒ‹ƒTƒCƒY‚ÅŠ„‚é‚±‚Æ‚Å•½‹Ï’l‚ğŒvZ
+		// ç·å’Œã‚’ã‚«ãƒ¼ãƒãƒ«ã‚µã‚¤ã‚ºã§å‰²ã‚‹ã“ã¨ã§å¹³å‡å€¤ã‚’è¨ˆç®—
         float kernelArea = (2 * kernelSize + 1) * (2 * kernelSize + 1);
         float4 averageColor = sum / kernelArea;
 
@@ -52,7 +53,7 @@ float4 main(VSOutput input) : SV_TARGET
 
         if (fmod(input.uv.y, 0.1f) < 0.05f)
         {
-            col = colortex1;
+            col = 1 - colortex0;
         }
         return float4(col.rgb, 1);
     }
@@ -63,7 +64,7 @@ float4 main(VSOutput input) : SV_TARGET
         float2 step = direction / float(samples);
 
         float4 col = tex0.Sample(smp, uv);
-        float totalWeight = 1.0;
+        float totalWeight = 0.5;
         for (int i = 1; i < samples; ++i)
         {
             float weight = (float(samples) - float(i)) / float(samples);
@@ -73,7 +74,7 @@ float4 main(VSOutput input) : SV_TARGET
         }
 
         col /= totalWeight;
-        return col;
+        return float4(col.rgb, 1);
     }
     else if (shadeNumber == 3)
     {
