@@ -30,7 +30,9 @@ void Enemy::Update(Input* input, bool isTitle) {
 	if (input->KeyboardPush(DIK_SPACE)) {
 		weapon_->Shot(object_->wtf, reticle->wtf);
 	}
-	weapon_->Update(input, isSlow);
+	if (isTitle) {
+		weapon_->Update(input, isSlow);
+	}
 }
 
 ///
