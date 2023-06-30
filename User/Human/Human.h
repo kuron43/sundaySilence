@@ -16,6 +16,7 @@ protected:
 
 	bool isSlow = false;
 	float slowSpeed = 0.25f;
+	bool _isTitle;
 public:
 
 	Human();

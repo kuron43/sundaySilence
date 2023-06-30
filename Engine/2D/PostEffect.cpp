@@ -210,6 +210,8 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	dataMap->center = { 0.5f,0.5f };
 	dataMap->intensity = 0.1f;
 	dataMap->samples = 1;
+
+	constDataBuff_->Unmap(0, nullptr);
 }
 
 void PostEffect::Finalize()
