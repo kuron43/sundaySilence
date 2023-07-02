@@ -41,6 +41,9 @@ void Shotgun::Update(Input* input, bool isSlow) {
 	{
 		speed_ = nomalSpeed;
 	}
+	if (input->MouseButtonPush(0)) {
+		
+	}
 
 	for (std::unique_ptr<Bullet>& bullet : bullets_) {
 		bullet->Update(speed_);
