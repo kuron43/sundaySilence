@@ -31,7 +31,11 @@ void SceneObjects::Initialize() {
 		player->Initialize();
 	}
 	{
-		
+		/*for (int i = 0; i <= 10; i++) {
+			std::unique_ptr<Enemy>newEnemy = std::make_unique<Enemy>();
+			newEnemy->Initialize();
+			enemys.push_back(newEnemy);
+		}*/
 	}
 
 	//ライトの生成

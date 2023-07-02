@@ -9,6 +9,7 @@ Enemy::~Enemy() {
 
 ///
 void Enemy::Initialize() {
+	isDead = false;
 	model_ = Model::LoadFromOBJ("cube");
 
 	object_ = Object3d::Create();
@@ -37,14 +38,17 @@ void Enemy::Update(Input* input, bool isTitle) {
 
 ///
 void Enemy::Draw(DirectXCommon* dxCommon) {
-	Object3d::PreDraw(dxCommon->GetCommandList());
-	object_->Draw();
-	if (nowTitle) {
-		reticle->Draw();
-	}
-	Object3d::PostDraw();
-	if (nowTitle) {
-		weapon_->Draw(dxCommon);
+
+	if (isDead) {
+		Object3d::PreDraw(dxCommon->GetCommandList());
+		object_->Draw();
+		if (nowTitle) {
+			reticle->Draw();
+		}
+		Object3d::PostDraw();
+		if (nowTitle) {
+			weapon_->Draw(dxCommon);
+		}
 	}
 }
 
