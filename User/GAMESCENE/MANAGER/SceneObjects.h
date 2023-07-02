@@ -12,6 +12,8 @@
 
 #include "Human.h"
 #include "Player.h"
+#include "Enemy.h"
+#include "Boss.h"
 
 // ゲーム使用のオブジェクト一括宣言クラス
 class SceneObjects
@@ -41,7 +43,9 @@ public:
 	std::unique_ptr<FBXModel> bossFbxM_;
 	std::unique_ptr<FBXObject3d> bossFbxO_;
 
-	std::unique_ptr<Human> human_;
+	// ポリモーフィズムとは...
+	std::unique_ptr<Human> player;
+	std::vector<std::unique_ptr<Human>> enemys;
 
 
 private:

@@ -21,8 +21,11 @@ public:
 
 	/// リセットを行う
 	void Reset() override;
+	// 種族番号取得
+	int HowTribe() { return Tribe_; }
 
 private:
+	const int Tribe_ = 1;
 	Model* model_;
 	Object3d* object_;
 	Vector3 faceAngle_;

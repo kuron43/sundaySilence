@@ -27,8 +27,11 @@ void SceneObjects::Initialize() {
 	}
 
 	{
-		human_ = std::make_unique<Player>();
-		human_->Initialize();
+		player = std::make_unique<Player>();
+		player->Initialize();
+	}
+	{
+		
 	}
 
 	//ライトの生成
