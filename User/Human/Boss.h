@@ -26,7 +26,7 @@ public:
 
 	// 動き
 
-	void Move();
+	//void Move();
 
 private:
 	const int Tribe_ = 2;
