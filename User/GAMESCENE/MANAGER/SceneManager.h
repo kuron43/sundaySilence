@@ -4,6 +4,7 @@
 #pragma warning(disable: 4828)
 #include <memory>
 #include <stack>
+#include <stdio.h>
 
 #pragma warning(pop)
 

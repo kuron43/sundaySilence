@@ -208,6 +208,7 @@
     <ClCompile Include="User\Weapon\Assault.cpp" />
     <ClCompile Include="User\Weapon\Shotgun.cpp" />
     <ClCompile Include="Engine\INPUT\MouseInput.cpp" />
+    <ClCompile Include="User\Human\Boss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -319,6 +320,7 @@
     <ClInclude Include="User\Weapon\Shotgun.h" />
     <ClInclude Include="Engine\INPUT\MouseInput.h" />
     <ClInclude Include="User\Weapon\Weaponlist.h" />
+    <ClInclude Include="User\Human\Boss.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
