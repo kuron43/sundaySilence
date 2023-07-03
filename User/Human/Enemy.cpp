@@ -5,6 +5,7 @@ Enemy::Enemy() {
 }
 Enemy::~Enemy() {
 	delete model_;
+	delete weapon_;
 }
 
 ///

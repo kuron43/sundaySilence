@@ -53,3 +53,4 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 void Boss::Reset() {
 
 }
+
