@@ -13,11 +13,11 @@ GAME1Scene::~GAME1Scene() {
 }
 
 void GAME1Scene::Initialize() {
-	/*Vector3 enepos = { 20,0,0 };
-	for (int i = 0; i <= sizeof(_objects->enemys);i++ ) {
-		_objects->enemys[i]->SetPos(enepos);
-		enepos.x += 5;
-	}*/
+	Vector3 enepos = { 10,0,0 };
+	for (Enemy* enemy : _objects->enemys) {
+		enemy->SetPos(enepos);
+		enepos.x += 3;
+	}
 }
 
 void GAME1Scene::Update(Input* input) {
@@ -26,9 +26,9 @@ void GAME1Scene::Update(Input* input) {
 	_controller->_camera->Update();
 	_objects->player->Update(input);
 
-	/*for (int i = 0; i <= sizeof(_objects->enemys); i++) {
-		_objects->enemys[i]->Update(input);
-	}*/
+	for (Enemy* enemy : _objects->enemys) {
+		enemy->Update(input);
+	}
 
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
@@ -43,7 +43,7 @@ void GAME1Scene::Update(Input* input) {
 
 void GAME1Scene::Draw() {
 	_objects->player->Draw(_controller->_dxCommon);
-	/*for (int i = 0; i <= sizeof(_objects->enemys); i++) {
-		_objects->enemys[i]->Draw(_controller->_dxCommon);
-	}*/
+	for (Enemy* enemy : _objects->enemys) {
+		enemy->Draw(_controller->_dxCommon);
+	}
 }

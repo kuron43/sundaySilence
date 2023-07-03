@@ -11,6 +11,7 @@ Enemy::~Enemy() {
 ///
 void Enemy::Initialize() {
 	isDead = false;
+	nowTitle = false;
 	model_ = Model::LoadFromOBJ("cube");
 
 	object_ = Object3d::Create();
@@ -40,7 +41,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 ///
 void Enemy::Draw(DirectXCommon* dxCommon) {
 
-	if (isDead) {
+	if (!isDead) {
 		Object3d::PreDraw(dxCommon->GetCommandList());
 		object_->Draw();
 		if (nowTitle) {
