@@ -52,4 +52,9 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 /// リセットを行う
 void Boss::Reset() {
 
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 26fc79a4895360e0c99f521d116bd376555835df
