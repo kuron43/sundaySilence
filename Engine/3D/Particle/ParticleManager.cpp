@@ -602,6 +602,8 @@ void ParticleManager::Add(int life, Vector3 position, Vector3 velociy, Vector3 a
 {
 	assert(start_scale);
 	assert(end_scale);
+	Vector2 scale ;
+	scale = { start_scale,end_scale };
 	//リストに要素を追加
 	particles.emplace_front();
 	//追加した要素の参照

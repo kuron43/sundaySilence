@@ -1,20 +1,19 @@
 #pragma once
 #include "Human.h"
 
-
-class Player :
-	public Human
+class Boss :
+    public Human
 {
 public:
-	Player();
-	~Player()override;
+	Boss();
+	~Boss()override;
 
 
 	/// シーンの更新を行う
 	void Initialize()override;
 
 	/// シーンの更新を行う
-	void Update(Input* input,bool isTitle = false)override;
+	void Update(Input* input, bool isTitle = false)override;
 
 	/// シーンの描画を行う
 	void Draw(DirectXCommon* dxCommon)override;
@@ -22,31 +21,33 @@ public:
 	/// リセットを行う
 	void Reset() override;
 
-	void Move(Input* input);
-
 	// 種族番号取得
 	int HowTribe() { return Tribe_; }
 
+	// 動き
+
+	// void Move();
+
 private:
-	const int Tribe_ = 0;
-	bool nowTitle = false;
+	const int Tribe_ = 2;
 
 	Model* model_;
 	Object3d* object_;
+	Vector3 faceAngle_;
+
 	Object3d* reticle;
-	float mouseSensitivity_ = 0.099f;	//マウス感度 0.05
+
 	//移動速度
 	const float kMoveSpeed_ = 0.5f;
-	//旋回速度
-	const float kTurnSpeed_ = Affin::radConvert(10);
 	bool isRun_ = false;
 	//移動ベクトル
 	Vector3 velocity_;
-	Vector3 faceAngle_;
 
 
-	Weapon* weapon_[2];
+	Weapon* weapon_;
 	bool isWeaponOn = true;
 
+	// タイトル用の処理と切り分けるためのやつ
+	bool nowTitle = false;
 };
 

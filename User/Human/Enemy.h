@@ -22,10 +22,18 @@ public:
 	/// リセットを行う
 	void Reset() override;
 
+	//
+	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
+
+	// 種族番号取得
+	int HowTribe() { return Tribe_; }
+
 private:
+	const int Tribe_ = 1;
 	Model* model_;
 	Object3d* object_;
 	Vector3 faceAngle_;
+	bool isDead = false;
 
 	Object3d* reticle;
 	
@@ -41,5 +49,6 @@ private:
 
 	// タイトル用の処理と切り分けるためのやつ
 	bool nowTitle = false;
+
 };
 
