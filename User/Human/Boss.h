@@ -24,6 +24,10 @@ public:
 	// 種族番号取得
 	int HowTribe() { return Tribe_; }
 
+	// 動き
+
+	// void Move();
+
 private:
 	const int Tribe_ = 2;
 

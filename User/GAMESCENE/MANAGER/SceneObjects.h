@@ -45,7 +45,7 @@ public:
 
 	// ポリモーフィズムとは...
 	std::unique_ptr<Human> player;
-	std::vector<std::unique_ptr<Enemy>> enemys;
+	std::list<Enemy*> enemys;
 
 
 private:
