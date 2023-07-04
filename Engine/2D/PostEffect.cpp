@@ -135,10 +135,10 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	depthBuff = dxCommon->GetbackBuffers();
 
 	VertexPosUv vertices_[4] = {
-		{{-0.75f,-0.75f,0.0f},{0.0f,1.0f}},
-		{{-0.75f,+0.75f,0.0f},{0.0f,0.0f}},
-		{{+0.75f,-0.75f,0.0f},{1.0f,1.0f}},
-		{{+0.75f,+0.75f,0.0f},{1.0f,0.0f}},
+		{{-1.0f,-1.0f,0.0f},{0.0f,1.0f}},
+		{{-1.0f,+1.0f,0.0f},{0.0f,0.0f}},
+		{{+1.0f,-1.0f,0.0f},{1.0f,1.0f}},
+		{{+1.0f,+1.0f,0.0f},{1.0f,0.0f}},
 	};
 	for (int i = 0; i < 4; i++)
 	{

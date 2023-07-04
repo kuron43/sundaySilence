@@ -135,6 +135,9 @@ void Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 	);
 	assert(SUCCEEDED(result));
 	assert(iBufferSize);
+	if (iBufferSize == 0) {
+
+	}
 
 	ScratchImage mipChain{};
 	// ミップマップ生成

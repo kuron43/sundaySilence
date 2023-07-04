@@ -20,7 +20,7 @@ void TitleScene::Update(Input* input) {
 	_controller->_camera->Update();
 
 	_objects->bossFbxO_->Update();
-	_objects->human_->Update(input,true);
+	_objects->player->Update(input,true);
 	
 	{
 		if (input->KeyboardTrigger(DIK_0)) {
@@ -60,6 +60,6 @@ void TitleScene::Update(Input* input) {
 
 void TitleScene::Draw() {
 
-	_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
-	_objects->human_->Draw(_controller->_dxCommon);
+	//_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
+	_objects->player->Draw(_controller->_dxCommon);
 }

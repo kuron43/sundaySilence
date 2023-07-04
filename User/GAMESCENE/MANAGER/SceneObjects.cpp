@@ -27,8 +27,15 @@ void SceneObjects::Initialize() {
 	}
 
 	{
-		human_ = std::make_unique<Player>();
-		human_->Initialize();
+		player = std::make_unique<Player>();
+		player->Initialize();
+	}
+	{
+		for (int i = 0; i <= 10; i++) {
+			Enemy* newEnemy = new Enemy();
+			newEnemy->Initialize();
+			enemys.emplace_back(newEnemy);
+		}
 	}
 
 	//ライトの生成
