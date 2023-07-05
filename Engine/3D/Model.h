@@ -62,7 +62,23 @@ public://静的メンバ関数
 	//setter
 	static void SetDevice(ID3D12Device* device) { Model::device_ = device; }
 
-	
+	/// <summary>
+	/// 頂点配列を取得
+	/// </summary>
+	/// <returns>頂点配列</returns>
+	inline const std::vector<VertexPosNormalUv>& GetVertices()
+	{
+		return vertices;
+	}
+
+	/// <summary>
+	/// インデックス配列を取得
+	/// </summary>
+	/// <returns>インデックス配列</returns>
+	inline const std::vector<unsigned short>& GetInidices()
+	{
+		return indices;
+	}
 
 private://メンバ変数
 	

@@ -10,22 +10,22 @@ public:
 		shapeType = COLLISIONSHAPE_MESH;
 	}
 
-	//OŠpŒ`‚Ì”z—ñ‚ğ\’z‚·‚é
-	void ConstructTriangles(Mesh* model);
+	//ä¸‰è§’å½¢ã®é…åˆ—ã‚’æ§‹ç¯‰ã™ã‚‹
+	void ConstructTriangles(Model* model);
 
-	//XVˆ—
+	//æ›´æ–°å‡¦ç†
 	void Update() override;
 
-	//‹…‚Æ‚Ì“–‚½‚è”»’è
+	//çƒã¨ã®å½“ãŸã‚Šåˆ¤å®š
 	bool CheckCollisionSphere(const Sphere& sphere , Vector3* inter = nullptr);
 
-	//ƒŒƒC‚Æ‚Ì“–‚½‚è”»’è
+	//ãƒ¬ã‚¤ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 	bool CheckCollisionRay(const Ray& ray , float* distance = nullptr , Vector3* inter = nullptr);
 
 private:
 	std::vector<Triangle> triangles;
 
-	//ƒ[ƒ‹ƒhs—ñ‚Ì‹ts—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®é€†è¡Œåˆ—
 	Matrix4 objectMatWorld;
 
 };

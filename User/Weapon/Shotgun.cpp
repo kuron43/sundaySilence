@@ -65,7 +65,7 @@ void Shotgun::Reset() {
 }
 
 // 発射を行う
-void Shotgun::Shot(Transform& player, Transform& reticle) {
+void Shotgun::Shot(Transform& player, Transform& reticle,int team) {
 	model_ = Model::LoadFromOBJ("cube");
 	if (mag < 30) {
 		if (coolTime <= 0) {
@@ -78,7 +78,7 @@ void Shotgun::Shot(Transform& player, Transform& reticle) {
 			velo.nomalize();
 			moveVec = velo * speed_;
 			moveVec.nomalize();
-			newBullet->Initialize(model_,startPos, moveVec);
+			newBullet->Initialize(model_,startPos, moveVec,team);
 
 			//弾を登録
 			bullets_.push_back(std::move(newBullet));

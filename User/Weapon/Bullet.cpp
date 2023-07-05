@@ -9,7 +9,7 @@ Bullet::Bullet() {
 Bullet::~Bullet() {
 
 }
-void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move)
+void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move,int team)
 {
 	//NULLチェック
 	assert(model);
@@ -22,6 +22,14 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move)
 	bulletObj_->wtf.position = position;
 	timeCount = 0;
 	isDead = false;
+	team_ = team;
+	if (team_ == 0) {
+		Vector4 color(0.0f, 0.0f, 0.0f, 1.0f);  // カラーなぜかARGB の順番
+		bulletObj_->SetColor(color);
+	}if (team_ == 1) {
+		Vector4 color(0.0f, 0.0f, 1.0f, 0.0f);
+		bulletObj_->SetColor(color);
+	}
 }
 
 void Bullet::Update(float speed)

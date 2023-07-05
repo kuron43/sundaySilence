@@ -209,11 +209,15 @@
     <ClCompile Include="User\Weapon\Shotgun.cpp" />
     <ClCompile Include="User\Human\Boss.cpp" />
     <ClCompile Include="Engine\INPUT\MouseInput.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="User\Human\Boss.cpp" />
+=======
     <ClCompile Include="Engine\COLIDER\Collision.cpp" />
     <ClCompile Include="Engine\COLIDER\CollisionManager.cpp" />
     <ClCompile Include="Engine\COLIDER\CollisionPrimitive.cpp" />
     <ClCompile Include="Engine\COLIDER\MeshCollider.cpp" />
     <ClCompile Include="Engine\COLIDER\SphereCollider.cpp" />
+>>>>>>> 26fc79a4895360e0c99f521d116bd376555835df
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BASE\FPS.h">
@@ -326,6 +330,8 @@
     <ClInclude Include="Engine\INPUT\MouseInput.h" />
     <ClInclude Include="User\Weapon\Weaponlist.h" />
     <ClInclude Include="User\Human\Boss.h" />
+<<<<<<< HEAD
+=======
     <ClInclude Include="Engine\COLIDER\BaseCollider.h" />
     <ClInclude Include="Engine\COLIDER\Collision.h" />
     <ClInclude Include="Engine\COLIDER\CollisionAttribute.h" />
@@ -336,6 +342,7 @@
     <ClInclude Include="Engine\COLIDER\MeshCollider.h" />
     <ClInclude Include="Engine\COLIDER\RaycastHit.h" />
     <ClInclude Include="Engine\COLIDER\SphereCollider.h" />
+>>>>>>> 26fc79a4895360e0c99f521d116bd376555835df
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

@@ -2,30 +2,30 @@
 
 #include "BaseCollider.h"
 #include "CollisionPrimitive.h"
-#include "MathFunc.h"
+//#include "MathFunc.h"
 
 class SphereCollider : public BaseCollider , public Sphere
 {
 public:
 	SphereCollider(Vector3 offset = {0 , 0 , 0} , float radius = 1.0f) :
 		offset(offset) ,
-		radius(radius)
+		radius_(radius)
 	{
-		//‹…Œ`ó‚ğƒZƒbƒg
+		//çƒå½¢çŠ¶ã‚’ã‚»ãƒƒãƒˆ
 		shapeType = COLLISIONSHAPE_SPHERE;
 	}
 
-	//XV
+	//æ›´æ–°
 	void Update() override;
 
 	inline void SetRadius(float radius)
 	{
-		this->radius = radius; 
+		radius_ = radius; 
 	}
 	
 	float GetRadius()
 	{
-		return radius; 
+		return radius_; 
 	}
 	
 	inline void SetBasisPos(Vector3* pos)
@@ -39,14 +39,14 @@ public:
 	}
 
 private:
-	//ƒIƒuƒWƒFƒNƒg’†S‚©‚ç‚ÌƒIƒtƒZƒbƒg
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸­å¿ƒã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 	Vector3 offset;
 
-	//ƒ‚ƒfƒ‹‚ª‚È‚¢ê‡‚ÌŠî€‚Æ‚È‚éƒxƒNƒgƒ‹
+	//ãƒ¢ãƒ‡ãƒ«ãŒãªã„å ´åˆã®åŸºæº–ã¨ãªã‚‹ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3* basisPos = nullptr;
 
-	//”¼Œa
-	float radius;
+	//åŠå¾„
+	float radius_;
 
 };
 

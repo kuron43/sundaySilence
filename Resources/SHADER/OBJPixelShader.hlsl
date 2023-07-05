@@ -18,6 +18,7 @@ float4 main(VSOutput input) : sv_TARGET
 {
 	//テクスチャマッピング
     float4 texcolor = tex.Sample(smp, input.uv);
+    float4 objcolor = color_;
 	//光沢度
     const float shininess = 4.0f;
 	//頂点から視点への方向ベクトル
@@ -65,7 +66,7 @@ float4 main(VSOutput input) : sv_TARGET
             float4 LightColor = float4(dirLights[i].lightcolor, 1);
             float3 lightDir = normalize(dirLights[i].lightv);
 			
-            float4 _ambient = texcolor * ambientColor * LightColor;
+            float4 _ambient = texcolor * ambientColor /** LightColor*/;
 
             float intensty = saturate(dot(normalize(input.normal), lightDir));
             float4 diffuse = texcolor * smoothstep(0.05, 0.1, intensty) * diffColor;
@@ -78,12 +79,13 @@ float4 main(VSOutput input) : sv_TARGET
             float4 specular = speclar;
             float4 ads = _ambient + diffuse + specular;
 			
-            float Rim = step(0.7, 1 - saturate(dot(input.normal, eyeDir)));
+            //float Rim = step(0.7, 1 - saturate(dot(input.normal, eyeDir)));
 
 
 			//全て加算する
 			//shadecolor = (1 - Rim) * (_ambient + diffuse + specular) + Rim * _RimColor;
-            shadecolor = (diffuse + _ambient + specular);
+            shadecolor = ads + objcolor;
+            //shadecolor = color_;
         }
     }
 	////点光源
@@ -172,5 +174,5 @@ float4 main(VSOutput input) : sv_TARGET
 	//}
 
 	//シェーディングによる色で描画
-    return shadecolor;
+    return shadecolor ;
 }

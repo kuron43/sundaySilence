@@ -8,6 +8,7 @@
 #include "SceneObjects.h"
 #include "Affin.h"
 #include "Camera.h"
+#include "CollisionManager.h"
 
 #include "JsonLoader.h"
 
@@ -64,6 +65,8 @@ private: // メンバ変数 (固定)
 
 	std::map<std::string, Model*> models;
 	std::vector<Object3d*> JsonObjects;
+
+	CollisionManager* collisionManager_ = nullptr;
 
 
 private:	//メンバ変数

@@ -2,6 +2,10 @@
 #include "Human.h"
 #include "Weaponlist.h"
 
+#include"SphereCollider.h"
+#include"CollisionManager.h"
+#include"CollisionAttribute.h"
+
 class Enemy :
     public Human
 {
@@ -50,5 +54,17 @@ private:
 	// タイトル用の処理と切り分けるためのやつ
 	bool nowTitle = false;
 
+
+	//コライダー
+public:
+	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
+	std::vector<SphereCollider*> GetSphere() { return sphere; }
+private:
+	int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
+	std::vector<SphereCollider*> sphere;
+	Ray* ray;
+	std::vector<Vector3> spherePos;
+	std::vector<std::unique_ptr<Object3d>> coliderPosTest_;
 };
 

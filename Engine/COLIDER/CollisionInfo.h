@@ -1,25 +1,25 @@
 #pragma once
-#include "MathFunc.h"
+//#include "MathFunc.h"
 
 class Object3d;
 class BaseCollider;
 
-//Õ“Ëî•ñ
+//è¡çªæƒ…å ±
 struct CollisionInfo
 {
 public:
 	CollisionInfo(Object3d* object , BaseCollider* collider , const Vector3 inter)
 	{
-		this->object = object;
-		this->collider = collider;
-		this->inter = inter;
+		object_ = object;
+		collider_ = collider;
+		inter_ = inter;
 	}
 
-	//Õ“Ë‘Šè‚ÌƒIƒuƒWƒFƒNƒg
-	Object3d* object = nullptr;
-	//Õ“Ë‘Šè‚ÌƒRƒ‰ƒCƒ_[
-	BaseCollider* collider = nullptr;
-	//Õ“Ë“X
-	Vector3 inter;
+	//è¡çªç›¸æ‰‹ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	Object3d* object_ = nullptr;
+	//è¡çªç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	BaseCollider* collider_ = nullptr;
+	//è¡çªåº—
+	Vector3 inter_;
 
 };

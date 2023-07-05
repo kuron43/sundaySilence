@@ -26,7 +26,7 @@ public:
 	virtual void Reset() = 0;
 
 	// 発射を行う
-	virtual void Shot(Transform& player, Transform& reticle) = 0;
+	virtual void Shot(Transform& player, Transform& reticle,int team) = 0;
 
 	
 };

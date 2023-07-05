@@ -4,36 +4,36 @@
 #include"Vector4.h"
 
 struct Sphere {
-	//’†SÀ•W
+	//ä¸­å¿ƒåº§æ¨™
 	Vector3 center = { 0,0,0 };
-	//”¼Œa
-	float radius = 1.0f;
+	//åŠå¾„
+	float radius_ = 1.0f;
 };
 
 struct Plane {
-	//–@üƒxƒNƒgƒ‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 normal = { 0,1,0 };
-	//Œ´“_(0,0,0)‚©‚ç‚Ì‹——£
+	//åŸç‚¹(0,0,0)ã‹ã‚‰ã®è·é›¢
 	float distance = 0.0f;
 };
 
 class Triangle {
 public:
-	//’¸“_À•W
+	//é ‚ç‚¹åº§æ¨™
 	Vector3 p0;
 	Vector3 p1;
 	Vector3 p2;
-	//–@üƒxƒNƒgƒ‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 normal;
 
-	//–@ü‚ÌŒvZ
+	//æ³•ç·šã®è¨ˆç®—
 	void ComputeNormal();
 
 };
 
 struct Ray {
-	//n“_
+	//å§‹ç‚¹
 	Vector3 start;
-	//•ûŒü
+	//æ–¹å‘
 	Vector3 dir;
 };

@@ -70,7 +70,7 @@ void Assault::Reset() {
 }
 
 // 発射を行う
-void Assault::Shot(Transform& player, Transform& reticle) {
+void Assault::Shot(Transform& player, Transform& reticle,int team) {
 	if (roadingTime <= 0) {
 		if (mag < 30) {
 			if (coolTime <= 0) {
@@ -83,7 +83,7 @@ void Assault::Shot(Transform& player, Transform& reticle) {
 				velo.nomalize();
 				moveVec = velo * speed_;
 				moveVec.nomalize();
-				newBullet->Initialize(model_, startPos, moveVec);
+				newBullet->Initialize(model_, startPos, moveVec,team);
 
 				//弾を登録
 				bullets_.push_back(std::move(newBullet));
