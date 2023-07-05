@@ -151,14 +151,14 @@ public: // メンバ関数
 
 	//setter
 	void SetModel(Model* model) { model_ = model; }
-	void SetColor(Vector4 color_) { color = color_; }
+	void SetColor(Vector4 color) { color_ = color; }
 
 private: // メンバ変数
-public:
+	Vector4 color_ = {0.0f,0.0f,0.0f,1};
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 
 	// 色
-	Vector4 color = { 1,1,1,1 };
+public:
 
 	// 親オブジェクト
 	Object3d* parent_ = nullptr;

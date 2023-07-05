@@ -48,7 +48,7 @@ void SceneObjects::Initialize() {
 	pointLightPos[2] = 0.0f;
 
 	lightGroup->SetDirLightColor(0, Vector3(1, 1, 1));
-	lightGroup->SetDirLightDir(0, Vector4(1, -1, 0, 0));
+	lightGroup->SetDirLightDir(0, Vector4(0, 0, 0, 0));
 
 	//3Dオブジェクトにライトをセット
 	Object3d::SetLight(lightGroup.get());

@@ -39,8 +39,14 @@ void Weapon::Reset() {
 
 }
 
-// 発射を行う
-void Weapon::Shot(Transform& player, Transform& reticle) {
+/// <summary>
+///  発射を行う
+/// </summary>
+/// <param name="player"></param>
+/// <param name="reticle"></param>
+/// <param name="team">0 = 敵：1 ＝ 自</param>
+void Weapon::Shot(Transform& player, Transform& reticle,int team) {
 	player;
 	reticle;
+	team;
 }

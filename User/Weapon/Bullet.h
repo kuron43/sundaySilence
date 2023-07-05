@@ -4,7 +4,7 @@
 class Bullet
 {
 public:
-	int tribe;
+	int team_;
 	int weapon;
 	bool isTeam;
 	bool isDead;
@@ -20,7 +20,7 @@ public:
 public:
 	Bullet();
 	~Bullet();
-	void Initialize(Model* model,const Vector3& position, Vector3 move);
+	void Initialize(Model* model,const Vector3& position, Vector3 move,int team);
 
 	void Update(float speed);
 

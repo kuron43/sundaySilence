@@ -95,7 +95,7 @@ Object3d* Object3d::Create()
 
 void Object3d::InitializeCamera(int window_width, int window_height)
 {
-	
+
 
 	//ビュー行列の算出
 	matView.MakeLookL(eye, target, up, matView);
@@ -300,8 +300,7 @@ bool Object3d::Initialize()
 		IID_PPV_ARGS(&constBuffB0));
 	assert(SUCCEEDED(result));
 
-
-
+	color_ = Vector4(0,0,0,0);
 
 	return true;
 }
@@ -333,13 +332,14 @@ void Object3d::Update()
 	}
 
 	// 定数バッファへデータ転送
+
 	ConstBufferDataB0* constMap = nullptr;
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
 	resultMat = wtf.matWorld * camera_->GetViewProjectionMatrix();	// 行列の合成
 	constMap->cameraPos = camera_->GetEye();
 	constMap->world = wtf.matWorld;
 	constMap->veiwproj = camera_->GetViewProjectionMatrix();
-	constMap->color = color;
+	constMap->color = color_;
 	constBuffB0->Unmap(0, nullptr);
 
 }
@@ -349,7 +349,7 @@ void Object3d::Draw()
 	// nullptrチェック
 	assert(device_);
 	//assert(Object3d::cmdList);
-	
+
 	//モデルがセットされてなければ描画をスキップ
 	if (model_ == nullptr) return;
 

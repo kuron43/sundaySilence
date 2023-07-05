@@ -45,12 +45,8 @@ public:
 
 	// ポリモーフィズムとは...
 	std::unique_ptr<Human> player;
-<<<<<<< HEAD
-	std::vector<std::unique_ptr<Enemy>> enemys;
-=======
-	std::list<Enemy*> enemys;
->>>>>>> 26fc79a4895360e0c99f521d116bd376555835df
 
+	std::list<Enemy*> enemys;
 
 private:
 	float ambientColor0[3] = { 1,1,1 };

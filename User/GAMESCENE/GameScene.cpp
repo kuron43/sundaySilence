@@ -37,6 +37,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	dxCommon_ = dxCommon;
 	input_ = input;
 
+	collisionManager_ = CollisionManager::GetInstance();
+
 	cam_TF.Initialize();
 	cam_TF.position = { 100.0f, 100, -0.01f };
 	tar = { 100.0f, 0.0f, 0.0f };
@@ -105,6 +107,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 /// 毎フレーム処理
 /// </summary>
 void GameScene::Update() {
+
+	collisionManager_->CheckAllCollisions();
+
 	/*cam_TF.UpdateMat();
 	camera->SetEye(Affin::GetWorldTrans(cam_TF.matWorld));
 	camera->SetTarget(tar);	*/

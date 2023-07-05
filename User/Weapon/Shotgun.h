@@ -37,7 +37,7 @@ public:
 	void Reset() override;
 
 	// 発射を行う
-	void Shot(Transform& player, Transform& reticle) override;
+	void Shot(Transform& player, Transform& reticle,int team) override;
 };
 
 

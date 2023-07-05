@@ -29,7 +29,7 @@ void Boss::Update(Input* input, bool isTitle) {
 	assert(input);
 	object_->Update();
 	if (input->KeyboardPush(DIK_SPACE)) {
-		weapon_->Shot(object_->wtf, reticle->wtf);
+		weapon_->Shot(object_->wtf, reticle->wtf,0);
 	}
 	if (isTitle) {
 		weapon_->Update(input, isSlow);
@@ -52,9 +52,5 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 /// リセットを行う
 void Boss::Reset() {
 
-<<<<<<< HEAD
-}
-=======
 }
 
->>>>>>> 26fc79a4895360e0c99f521d116bd376555835df

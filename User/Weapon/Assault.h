@@ -11,6 +11,8 @@ private:
 	bool active_ = false;
 	const int WeaponNum = 1;
 
+	int team_;
+
 private:
 	const float nomalSpeed = 1.5f;
 	float speed_ = nomalSpeed;
@@ -37,6 +39,6 @@ public:
 	void Reset() override;
 
 	// 発射を行う
-	void Shot(Transform& player, Transform& reticle) override;
+	void Shot(Transform& player, Transform& reticle,int team) override;
 };
 
