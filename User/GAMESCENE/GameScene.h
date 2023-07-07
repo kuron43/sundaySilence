@@ -59,11 +59,12 @@ private: // メンバ変数 (固定)
 	SceneManager* sceneManager = nullptr;
 	std::unique_ptr<SceneObjects> sceneObjects;
 
-	LevelData* leveData = nullptr;
+	// json
 	Model* modelcube = nullptr;
 	//Model* modelREX = nullptr;
 
-	std::map<std::string, Model*> models;
+	LevelData* leveData = nullptr;
+	std::map<std::string, Model*> jsonModels;
 	std::vector<Object3d*> JsonObjects;
 
 	CollisionManager* collisionManager_ = nullptr;

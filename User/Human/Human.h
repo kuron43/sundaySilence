@@ -8,6 +8,10 @@
 
 #include "Weapon.h"
 
+#include"SphereCollider.h"
+#include"CollisionManager.h"
+#include"CollisionAttribute.h"
+
 // 基底クラス
 class Human
 {

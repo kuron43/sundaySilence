@@ -2,10 +2,6 @@
 #include "Human.h"
 #include "Weaponlist.h"
 
-#include"SphereCollider.h"
-#include"CollisionManager.h"
-#include"CollisionAttribute.h"
-
 class Enemy :
     public Human
 {
@@ -32,10 +28,13 @@ public:
 	// 種族番号取得
 	int HowTribe() { return Tribe_; }
 
+	Transform GetTransform() { return object_->wtf; }
+	
+public:
+	Object3d* object_;
 private:
 	const int Tribe_ = 1;
 	Model* model_;
-	Object3d* object_;
 	Vector3 faceAngle_;
 	bool isDead = false;
 

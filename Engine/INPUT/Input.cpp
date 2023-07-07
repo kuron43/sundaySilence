@@ -9,6 +9,7 @@ Input::Input() {
 Input::~Input() {
 	delete keybord_;
 	delete Xpad_;
+	delete mouse_;
 }
 void Input::Initialize(WinApp* winApp)
 {

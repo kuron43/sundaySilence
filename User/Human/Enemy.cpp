@@ -30,13 +30,13 @@ void Enemy::Initialize() {
 	spherePos.resize(SPHERE_COLISSION_NUM);
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
 	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
-	
+
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
 		sphere[i]->SetBasisPos(&spherePos[i]);
-		sphere[i]->SetRadius(8.0f);
+		sphere[i]->SetRadius(1.0f);
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		////test
@@ -54,25 +54,28 @@ void Enemy::Update(Input* input, bool isTitle) {
 	assert(input);
 	object_->Update();
 	if (input->KeyboardPush(DIK_SPACE)) {
-		weapon_->Shot(object_->wtf, reticle->wtf,0);
+		//weapon_->Shot(object_->wtf, reticle->wtf, 0);
 	}
 	if (!isTitle) {
 		weapon_->Update(input, isSlow);
 	}
+
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
+		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
+			isDead = true;
+		}
+	}
+
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
-		/*if (sphere[i]->GetIsHit() == true && player_->GetIsAtkCollide() == true){
-
-		 }*/
-
 	}
 }
 
 ///
 void Enemy::Draw(DirectXCommon* dxCommon) {
 
-	if (!isDead) {
+	if (isDead == false) {
 		Object3d::PreDraw(dxCommon->GetCommandList());
 		object_->Draw();
 		if (nowTitle) {

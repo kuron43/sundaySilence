@@ -43,7 +43,7 @@ void CollisionManager::CheckAllCollisions()
 
 				if (Collision::CheckSphere2Sphere(*sphereA , *sphereB , &inter))
 				{
-					colA->OnCllision(CollisionInfo(colB->GetObject3d() , colB , inter));
+ 					colA->OnCllision(CollisionInfo(colB->GetObject3d() , colB , inter));
 					colB->OnCllision(CollisionInfo(colA->GetObject3d() , colA , inter));
 				}
 
