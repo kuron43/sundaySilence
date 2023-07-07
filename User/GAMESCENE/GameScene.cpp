@@ -68,8 +68,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 		//modelcube = Model::LoadFromOBJ("cube");
 		////modelREX = Model::LoadFromOBJ("REX");
 
-		//models.insert(std::make_pair("cube", modelcube));
-		////models.insert(std::make_pair("REX", modelREX));
+		//jsonModels.insert(std::make_pair("cube", modelcube));
+		////jsonModels.insert(std::make_pair("REX", modelREX));
 
 		//{
 
@@ -77,8 +77,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 		//	for (auto& objectData : leveData->JsonObjects) {
 		//		//ファイル名から登録済みモデルを検索
 		//		Model* model = nullptr;
-		//		decltype(models)::iterator it = models.find(objectData.fileName);
-		//		if (it != models.end()) { model = it->second; }
+		//		decltype(jsonModels)::iterator it = jsonModels.find(objectData.fileName);
+		//		if (it != jsonModels.end()) { model = it->second; }
 		//		// 座標
 		//		Object3d* newObject = Object3d::Create();
 		//		newObject->SetModel(model);
@@ -95,6 +95,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 		//		sca = objectData.scaling;
 		//		newObject->wtf.scale = sca;
 		//		//
+
+		//		if (objectData.fileName == "cube") {
+		//			pos+= Vector3(11,11,11);
+		//		}
 		//		JsonObjects.push_back(newObject);
 
 		//	}

@@ -1,6 +1,7 @@
 #pragma once
 #include "IScene.h"
 
+#include "JsonLoader.h"
 
 
 class GAME1Scene :
@@ -27,6 +28,15 @@ private:
 	Vector3 camposTar = { 0,0,0 };
 
 public:
+
+
+	// json
+	Model* modelcube = nullptr;
+	//Model* modelREX = nullptr;
+
+	LevelData* leveData = nullptr;
+	std::map<std::string, Model*> jsonModels;
+	std::vector<Object3d*> JsonObjects;
 
 };
 

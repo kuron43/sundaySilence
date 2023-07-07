@@ -48,5 +48,17 @@ private:
 	Weapon* weapon_[2];
 	bool isWeaponOn = true;
 
+	//コライダー
+public:
+	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
+	std::vector<SphereCollider*> GetSphere() { return sphere; }
+private:
+	int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
+	std::vector<SphereCollider*> sphere;
+	Ray* ray;
+	std::vector<Vector3> spherePos;
+	std::vector<Object3d*> coliderPosTest_;
+
 };
 

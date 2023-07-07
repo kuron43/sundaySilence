@@ -31,12 +31,14 @@ void SceneObjects::Initialize() {
 		player->Initialize();
 	}
 	{
-		for (int i = 0; i <= 10; i++) {
+		/*for (int i = 0; i <= 10; i++) {
 			Enemy* newEnemy = new Enemy();
 			newEnemy->Initialize();
 			enemys.emplace_back(newEnemy);
-		}
+		}*/
+
 	}
+
 
 	//ライトの生成
 	lightGroup = std::make_unique< LightGroup>();
