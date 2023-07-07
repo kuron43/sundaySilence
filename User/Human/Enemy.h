@@ -24,6 +24,7 @@ public:
 
 	//
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
+	void SetReticle(Vector3 ret) { reticle->wtf.position = ret; }
 
 	// 種族番号取得
 	int HowTribe() { return Tribe_; }

@@ -44,9 +44,12 @@ public:
 	std::unique_ptr<FBXObject3d> bossFbxO_;
 
 	// ポリモーフィズムとは...
-	std::unique_ptr<Human> player;
+	std::unique_ptr<Player> player;
 
 	std::vector<Enemy*> enemys;
+
+	Model* wallMD;
+	std::vector<Object3d*> walls;
 
 private:
 	float ambientColor0[3] = { 1,1,1 };

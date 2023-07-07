@@ -3,6 +3,7 @@
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "Transform.h"
+#include "Bullet.h"
 
 class Weapon
 {

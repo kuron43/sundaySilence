@@ -31,11 +31,7 @@ void SceneObjects::Initialize() {
 		player->Initialize();
 	}
 	{
-		/*for (int i = 0; i <= 10; i++) {
-			Enemy* newEnemy = new Enemy();
-			newEnemy->Initialize();
-			enemys.emplace_back(newEnemy);
-		}*/
+		wallMD = Model::LoadFromOBJ("wall");
 
 	}
 

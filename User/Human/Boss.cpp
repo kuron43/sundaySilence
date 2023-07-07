@@ -28,8 +28,8 @@ void Boss::Initialize() {
 void Boss::Update(Input* input, bool isTitle) {
 	assert(input);
 	object_->Update();
-	if (input->KeyboardPush(DIK_SPACE)) {
-		//weapon_->Shot(object_->wtf, reticle->wtf,0);
+	if (input->KeyboardPush(DIK_P)) {
+		weapon_->Shot(object_->wtf, reticle->wtf,ENEMY);
 	}
 	if (isTitle) {
 		weapon_->Update(input, isSlow);

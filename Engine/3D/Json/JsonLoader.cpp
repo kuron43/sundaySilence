@@ -68,11 +68,11 @@ LevelData* JsonLoader::LoadJsonFile(const std::string& fileName) {
 			objectData.translation.z = (float)transform["translation"][2]; // -
 			//objectData.translation.z = - objectData.translation.z;			
 			// 回転角
-			objectData.rotation.x = (float)transform["rotation"][1]; // -
+			objectData.rotation.x = JsonLoader::RadConvert((float)transform["rotation"][2]); // -
 			objectData.rotation.x = - objectData.rotation.x;
-			objectData.rotation.y = (float)transform["rotation"][2]; // -
+			objectData.rotation.y = JsonLoader::RadConvert((float)transform["rotation"][1]); // -
 			objectData.rotation.y = - objectData.rotation.y;
-			objectData.rotation.z = (float)transform["rotation"][0];
+			objectData.rotation.z = JsonLoader::RadConvert((float)transform["rotation"][0]);
 			// スケーリング
 			objectData.scaling.x = (float)transform["scaling"][1];
 			objectData.scaling.y = (float)transform["scaling"][2];
@@ -91,3 +91,13 @@ LevelData* JsonLoader::LoadJsonFile(const std::string& fileName) {
 	return levelData;
 }
 
+/// <summary>
+/// 度数法 -> ラジアン
+/// </summary>
+float JsonLoader::RadConvert(float value) {
+	float radValue;
+
+	radValue = value * (3.141592f / 180);
+
+	return radValue;
+}

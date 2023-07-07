@@ -10,6 +10,7 @@ GAME1Scene::GAME1Scene(SceneManager* controller, SceneObjects* objects) {
 }
 
 GAME1Scene::~GAME1Scene() {
+	_objects->walls.clear();
 }
 
 void GAME1Scene::Initialize() {
@@ -21,7 +22,7 @@ void GAME1Scene::Initialize() {
 
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("game1");
+		leveData = JsonLoader::LoadJsonFile("game2");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -40,7 +41,27 @@ void GAME1Scene::Initialize() {
 				Vector3 sca;
 				sca = objectData.scaling;
 				newEnemy->object_->wtf.scale = sca;
+				newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 				_objects->enemys.emplace_back(newEnemy);
+			}
+			if (objectData.fileName == "wall") {
+				Object3d* newWall = Object3d::Create();
+				newWall->SetModel(_objects->wallMD);
+				newWall->Initialize();
+				//座標
+				Vector3 pos;
+				pos = objectData.translation;
+				newWall->wtf.position = pos;
+				//回転
+				Vector3 rot;
+				rot = objectData.rotation;
+				newWall->wtf.rotation = rot;
+				//拡縮
+				Vector3 sca;
+				sca = objectData.scaling;
+				newWall->wtf.scale = sca;
+				newWall->SetColor(Vector4(0.5f, 0.3f, 0.3f, 0.3f));
+				_objects->walls.emplace_back(newWall);
 			}
 
 		}
@@ -53,8 +74,12 @@ void GAME1Scene::Update(Input* input) {
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
 	_objects->player->Update(input);
+	for (Object3d* walls : _objects->walls) {
+		walls->Update();
+	}
 
 	for (Enemy* enemy : _objects->enemys) {
+		enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 		enemy->Update(input);
 	}
 
@@ -71,4 +96,9 @@ void GAME1Scene::Draw() {
 	for (Enemy* enemy : _objects->enemys) {
 		enemy->Draw(_controller->_dxCommon);
 	}
+	Object3d::PreDraw(_controller->_dxCommon->GetCommandList());
+	for (Object3d* walls : _objects->walls) {
+		walls->Draw();
+	}
+	Object3d::PostDraw();
 }
