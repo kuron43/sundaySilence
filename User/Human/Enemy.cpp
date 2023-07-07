@@ -21,6 +21,7 @@ void Enemy::Initialize() {
 	reticle = Object3d::Create();
 	reticle->SetModel(model_);
 	reticle->Initialize();
+
 	weapon_ = new Assault();
 	weapon_->Initialize();
 
@@ -52,9 +53,11 @@ void Enemy::Initialize() {
 ///
 void Enemy::Update(Input* input, bool isTitle) {
 	assert(input);
+	nowTitle = !isTitle;
 	object_->Update();
-	if (input->KeyboardPush(DIK_SPACE)) {
-		//weapon_->Shot(object_->wtf, reticle->wtf, 0);
+	reticle->Update();
+	if (input->KeyboardPush(DIK_P)) {
+		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
 	if (!isTitle) {
 		weapon_->Update(input, isSlow);
@@ -63,6 +66,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			isDead = true;
+			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}
 	}
 

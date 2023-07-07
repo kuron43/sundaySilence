@@ -23,10 +23,10 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move,int 
 	bulletObj_->wtf.position = position;
 	timeCount = 0;
 	isDead = false;
-	if (team_ == 0) {
+	if (team_ == PLAYER) {
 		Vector4 color(0.0f, 0.0f, 1.0f, 1.0f);  // カラーなぜかARGB の順番
 		bulletObj_->SetColor(color);
-	}if (team_ == 1) {
+	}if (team_ == ENEMY) {
 		Vector4 color(0.0f, 1.0f, 1.0f, 0.0f);
 		bulletObj_->SetColor(color);
 	}
@@ -44,10 +44,10 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move,int 
 		spherePos[i] = Affin::GetWorldTrans(bulletObj_->wtf.matWorld);
 		sphere[i]->SetBasisPos(&spherePos[i]);
 		sphere[i]->SetRadius(1.0f);
-		if (team_ == 0) { // 自機弾
+		if (team_ == PLAYER) { // 自機弾
 			sphere[i]->SetAttribute(COLLISION_ATTR_PLAYERBULLETS);
 		}
-		if (team_ == 1) { // 敵弾
+		if (team_ == ENEMY) { // 敵弾
 			sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIEBULLETS);
 		}
 		sphere[i]->Update();
@@ -73,12 +73,19 @@ void Bullet::Update(float speed)
 	//行列の再計算
 	bulletObj_->Update();
 
-	/*for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIES ||
-			sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER) {
-			OnColision();
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIES && team_ == PLAYER) {
+			isDead = true;
+			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}
-	}*/
+		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER && team_ == ENEMY) {
+			isDead = true;
+			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+		}
+		if (isDead == true) {
+			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+		}
+	}
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = Affin::GetWorldTrans(bulletObj_->wtf.matWorld);

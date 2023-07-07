@@ -24,8 +24,10 @@ public:
 
 	void Move(Input* input);
 
+	Transform GetTransform() { return object_->wtf; };
+
 	// 種族番号取得
-	int HowTribe() { return Tribe_; }
+	int HowTribe() { return Tribe_; };
 
 private:
 	const int Tribe_ = 0;
