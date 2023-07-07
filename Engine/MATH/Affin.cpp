@@ -110,11 +110,11 @@ Matrix4 Affin::matRotation(float rotateX, float rotateY, float rotateZ) {
 	Matrix4 x = matRotateX(rotateX);
 	Matrix4 y = matRotateY(rotateY);
 	Matrix4 z = matRotateZ(rotateZ);
-	Matrix4 matRot;
+	Matrix4 matRot = matUnit();
 
-	x *= z;
-	y *= x;
-	matRot = y;
+	matRot *= z;
+	matRot *= x;
+	matRot *= y;
 
 	return matRot;
 }
@@ -127,11 +127,11 @@ Matrix4 Affin::matRotation(Vector3 rotate) {
 	Matrix4 x = matRotateX(rotate.x);
 	Matrix4 y = matRotateY(rotate.y);
 	Matrix4 z = matRotateZ(rotate.z);
-	Matrix4 matRot;
-
-	x *= z;
-	y *= x;
-	matRot = y;
+	Matrix4 matRot = matUnit();
+	
+	matRot *= z;
+	matRot *= x;
+	matRot *= y;
 
 	return matRot;
 }

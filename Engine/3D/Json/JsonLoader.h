@@ -52,6 +52,8 @@ public:
 	//void MakeScene(LevelData* leveData);
 
 private:
+	// 度数法 -> ラジアン
+	static float RadConvert(float value);
 	std::map<std::string,Model*> models;
 };
 

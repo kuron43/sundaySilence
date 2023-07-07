@@ -57,10 +57,10 @@ void Player::Update(Input* input, bool isTitle) {
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_,0,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
 	if (input->MouseButtonPush(0)) {
-		weapon_[0]->Shot(object_->wtf, reticle->wtf, 0);
+		weapon_[0]->Shot(object_->wtf, reticle->wtf, PLAYER);
 	}
 	if (input->MouseButtonPush(1)) {
-		weapon_[0]->Shot(object_->wtf, reticle->wtf, 1);
+		weapon_[0]->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
 	weapon_[0]->Update(input, isSlow);
 
