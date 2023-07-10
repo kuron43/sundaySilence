@@ -11,6 +11,7 @@ GAME1Scene::GAME1Scene(SceneManager* controller, SceneObjects* objects) {
 
 GAME1Scene::~GAME1Scene() {
 	_objects->walls.clear();
+	_objects->enemys.clear();
 }
 
 void GAME1Scene::Initialize() {
@@ -87,6 +88,9 @@ void GAME1Scene::Update(Input* input) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
 	}
 	else if (input->KeyboardTrigger(DIK_RETURN)) {
+		for (Enemy* enemy : _objects->enemys) {
+			enemy->Reset();
+		}
 		_controller->ChangeScene(new EndScene(_controller, _objects));
 	}
 }
@@ -97,8 +101,8 @@ void GAME1Scene::Draw() {
 		enemy->Draw(_controller->_dxCommon);
 	}
 	Object3d::PreDraw(_controller->_dxCommon->GetCommandList());
-	for (Object3d* walls : _objects->walls) {
+	/*for (Object3d* walls : _objects->walls) {
 		walls->Draw();
-	}
+	}*/
 	Object3d::PostDraw();
 }

@@ -65,6 +65,6 @@ private:
 	std::vector<SphereCollider*> sphere;
 	Ray* ray;
 	std::vector<Vector3> spherePos;
-	std::vector<std::unique_ptr<Object3d>> coliderPosTest_;
+	std::vector<Object3d*> coliderPosTest_;
 };
 

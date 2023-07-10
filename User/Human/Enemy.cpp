@@ -6,6 +6,11 @@ Enemy::Enemy() {
 Enemy::~Enemy() {
 	delete model_;
 	delete weapon_;
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+		delete sphere[i];
+
+	}
 }
 
 ///
@@ -42,10 +47,10 @@ void Enemy::Initialize() {
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		////test
 		//coliderPosTest_[i] = Object3d::Create();
-		//coliderPosTest_[i]->SetModel(hpModel_.get());
-		//coliderPosTest_[i]->SetPosition(sphere[i]->center);
-		//coliderPosTest_[i]->SetScale({ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() });
-		//coliderPosTest_[i]->SetRotate({ 0,0,0 });
+		//coliderPosTest_[i]->SetModel(model_);
+		//coliderPosTest_[i]->wtf.position = sphere[i]->center;
+		//coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
+		//coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
 		//coliderPosTest_[i]->Update();
 	}
 }
@@ -73,6 +78,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
+		//coliderPosTest_[i]->Update();
 	}
 }
 
@@ -85,6 +91,9 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 		if (nowTitle) {
 			reticle->Draw();
 		}
+		/*for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+			coliderPosTest_[i]->Draw();
+		}*/
 		Object3d::PostDraw();
 		if (nowTitle) {
 			weapon_->Draw(dxCommon);
@@ -94,5 +103,11 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 
 /// リセットを行う
 void Enemy::Reset() {
+	delete model_;
+	delete weapon_;
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+		delete sphere[i];
 
+	}
 }
