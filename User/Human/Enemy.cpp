@@ -58,28 +58,19 @@ void Enemy::Initialize() {
 ///
 void Enemy::Update(Input* input, bool isTitle) {
 	assert(input);
+	nowTitle = false;
 	nowTitle = !isTitle;
+
 	object_->Update();
 	reticle->Update();
 	if (input->KeyboardPush(DIK_P)) {
 		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
-	if (!isTitle) {
-		weapon_->Update(input, isSlow);
-	}
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
-			isDead = true;
-			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-		}
-	}
+	weapon_->Update(input, isSlow);
+	FrontFace();
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		spherePos[i] = object_->wtf.position;
-		sphere[i]->Update();
-		//coliderPosTest_[i]->Update();
-	}
+	ColiderUpdate();
 }
 
 ///
@@ -89,7 +80,7 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 		Object3d::PreDraw(dxCommon->GetCommandList());
 		object_->Draw();
 		if (nowTitle) {
-			reticle->Draw();
+			//reticle->Draw();
 		}
 		/*for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 			coliderPosTest_[i]->Draw();
@@ -109,5 +100,33 @@ void Enemy::Reset() {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
 
+	}
+}
+
+/// <summary>
+/// 撃つ方向に向かせる
+/// </summary>
+void Enemy::FrontFace() {
+	Vector3 faceAngle = { 0,0,0 };
+	{
+		faceAngle.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
+		frontVec_ = faceAngle;
+	}
+
+	object_->wtf.rotation = frontVec_;
+}
+
+void Enemy::ColiderUpdate() {
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
+			isDead = true;
+			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+		}
+	}
+
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		spherePos[i] = object_->wtf.position;
+		sphere[i]->Update();
+		//coliderPosTest_[i]->Update();
 	}
 }

@@ -48,7 +48,7 @@ void MeshCollider::Update()
 }
 
 //球との当たり判定
-bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter)
+bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter,Vector3* reject)
 {
 	Sphere localSphere;
 
@@ -70,7 +70,7 @@ bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter)
 	for (; it != triangles.cend(); ++it)
 	{
 		const Triangle& triangle = *it;
-		if (Collision::CheckSphere2Triangle(localSphere , triangle , inter))
+		if (Collision::CheckSphere2Triangle(localSphere , triangle , inter,reject))
 		{
 			if (inter)
 			{
@@ -87,6 +87,11 @@ bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter)
 				inter->y = interMat.m[3][1];
 				inter->z = interMat.m[3][2];
 
+			}
+			if (reject) {
+				const Matrix4& matWorld = GetObject3d()->wtf.matWorld;
+
+				*reject = Affin::VecMat(*reject, matWorld);
 			}
 
 			return true;

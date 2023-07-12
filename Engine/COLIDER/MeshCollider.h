@@ -17,7 +17,7 @@ public:
 	void Update() override;
 
 	//球との当たり判定
-	bool CheckCollisionSphere(const Sphere& sphere , Vector3* inter = nullptr);
+	bool CheckCollisionSphere(const Sphere& sphere , Vector3* inter = nullptr,Vector3* reject = nullptr);
 
 	//レイとの当たり判定
 	bool CheckCollisionRay(const Ray& ray , float* distance = nullptr , Vector3* inter = nullptr);
