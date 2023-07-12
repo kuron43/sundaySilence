@@ -1,6 +1,7 @@
 #pragma once
 #include "CollisionPrimitive.h"
 #include "RaycastHit.h"
+#include "QueryCallback.h"
 
 #pragma warning(push)
 #pragma warning(disable: 4819)
@@ -34,6 +35,14 @@ public:
 	void CheckAllCollisions();
 	bool Raycast(const Ray& ray , unsigned short attribute, RaycastHit* hitInfo = nullptr , float maxDistance = D3D12_FLOAT32_MAX);
 	bool Raycast(const Ray& ray , RaycastHit* hitInfo = nullptr , float maxDistance = D3D12_FLOAT32_MAX);
+
+	/// <summary>
+	/// 球による衝突全検索
+	/// </summary>
+	/// <param name="sphere">球</param>
+	/// <param name="callback">衝突時コールバック</param>
+	/// <param name="attribute">対象の属性</param>
+	void QuerySphere(const Sphere& sphere, QueryCallback* callback, unsigned short attribute = (unsigned short)0xffff);
 
 private:
 	CollisionManager() = default;

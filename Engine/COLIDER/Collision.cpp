@@ -1,23 +1,32 @@
 #include "Collision.h"
 using namespace DirectX;
 
-bool Collision::CheckSphere2Sphere(const Sphere& sphereA , const Sphere& sphereB , Vector3* inter)
+bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, Vector3* inter, Vector3* reject)
 {
 	float dist = sqrtf(float(
-		pow(sphereB.center.x - sphereA.center.x , 2) +
-		pow(sphereB.center.y - sphereA.center.y , 2) +
-		pow(sphereB.center.z - sphereA.center.z , 2)
-	));
+		pow(sphereB.center.x - sphereA.center.x, 2) +
+		pow(sphereB.center.y - sphereA.center.y, 2) +
+		pow(sphereB.center.z - sphereA.center.z, 2)
+		));
 
 	if (dist > sphereA.radius_ + sphereB.radius_)
 	{
 		return false;
 	}
 	*inter = sphereA.center + (sphereB.center - sphereA.center) / 2;
+	//押し出すベクトルを計算
+	if (reject) {
+		Vector3 normaVec = { 0,0,0 };
+		float rejectLen = sphereA.radius_ + sphereB.radius_ - sqrtf(dist);
+		normaVec = sphereA.center - sphereB.center;
+		normaVec.nomalize();
+		*reject = normaVec;
+		*reject *= rejectLen;
+	}
 	return true;
 }
 
-bool Collision::CheckSphere2Plane(const Sphere& sphere , const Plane& plane , Vector3* inter)
+bool Collision::CheckSphere2Plane(const Sphere& sphere, const Plane& plane, Vector3* inter, Vector3* reject)
 {
 	//座標系の原点から球の中心座標への距離
 	float distV = sphere.center.dot(plane.normal);
@@ -34,12 +43,18 @@ bool Collision::CheckSphere2Plane(const Sphere& sphere , const Plane& plane , Ve
 		//平面上の最近接点を疑似交点とする
 		*inter = -dist * plane.normal + sphere.center;
 	}
+	if (reject) {
+
+	}
 
 	return true;
 }
 
-void Collision::ClosestPtPoint2Triangle(const Vector3& point , const Triangle& triangle , Vector3* closest)
+void Collision::ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle, Vector3* closest, Vector3* reject)
 {
+	if (reject) {
+
+	}
 	// pointがp0の外側の頂点領域の中にあるかどうかチェック
 	Vector3 p0_p1 = triangle.p1 - triangle.p0;
 	Vector3 p0_p2 = triangle.p2 - triangle.p0;
@@ -112,17 +127,17 @@ void Collision::ClosestPtPoint2Triangle(const Vector3& point , const Triangle& t
 	*closest = triangle.p0 + p0_p1 * v + p0_p2 * w;
 }
 
-bool Collision::CheckSphere2Triangle(const Sphere& sphere , const Triangle& triangle , Vector3* inter)
+bool Collision::CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle, Vector3* inter, Vector3* reject)
 {
 	Vector3 p;
 	//球の中心に対する接点である三角形上にある点pを見つける
-	ClosestPtPoint2Triangle(sphere.center , triangle , &p);
+	ClosestPtPoint2Triangle(sphere.center, triangle, &p);
 	//点pと球の中心の差分ベクトル
 	Vector3 v = p - sphere.center;
 	//距離の二乗を求める
-	float powDist = powf(v.length() , 2);
+	float powDist = powf(v.length(), 2);
 
-	if (powDist > powf(sphere.radius_ , 2))
+	if (powDist > powf(sphere.radius_, 2))
 	{
 		return false;
 	}
@@ -131,11 +146,17 @@ bool Collision::CheckSphere2Triangle(const Sphere& sphere , const Triangle& tria
 	{
 		*inter = p;
 	}
+	if (reject) {
+		float ds = sphere.center.dot(triangle.normal);
+		float dt = triangle.p0.dot(triangle.normal);
+		float rejectLen = dt - ds + sphere.radius_;
+		*reject = triangle.normal * rejectLen;
+	}
 
 	return true;
 }
 
-bool Collision::CheckRay2Plane(const Ray& ray , const Plane& plane , float* distance , Vector3* inter)
+bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance, Vector3* inter, Vector3* reject)
 {
 	//誤差吸収用の微小な値
 	const float epsilon = 1.0e-5f;
@@ -170,12 +191,18 @@ bool Collision::CheckRay2Plane(const Ray& ray , const Plane& plane , float* dist
 	{
 		*inter = ray.start + t * ray.dir;
 	}
+	if (reject) {
+
+	}
 
 	return true;
 }
 
-bool Collision::CheckRay2Triangle(const Ray& ray , const Triangle& triangle , float* distance , Vector3* inter)
+bool Collision::CheckRay2Triangle(const Ray& ray, const Triangle& triangle, float* distance, Vector3* inter, Vector3* reject)
 {
+	if (reject) {
+
+	}
 	//三角形が乗っている平面を算出
 	Plane plane;
 	Vector3 interPlane;
@@ -183,7 +210,7 @@ bool Collision::CheckRay2Triangle(const Ray& ray , const Triangle& triangle , fl
 	plane.distance = triangle.normal.dot(triangle.p0);
 
 	//レイと平面が当たっていなければ当たっていない
-	if (!CheckRay2Plane(ray , plane , distance , &interPlane))
+	if (!CheckRay2Plane(ray, plane, distance, &interPlane))
 	{
 		return false;
 	}
@@ -231,11 +258,14 @@ bool Collision::CheckRay2Triangle(const Ray& ray , const Triangle& triangle , fl
 	return true;
 }
 
-bool Collision::CheckRay2Sphere(const Ray& ray , const Sphere& sphere , float* distance , Vector3* inter)
+bool Collision::CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* distance, Vector3* inter, Vector3* reject)
 {
+	if (reject) {
+
+	}
 	Vector3 m = ray.start - sphere.center;
 	float b = m.dot(ray.dir);
-	float c = m.dot(m) - powf(sphere.radius_ , 2);
+	float c = m.dot(m) - powf(sphere.radius_, 2);
 
 	//レイの始点が球の外にあり(c>0)、レイが球から離れている方向を指している場合(b>0)、当たらない
 	if (c > 0.0f && b > 0.0f)

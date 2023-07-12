@@ -30,16 +30,24 @@ public:
 	int HowTribe() { return Tribe_; }
 
 	Transform GetTransform() { return object_->wtf; }
+
+private:
+	void FrontFace();
+	void ColiderUpdate();
 	
 public:
 	Object3d* object_;
 private:
 	const int Tribe_ = 1;
+	bool isFound = false;
+	bool isFire = false;
+
 	Model* model_;
-	Vector3 faceAngle_;
+	Object3d* reticle;
+
+	Vector3 frontVec_;
 	bool isDead = false;
 
-	Object3d* reticle;
 	
 	//移動速度
 	const float kMoveSpeed_ = 0.5f;

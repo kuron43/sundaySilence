@@ -308,8 +308,24 @@ bool Object3d::Initialize()
 
 void Object3d::Update()
 {
-
 	HRESULT result;
+	UpdateMatrix();
+
+	// 定数バッファへデータ転送
+	Matrix4 resultMat;
+	resultMat = Affin::matUnit();
+	ConstBufferDataB0* constMap = nullptr;
+	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
+	resultMat = wtf.matWorld * camera_->GetViewProjectionMatrix();	// 行列の合成
+	constMap->cameraPos = camera_->GetEye();
+	constMap->world = wtf.matWorld;
+	constMap->veiwproj = camera_->GetViewProjectionMatrix();
+	constMap->color = color_;
+	constBuffB0->Unmap(0, nullptr);
+
+}
+
+void Object3d::UpdateMatrix() {
 	Matrix4 matScale, matRot, matTrans, resultMat;
 	resultMat = Affin::matUnit();
 
@@ -330,18 +346,6 @@ void Object3d::Update()
 		// 親オブジェクトのワールド行列を掛ける
 		wtf.matWorld *= parent_->wtf.matWorld;
 	}
-
-	// 定数バッファへデータ転送
-
-	ConstBufferDataB0* constMap = nullptr;
-	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
-	resultMat = wtf.matWorld * camera_->GetViewProjectionMatrix();	// 行列の合成
-	constMap->cameraPos = camera_->GetEye();
-	constMap->world = wtf.matWorld;
-	constMap->veiwproj = camera_->GetViewProjectionMatrix();
-	constMap->color = color_;
-	constBuffB0->Unmap(0, nullptr);
-
 }
 
 void Object3d::Draw()
