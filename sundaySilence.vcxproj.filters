@@ -72,6 +72,8 @@
     <ClCompile Include="User\Human\Player.cpp" />
     <ClCompile Include="User\Weapon\Shotgun.cpp" />
     <ClCompile Include="User\Weapon\Weapon.cpp" />
+    <ClCompile Include="User\Objects\Objects.cpp" />
+    <ClCompile Include="Engine\COLIDER\QueryCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
@@ -140,6 +142,8 @@
     <ClInclude Include="User\Weapon\Shotgun.h" />
     <ClInclude Include="User\Weapon\Weapon.h" />
     <ClInclude Include="User\Weapon\Weaponlist.h" />
+    <ClInclude Include="User\Objects\Objects.h" />
+    <ClInclude Include="Engine\COLIDER\QueryCallback.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli" />

@@ -125,6 +125,7 @@
     <ClCompile Include="Engine\COLIDER\CollisionManager.cpp" />
     <ClCompile Include="Engine\COLIDER\CollisionPrimitive.cpp" />
     <ClCompile Include="Engine\COLIDER\MeshCollider.cpp" />
+    <ClCompile Include="Engine\COLIDER\QueryCallback.cpp" />
     <ClCompile Include="Engine\COLIDER\SphereCollider.cpp" />
     <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp" />
     <ClCompile Include="Engine\Framework\Framework.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
     <ClCompile Include="User\Human\Boss.cpp" />
     <ClCompile Include="User\Human\Enemy.cpp" />
+    <ClCompile Include="User\Objects\Objects.cpp" />
     <ClCompile Include="User\Weapon\Assault.cpp" />
     <ClCompile Include="User\Weapon\Bullet.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
@@ -190,6 +192,7 @@
     <ClInclude Include="Engine\COLIDER\CollisionPrimitive.h" />
     <ClInclude Include="Engine\COLIDER\CollisionTypes.h" />
     <ClInclude Include="Engine\COLIDER\MeshCollider.h" />
+    <ClInclude Include="Engine\COLIDER\QueryCallback.h" />
     <ClInclude Include="Engine\COLIDER\RaycastHit.h" />
     <ClInclude Include="Engine\COLIDER\SphereCollider.h" />
     <ClInclude Include="Engine\DEBUG\ImGuiManager.h" />
@@ -222,6 +225,7 @@
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />
     <ClInclude Include="User\Human\Boss.h" />
     <ClInclude Include="User\Human\Enemy.h" />
+    <ClInclude Include="User\Objects\Objects.h" />
     <ClInclude Include="User\Weapon\Assault.h" />
     <ClInclude Include="User\Weapon\Bullet.h" />
     <ClInclude Include="User\Human\Human.h" />

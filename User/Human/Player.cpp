@@ -52,7 +52,6 @@ void Player::Initialize() {
 void Player::Update(Input* input, bool isTitle) {
 	nowTitle = isTitle;
 	Move(input);
-	object_->Update();
 	Vector2 mousepos = input->GetMousePosition();
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_,0,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
@@ -64,6 +63,9 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 	weapon_[0]->Update(input, isSlow);
 
+
+
+	object_->UpdateMatrix();
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
 
@@ -74,6 +76,52 @@ void Player::Update(Input* input, bool isTitle) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
 	}
+
+	// クエリーコールバッククラス
+	class PlayerQueryCallback :public QueryCallback
+	{
+	public:
+		PlayerQueryCallback(Sphere* sphere) :sphereQ(sphere) {};
+		// 衝突時コールバック
+		bool OnQueryHit(const QueryHit& info) {
+			// ワールドの上方向
+			const Vector3 up = { 0,1,0 };
+			// 排斥方向			
+			Vector3 rejectDir = info.reject;
+			rejectDir.nomalize();
+			// 上方向と排斥方向の角度差のコサイン値
+			float cos = rejectDir.dot(up);
+
+			// 地面判定しきい値
+			const float threshold = cosf(Affin::radConvert(30.0f));
+			// 角度差によって天井または地面と判定される場合を除いて
+			if (-threshold < cos && cos < threshold) {
+				// 球を排斥 （押し出す）
+				sphereQ->center += info.reject;
+				move += info.reject;
+			}
+			return true;
+		}
+
+		// クエリーに使用する球
+		Sphere* sphereQ = nullptr;
+		// 排斥による移動量
+		Vector3 move = {};
+	};
+	//クエリーコールバックの関数オブジェクト
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		PlayerQueryCallback callback(sphere[i]);
+		//
+		CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback);
+		object_->wtf.position.x += callback.move.x;
+		object_->wtf.position.y += callback.move.y;
+		object_->wtf.position.z += callback.move.z;
+
+		object_->UpdateMatrix();
+		sphere[i]->Update();
+	}
+
+	object_->Update();
 }
 
 ///
@@ -107,6 +155,7 @@ void Player::Move(Input* input) {
 	//速度を0にする
 	velocity_ = { 0 , 0 , 0 };
 	Vector2 vec2Velocity = { 0,0 };
+	Vector3 faceAngle = { 0,0,0 };
 	{
 		////キー入力があったら
 		//if (input->KeyboardPush(DIK_W) ||
@@ -420,10 +469,10 @@ void Player::Move(Input* input) {
 		}
 
 	}
-	
-		vec2Velocity = input->Pad_X_GetLeftStickVec(Vector2(1.0f, 1.0f));
-		velocity_ += { vec2Velocity.x,0,-vec2Velocity.y };
-	
+
+	vec2Velocity = input->Pad_X_GetLeftStickVec(Vector2(1.0f, 1.0f));
+	velocity_ += { vec2Velocity.x, 0, -vec2Velocity.y };
+
 
 	//////////////////////////////////
 	float speed = kMoveSpeed_;
@@ -441,10 +490,12 @@ void Player::Move(Input* input) {
 		speed = kMoveSpeed_;
 	}
 
-	//velocity_ = Affin::VecMat(velocity_, object_->wtf.matWorld);
+	{
+		faceAngle_.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
+		faceAngle = faceAngle_;
+	}
 
-	
-
+	object_->wtf.rotation = faceAngle;
 	object_->wtf.position += velocity_;
 
 }

@@ -101,8 +101,8 @@ void GAME1Scene::Draw() {
 		enemy->Draw(_controller->_dxCommon);
 	}
 	Object3d::PreDraw(_controller->_dxCommon->GetCommandList());
-	/*for (Object3d* walls : _objects->walls) {
+	for (Object3d* walls : _objects->walls) {
 		walls->Draw();
-	}*/
+	}
 	Object3d::PostDraw();
 }

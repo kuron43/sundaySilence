@@ -133,7 +133,7 @@ public: // メンバ関数
 	/// </summary>
 	void Update();
 
-	//void Update(View* view);
+	void UpdateMatrix();
 
 	/// <summary>
 	/// 描画

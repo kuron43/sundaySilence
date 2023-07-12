@@ -1,6 +1,7 @@
 #pragma once
 
 //当たり判定属性
+const unsigned short COLLISION_ATTR_ALL = 0xffff;
 const unsigned short COLLISION_ATTR_LANDSPHERE = 0b1 << 0;
 const unsigned short COLLISION_ATTR_ALLIES = 0b1 << 1;
 const unsigned short COLLISION_ATTR_ENEMIES = 0b1 << 2;

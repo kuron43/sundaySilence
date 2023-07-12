@@ -30,7 +30,7 @@ private:
 
 	Model* model_;
 	Object3d* object_;
-	Vector3 faceAngle_;
+	Vector3 frontVec_;
 
 	Object3d* reticle;
 
