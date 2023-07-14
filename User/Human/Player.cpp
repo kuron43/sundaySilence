@@ -40,7 +40,7 @@ void Player::Initialize() {
 		//test
 		/*coliderPosTest_[i] = Object3d::Create();
 		coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
-		coliderPosTest_[i]->wtf.position = (sphere[i]->center);
+		coliderPosTest_[i]->wtf.m_Pos = (sphere[i]->center);
 		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
 		coliderPosTest_[i]->Update();*/

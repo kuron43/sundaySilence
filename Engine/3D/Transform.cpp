@@ -36,4 +36,6 @@ void Transform::UpdateMat() {
 	matWorld *= matScale; // ワールド行列にスケーリングを反映
 	matWorld *= matRot; // ワールド行列に回転を反映
 	matWorld *= matTrans; // ワールド行列に平行移動を反映
+
+	rotMat = matRot;
 }

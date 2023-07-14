@@ -46,22 +46,23 @@ void GAME1Scene::Initialize() {
 				_objects->enemys.emplace_back(newEnemy);
 			}
 			if (objectData.fileName == "wall") {
-				Object3d* newWall = Object3d::Create();
-				newWall->SetModel(_objects->wallMD);
-				newWall->Initialize();
+				Wall* newWall = new Wall();
+				newWall->Initialize(_objects->wallMD);
 				//座標
 				Vector3 pos;
 				pos = objectData.translation;
-				newWall->wtf.position = pos;
+				newWall->object_->wtf.position = pos;
 				//回転
 				Vector3 rot;
 				rot = objectData.rotation;
-				newWall->wtf.rotation = rot;
+				newWall->object_->wtf.rotation = rot;
 				//拡縮
 				Vector3 sca;
 				sca = objectData.scaling;
-				newWall->wtf.scale = sca;
-				newWall->SetColor(Vector4(0.5f, 0.3f, 0.3f, 0.3f));
+				newWall->object_->wtf.scale = sca;
+				newWall->object_->SetColor(Vector4(0.5f, 0.3f, 0.3f, 0.3f));
+				newWall->object_->wtf.UpdateMat();
+				newWall->CollideInitialize();
 				_objects->walls.emplace_back(newWall);
 			}
 
@@ -75,7 +76,7 @@ void GAME1Scene::Update(Input* input) {
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
 	_objects->player->Update(input);
-	for (Object3d* walls : _objects->walls) {
+	for (Wall* walls : _objects->walls) {
 		walls->Update();
 	}
 
@@ -100,9 +101,8 @@ void GAME1Scene::Draw() {
 	for (Enemy* enemy : _objects->enemys) {
 		enemy->Draw(_controller->_dxCommon);
 	}
-	Object3d::PreDraw(_controller->_dxCommon->GetCommandList());
-	for (Object3d* walls : _objects->walls) {
-		walls->Draw();
+	for (Wall* walls : _objects->walls) {
+		walls->Draw(_controller->_dxCommon);
 	}
-	Object3d::PostDraw();
+
 }

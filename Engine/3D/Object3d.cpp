@@ -300,6 +300,7 @@ bool Object3d::Initialize()
 		IID_PPV_ARGS(&constBuffB0));
 	assert(SUCCEEDED(result));
 
+	wtf.Initialize();
 	color_ = Vector4(0,0,0,0);
 
 	return true;
@@ -326,20 +327,22 @@ void Object3d::Update()
 }
 
 void Object3d::UpdateMatrix() {
-	Matrix4 matScale, matRot, matTrans, resultMat;
-	resultMat = Affin::matUnit();
+	//Matrix4 matScale, matRot, matTrans, resultMat;
+	//resultMat = Affin::matUnit();
 
-	// スケール、回転、平行移動行列の計算
-	matScale = Affin::matScale(wtf.scale.x, wtf.scale.y, wtf.scale.z);
-	matRot = Affin::matUnit();
-	matRot *= Affin::matRotation(wtf.rotation);
-	matTrans = Affin::matTrans(wtf.position.x, wtf.position.y, wtf.position.z);
+	//// スケール、回転、平行移動行列の計算
+	//matScale = Affin::matScale(wtf.scale.x, wtf.scale.y, wtf.scale.z);
+	//matRot = Affin::matUnit();
+	//matRot *= Affin::matRotation(wtf.rotation);
+	//matTrans = Affin::matTrans(wtf.m_Pos.x, wtf.m_Pos.y, wtf.m_Pos.z);
 
-	// ワールド行列の合成
-	wtf.matWorld = Affin::matUnit(); // 変形をリセット
-	wtf.matWorld *= matScale; // ワールド行列にスケーリングを反映
-	wtf.matWorld *= matRot; // ワールド行列に回転を反映
-	wtf.matWorld *= matTrans; // ワールド行列に平行移動を反映
+	//// ワールド行列の合成
+	//wtf.matWorld = Affin::matUnit(); // 変形をリセット
+	//wtf.matWorld *= matScale; // ワールド行列にスケーリングを反映
+	//wtf.matWorld *= matRot; // ワールド行列に回転を反映
+	//wtf.matWorld *= matTrans; // ワールド行列に平行移動を反映
+
+	wtf.UpdateMat();
 
 	// 親オブジェクトがあれば
 	if (parent_ != nullptr) {

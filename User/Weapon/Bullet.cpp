@@ -56,7 +56,7 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move,int 
 		//test
 		/*coliderPosTest_[i] = Object3d::Create();
 		//coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
-		//coliderPosTest_[i]->wtf.position = (sphere[i]->center);
+		//coliderPosTest_[i]->wtf.m_Pos = (sphere[i]->center);
 		//coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
 		//coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
 		//coliderPosTest_[i]->Update();*/
@@ -82,6 +82,10 @@ void Bullet::Update(float speed)
 			isDead = true;
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}
+		/*if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
+			isDead = true;
+			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+		}*/
 		if (isDead == true) {
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}

@@ -36,6 +36,7 @@ private:
 	Model* model_;
 	Object3d* object_;
 	Object3d* reticle;
+	Transform shotPos;
 	float mouseSensitivity_ = 0.099f;	//マウス感度 0.05
 	//移動速度
 	const float kMoveSpeed_ = 0.5f;

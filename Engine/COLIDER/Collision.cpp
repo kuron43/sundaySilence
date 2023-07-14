@@ -301,3 +301,204 @@ bool Collision::CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* dis
 
 	return true;
 }
+
+// 3次元OBBと点の最短距離算出関数
+float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
+{
+	Vector3 Vec(0, 0, 0);   // 最終的に長さを求めるベクトル
+	float result = 0;
+
+	// 各軸についてはみ出た部分のベクトルを算出
+	for (int i = 0; i < 3; i++)
+	{
+		float L = obb.m_fLength[i];
+		// L=0は計算できない
+		if (L <= 0) {
+			continue;
+		}
+		float s = Vector3(p - obb.m_Pos).dot(obb.m_NormaDirect[i]) / L;
+
+		// sの値から、はみ出した部分があればそのベクトルを加算
+		s = (float)fabs(s);
+		if (s > 1) {
+			Vec += (1 - s) * L * obb.m_NormaDirect[i];   // はみ出した部分のベクトル算出
+		}
+	}
+	result = Vec.length();
+
+	return result;   // 長さを出力
+}
+
+bool Collision::CheckOBB2OBB(const OBB& obb1, const OBB& obb2, Vector3* inter, Vector3* reject) {
+	if (reject) {
+
+	}
+	// 各方向ベクトルの確保
+// （N***:標準化方向ベクトル）
+	Vector3 NAe1 = obb1.m_NormaDirect[0], Ae1 = NAe1 * obb1.m_fLength[0];
+	Vector3 NAe2 = obb1.m_NormaDirect[1], Ae2 = NAe2 * obb1.m_fLength[1];
+	Vector3 NAe3 = obb1.m_NormaDirect[2], Ae3 = NAe3 * obb1.m_fLength[2];
+	Vector3 NBe1 = obb2.m_NormaDirect[0], Be1 = NBe1 * obb2.m_fLength[0];
+	Vector3 NBe2 = obb2.m_NormaDirect[1], Be2 = NBe2 * obb2.m_fLength[1];
+	Vector3 NBe3 = obb2.m_NormaDirect[2], Be3 = NBe3 * obb2.m_fLength[2];
+	Vector3 Interval = obb1.m_Pos - obb2.m_Pos;
+
+	// 分離軸 : Ae1
+	float rA = Ae1.length();
+	float rB = LenSegOnSeparateAxis(NAe1, Be1, Be2, Be3);
+	float L = (float)fabs(Interval.dot(NAe1));
+	if (L > rA + rB) {
+		return false;
+	}// 衝突していない
+
+	// 分離軸 : Ae2
+	rA = Ae2.length();
+	rB = LenSegOnSeparateAxis(NAe2, Be1, Be2, Be3);
+	L = (float)fabs(Interval.dot(NAe2));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : Ae3
+	rA = Ae3.length();
+	rB = LenSegOnSeparateAxis(NAe3, Be1, Be2, Be3);
+	L = (float)fabs(Interval.dot(NAe3));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : Be1
+	rA = LenSegOnSeparateAxis(NBe1, Ae1, Ae2, Ae3);
+	rB = Be1.length();
+	L = (float)fabs(Interval.dot(NBe1));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : Be2
+	rA = LenSegOnSeparateAxis(NBe2, Ae1, Ae2, Ae3);
+	rB = Be2.length();
+	L = (float)fabs(Interval.dot(NBe2));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : Be3
+	rA = LenSegOnSeparateAxis(NBe3, Ae1, Ae2, Ae3);
+	rB = Be3.length();
+	L = (float)fabs(Interval.dot(NBe3));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : C11
+	Vector3 Cross;
+	Cross = NAe1.cross(NBe1);
+	rA = LenSegOnSeparateAxis(Cross, Ae2, Ae3);
+	rB = LenSegOnSeparateAxis(Cross, Be2, Be3);
+	L = (float)fabs((float)Interval.dot(Cross));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : C12
+	Cross = NAe1.cross(NBe2);
+	rA = LenSegOnSeparateAxis(Cross, Ae2, Ae3);
+	rB = LenSegOnSeparateAxis(Cross, Be1, Be3);
+	L = (float)fabs((float)Interval.dot(Cross));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : C13
+	Cross = NAe1.cross(NBe3);
+	rA = LenSegOnSeparateAxis(Cross, Ae2, Ae3);
+	rB = LenSegOnSeparateAxis(Cross, Be1, Be2);
+	L = (float)fabs((float)Interval.dot(Cross));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : C21
+	Cross = NAe2.cross(NBe1);
+	rA = LenSegOnSeparateAxis(Cross, Ae1, Ae3);
+	rB = LenSegOnSeparateAxis(Cross, Be2, Be3);
+	L = (float)fabs((float)Interval.dot(Cross));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : C22
+	Cross = NAe2.cross(NBe2);
+	rA = LenSegOnSeparateAxis(Cross, Ae1, Ae3);
+	rB = LenSegOnSeparateAxis(Cross, Be1, Be3);
+	L = (float)fabs((float)Interval.dot(Cross));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : C23
+	Cross = NAe2.cross(NBe3);
+	rA = LenSegOnSeparateAxis(Cross, Ae1, Ae3);
+	rB = LenSegOnSeparateAxis(Cross, Be1, Be2);
+	L = (float)fabs((float)Interval.dot(Cross));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : C31
+	Cross = NAe3.cross(NBe1);
+	rA = LenSegOnSeparateAxis(Cross, Ae1, Ae2);
+	rB = LenSegOnSeparateAxis(Cross, Be2, Be3);
+	L = (float)fabs((float)Interval.dot(Cross));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : C32
+	Cross = NAe3.cross(NBe2);
+	rA = LenSegOnSeparateAxis(Cross, Ae1, Ae2);
+	rB = LenSegOnSeparateAxis(Cross, Be1, Be3);
+	L = (float)fabs((float)Interval.dot(Cross));
+	if (L > rA + rB) {
+		return false;
+	}
+
+	// 分離軸 : C33
+	Cross = NAe3.cross(NBe3);
+	rA = LenSegOnSeparateAxis(Cross, Ae1, Ae2);
+	rB = LenSegOnSeparateAxis(Cross, Be1, Be2);
+	L = (float)fabs((float)Interval.dot(Cross));
+	if (L > rA + rB) {
+		return false;
+	}
+	//疑似交点
+	if (inter)
+	{
+		//平面上の最近接点を疑似交点とする
+		//*inter = 
+	}
+	// 分離平面が存在しないので「衝突している」
+	return true;
+}
+
+bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* inter, Vector3* reject) {
+	if (reject) {
+
+	}
+	float length;
+	OBB obb_ = obb;
+	Vector3 spherePos = sphere.center;
+	length = LenOBBToPoint(obb_, spherePos);
+	if ((float)fabs(length) <= sphere.radius_) {
+		return false;
+	}
+	//疑似交点
+	if (inter)
+	{
+		//平面上の最近接点を疑似交点とする
+		//*inter = 
+	}
+
+	return true;
+}

@@ -85,7 +85,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 		//		//座標
 		//		Vector3 pos;
 		//		pos = objectData.translation;
-		//		newObject->wtf.position = pos;
+		//		newObject->wtf.m_Pos = pos;
 		//		//回転
 		//		Vector3 rot;
 		//		rot = objectData.rotation;

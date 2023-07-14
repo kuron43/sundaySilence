@@ -48,7 +48,7 @@ void Enemy::Initialize() {
 		////test
 		//coliderPosTest_[i] = Object3d::Create();
 		//coliderPosTest_[i]->SetModel(model_);
-		//coliderPosTest_[i]->wtf.position = sphere[i]->center;
+		//coliderPosTest_[i]->wtf.m_Pos = sphere[i]->center;
 		//coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
 		//coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
 		//coliderPosTest_[i]->Update();
@@ -68,8 +68,8 @@ void Enemy::Update(Input* input, bool isTitle) {
 	}
 
 	weapon_->Update(input, isSlow);
-	FrontFace();
 
+	FrontFace();
 	ColiderUpdate();
 }
 

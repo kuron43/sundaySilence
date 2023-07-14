@@ -94,13 +94,13 @@ public: // メンバ関数
 	/// <summary>
 	/// 大きさの設定
 	/// </summary>
-	/// <param name="position">座標</param>
+	/// <param name="m_Pos">座標</param>
 	void SetScale(const Vector3& scale) { wtf.scale = scale; }
 
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
-	/// <param name="position">座標</param>
+	/// <param name="m_Pos">座標</param>
 	void SetPosition(const Vector3& position) { wtf.position = position; }
 
 	/// <summary>
@@ -182,7 +182,7 @@ protected: // メンバ変数
 	//// X,Y,Z軸回りのローカル回転角
 	//XMFLOAT3 rotation = { 0,0,0 };
 	//// ローカル座標
-	//XMFLOAT3 position = { 0,0,0 };
+	//XMFLOAT3 m_Pos = { 0,0,0 };
 	//// ローカルワールド変換行列
 	//XMMATRIX matWorld;
 	// モデル

@@ -23,5 +23,36 @@ public:
 
 	static bool CheckRay2Sphere(const Ray& ray , const Sphere& sphere , float* distance = nullptr , Vector3* inter = nullptr, Vector3* reject = nullptr);
 
+	// OBB
+
+	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere,Vector3* inter = nullptr, Vector3* reject = nullptr);
+
+	static bool CheckOBB2OBB(const OBB& obb1,const OBB& obb2, Vector3* inter = nullptr, Vector3* reject = nullptr);
+
+private:
+
+	// 3次元OBBと点の最短距離算出関数
+	static float LenOBBToPoint(OBB& obb, Vector3& p);
+	// http://marupeke296.com/COL_3D_No12_OBBvsPoint.html
+
+	// 分離軸に投影された軸成分から投影線分長を算出
+	static float LenSegOnSeparateAxis(Vector3& Sep, Vector3& e1, Vector3& e2, Vector3& e3)
+	{
+		// 3つの内積の絶対値の和で投影線分長を計算
+		// 分離軸Sepは標準化されていること
+		float r1 = (float)fabs((double)Sep.dot(e1));
+		float r2 = (float)fabs((double)Sep.dot(e2));
+		float r3 =  (float)fabs((double)Sep.dot(e3));
+		return r1 + r2 + r3;
+	}
+
+	static float LenSegOnSeparateAxis(Vector3& Sep, Vector3& e1, Vector3& e2)
+	{
+		// 3つの内積の絶対値の和で投影線分長を計算
+		// 分離軸Sepは標準化されていること
+		float r1 = (float)fabs((double)Sep.dot(e1));
+		float r2 = (float)fabs((double)Sep.dot(e2));
+		return r1 + r2;
+	}// http://k3tec.net/neko_wiki/index.php?DirectX%B9%D6%BA%C222%B2%F3
 };
 

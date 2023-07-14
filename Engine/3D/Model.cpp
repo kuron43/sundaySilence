@@ -248,7 +248,7 @@ void Model::LoadFromOBJInternal(const std::string& modelname)
 			positions.emplace_back(position);
 			//頂点データに追加
 			/*VertexPosNormalUv vertex{};
-			vertex.pos = position;
+			vertex.pos = m_Pos;
 			vertices.emplace_back(vertex);*/
 		}
 
