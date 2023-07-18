@@ -1,5 +1,6 @@
 #include "Wall.h"
 #include "DirectXCommon.h"
+#include "imgui.h"
 
 Wall::Wall() {
 
@@ -14,12 +15,12 @@ void Wall::Initialize(Model* model) {
 	object_->SetModel(model);
 	object_->Initialize();
 
-	
+
 }
 
 void Wall::CollideInitialize() {
-	obbPos_ = Affin::GetWorldTrans(object_->wtf.matWorld);
-	obbLength_ = Vector3(10, 10, 10);
+	//obbPos_ = Affin::GetWorldTrans(object_->wtf.matWorld);
+	//obbLength_ = Vector3(10, 10, 10);
 	obb_ = new ObbCollider;
 	obb_->CreateOBB(object_);
 	CollisionManager::GetInstance()->AddCollider(obb_);
@@ -38,6 +39,7 @@ void Wall::CollideInitialize() {
 
 /// 更新を行う
 void Wall::Update() {
+	isHit = false;
 	object_->Update();
 	coliderPosTest_->wtf.position = obb_->GetPos_();
 	coliderPosTest_->wtf.scale.x = obb_->GetLength(0);
@@ -49,12 +51,22 @@ void Wall::Update() {
 
 
 
-	if (obb_->GetIsHit() == true && obb_->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
+	if (obb_->GetIsHit() == true && obb_->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER) {
 		//CollisionManager::GetInstance()->RemoveCollider(obb_);
 		Vector3 a = { 0,0,0 };
+		ImGui::Begin("Wall");
+		ImGui::Text("Hit");
+		ImGui::End();
+		isHit = true;
 	}
-	//obb_->UpdateObb(*object_);
+	/*ImGui::Begin("WallPOS");
+	ImGui::Text("pos:%f,%f,%f", obb_->GetPos_().x, obb_->GetPos_().y, obb_->GetPos_().z);
+	ImGui::Text("Len:%f,%f,%f", obb_->GetLength(0), obb_->GetLength(1), obb_->GetLength(2));
+	ImGui::Text("Dir:%f,%f,%f", obb_->GetLength(0), obb_->GetLength(1), obb_->GetLength(2));
+
+	ImGui::End();*/
 	obb_->Update();
+	//obb_->UpdateObb(*object_);
 }
 
 /// 描画を行う
@@ -63,7 +75,7 @@ void Wall::Draw(DirectXCommon* dxCommon) {
 	//object_->Draw();
 	if (!obb_->GetIsHit()) {
 
-	coliderPosTest_->Draw();
+		coliderPosTest_->Draw();
 	}
 	Object3d::PostDraw();
 
@@ -71,5 +83,9 @@ void Wall::Draw(DirectXCommon* dxCommon) {
 
 /// リセットを行う
 void Wall::Reset() {
+	delete model_;
+	CollisionManager::GetInstance()->RemoveCollider(obb_);
+	delete obb_;
+
 
 }

@@ -310,7 +310,10 @@ bool Object3d::Initialize()
 void Object3d::Update()
 {
 	HRESULT result;
+
 	UpdateMatrix();
+
+
 
 	// 定数バッファへデータ転送
 	Matrix4 resultMat;

@@ -74,7 +74,7 @@ void CollisionManager::CheckAllCollisions()
 				}
 
 			}
-			else if (colA->GetShapeType() == COLLISIONSHAPE_OBB &&
+			if (colA->GetShapeType() == COLLISIONSHAPE_OBB &&
 				colB->GetShapeType() == COLLISIONSHAPE_OBB)
 			{
 				OBB* obbA = dynamic_cast<OBB*>(colA);
@@ -94,8 +94,8 @@ void CollisionManager::CheckAllCollisions()
 
 				Vector3 inter;
 				if (Collision::CheckOBB2Sphere(*obbA, *sphere)) {
-					//colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
-					//colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
+					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
+					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
 				}
 
 			}

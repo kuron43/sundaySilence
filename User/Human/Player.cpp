@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Assault.h"
+#include "imgui.h"
 
 Player::Player() {
 
@@ -38,12 +39,12 @@ void Player::Initialize() {
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_PLAYER);
 		//test
-		/*coliderPosTest_[i] = Object3d::Create();
+		coliderPosTest_[i] = Object3d::Create();
 		coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
-		coliderPosTest_[i]->wtf.m_Pos = (sphere[i]->center);
+		coliderPosTest_[i]->wtf.position = (sphere[i]->center);
 		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
-		coliderPosTest_[i]->Update();*/
+		coliderPosTest_[i]->Update();
 	}
 
 }
@@ -75,6 +76,11 @@ void Player::Update(Input* input, bool isTitle) {
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
+
+		coliderPosTest_[i]->wtf.position = (sphere[i]->center);
+		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
+		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
+		coliderPosTest_[i]->Update();
 	}
 
 	// クエリーコールバッククラス
@@ -122,19 +128,23 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 
 	object_->Update();
+	ImGui::Begin("PlyPOS");
+	ImGui::Text("Hit:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
+	ImGui::Text("Hit:%f,%f,%f", object_->wtf.scale.x, object_->wtf.scale.y, object_->wtf.scale.z);
+	ImGui::End();
 }
 
 ///
 void Player::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
-	object_->Draw();
+	//object_->Draw();
 	if (!nowTitle) {
 		reticle->Draw();
 	}
-	//for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-	//	
-	//	//coliderPosTest_[i]->Draw();
-	//}
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		
+		coliderPosTest_[i]->Draw();
+	}
 	Object3d::PostDraw();
 	if (!nowTitle) {
 		weapon_[0]->Draw(dxCommon);

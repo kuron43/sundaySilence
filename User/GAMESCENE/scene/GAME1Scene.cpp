@@ -61,7 +61,7 @@ void GAME1Scene::Initialize() {
 				sca = objectData.scaling;
 				newWall->object_->wtf.scale = sca;
 				newWall->object_->SetColor(Vector4(0.5f, 0.3f, 0.3f, 0.3f));
-				newWall->object_->wtf.UpdateMat();
+				newWall->object_->Update();
 				newWall->CollideInitialize();
 				_objects->walls.emplace_back(newWall);
 			}
@@ -72,12 +72,20 @@ void GAME1Scene::Initialize() {
 }
 
 void GAME1Scene::Update(Input* input) {
+
 	_controller->_camera->SetEye(camposEye);
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
 	_objects->player->Update(input);
+	int num = 0;
 	for (Wall* walls : _objects->walls) {
 		walls->Update();
+		ImGui::Begin("WallNum");
+		ImGui::Text("pos%d:%f,%f,%f", num, walls->GetObb().GetPos_().x, walls->GetObb().GetPos_().y, walls->GetObb().GetPos_().z);
+		ImGui::Text("Len%d:%f,%f,%f", num, walls->GetObb().GetLength(0), walls->GetObb().GetLength(1), walls->GetObb().GetLength(2));
+		ImGui::Text("Dir%d:%f,%f,%f", num, walls->GetObb().GetLength(0), walls->GetObb().GetLength(1), walls->GetObb().GetLength(2));
+		ImGui::End();
+		num++;
 	}
 
 	for (Enemy* enemy : _objects->enemys) {

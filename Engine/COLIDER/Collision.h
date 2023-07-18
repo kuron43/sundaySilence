@@ -34,6 +34,7 @@ private:
 	// 3次元OBBと点の最短距離算出関数
 	static float LenOBBToPoint(OBB& obb, Vector3& p);
 	// http://marupeke296.com/COL_3D_No12_OBBvsPoint.html
+	
 
 	// 分離軸に投影された軸成分から投影線分長を算出
 	static float LenSegOnSeparateAxis(Vector3& Sep, Vector3& e1, Vector3& e2, Vector3& e3)

@@ -1,4 +1,5 @@
 #include "Collision.h"
+#include "imgui.h"
 using namespace DirectX;
 
 bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, Vector3* inter, Vector3* reject)
@@ -306,17 +307,17 @@ bool Collision::CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* dis
 float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
 {
 	Vector3 Vec(0, 0, 0);   // 最終的に長さを求めるベクトル
-	float result = 0;
+	//float result = 0;
 
 	// 各軸についてはみ出た部分のベクトルを算出
 	for (int i = 0; i < 3; i++)
 	{
-		float L = obb.m_fLength[i];
+		float L = obb.m_fLength[i]/2;
 		// L=0は計算できない
 		if (L <= 0) {
 			continue;
 		}
-		float s = Vector3(p - obb.m_Pos).dot(obb.m_NormaDirect[i]) / L;
+		float s = obb.m_NormaDirect[i].dot(p - obb.m_Pos) / L;
 
 		// sの値から、はみ出した部分があればそのベクトルを加算
 		s = (float)fabs(s);
@@ -324,9 +325,9 @@ float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
 			Vec += (1 - s) * L * obb.m_NormaDirect[i];   // はみ出した部分のベクトル算出
 		}
 	}
-	result = Vec.length();
+	//result = Vec.length();
 
-	return result;   // 長さを出力
+	return Vec.length();   // 長さを出力
 }
 
 bool Collision::CheckOBB2OBB(const OBB& obb1, const OBB& obb2, Vector3* inter, Vector3* reject) {
@@ -490,9 +491,15 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 	OBB obb_ = obb;
 	Vector3 spherePos = sphere.center;
 	length = LenOBBToPoint(obb_, spherePos);
-	if ((float)fabs(length) <= sphere.radius_) {
+	if ((float)fabs(length) >= sphere.radius_) {
+		ImGui::Begin("lenMath");
+		ImGui::Text("lenMathFalse:%f", length);
+		ImGui::End();
 		return false;
 	}
+	ImGui::Begin("lenMath");
+	ImGui::Text("lenMathTrue:%f",length);
+	ImGui::End();
 	//疑似交点
 	if (inter)
 	{
@@ -500,5 +507,5 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 		//*inter = 
 	}
 
-	return true;
+  	return true;
 }

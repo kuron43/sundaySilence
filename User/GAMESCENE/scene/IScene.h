@@ -6,6 +6,8 @@
 #include "Input.h"
 #include "Camera.h"
 
+#include "imgui.h"
+
 class SceneManager;
 
 // シーン管理のための基底クラス

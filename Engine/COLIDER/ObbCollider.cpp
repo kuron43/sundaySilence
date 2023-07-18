@@ -16,6 +16,7 @@ void ObbCollider::CreateOBB(Object3d* obj) {
 
 	Matrix4 matRot;
 	rotate = obj->wtf.rotation;
+	obj3d_ = obj;
 
 	//最大値、最小値の初期値設定
 	Vector3 max = Vector3(-10000.0f, -10000.0f, -10000.0f);
@@ -59,11 +60,11 @@ void ObbCollider::CreateOBB(Object3d* obj) {
 
 void ObbCollider::Update()
 {
-	if (object3d_)
+	if (obj3d_)
 	{
 		//ワールド行列から座標を抽出
-		const Matrix4& matWorld = object3d_->wtf.matWorld;
-		const Matrix4& rotMat = Affin::matRotation(object3d_->wtf.rotation);
+		const Matrix4& matWorld = obj3d_->wtf.matWorld;
+		const Matrix4& rotMat = Affin::matRotation(obj3d_->wtf.rotation);
 
 		//球のメンバ変数を更新
 		m_Pos =

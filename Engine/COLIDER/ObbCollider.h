@@ -45,6 +45,7 @@ public:
 	}
 
 private:
+	Object3d* obj3d_;
 	Vector3 rotate;
 
 	Vector3 m_Pos;              // 位置

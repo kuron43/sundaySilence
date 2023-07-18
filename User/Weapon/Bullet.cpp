@@ -82,10 +82,10 @@ void Bullet::Update(float speed)
 			isDead = true;
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}
-		/*if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
+		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
 			isDead = true;
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-		}*/
+		}
 		if (isDead == true) {
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}
