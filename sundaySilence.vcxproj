@@ -70,6 +70,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -95,6 +96,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libfbxsdk-mt.lib;libxml2-mt.lib;zlib-mt.lib;%(AdditionalDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -125,6 +127,7 @@
     <ClCompile Include="Engine\COLIDER\CollisionManager.cpp" />
     <ClCompile Include="Engine\COLIDER\CollisionPrimitive.cpp" />
     <ClCompile Include="Engine\COLIDER\MeshCollider.cpp" />
+    <ClCompile Include="Engine\COLIDER\ObbCollider.cpp" />
     <ClCompile Include="Engine\COLIDER\QueryCallback.cpp" />
     <ClCompile Include="Engine\COLIDER\SphereCollider.cpp" />
     <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp" />
@@ -157,10 +160,12 @@
     <ClCompile Include="User\Human\Boss.cpp" />
     <ClCompile Include="User\Human\Enemy.cpp" />
     <ClCompile Include="User\Objects\Objects.cpp" />
+    <ClCompile Include="User\Objects\Wall.cpp" />
     <ClCompile Include="User\Weapon\Assault.cpp" />
     <ClCompile Include="User\Weapon\Bullet.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
     <ClCompile Include="User\Human\Player.cpp" />
+    <ClCompile Include="User\Weapon\BulletManager.cpp" />
     <ClCompile Include="User\Weapon\Shotgun.cpp" />
     <ClCompile Include="User\Weapon\Weapon.cpp" />
   </ItemGroup>
@@ -192,6 +197,7 @@
     <ClInclude Include="Engine\COLIDER\CollisionPrimitive.h" />
     <ClInclude Include="Engine\COLIDER\CollisionTypes.h" />
     <ClInclude Include="Engine\COLIDER\MeshCollider.h" />
+    <ClInclude Include="Engine\COLIDER\ObbCollider.h" />
     <ClInclude Include="Engine\COLIDER\QueryCallback.h" />
     <ClInclude Include="Engine\COLIDER\RaycastHit.h" />
     <ClInclude Include="Engine\COLIDER\SphereCollider.h" />
@@ -226,10 +232,12 @@
     <ClInclude Include="User\Human\Boss.h" />
     <ClInclude Include="User\Human\Enemy.h" />
     <ClInclude Include="User\Objects\Objects.h" />
+    <ClInclude Include="User\Objects\Wall.h" />
     <ClInclude Include="User\Weapon\Assault.h" />
     <ClInclude Include="User\Weapon\Bullet.h" />
     <ClInclude Include="User\Human\Human.h" />
     <ClInclude Include="User\Human\Player.h" />
+    <ClInclude Include="User\Weapon\BulletManager.h" />
     <ClInclude Include="User\Weapon\Shotgun.h" />
     <ClInclude Include="User\Weapon\Weapon.h" />
     <ClInclude Include="User\Weapon\Weaponlist.h" />

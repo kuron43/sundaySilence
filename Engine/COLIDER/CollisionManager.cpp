@@ -3,7 +3,7 @@
 #include "MeshCollider.h"
 #include "Collision.h"
 #include "Vector3.h"
-//#include"MathFunc.h"
+#include "imgui.h"
 
 CollisionManager* CollisionManager::GetInstance()
 {
@@ -41,49 +41,76 @@ void CollisionManager::CheckAllCollisions()
 				Sphere* sphereB = dynamic_cast<Sphere*>(colB);
 				Vector3 inter;
 
-				if (Collision::CheckSphere2Sphere(*sphereA , *sphereB , &inter))
+				if (Collision::CheckSphere2Sphere(*sphereA, *sphereB, &inter))
 				{
- 					colA->OnCllision(CollisionInfo(colB->GetObject3d() , colB , inter));
-					colB->OnCllision(CollisionInfo(colA->GetObject3d() , colA , inter));
+					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
+					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
 				}
 
 			}
+			if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&
+				colB->GetShapeType() == COLLISIONSHAPE_OBB)
+			{
+				Sphere* sphere = dynamic_cast<Sphere*>(colA);
+				OBB* obb = dynamic_cast<OBB*>(colB);
+
+				ImGui::Begin("Sphere2Obb");
+				ImGui::Text("T pos:A,%f,%f,%f", obb->m_Pos.x, obb->m_Pos.y, obb->m_Pos.z);
+				ImGui::Text("T pos:B,%f,%f,%f\n", sphere->center.x, sphere->center.y, sphere->center.z);
+				ImGui::End();
+
+				Vector3 inter;
+				if (Collision::CheckOBB2Sphere(*obb, *sphere, &inter)) {
+					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
+					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
+				}
+
+			}
+
 			else if (colA->GetShapeType() == COLLISIONSHAPE_MESH &&
-					 colB->GetShapeType() == COLLISIONSHAPE_SPHERE)
+				colB->GetShapeType() == COLLISIONSHAPE_SPHERE)
 			{
 				MeshCollider* meshCollider = dynamic_cast<MeshCollider*>(colA);
 				Sphere* sphere = dynamic_cast<Sphere*>(colB);
 				Vector3 inter;
 
-				if (meshCollider->CheckCollisionSphere(*sphere , &inter))
+				if (meshCollider->CheckCollisionSphere(*sphere, &inter))
 				{
-					colA->OnCllision(CollisionInfo(colB->GetObject3d() , colB , inter));
-					colB->OnCllision(CollisionInfo(colA->GetObject3d() , colA , inter));
+					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
+					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
 				}
-
 			}
 
 			else if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&
-					 colB->GetShapeType() == COLLISIONSHAPE_MESH)
+				colB->GetShapeType() == COLLISIONSHAPE_MESH)
 			{
 				Sphere* sphere = dynamic_cast<Sphere*>(colA);
 				MeshCollider* meshCollider = dynamic_cast<MeshCollider*>(colB);
 				Vector3 inter;
-
-				if (meshCollider->CheckCollisionSphere(*sphere , &inter))
+				if (meshCollider->CheckCollisionSphere(*sphere, &inter))
 				{
-					colA->OnCllision(CollisionInfo(colB->GetObject3d() , colB , inter));
-					colB->OnCllision(CollisionInfo(colA->GetObject3d() , colA , inter));
+					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
+					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
+				}
+			}
+
+			if (colA->GetShapeType() == COLLISIONSHAPE_OBB &&
+				colB->GetShapeType() == COLLISIONSHAPE_OBB)
+			{
+				OBB* obbA = dynamic_cast<OBB*>(colA);
+				OBB* obbB = dynamic_cast<OBB*>(colB);
+				Vector3 inter;
+				if (Collision::CheckOBB2OBB(*obbA, *obbB)) {
+					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
+					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
 				}
 
 			}
-
-
 		}
 	}
 }
 
-bool CollisionManager::Raycast(const Ray& ray , unsigned short attribute , RaycastHit* hitInfo , float maxDistance)
+bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, RaycastHit* hitInfo, float maxDistance)
 {
 	bool result = false;
 	//走査用のイテレータ
@@ -106,7 +133,7 @@ bool CollisionManager::Raycast(const Ray& ray , unsigned short attribute , Rayca
 			float tempDistance;
 			Vector3 tempInter;
 			//当たらなければ除外
-			if (!Collision::CheckRay2Sphere(ray , *sphere , &tempDistance , &tempInter))
+			if (!Collision::CheckRay2Sphere(ray, *sphere, &tempDistance, &tempInter))
 			{
 				continue;
 			}
@@ -131,7 +158,7 @@ bool CollisionManager::Raycast(const Ray& ray , unsigned short attribute , Rayca
 
 			float tempDistance;
 			Vector3 tempInter;
-			if (!meshCollider->CheckCollisionRay(ray , &tempDistance , &tempInter))
+			if (!meshCollider->CheckCollisionRay(ray, &tempDistance, &tempInter))
 			{
 				continue;
 			}
@@ -159,9 +186,9 @@ bool CollisionManager::Raycast(const Ray& ray , unsigned short attribute , Rayca
 	return result;
 }
 
-bool CollisionManager::Raycast(const Ray& ray , RaycastHit* hitInfo , float maxDistance)
+bool CollisionManager::Raycast(const Ray& ray, RaycastHit* hitInfo, float maxDistance)
 {
-	return Raycast(ray , 0xffff , hitInfo , maxDistance);
+	return Raycast(ray, 0xffff, hitInfo, maxDistance);
 }
 
 void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback, unsigned short attribute) {

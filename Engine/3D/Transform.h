@@ -10,6 +10,7 @@ public:
 	~Transform();
 	void Initialize();
 	void UpdateMat();
+	Matrix4 GetRotMat() { return rotMat; };
 public:
 	// ローカルスケール
 	Vector3 scale = { 1,1,1 };
@@ -20,4 +21,6 @@ public:
 	// ローカルワールド変換行列
 	Matrix4 matWorld = Affin::matUnit();
 
+private:
+	Matrix4 rotMat = Affin::matUnit();
 };

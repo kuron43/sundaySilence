@@ -37,3 +37,12 @@ struct Ray {
 	//方向
 	Vector3 dir;
 };
+
+struct OBB
+{
+public:
+	Vector3 m_Pos;              // 位置
+	Vector3 m_NormaDirect[3];   // 方向ベクトル
+	float m_fLength[3];             // 各軸方向の長さ
+};
+//	http://marupeke296.com/COL_3D_No13_OBBvsOBB.html

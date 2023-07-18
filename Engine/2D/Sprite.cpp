@@ -9,7 +9,7 @@
 //	bool flipX,
 //	bool flipY) {
 //	size_ = size;
-//	position = pos;
+//	m_Pos = pos;
 //	color = color_;
 //	anchorPoint = anchorP;
 //	//テクスチャ番号

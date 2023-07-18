@@ -49,14 +49,14 @@ public:
 
 	//コライダー
 public:
-	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
-	std::vector<SphereCollider*> GetSphere() { return sphere; }
+	void SetSphere(SphereCollider* sphere_) { sphere = sphere_; }
+	SphereCollider* GetSphere() { return sphere; }
 private:
-	int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	//int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
 	//std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
-	std::vector<SphereCollider*> sphere;
+	SphereCollider* sphere;
 	//Ray* ray;
-	std::vector<Vector3> spherePos;
-	std::vector<Object3d*> coliderPosTest_;
+	Vector3 spherePos;
+	Object3d* coliderPosTest_;
 };
 

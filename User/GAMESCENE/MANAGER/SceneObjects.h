@@ -15,6 +15,8 @@
 #include "Enemy.h"
 #include "Boss.h"
 
+#include "Wall.h"
+
 // ゲーム使用のオブジェクト一括宣言クラス
 class SceneObjects
 {
@@ -49,7 +51,7 @@ public:
 	std::vector<Enemy*> enemys;
 
 	Model* wallMD;
-	std::vector<Object3d*> walls;
+	std::vector<Wall*> walls;
 
 private:
 	float ambientColor0[3] = { 1,1,1 };
