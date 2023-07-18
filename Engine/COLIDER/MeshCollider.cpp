@@ -10,7 +10,7 @@ void MeshCollider::ConstructTriangles(Model* model)
 
 	//インデックス配列を取得
 	const std::vector<unsigned short>& indices = model->GetInidices();
-	const std::vector<Model::VertexPosNormalUv>& vertices = model->GetVertices();
+	const std::vector<VertexPosNormalUv>& vertices = model->GetVertices();
 
 	int start = 0;
 

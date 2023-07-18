@@ -1,7 +1,7 @@
 #include "Input.h"
 #include <cassert>
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib, "dxguid.lib")
+//#pragma comment(lib, "dinput8.lib")
+//#pragma comment(lib, "dxguid.lib")
 
 Input::Input() {
 

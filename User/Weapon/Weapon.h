@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Transform.h"
 #include "Bullet.h"
+#include "BulletManager.h"
 
 class Weapon
 {

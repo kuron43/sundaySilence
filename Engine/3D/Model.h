@@ -13,6 +13,13 @@
 #include "Affin.h"
 
 
+// 頂点データ構造体
+	struct VertexPosNormalUv
+	{
+		Vector3 pos; // xyz座標
+		Vector3 normal; // 法線ベクトル
+		Vector2 uv;  // uv座標
+	};
 class Model
 {
 private: // エイリアス
@@ -21,13 +28,6 @@ private: // エイリアス
 	// DirectX::を省略
 
 public: // サブクラス
-// 頂点データ構造体
-	struct VertexPosNormalUv
-	{
-		Vector3 pos; // xyz座標
-		Vector3 normal; // 法線ベクトル
-		Vector2 uv;  // uv座標
-	};
 
 	struct ConstBufferDataB1 {
 		Vector3 ambient;	//アンビエント係数

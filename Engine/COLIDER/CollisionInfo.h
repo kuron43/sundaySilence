@@ -19,7 +19,7 @@ public:
 	Object3d* object_ = nullptr;
 	//衝突相手のコライダー
 	BaseCollider* collider_ = nullptr;
-	//衝突店
+	//衝突ten
 	Vector3 inter_;
 
 };

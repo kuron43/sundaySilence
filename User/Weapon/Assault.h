@@ -6,7 +6,7 @@ class Assault :
     public Weapon
 {
 private:
-	std::list<std::unique_ptr<Bullet>> bullets_;
+	std::list<Bullet*> bullets_;
 	Model* model_;
 	bool active_ = false;
 	const int WeaponNum = 1;

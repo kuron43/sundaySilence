@@ -23,7 +23,7 @@ public:
 	//コライダーの追加
 	inline void AddCollider(BaseCollider* collider)
 	{
-		colliders.push_front(collider);
+		colliders.emplace_front(collider);
 	}
 
 	//コライダーの削除

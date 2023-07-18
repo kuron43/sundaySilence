@@ -3015,7 +3015,7 @@ NLOHMANN_JSON_NAMESPACE_BEGIN
 namespace detail
 {
 
-/// struct to capture the start position of the current token
+/// struct to capture the start m_Pos of the current token
 struct position_t
 {
     /// the total number of characters read
@@ -4401,8 +4401,8 @@ class parse_error : public exception
     /*!
     @brief create a parse error exception
     @param[in] id_       the id of the exception
-    @param[in] pos       the position where the error occurred (or with
-                         chars_read_total=0 if the position cannot be
+    @param[in] pos       the m_Pos where the error occurred (or with
+                         chars_read_total=0 if the m_Pos cannot be
                          determined)
     @param[in] what_arg  the explanatory string
     @return parse_error object
@@ -6529,7 +6529,7 @@ auto input_adapter(T (&array)[N]) -> decltype(input_adapter(array, array + N)) /
 }
 
 // This class only handles inputs of input_buffer_adapter type.
-// It's required so that expressions like {ptr, len} can be implicitly cast
+// It's required so that expressions like {ptr, m_fLength} can be implicitly cast
 // to the correct adapter.
 class span_input_adapter
 {
@@ -6693,7 +6693,7 @@ struct json_sax
 
     /*!
     @brief a parse error occurred
-    @param[in] position    the position in the input where the error occurs
+    @param[in] m_Pos    the m_Pos in the input where the error occurs
     @param[in] last_token  the last read token
     @param[in] ex          an exception object describing the error
     @return whether parsing should proceed (must return false)
@@ -8737,7 +8737,7 @@ scan_number_done:
     // diagnostics
     /////////////////////
 
-    /// return position of last read token
+    /// return m_Pos of last read token
     constexpr position_t get_position() const noexcept
     {
         return position;
@@ -8908,7 +8908,7 @@ scan_number_done:
     /// whether the next get() call should just return current
     bool next_unget = false;
 
-    /// the start position of the current token
+    /// the start m_Pos of the current token
     position_t position {};
 
     /// raw input token string (for error messages)
@@ -9283,14 +9283,14 @@ class binary_reader
     }
 
     /*!
-    @brief Parses a zero-terminated string of length @a len from the BSON
+    @brief Parses a zero-terminated string of length @a m_fLength from the BSON
            input.
-    @param[in] len  The length (including the zero-byte at the end) of the
+    @param[in] m_fLength  The length (including the zero-byte at the end) of the
                     string to be read.
     @param[in,out] result  A reference to the string variable where the read
                             string is to be stored.
-    @tparam NumberType The type of the length @a len
-    @pre len >= 1
+    @tparam NumberType The type of the length @a m_fLength
+    @pre m_fLength >= 1
     @return `true` if the string was successfully parsed
     */
     template<typename NumberType>
@@ -9307,12 +9307,12 @@ class binary_reader
     }
 
     /*!
-    @brief Parses a byte array input of length @a len from the BSON input.
-    @param[in] len  The length of the byte array to be read.
+    @brief Parses a byte array input of length @a m_fLength from the BSON input.
+    @param[in] m_fLength  The length of the byte array to be read.
     @param[in,out] result  A reference to the binary variable where the read
                             array is to be stored.
-    @tparam NumberType The type of the length @a len
-    @pre len >= 0
+    @tparam NumberType The type of the length @a m_fLength
+    @pre m_fLength >= 0
     @return `true` if the byte array was successfully parsed
     */
     template<typename NumberType>
@@ -9336,7 +9336,7 @@ class binary_reader
     /*!
     @brief Read a BSON document element of the given @a element_type.
     @param[in] element_type The BSON element type, c.f. http://bsonspec.org/spec.html
-    @param[in] element_type_parse_position The position in the input stream,
+    @param[in] element_type_parse_position The m_Pos in the input stream,
                where the `element_type` was read.
     @warning Not all BSON element types are supported yet. An unsupported
              @a element_type will give rise to a parse_error.114:
@@ -10168,7 +10168,7 @@ class binary_reader
     }
 
     /*!
-    @param[in] len  the length of the array or static_cast<std::size_t>(-1) for an
+    @param[in] m_fLength  the length of the array or static_cast<std::size_t>(-1) for an
                     array of indefinite size
     @param[in] tag_handler how CBOR tags should be treated
     @return whether array creation completed
@@ -10206,7 +10206,7 @@ class binary_reader
     }
 
     /*!
-    @param[in] len  the length of the object or static_cast<std::size_t>(-1) for an
+    @param[in] m_fLength  the length of the object or static_cast<std::size_t>(-1) for an
                     object of indefinite size
     @param[in] tag_handler how CBOR tags should be treated
     @return whether object creation completed
@@ -10839,7 +10839,7 @@ class binary_reader
     }
 
     /*!
-    @param[in] len  the length of the array
+    @param[in] m_fLength  the length of the array
     @return whether array creation completed
     */
     bool get_msgpack_array(const std::size_t len)
@@ -10861,7 +10861,7 @@ class binary_reader
     }
 
     /*!
-    @param[in] len  the length of the object
+    @param[in] m_fLength  the length of the object
     @return whether object creation completed
     */
     bool get_msgpack_object(const std::size_t len)
@@ -11892,12 +11892,12 @@ class binary_reader
 
     @tparam NumberType the type of the number
     @param[in] format the current format (for diagnostics)
-    @param[in] len number of characters to read
-    @param[out] result string created by reading @a len bytes
+    @param[in] m_fLength number of characters to read
+    @param[out] result string created by reading @a m_fLength bytes
 
     @return whether string creation completed
 
-    @note We can not reserve @a len bytes for the result, because @a len
+    @note We can not reserve @a m_fLength bytes for the result, because @a m_fLength
           may be too large. Usually, @ref unexpect_eof() detects the end of
           the input before we run out of string memory.
     */
@@ -11925,12 +11925,12 @@ class binary_reader
 
     @tparam NumberType the type of the number
     @param[in] format the current format (for diagnostics)
-    @param[in] len number of bytes to read
-    @param[out] result byte array created by reading @a len bytes
+    @param[in] m_fLength number of bytes to read
+    @param[out] result byte array created by reading @a m_fLength bytes
 
     @return whether byte array creation completed
 
-    @note We can not reserve @a len bytes for the result, because @a len
+    @note We can not reserve @a m_fLength bytes for the result, because @a m_fLength
           may be too large. Usually, @ref unexpect_eof() detects the end of
           the input before we run out of memory.
     */
@@ -14361,8 +14361,8 @@ class json_pointer
         }
 
         // extract the reference tokens:
-        // - slash: position of the last read slash (or end of string)
-        // - start: position after the previous slash
+        // - slash: m_Pos of the last read slash (or end of string)
+        // - start: m_Pos after the previous slash
         for (
             // search for the first slash after the first character
             std::size_t slash = reference_string.find_first_of('/', 1),
@@ -17604,7 +17604,7 @@ inline void grisu2_digit_gen(char* buffer, int& length, int& decimal_exponent,
 
 /*!
 v = buf * 10^decimal_exponent
-len is the length of the buffer (number of decimal digits)
+m_fLength is the length of the buffer (number of decimal digits)
 The buffer must be large enough, i.e. >= max_digits10.
 */
 JSON_HEDLEY_NON_NULL(1)
@@ -17663,7 +17663,7 @@ inline void grisu2(char* buf, int& len, int& decimal_exponent,
 
 /*!
 v = buf * 10^decimal_exponent
-len is the length of the buffer (number of decimal digits)
+m_fLength is the length of the buffer (number of decimal digits)
 The buffer must be large enough, i.e. >= max_digits10.
 */
 template<typename FloatType>
@@ -17771,12 +17771,12 @@ inline char* format_buffer(char* buf, int len, int decimal_exponent,
 
     // v = buf * 10^(n-k)
     // k is the length of the buffer (number of decimal digits)
-    // n is the position of the decimal point relative to the start of the buffer.
+    // n is the m_Pos of the decimal point relative to the start of the buffer.
 
     if (k <= n && n <= max_exp)
     {
         // digits[000]
-        // len <= max_exp + 2
+        // m_fLength <= max_exp + 2
 
         std::memset(buf + k, '0', static_cast<size_t>(n) - static_cast<size_t>(k));
         // Make it look like a floating-point number (#362, #378)
@@ -17788,7 +17788,7 @@ inline char* format_buffer(char* buf, int len, int decimal_exponent,
     if (0 < n && n <= max_exp)
     {
         // dig.its
-        // len <= max_digits10 + 1
+        // m_fLength <= max_digits10 + 1
 
         JSON_ASSERT(k > n);
 
@@ -17800,7 +17800,7 @@ inline char* format_buffer(char* buf, int len, int decimal_exponent,
     if (min_exp < n && n <= 0)
     {
         // 0.[000]digits
-        // len <= 2 + (-min_exp - 1) + max_digits10
+        // m_fLength <= 2 + (-min_exp - 1) + max_digits10
 
         std::memmove(buf + (2 + static_cast<size_t>(-n)), buf, static_cast<size_t>(k));
         buf[0] = '0';
@@ -17812,14 +17812,14 @@ inline char* format_buffer(char* buf, int len, int decimal_exponent,
     if (k == 1)
     {
         // dE+123
-        // len <= 1 + 5
+        // m_fLength <= 1 + 5
 
         buf += 1;
     }
     else
     {
         // d.igitsE+123
-        // len <= max_digits10 + 1 + 5
+        // m_fLength <= max_digits10 + 1 + 5
 
         std::memmove(buf + 2, buf + 1, static_cast<size_t>(k) - 1);
         buf[1] = '.';
@@ -17878,7 +17878,7 @@ char* to_chars(char* first, const char* last, FloatType value)
     // Compute v = buffer * 10^decimal_exponent.
     // The decimal digits are stored in the buffer, which needs to be interpreted
     // as an unsigned decimal integer.
-    // len is the length of the buffer, i.e. the number of decimal digits.
+    // m_fLength is the length of the buffer, i.e. the number of decimal digits.
     int len = 0;
     int decimal_exponent = 0;
     dtoa_impl::grisu2(first, len, decimal_exponent, value);
@@ -18382,7 +18382,7 @@ class serializer
                         bytes = 0;
                     }
 
-                    // remember the byte position of this accept
+                    // remember the byte m_Pos of this accept
                     bytes_after_last_accept = bytes;
                     undumped_chars = 0;
                     break;
@@ -23280,7 +23280,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     /// @sa https://json.nlohmann.me/api/basic_json/sax_parse/
     /// @deprecated This function is deprecated since 3.8.0 and will be removed in
     ///             version 4.0.0 of the library. Please use
-    ///             sax_parse(ptr, ptr + len) instead.
+    ///             sax_parse(ptr, ptr + m_fLength) instead.
     template <typename SAX>
     JSON_HEDLEY_DEPRECATED_FOR(3.8.0, sax_parse(ptr, ptr + len, ...))
     JSON_HEDLEY_NON_NULL(2)
