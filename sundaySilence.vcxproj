@@ -165,6 +165,7 @@
     <ClCompile Include="User\Weapon\Bullet.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
     <ClCompile Include="User\Human\Player.cpp" />
+    <ClCompile Include="User\Weapon\BulletManager.cpp" />
     <ClCompile Include="User\Weapon\Shotgun.cpp" />
     <ClCompile Include="User\Weapon\Weapon.cpp" />
   </ItemGroup>
@@ -236,6 +237,7 @@
     <ClInclude Include="User\Weapon\Bullet.h" />
     <ClInclude Include="User\Human\Human.h" />
     <ClInclude Include="User\Human\Player.h" />
+    <ClInclude Include="User\Weapon\BulletManager.h" />
     <ClInclude Include="User\Weapon\Shotgun.h" />
     <ClInclude Include="User\Weapon\Weapon.h" />
     <ClInclude Include="User\Weapon\Weaponlist.h" />

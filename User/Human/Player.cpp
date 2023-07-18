@@ -34,6 +34,7 @@ void Player::Initialize() {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
+		sphere[i]->SetObject3d(object_);
 		sphere[i]->SetBasisPos(&spherePos[i]);
 		sphere[i]->SetRadius(1.0f);
 		sphere[i]->Update();
@@ -59,9 +60,9 @@ void Player::Update(Input* input, bool isTitle) {
 	if (input->MouseButtonPush(0)) {
 		weapon_[0]->Shot(object_->wtf, reticle->wtf, PLAYER);
 	}
-	if (input->MouseButtonPush(1)) {
+	/*if (input->MouseButtonPush(1)) {
 		weapon_[0]->Shot(object_->wtf, reticle->wtf, ENEMY);
-	}
+	}*/
 	weapon_[0]->Update(input, isSlow);
 
 

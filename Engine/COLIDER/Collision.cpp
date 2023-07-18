@@ -12,6 +12,10 @@ bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB,
 
 	if (dist > sphereA.radius_ + sphereB.radius_)
 	{
+		//ImGui::Begin("Sphere2Sphere");
+		//ImGui::Text("F pos:A,%f,%f,%f", sphereA.center.x, sphereA.center.y, sphereA.center.z);
+		//ImGui::Text("F pos:B,%f,%f,%f\n", sphereB.center.x, sphereA.center.y, sphereA.center.z);
+		//ImGui::End();
 		return false;
 	}
 	*inter = sphereA.center + (sphereB.center - sphereA.center) / 2;
@@ -24,6 +28,10 @@ bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB,
 		*reject = normaVec;
 		*reject *= rejectLen;
 	}
+	//ImGui::Begin("Sphere2Sphere");
+	//ImGui::Text("T pos:A,%f,%f,%f", sphereA.center.x, sphereA.center.y, sphereA.center.z);
+	//ImGui::Text("T pos:B,%f,%f,%f\n", sphereB.center.x, sphereA.center.y, sphereA.center.z);
+	//ImGui::End();
 	return true;
 }
 
@@ -312,7 +320,8 @@ float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
 	// 各軸についてはみ出た部分のベクトルを算出
 	for (int i = 0; i < 3; i++)
 	{
-		float L = obb.m_fLength[i]/2;
+		//float L = obb.m_fLength[i]/2;
+		float L = obb.m_fLength[i];
 		// L=0は計算できない
 		if (L <= 0) {
 			continue;
@@ -484,28 +493,36 @@ bool Collision::CheckOBB2OBB(const OBB& obb1, const OBB& obb2, Vector3* inter, V
 }
 
 bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* inter, Vector3* reject) {
-	if (reject) {
-
-	}
 	float length;
+	float rejectLen = 0;
 	OBB obb_ = obb;
 	Vector3 spherePos = sphere.center;
+	//float sphereRad = sphere.radius_;
 	length = LenOBBToPoint(obb_, spherePos);
 	if ((float)fabs(length) >= sphere.radius_) {
-		ImGui::Begin("lenMath");
-		ImGui::Text("lenMathFalse:%f", length);
-		ImGui::End();
+		rejectLen = length;
+		//ImGui::Begin("lenMath");
+		//ImGui::Text("lenMathTrue:%f,%f", length, sphereRad);
+		//ImGui::End();
 		return false;
 	}
-	ImGui::Begin("lenMath");
-	ImGui::Text("lenMathTrue:%f",length);
-	ImGui::End();
+
 	//疑似交点
 	if (inter)
 	{
 		//平面上の最近接点を疑似交点とする
-		//*inter = 
+		*inter = spherePos ;
 	}
+	if (reject) {
 
+	}
+	//ImGui::Begin("lenMath");
+	//ImGui::Text("lenMathTrue:%f,%f", length, sphereRad);
+	//ImGui::End();
+
+	ImGui::Begin("Sphere2Obb2");
+	ImGui::Text("T pos:A,%f,%f,%f", obb.m_Pos.x, obb.m_Pos.y, obb.m_Pos.z);
+	ImGui::Text("T pos:B,%f,%f,%f\n", sphere.center.x, sphere.center.y, sphere.center.z);
+	ImGui::End();
   	return true;
 }

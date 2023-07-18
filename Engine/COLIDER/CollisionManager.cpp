@@ -3,7 +3,7 @@
 #include "MeshCollider.h"
 #include "Collision.h"
 #include "Vector3.h"
-//#include"MathFunc.h"
+#include "imgui.h"
 
 CollisionManager* CollisionManager::GetInstance()
 {
@@ -48,6 +48,25 @@ void CollisionManager::CheckAllCollisions()
 				}
 
 			}
+			if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&
+				colB->GetShapeType() == COLLISIONSHAPE_OBB)
+			{
+				Sphere* sphere = dynamic_cast<Sphere*>(colA);
+				OBB* obb = dynamic_cast<OBB*>(colB);
+
+				ImGui::Begin("Sphere2Obb");
+				ImGui::Text("T pos:A,%f,%f,%f", obb->m_Pos.x, obb->m_Pos.y, obb->m_Pos.z);
+				ImGui::Text("T pos:B,%f,%f,%f\n", sphere->center.x, sphere->center.y, sphere->center.z);
+				ImGui::End();
+
+				Vector3 inter;
+				if (Collision::CheckOBB2Sphere(*obb, *sphere, &inter)) {
+					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
+					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
+				}
+
+			}
+
 			else if (colA->GetShapeType() == COLLISIONSHAPE_MESH &&
 				colB->GetShapeType() == COLLISIONSHAPE_SPHERE)
 			{
@@ -61,6 +80,7 @@ void CollisionManager::CheckAllCollisions()
 					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
 				}
 			}
+
 			else if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&
 				colB->GetShapeType() == COLLISIONSHAPE_MESH)
 			{
@@ -72,8 +92,8 @@ void CollisionManager::CheckAllCollisions()
 					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
 					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
 				}
-
 			}
+
 			if (colA->GetShapeType() == COLLISIONSHAPE_OBB &&
 				colB->GetShapeType() == COLLISIONSHAPE_OBB)
 			{
@@ -86,20 +106,6 @@ void CollisionManager::CheckAllCollisions()
 				}
 
 			}
-			else if (colA->GetShapeType() == COLLISIONSHAPE_OBB &&
-				colB->GetShapeType() == COLLISIONSHAPE_SPHERE)
-			{
-				OBB* obbA = dynamic_cast<OBB*>(colA);
-				Sphere* sphere = dynamic_cast<Sphere*>(colB);
-
-				Vector3 inter;
-				if (Collision::CheckOBB2Sphere(*obbA, *sphere)) {
-					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
-					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
-				}
-
-			}
-
 		}
 	}
 }

@@ -41,6 +41,7 @@ void Enemy::Initialize() {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
+		sphere[i]->SetObject3d(object_);
 		sphere[i]->SetBasisPos(&spherePos[i]);
 		sphere[i]->SetRadius(1.0f);
 		sphere[i]->Update();
@@ -63,10 +64,10 @@ void Enemy::Update(Input* input, bool isTitle) {
 
 	object_->Update();
 	reticle->Update();
-	if (input->KeyboardPush(DIK_P)) {
+
+	if (input->KeyboardPush(DIK_P) && isDead == false) {
 		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
-
 	weapon_->Update(input, isSlow);
 
 	FrontFace();
@@ -120,13 +121,15 @@ void Enemy::ColiderUpdate() {
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			isDead = true;
-			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}
 	}
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
-		//coliderPosTest_[i]->Update();
+		if (isDead) {
+			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+			delete sphere[i];
+		}
 	}
 }

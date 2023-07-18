@@ -9,6 +9,7 @@
 #include "Affin.h"
 #include "Camera.h"
 #include "CollisionManager.h"
+#include "BulletManager.h"
 
 #include "JsonLoader.h"
 
@@ -68,6 +69,7 @@ private: // メンバ変数 (固定)
 	std::vector<Object3d*> JsonObjects;
 
 	CollisionManager* collisionManager_ = nullptr;
+	BulletManager* bulletManager_ = nullptr;
 
 
 private:	//メンバ変数

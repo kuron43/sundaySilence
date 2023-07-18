@@ -32,7 +32,6 @@ void SceneObjects::Initialize() {
 	}
 	{
 		wallMD = Model::LoadFromOBJ("wall");
-
 	}
 
 

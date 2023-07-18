@@ -22,7 +22,8 @@ public:
 	//更新
 	void UpdateObb(Object3d& obj);
 public:
-	void CreateOBB(Object3d* obj);
+	//void CreateOBB(Object3d* obj);
+	void CreateOBB(std::vector<VertexPosNormalUv> vertices, Transform* wtfP);
 
 	// 指定軸番号の方向ベクトルを取得
 	Vector3 GetDirect(int elem) {
@@ -45,7 +46,7 @@ public:
 	}
 
 private:
-	Object3d* obj3d_;
+	Transform* wtf_;
 	Vector3 rotate;
 
 	Vector3 m_Pos;              // 位置

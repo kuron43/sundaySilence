@@ -80,18 +80,15 @@ void GAME1Scene::Update(Input* input) {
 	int num = 0;
 	for (Wall* walls : _objects->walls) {
 		walls->Update();
-		ImGui::Begin("WallNum");
-		ImGui::Text("pos%d:%f,%f,%f", num, walls->GetObb().GetPos_().x, walls->GetObb().GetPos_().y, walls->GetObb().GetPos_().z);
-		ImGui::Text("Len%d:%f,%f,%f", num, walls->GetObb().GetLength(0), walls->GetObb().GetLength(1), walls->GetObb().GetLength(2));
-		ImGui::Text("Dir%d:%f,%f,%f", num, walls->GetObb().GetLength(0), walls->GetObb().GetLength(1), walls->GetObb().GetLength(2));
-		ImGui::End();
 		num++;
 	}
 
+	BulletManager::GetInstance()->Update();
 	for (Enemy* enemy : _objects->enemys) {
 		enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 		enemy->Update(input);
 	}
+
 
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
@@ -112,5 +109,11 @@ void GAME1Scene::Draw() {
 	for (Wall* walls : _objects->walls) {
 		walls->Draw(_controller->_dxCommon);
 	}
+
+	Object3d::PreDraw(_controller->_dxCommon->GetCommandList());
+
+	BulletManager::GetInstance()->Draw();
+
+	Object3d::PostDraw();
 
 }

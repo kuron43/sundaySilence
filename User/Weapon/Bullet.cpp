@@ -9,7 +9,7 @@ Bullet::Bullet() {
 Bullet::~Bullet() {
 
 }
-void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move,int team)
+void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, int team)
 {
 	//NULLチェック
 	assert(model);
@@ -32,35 +32,32 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move,int 
 	}
 
 	//当たり判定用
-	SPHERE_COLISSION_NUM = 1;
-	sphere.resize(SPHERE_COLISSION_NUM);
-	spherePos.resize(SPHERE_COLISSION_NUM);
-	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
-	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
-
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		sphere[i] = new SphereCollider;
-		CollisionManager::GetInstance()->AddCollider(sphere[i]);
-		spherePos[i] = Affin::GetWorldTrans(bulletObj_->wtf.matWorld);
-		sphere[i]->SetBasisPos(&spherePos[i]);
-		sphere[i]->SetRadius(1.0f);
-		if (team_ == PLAYER) { // 自機弾
-			sphere[i]->SetAttribute(COLLISION_ATTR_PLAYERBULLETS);
-		}
-		if (team_ == ENEMY) { // 敵弾
-			sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIEBULLETS);
-		}
-		sphere[i]->Update();
-		
-		
-		//test
-		/*coliderPosTest_[i] = Object3d::Create();
-		//coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
-		//coliderPosTest_[i]->wtf.m_Pos = (sphere[i]->center);
-		//coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
-		//coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
-		//coliderPosTest_[i]->Update();*/
+	sphere = new SphereCollider;
+	CollisionManager::GetInstance()->AddCollider(sphere);
+	spherePos = Affin::GetWorldTrans(bulletObj_->wtf.matWorld);
+	sphere->SetObject3d(bulletObj_);
+	//sphere->SetBasisPos(&spherePos[i]);
+	sphere->SetRadius(0.8f);
+	sphere->Update();
+	sphere->SetAttribute(COLLISION_ATTR_PLAYERBULLETS);
+	if (team_ == PLAYER) { // 自機弾
 	}
+	else if (team_ == ENEMY) { // 敵弾
+		sphere->SetAttribute(COLLISION_ATTR_ENEMIEBULLETS);
+	}
+	else {
+		sphere->SetAttribute(COLLISION_ATTR_UNKNOWN);
+	}
+
+
+	//test
+	coliderPosTest_ = Object3d::Create();
+	coliderPosTest_->SetModel(Model::LoadFromOBJ("sphere"));
+	coliderPosTest_->wtf.position = (sphere->center);
+	coliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
+	coliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+	coliderPosTest_->Update();
+
 }
 
 void Bullet::Update(float speed)
@@ -73,39 +70,34 @@ void Bullet::Update(float speed)
 	//行列の再計算
 	bulletObj_->Update();
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIES && team_ == PLAYER) {
+
+	if (sphere->GetIsHit() == true) {
+		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT && team_ == PLAYER ||
+			sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT && team_ == ENEMY) {
 			isDead = true;
-			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER && team_ == ENEMY) {
+		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIES && team_ == PLAYER) {
 			isDead = true;
-			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
+		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER && team_ == ENEMY) {
 			isDead = true;
-			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-		}
-		if (isDead == true) {
-			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		}
 	}
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		spherePos[i] = Affin::GetWorldTrans(bulletObj_->wtf.matWorld);
-		sphere[i]->Update();
+	sphere->Update();
+	if (isDead == true) {
+		CollisionManager::GetInstance()->RemoveCollider(sphere);
+		delete sphere;
 	}
+
 }
 
 void Bullet::Draw()
 {
 	//モデルの描画
 	bulletObj_->Draw();
+	//coliderPosTest_->Draw();
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-
-		//coliderPosTest_[i]->Draw();
-	}
 }
 
 void Bullet::OnColision() {

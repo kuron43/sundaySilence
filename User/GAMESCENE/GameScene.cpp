@@ -38,6 +38,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	input_ = input;
 
 	collisionManager_ = CollisionManager::GetInstance();
+	bulletManager_ = BulletManager::GetInstance();
 
 	cam_TF.Initialize();
 	cam_TF.position = { 100.0f, 100, -0.01f };
@@ -113,6 +114,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 void GameScene::Update() {
 
 	collisionManager_->CheckAllCollisions();
+	//bulletManager_->Update();
 
 	/*cam_TF.UpdateMat();
 	camera->SetEye(Affin::GetWorldTrans(cam_TF.matWorld));
@@ -132,6 +134,7 @@ void GameScene::Update() {
 /// 描画
 /// </summary>
 void GameScene::Draw() {
+
 	sceneManager->SceneDraw();
 	// Json
 	{

@@ -12,18 +12,18 @@ ObbCollider::ObbCollider(Vector3 offset, Vector3 length, Matrix4 rotMat)
 	//球形状をセット
 	shapeType = COLLISIONSHAPE_OBB;
 }
-void ObbCollider::CreateOBB(Object3d* obj) {
+void ObbCollider::CreateOBB(std::vector<VertexPosNormalUv> vertices,Transform* wtfP) {
 
 	Matrix4 matRot;
-	rotate = obj->wtf.rotation;
-	obj3d_ = obj;
+	wtf_ = wtfP;
+	rotate = wtf_->rotation;
 
 	//最大値、最小値の初期値設定
 	Vector3 max = Vector3(-10000.0f, -10000.0f, -10000.0f);
 	Vector3 min = Vector3(10000.0f, 10000.0f, 10000.0f);
 
 	//メッシュの頂点データ取得
-	std::vector<VertexPosNormalUv> vertexBuffer = obj->model_->GetVertices();
+	std::vector<VertexPosNormalUv> vertexBuffer = vertices;
 	//最大値、最小値取得ループ
 	for (size_t i = 0; i < vertexBuffer.size(); i++)
 	{
@@ -37,11 +37,11 @@ void ObbCollider::CreateOBB(Object3d* obj) {
 	}
 
 	//中心点取得
-	m_Pos = (min + max) * 0.5f + Affin::GetWorldTrans(obj->wtf.matWorld);
+	m_Pos = (min + max) * 0.5f + Affin::GetWorldTrans(wtf_->matWorld);
 	//m_Pos = obj->wtf.m_Pos = { 0,0,0 };
 
 	//方向ベクトル取得
-	Matrix4 rotMat = Affin::matRotation(obj->wtf.rotation);
+	Matrix4 rotMat = Affin::matRotation(wtf_->rotation);
 	m_NormaDirect[0] = Vector3(rotMat.m[0][0], rotMat.m[0][1], rotMat.m[0][2]);
 	m_NormaDirect[1] = Vector3(rotMat.m[1][0], rotMat.m[1][1], rotMat.m[1][2]);
 	m_NormaDirect[2] = Vector3(rotMat.m[2][0], rotMat.m[2][1], rotMat.m[2][2]);
@@ -51,20 +51,20 @@ void ObbCollider::CreateOBB(Object3d* obj) {
 	m_fLength[1] = fabsf(max.y - min.y) * 0.5f;
 	m_fLength[2] = fabsf(max.z - min.z) * 0.5f;
 
-	m_fLength[0] *= obj->wtf.scale.x;
-	m_fLength[1] *= obj->wtf.scale.y;
-	m_fLength[2] *= obj->wtf.scale.z;
+	m_fLength[0] *= wtf_->scale.x;
+	m_fLength[1] *= wtf_->scale.y;
+	m_fLength[2] *= wtf_->scale.z;
 	//球形状をセット
 	shapeType = COLLISIONSHAPE_OBB;
 }
 
 void ObbCollider::Update()
 {
-	if (obj3d_)
+	if (wtf_)
 	{
 		//ワールド行列から座標を抽出
-		const Matrix4& matWorld = obj3d_->wtf.matWorld;
-		const Matrix4& rotMat = Affin::matRotation(obj3d_->wtf.rotation);
+		const Matrix4& matWorld = wtf_->matWorld;
+		const Matrix4& rotMat = Affin::matRotation(wtf_->rotation);
 
 		//球のメンバ変数を更新
 		m_Pos =

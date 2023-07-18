@@ -22,8 +22,9 @@ void Wall::CollideInitialize() {
 	//obbPos_ = Affin::GetWorldTrans(object_->wtf.matWorld);
 	//obbLength_ = Vector3(10, 10, 10);
 	obb_ = new ObbCollider;
-	obb_->CreateOBB(object_);
+	obb_->CreateOBB(object_->model_->GetVertices(), &object_->wtf);
 	CollisionManager::GetInstance()->AddCollider(obb_);
+	obb_->SetObject3d(coliderPosTest_);
 	obb_->Update();
 	obb_->SetAttribute(COLLISION_ATTR_BARRIEROBJECT);
 	//test
@@ -51,7 +52,7 @@ void Wall::Update() {
 
 
 
-	if (obb_->GetIsHit() == true && obb_->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER) {
+	if (obb_->GetIsHit() == true && obb_->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
 		//CollisionManager::GetInstance()->RemoveCollider(obb_);
 		Vector3 a = { 0,0,0 };
 		ImGui::Begin("Wall");
