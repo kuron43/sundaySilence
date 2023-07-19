@@ -70,7 +70,6 @@ void Bullet::Update(float speed)
 	//行列の再計算
 	bulletObj_->Update();
 
-
 	if (sphere->GetIsHit() == true) {
 		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT && team_ == PLAYER ||
 			sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT && team_ == ENEMY) {
@@ -83,21 +82,27 @@ void Bullet::Update(float speed)
 			isDead = true;
 		}
 	}
-
-	sphere->Update();
 	if (isDead == true) {
-		CollisionManager::GetInstance()->RemoveCollider(sphere);
-		delete sphere;
+		assert(sphere);
 	}
 
+	sphere->Update();
+}
+
+void Bullet::DeadUpdate() {
+	if (isDead == true) {
+		CollisionManager::GetInstance()->RemoveCollider(sphere);
+		//delete sphere;
+	}
 }
 
 void Bullet::Draw()
 {
-	//モデルの描画
-	bulletObj_->Draw();
-	//coliderPosTest_->Draw();
-
+	if (!isDead) {
+		//モデルの描画
+		bulletObj_->Draw();
+		//coliderPosTest_->Draw();
+	}
 }
 
 void Bullet::OnColision() {

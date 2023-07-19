@@ -35,6 +35,7 @@ public:
 	void Initialize(Model* model,const Vector3& position, Vector3 move,int team);
 
 	void Update(float speed);
+	void DeadUpdate();
 
 	void Draw();
 
