@@ -28,6 +28,7 @@ public:
 
 	static void SetSpeed(float speed) { speed_ = speed; }
 	void Update();
+	void DeadUpdate();
 	void Draw();
 
 private:
