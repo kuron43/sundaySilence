@@ -19,6 +19,7 @@ private:
 	int coolTime = 0;
 	int mag = 0;
 	int roadingTime = 0;
+	bool goShot;
 
 
 public:

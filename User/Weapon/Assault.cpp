@@ -29,6 +29,7 @@ Assault* Assault::Create()
 /// 更新を行う
 bool Assault::Initialize() {
 	model_ = Model::LoadFromOBJ("cube");
+	goShot = true;
 	return true;
 }
 
@@ -46,22 +47,40 @@ void Assault::Update(Input* input, bool isSlow) {
 	{
 		speed_ = nomalSpeed;
 	}
-	//BulletManager::GetInstance()->SetSpeed(speed_);
-	for (Bullet* bullet : bullets_) {
-		bullet->Update(speed_);
+	// 
+	if (roadingTime <= 0) {
+		if (mag < 10) {
+			goShot = true;
+		}
+		if (mag >= 10) {
+			if (isSlow_ == true) {
+				roadingTime = 150;
+				goShot = false;
+			}
+			else {
+				roadingTime = 50;
+				goShot = false;
+			}
+			mag = 0;
+		}
 	}
-	//デスフラグの立った弾を削除
-	bullets_.remove_if([](Bullet* bullet) { return bullet->IsDead(); });
+	roadingTime--;
+	BulletManager::GetInstance()->SetSpeed(speed_);
+	//for (Bullet* bullet : bullets_) {
+	//	bullet->Update(speed_);
+	//}
+	////デスフラグの立った弾を削除
+	//bullets_.remove_if([](Bullet* bullet) { return bullet->IsDead(); });
 }
 
 /// 描画を行う
 void Assault::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
-	for (Bullet* bullet : bullets_) {
-		if (bullet->IsDead() == false) {
-			bullet->Draw();
-		}
-	}
+	//for (Bullet* bullet : bullets_) {
+	//	if (bullet->IsDead() == false) {
+	//		//bullet->Draw();
+	//	}
+	//}
 	Object3d::PostDraw();
 }
 
@@ -72,48 +91,34 @@ void Assault::Reset() {
 
 // 発射を行う
 void Assault::Shot(Transform& player, Transform& reticle,int team) {
-	if (roadingTime <= 0) {
-		if (mag < 10) {
-			if (coolTime <= 0) {
-				//弾を生成し、初期化
-				Bullet* newBullet = new Bullet();
-				Vector3 startPos, reticleVec, moveVec, velo;
-				startPos = Affin::GetWorldTrans(player.matWorld); // 発射座標
-				reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
-				velo = reticleVec - startPos;
-				velo.nomalize();
-				moveVec = velo * speed_;
-				moveVec.nomalize();
-				newBullet->Initialize(model_, startPos, moveVec,team);
+	
+	if (coolTime <= 0 && goShot == true) {
+		//弾を生成し、初期化
+		Bullet* newBullet = new Bullet();
+		Vector3 startPos, reticleVec, moveVec, velo;
+		startPos = Affin::GetWorldTrans(player.matWorld); // 発射座標
+		reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
+		velo = reticleVec - startPos;
+		velo.nomalize();
+		moveVec = velo * speed_;
+		moveVec.nomalize();
+		newBullet->Initialize(model_, startPos, moveVec, team);
 
-				//弾を登録
-				//BulletManager::GetInstance()->AddBullet(std::move(newBullet));
-				bullets_.push_back(std::move(newBullet));
-				//delete newBullet;
-				mag++;
+		//弾を登録
+		BulletManager::GetInstance()->AddBullet(std::move(newBullet));
+		//bullets_.push_back(std::move(newBullet));
+		//delete newBullet;
+		mag++;
 
-				//クールタイムをリセット
-				if (isSlow_ == true) {
-					coolTime = 9;
-				}
-				else {
-					coolTime = 3;
-				}
-			}
-			else {
-				coolTime--;
-			}
+		//クールタイムをリセット
+		if (isSlow_ == true) {
+			coolTime = 9;
 		}
-		if (mag >= 10) {
-			if (isSlow_ == true) {
-				roadingTime = 150;
-			}
-			else {
-				roadingTime = 50;
-			}
-			mag = 0;
+		else {
+			coolTime = 3;
 		}
 	}
-	roadingTime--;
-
+	else {
+		coolTime--;
+	}
 }

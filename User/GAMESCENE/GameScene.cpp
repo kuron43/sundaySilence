@@ -114,7 +114,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 void GameScene::Update() {
 
 	collisionManager_->CheckAllCollisions();
-	//bulletManager_->Update();
 
 	/*cam_TF.UpdateMat();
 	camera->SetEye(Affin::GetWorldTrans(cam_TF.matWorld));
@@ -126,6 +125,7 @@ void GameScene::Update() {
 	}
 	sceneObjects->lightGroup->Update();
 	sceneManager->SceneUpdate(input_);
+	bulletManager_->DeadUpdate();
 
 	camera->Update();
 }

@@ -99,7 +99,7 @@ void Enemy::Reset() {
 	delete weapon_;
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-		delete sphere[i];
+		//delete sphere[i];
 
 	}
 }
@@ -127,9 +127,11 @@ void Enemy::ColiderUpdate() {
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
+	}
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (isDead) {
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-			delete sphere[i];
+			//delete sphere[i];
 		}
 	}
 }
