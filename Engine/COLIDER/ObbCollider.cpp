@@ -1,5 +1,11 @@
 #include "ObbCollider.h"
 
+ObbCollider* ObbCollider::GetInstance()
+{
+	static ObbCollider instance;
+	return &instance;
+}
+
 ObbCollider::ObbCollider(Vector3 offset, Vector3 length, Matrix4 rotMat)
 {
 	m_Pos = offset;
@@ -128,4 +134,54 @@ void ObbCollider::UpdateObb(Object3d& obj)
 	OBB::m_fLength[2] = m_fLength[2];
 
 	isHit = false;
+}
+
+bool ObbCollider::CheckOBB2RAY(const OBB& obb, const Ray& ray, float* distance, Vector3* inter, Vector3* reject) {
+	const float EPSILON = (float)1.175494e-37;
+
+	Vector3 m = (ray.start + ray.dir) * 0.5f;
+	Vector3 d = ray.dir - m;
+	m = m - obb.m_Pos;
+	m = Vector3(obb.m_NormaDirect[0].dot(m), obb.m_NormaDirect[1].dot(m), obb.m_NormaDirect[2].dot(m));
+	d = Vector3(obb.m_NormaDirect[0].dot(d), obb.m_NormaDirect[1].dot(d), obb.m_NormaDirect[2].dot(d));
+
+	float adx = fabsf(d.x);
+	if (fabsf(m.x) > obb.m_fLength[0] + adx) {
+		return false;
+	}
+
+	float ady = fabsf(d.y);
+	if (fabsf(m.y) > obb.m_fLength[1] + ady) {
+		return false;
+	}
+
+	float adz = fabsf(d.z);
+	if (fabsf(m.z) > obb.m_fLength[2] + adz) {
+		return false;
+	}
+	adx += EPSILON;
+	ady += EPSILON;
+	adz += EPSILON;
+
+	if (fabsf(m.y * d.z - m.z * d.y) > obb.m_fLength[1] * adz + obb.m_fLength[2] * ady) {
+		return false;
+	}
+	if (fabsf(m.z * d.x - m.x * d.z) > obb.m_fLength[0] * adz + obb.m_fLength[2] * adx) {
+		return false;
+	}
+	if (fabsf(m.x * d.y - m.y * d.x) > obb.m_fLength[0] * ady + obb.m_fLength[1] * adx) {
+		return false;
+	}
+	if (distance)
+	{
+		*distance = Vector3(ray.start - obb.m_Pos).length();
+	}
+	if (inter) {
+
+	}
+	if (reject) {
+
+	}
+
+	return true;
 }

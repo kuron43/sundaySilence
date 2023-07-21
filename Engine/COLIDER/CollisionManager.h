@@ -2,6 +2,7 @@
 #include "CollisionPrimitive.h"
 #include "RaycastHit.h"
 #include "QueryCallback.h"
+#include "ObbCollider.h"
 
 #pragma warning(push)
 #pragma warning(disable: 4819)

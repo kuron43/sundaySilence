@@ -57,22 +57,13 @@ void Player::Update(Input* input, bool isTitle) {
 	Vector2 mousepos = input->GetMousePosition();
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_,0,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
-	if (input->MouseButtonPush(0)) {
+	if (input->MouseButtonPush(0) && !isTitle) {
 		weapon_[0]->Shot(object_->wtf, reticle->wtf, PLAYER);
 	}
-	/*if (input->MouseButtonPush(1)) {
-		weapon_[0]->Shot(object_->wtf, reticle->wtf, ENEMY);
-	}*/
 	weapon_[0]->Update(input, isSlow);
 
-
-
 	object_->UpdateMatrix();
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
-
-		}
-	}
+	
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
@@ -82,6 +73,12 @@ void Player::Update(Input* input, bool isTitle) {
 		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
 		coliderPosTest_[i]->Update();
+	}
+
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
+			Vector3 a{ 0,0,0 };
+		}
 	}
 
 	// クエリーコールバッククラス
@@ -128,7 +125,10 @@ void Player::Update(Input* input, bool isTitle) {
 		sphere[i]->Update();
 	}
 
+	
+
 	object_->Update();
+
 	ImGui::Begin("PlyPOS");
 	ImGui::Text("Hit:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
 	ImGui::Text("Hit:%f,%f,%f", object_->wtf.scale.x, object_->wtf.scale.y, object_->wtf.scale.z);
@@ -138,13 +138,13 @@ void Player::Update(Input* input, bool isTitle) {
 ///
 void Player::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
-	//object_->Draw();
+	object_->Draw();
 	if (!nowTitle) {
 		reticle->Draw();
 	}
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		
-		coliderPosTest_[i]->Draw();
+		//coliderPosTest_[i]->Draw();
 	}
 	Object3d::PostDraw();
 	if (!nowTitle) {
@@ -158,6 +158,10 @@ void Player::Draw(DirectXCommon* dxCommon) {
 /// リセットを行う
 void Player::Reset() {
 
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+	}
+
 }
 
 void Player::Move(Input* input) {
@@ -167,6 +171,7 @@ void Player::Move(Input* input) {
 	velocity_ = { 0 , 0 , 0 };
 	Vector2 vec2Velocity = { 0,0 };
 	Vector3 faceAngle = { 0,0,0 };
+	Vector3 speed = { 0 , 0 , 0 };
 	{
 		////キー入力があったら
 		//if (input->KeyboardPush(DIK_W) ||
@@ -467,26 +472,25 @@ void Player::Move(Input* input) {
 		input->KeyboardPush(DIK_D)) {
 
 		if (input->KeyboardPush(DIK_W)) {
-			velocity_ += Vector3(0, 0, 0.5f);
+			speed += Vector3(0, 0, kMoveSpeed_);
 		}
 		if (input->KeyboardPush(DIK_S)) {
-			velocity_ += Vector3(0, 0, -0.5f);
+			speed += Vector3(0, 0, -kMoveSpeed_);
 		}
 		if (input->KeyboardPush(DIK_A)) {
-			velocity_ += Vector3(-0.5f, 0, 0);
+			speed += Vector3(-kMoveSpeed_, 0, 0);
 		}
 		if (input->KeyboardPush(DIK_D)) {
-			velocity_ += Vector3(0.5f, 0, 0);
+			speed += Vector3(kMoveSpeed_, 0, 0);
 		}
 
 	}
 
 	vec2Velocity = input->Pad_X_GetLeftStickVec(Vector2(1.0f, 1.0f));
-	velocity_ += { vec2Velocity.x, 0, -vec2Velocity.y };
+	speed += { vec2Velocity.x, 0, -vec2Velocity.y };
 
 
 	//////////////////////////////////
-	float speed = kMoveSpeed_;
 	if (input->KeyboardPush(DIK_R)) {
 		isSlow = true;
 	}
@@ -495,10 +499,10 @@ void Player::Move(Input* input) {
 	}
 
 	if (isSlow == true) {
-		speed = speed * 0.25f;
+		velocity_ = speed * 0.25f;
 	}
 	else {
-		speed = kMoveSpeed_;
+		velocity_ = speed;
 	}
 
 	{

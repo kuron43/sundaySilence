@@ -175,6 +175,29 @@ bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, Raycast
 			inter = tempInter;
 			it_hit = it;
 		}
+		else if (colA->GetShapeType() == COLLISIONSHAPE_OBB)
+		{
+			OBB* obb = dynamic_cast<OBB*>(colA);
+
+			float tempDistance;
+			Vector3 tempInter;
+			if (!ObbCollider::GetInstance()->CheckOBB2RAY(*obb,ray, &tempDistance, &tempInter))
+			{
+				continue;
+			}
+			if (tempDistance >= distance)
+			{
+				continue;
+			}
+			if (!(colA->attribute_ & attribute))
+			{
+				continue;
+			}
+			result = true;
+			distance = tempDistance;
+			inter = tempInter;
+			it_hit = it;
+		}
 	}
 	if (result && hitInfo)
 	{
@@ -232,6 +255,26 @@ void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback
 			Vector3 tempInter;
 			Vector3 tempReject;
 			if (!meshCollider->CheckCollisionSphere(sphere, &tempInter, &tempReject))continue;
+
+			// 交差情報をセット
+			QueryHit info;
+			info.coloder = col;
+			info.object = col->GetObject3d();
+			info.inter = tempInter;
+			info.reject = tempReject;
+
+			// クエリーコールバック呼び出し
+			if (!callback->OnQueryHit(info)) {
+				// 戻り値がfalseの場合、継続せず終了
+				return;
+			}
+		}//OBB
+		else if (col->GetShapeType() == COLLISIONSHAPE_OBB) {
+			OBB* sphereB = dynamic_cast<OBB*>(col);
+
+			Vector3 tempInter;
+			Vector3 tempReject;
+			if (!Collision::CheckOBB2Sphere(*sphereB, sphere, &tempInter, &tempReject))continue;
 
 			// 交差情報をセット
 			QueryHit info;

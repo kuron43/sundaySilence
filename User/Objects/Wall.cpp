@@ -52,7 +52,7 @@ void Wall::Update() {
 
 
 
-	if (obb_->GetIsHit() == true && obb_->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
+	if (obb_->GetIsHit() == true && obb_->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER) {
 		//CollisionManager::GetInstance()->RemoveCollider(obb_);
 		Vector3 a = { 0,0,0 };
 		ImGui::Begin("Wall");

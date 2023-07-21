@@ -23,7 +23,7 @@ void GAME1Scene::Initialize() {
 
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("game2");
+		leveData = JsonLoader::LoadJsonFile("game3");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -76,8 +76,9 @@ void GAME1Scene::Update(Input* input) {
 	_controller->_camera->SetEye(camposEye);
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
-	_objects->player->Update(input);
 	int num = 0;
+
+	_objects->player->Update(input);
 	for (Wall* walls : _objects->walls) {
 		walls->Update();
 		num++;

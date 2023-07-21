@@ -1,5 +1,6 @@
 #pragma once
 #include "CollisionPrimitive.h"
+#include <vector>
 
 class Collision
 {
@@ -28,6 +29,8 @@ public:
 	static bool CheckOBB2Sphere(const OBB& obb, const Sphere& sphere,Vector3* inter = nullptr, Vector3* reject = nullptr);
 
 	static bool CheckOBB2OBB(const OBB& obb1,const OBB& obb2, Vector3* inter = nullptr, Vector3* reject = nullptr);
+
+	//static bool CheckOBB2RAY(const OBB& obb, const Ray& ray, Vector3* inter = nullptr, Vector3* reject = nullptr);
 
 private:
 

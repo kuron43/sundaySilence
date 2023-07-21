@@ -54,6 +54,12 @@ void Enemy::Initialize() {
 		//coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
 		//coliderPosTest_[i]->Update();
 	}
+	/*ray = new Ray;
+	Vector3 rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
+	ray->start = Affin::GetWorldTrans( object_->wtf.matWorld);
+	ray->dir = rayvec;
+	CollisionManager::GetInstance()->Raycast;*/
+
 }
 
 ///

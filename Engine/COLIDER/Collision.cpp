@@ -326,7 +326,7 @@ float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
 		if (L <= 0) {
 			continue;
 		}
-		float s = obb.m_NormaDirect[i].dot(p - obb.m_Pos) / L;
+		float s = Vector3(p - obb.m_Pos).dot(obb.m_NormaDirect[i]) / L;
 
 		// sの値から、はみ出した部分があればそのベクトルを加算
 		s = (float)fabs(s);
@@ -493,36 +493,58 @@ bool Collision::CheckOBB2OBB(const OBB& obb1, const OBB& obb2, Vector3* inter, V
 }
 
 bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* inter, Vector3* reject) {
-	float length;
-	float rejectLen = 0;
+	float length; ///
+	Vector2 rejectLen;
+	Vector3 inter_;
 	OBB obb_ = obb;
 	Vector3 spherePos = sphere.center;
+	Vector3 obbPos = obb_.m_Pos;
+	Vector3 rejeVec;
+
+	rejeVec = sphere.center - obbPos;
+	float len = rejeVec.length();
+	rejeVec.nomalize();
+
 	//float sphereRad = sphere.radius_;
-	length = LenOBBToPoint(obb_, spherePos);
-	if ((float)fabs(length) >= sphere.radius_) {
-		rejectLen = length;
-		//ImGui::Begin("lenMath");
-		//ImGui::Text("lenMathTrue:%f,%f", length, sphereRad);
-		//ImGui::End();
+	length = LenOBBToPoint(obb_, spherePos);////
+
+	inter_ = obb_.m_Pos + (rejeVec * (length-sphere.radius_));
+	if ((float)fabs(length) > sphere.radius_) {
+		rejectLen.x = length;
+
+		ImGui::Begin("Sphere2Obb5");
+		ImGui::Text("F pos:A,%f,%f,%f", obb.m_Pos.x, obb.m_Pos.y, obb.m_Pos.z);
+		ImGui::Text("F pos:B,%f,%f,%f\n", sphere.center.x, sphere.center.y, sphere.center.z);
+		ImGui::Text("F RejeVec:,%f,%f,%f\n", rejeVec.x, rejeVec.y, rejeVec.z);
+		ImGui::Text("F len:,%f,rejeLEN%f\n\n", length, len);
+		ImGui::End();
 		return false;
 	}
 
 	//疑似交点
 	if (inter)
-	{
+	{		
 		//平面上の最近接点を疑似交点とする
-		*inter = spherePos ;
+		*inter = obb_.m_Pos + (rejeVec * length);		
 	}
 	if (reject) {
+	
+		//float ds = spherePos.dot(obb_.m_NormaDirect[2]);
+		//float dt = obbPos.dot(obb_.m_NormaDirect[2]);
+		//float rejelen = dt - ds + sphere.radius_;
+		//rejeVec =  sphere.center - inter_;
+		//*reject = obb_.m_NormaDirect[2] * rejelen;
+		
 
 	}
-	//ImGui::Begin("lenMath");
-	//ImGui::Text("lenMathTrue:%f,%f", length, sphereRad);
-	//ImGui::End();
-
-	ImGui::Begin("Sphere2Obb2");
+	ImGui::Begin("Sphere2Obb5");
 	ImGui::Text("T pos:A,%f,%f,%f", obb.m_Pos.x, obb.m_Pos.y, obb.m_Pos.z);
 	ImGui::Text("T pos:B,%f,%f,%f\n", sphere.center.x, sphere.center.y, sphere.center.z);
+	ImGui::Text("T RejeVec:,%f,%f,%f\n", rejeVec.x, rejeVec.y, rejeVec.z);
+	ImGui::Text("T len:,%f,rejeLEN%f\n\n", length, len);
 	ImGui::End();
-  	return true;
+	return true;
 }
+
+
+

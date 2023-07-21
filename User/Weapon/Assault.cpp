@@ -65,6 +65,7 @@ void Assault::Update(Input* input, bool isSlow) {
 		}
 	}
 	roadingTime--;
+
 	BulletManager::GetInstance()->SetSpeed(speed_);
 	//for (Bullet* bullet : bullets_) {
 	//	bullet->Update(speed_);
@@ -112,10 +113,10 @@ void Assault::Shot(Transform& player, Transform& reticle,int team) {
 
 		//クールタイムをリセット
 		if (isSlow_ == true) {
-			coolTime = 9;
+			coolTime = 18;
 		}
 		else {
-			coolTime = 3;
+			coolTime = 9;
 		}
 	}
 	else {
