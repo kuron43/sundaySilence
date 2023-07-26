@@ -112,11 +112,20 @@ void Assault::Shot(Transform& player, Transform& reticle,int team) {
 		mag++;
 
 		//クールタイムをリセット
-		if (isSlow_ == true) {
-			coolTime = 18;
-		}
-		else {
-			coolTime = 9;
+		if (team == PLAYER) {
+			if (isSlow_ == true) {
+				coolTime = 45;
+			}
+			else {
+				coolTime = 15;
+			}
+		}if (team == ENEMY) {
+			if (isSlow_ == true) {
+				coolTime = 45 * 3;
+			}
+			else {
+				coolTime = 15 * 3;
+			}
 		}
 	}
 	else {
