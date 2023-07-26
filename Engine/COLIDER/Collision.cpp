@@ -12,10 +12,6 @@ bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB,
 
 	if (dist > sphereA.radius_ + sphereB.radius_)
 	{
-		//ImGui::Begin("Sphere2Sphere");
-		//ImGui::Text("F pos:A,%f,%f,%f", sphereA.center.x, sphereA.center.y, sphereA.center.z);
-		//ImGui::Text("F pos:B,%f,%f,%f\n", sphereB.center.x, sphereA.center.y, sphereA.center.z);
-		//ImGui::End();
 		return false;
 	}
 	*inter = sphereA.center + (sphereB.center - sphereA.center) / 2;
@@ -28,10 +24,7 @@ bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB,
 		*reject = normaVec;
 		*reject *= rejectLen;
 	}
-	//ImGui::Begin("Sphere2Sphere");
-	//ImGui::Text("T pos:A,%f,%f,%f", sphereA.center.x, sphereA.center.y, sphereA.center.z);
-	//ImGui::Text("T pos:B,%f,%f,%f\n", sphereB.center.x, sphereA.center.y, sphereA.center.z);
-	//ImGui::End();
+
 	return true;
 }
 
@@ -170,7 +163,7 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
 	//誤差吸収用の微小な値
 	const float epsilon = 1.0e-5f;
 	//面法線とレイの方向ベクトルの内積
-	float d1 = plane.normal.dot(ray.dir);
+	float d1 = plane.normal.dot(ray.dir_);
 	//裏面には当たらない
 	if (d1 > -epsilon)
 	{
@@ -178,7 +171,7 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
 	}
 
 	//面法線とレイの視点座標の内積
-	float d2 = plane.normal.dot(ray.start);
+	float d2 = plane.normal.dot(ray.start_);
 	//始点と平面の距離(平面の法線方向)
 	float dist = d2 - plane.distance;
 	//始点と平面の距離(レイ方向)
@@ -198,7 +191,7 @@ bool Collision::CheckRay2Plane(const Ray& ray, const Plane& plane, float* distan
 	//交点を計算
 	if (inter)
 	{
-		*inter = ray.start + t * ray.dir;
+		*inter = ray.start_ + t * ray.dir_;
 	}
 	if (reject) {
 
@@ -272,8 +265,8 @@ bool Collision::CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* dis
 	if (reject) {
 
 	}
-	Vector3 m = ray.start - sphere.center;
-	float b = m.dot(ray.dir);
+	Vector3 m = ray.start_ - sphere.center;
+	float b = m.dot(ray.dir_);
 	float c = m.dot(m) - powf(sphere.radius_, 2);
 
 	//レイの始点が球の外にあり(c>0)、レイが球から離れている方向を指している場合(b>0)、当たらない
@@ -305,7 +298,7 @@ bool Collision::CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* dis
 
 	if (inter)
 	{
-		*inter = ray.start + t * ray.dir;
+		*inter = ray.start_ + t * ray.dir_;
 	}
 
 	return true;
@@ -518,6 +511,7 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 		ImGui::Text("F RejeVec:,%f,%f,%f\n", rejeVec.x, rejeVec.y, rejeVec.z);
 		ImGui::Text("F len:,%f,rejeLEN%f\n\n", length, len);
 		ImGui::End();
+
 		return false;
 	}
 

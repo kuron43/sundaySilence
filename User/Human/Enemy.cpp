@@ -6,15 +6,19 @@ Enemy::Enemy() {
 Enemy::~Enemy() {
 	delete model_;
 	delete weapon_;
+	delete rayHit;
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
 
 	}
+	CollisionManager::GetInstance()->RemoveCollider(ray);
+	delete ray;
 }
 
 ///
 void Enemy::Initialize() {
+	isFound = false;
 	isDead = false;
 	nowTitle = false;
 	model_ = Model::LoadFromOBJ("cube");
@@ -37,6 +41,9 @@ void Enemy::Initialize() {
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
 	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
 
+	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
+	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
+
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
@@ -46,19 +53,21 @@ void Enemy::Initialize() {
 		sphere[i]->SetRadius(1.0f);
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
-		////test
-		//coliderPosTest_[i] = Object3d::Create();
-		//coliderPosTest_[i]->SetModel(model_);
-		//coliderPosTest_[i]->wtf.m_Pos = sphere[i]->center;
-		//coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
-		//coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
-		//coliderPosTest_[i]->Update();
+		//test
+		coliderPosTest_[i] = Object3d::Create();
+		coliderPosTest_[i]->SetModel(model_);
+		coliderPosTest_[i]->wtf.position = rayvec;
+		coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
+		coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
+		coliderPosTest_[i]->Update();
 	}
-	/*ray = new Ray;
-	Vector3 rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
-	ray->start = Affin::GetWorldTrans( object_->wtf.matWorld);
-	ray->dir = rayvec;
-	CollisionManager::GetInstance()->Raycast;*/
+	ray = new RayCollider;
+
+	ray->SetStart(Affin::GetWorldTrans(object_->wtf.matWorld));
+	ray->SetDir(rayvec);
+	ray->SetObject3d(object_);
+	CollisionManager::GetInstance()->AddCollider(ray);
+	rayHit = new RaycastHit;
 
 }
 
@@ -71,7 +80,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 	object_->Update();
 	reticle->Update();
 
-	if (input->KeyboardPush(DIK_P) && isDead == false) {
+	if (isFire == true) {
 		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
 	weapon_->Update(input, isSlow);
@@ -89,9 +98,9 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 		if (nowTitle) {
 			//reticle->Draw();
 		}
-		/*for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 			coliderPosTest_[i]->Draw();
-		}*/
+		}
 		Object3d::PostDraw();
 		if (nowTitle) {
 			weapon_->Draw(dxCommon);
@@ -124,6 +133,15 @@ void Enemy::FrontFace() {
 }
 
 void Enemy::ColiderUpdate() {
+
+	isBlocked = false;
+	isFound = false;
+	isFire = false;
+
+	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
+	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
+	ray->SetDir(Affin::GetWorldTrans(reticle->wtf.matWorld));
+
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			isDead = true;
@@ -132,11 +150,34 @@ void Enemy::ColiderUpdate() {
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
+		coliderPosTest_[i]->wtf.position = ray->GetDir();
 		sphere[i]->Update();
+		coliderPosTest_[i]->Update();
+	}
+	ray->Update();
+	
+	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+		isFound = false;
+		isBlocked = true;
+
+		ImGui::Begin("eneRayHitBarrier");
+		ImGui::Text("HIT : dis %f", rayHit->distance);
+		ImGui::End();
+
+	}
+	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
+		isFound = true;
+		if (isBlocked == false) {
+			isFire = true;
+			ImGui::Begin("eneRayHitPlayer");
+			ImGui::Text("HIT : dis %f", rayHit->distance);
+			ImGui::End();
+		}				
 	}
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (isDead) {
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+			CollisionManager::GetInstance()->RemoveCollider(ray);
 			//delete sphere[i];
 		}
 	}

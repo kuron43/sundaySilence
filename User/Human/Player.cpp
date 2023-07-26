@@ -78,6 +78,9 @@ void Player::Update(Input* input, bool isTitle) {
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
 			Vector3 a{ 0,0,0 };
+			ImGui::Begin("plyHitWall");
+			ImGui::Text("Hit:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
+			ImGui::End();
 		}
 	}
 

@@ -23,7 +23,7 @@ void GAME1Scene::Initialize() {
 
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("game3");
+		leveData = JsonLoader::LoadJsonFile("game2");
 
 		for (auto& objectData : leveData->JsonObjects) {
 

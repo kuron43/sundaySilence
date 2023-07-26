@@ -16,6 +16,16 @@ struct Plane {
 	float distance = 0.0f;
 };
 
+struct FinitePlane {
+	//法線ベクトル
+	Vector3 normal = { 0,1,0 };
+	//原点(0,0,0)からの距離
+	float distance = 0.0f;
+
+	Vector3 vertex[4];
+	Vector3 pos = { 0,0,0 };
+};
+
 class Triangle {
 public:
 	//頂点座標
@@ -32,9 +42,9 @@ public:
 
 struct Ray {
 	//始点
-	Vector3 start;
+	Vector3 start_;
 	//方向
-	Vector3 dir;
+	Vector3 dir_;
 };
 
 struct OBB
@@ -43,5 +53,7 @@ public:
 	Vector3 m_Pos;              // 位置
 	Vector3 m_NormaDirect[3];   // 方向ベクトル
 	float m_fLength[3];             // 各軸方向の長さ
+
+	FinitePlane plane[6];
 };
 //	http://marupeke296.com/COL_3D_No13_OBBvsOBB.html

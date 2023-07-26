@@ -62,6 +62,66 @@ void ObbCollider::CreateOBB(std::vector<VertexPosNormalUv> vertices,Transform* w
 	m_fLength[2] *= wtf_->scale.z;
 	//球形状をセット
 	shapeType = COLLISIONSHAPE_OBB;
+	for (int i = 0; i < 6; i++) {
+		plane[i].pos = m_Pos;
+	}
+
+	plane[0].normal = m_NormaDirect[0];
+	plane[1].normal = m_NormaDirect[1];
+	plane[2].normal = m_NormaDirect[2];
+	plane[3].normal = -m_NormaDirect[0];
+	plane[4].normal = -m_NormaDirect[1];
+	plane[5].normal = -m_NormaDirect[2];
+
+	plane[0].distance = m_fLength[0] / 2;
+	plane[1].distance = m_fLength[1] / 2;
+	plane[2].distance = m_fLength[2] / 2;
+	plane[3].distance = m_fLength[0] / 2;
+	plane[4].distance = m_fLength[1] / 2;
+	plane[5].distance = m_fLength[2] / 2;
+
+	{// (仮)
+		// ABC (頂点参考)
+		// https://www.studyup.jp/contents/sansuu/tenkai.html#index_id2
+
+		plane[0].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上 B
+		plane[0].vertex[2] = { +1.0f, +1.0f, +1.0f }; // 右下 D
+		plane[0].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上 A
+		plane[0].vertex[0] = { -1.0f, +1.0f, +1.0f }; // 左下 C
+
+		plane[1].vertex[3] = { +1.0f, +1.0f, +1.0f }; // 右上  D
+		plane[1].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  I
+		plane[1].vertex[1] = { -1.0f, +1.0f, +1.0f }; // 左上  C
+		plane[1].vertex[0] = { -1.0f, -1.0f, +1.0f }; // 左下  H
+
+		plane[2].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上  E
+		plane[2].vertex[2] = { +1.0f, -1.0f, -1.0f }; // 右下  J
+		plane[2].vertex[1] = { +1.0f, +1.0f, +1.0f }; // 左上  D
+		plane[2].vertex[0] = { +1.0f, -1.0f, +1.0f }; // 左下  I
+
+		plane[3].vertex[3] = { -1.0f, +1.0f, -1.0f }; // 右上  F
+		plane[3].vertex[2] = { -1.0f, -1.0f, -1.0f }; // 右下  K
+		plane[3].vertex[1] = { +1.0f, +1.0f, -1.0f }; // 左上  E
+		plane[3].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  J
+
+		plane[4].vertex[3] = { -1.0f, +1.0f, +1.0f }; // 右上  G
+		plane[4].vertex[2] = { -1.0f, -1.0f, +1.0f }; // 右下  L
+		plane[4].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上  F
+		plane[4].vertex[0] = { -1.0f, -1.0f, -1.0f }; // 左下  K
+
+		plane[4].vertex[3] = { -1.0f, -1.0f, +1.0f }; // 右上  L
+		plane[4].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  N
+		plane[4].vertex[1] = { -1.0f, -1.0f, -1.0f }; // 左上  K
+		plane[4].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  M
+	}
+
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 4; j++)
+		{
+			//plane[i].vertex[j] = Affin::VecMat()
+		}
+	}
+
 }
 
 void ObbCollider::Update()
@@ -95,6 +155,13 @@ void ObbCollider::Update()
 		OBB::m_fLength[0] = m_fLength[0];
 		OBB::m_fLength[1] = m_fLength[1];
 		OBB::m_fLength[2] = m_fLength[2];
+
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 4; j++)
+			{
+
+			}
+		}
 	}
 	else
 	{
@@ -139,8 +206,8 @@ void ObbCollider::UpdateObb(Object3d& obj)
 bool ObbCollider::CheckOBB2RAY(const OBB& obb, const Ray& ray, float* distance, Vector3* inter, Vector3* reject) {
 	const float EPSILON = (float)1.175494e-37;
 
-	Vector3 m = (ray.start + ray.dir) * 0.5f;
-	Vector3 d = ray.dir - m;
+	Vector3 m = (ray.start_ + ray.dir_) * 0.5f;
+	Vector3 d = ray.dir_ - m;
 	m = m - obb.m_Pos;
 	m = Vector3(obb.m_NormaDirect[0].dot(m), obb.m_NormaDirect[1].dot(m), obb.m_NormaDirect[2].dot(m));
 	d = Vector3(obb.m_NormaDirect[0].dot(d), obb.m_NormaDirect[1].dot(d), obb.m_NormaDirect[2].dot(d));
@@ -174,7 +241,7 @@ bool ObbCollider::CheckOBB2RAY(const OBB& obb, const Ray& ray, float* distance, 
 	}
 	if (distance)
 	{
-		*distance = Vector3(ray.start - obb.m_Pos).length();
+		*distance = Vector3(ray.start_ - obb.m_Pos).length();
 	}
 	if (inter) {
 

@@ -74,10 +74,10 @@ void Wall::Update() {
 void Wall::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
 	//object_->Draw();
-	if (!obb_->GetIsHit()) {
+	
 
 		coliderPosTest_->Draw();
-	}
+	
 	Object3d::PostDraw();
 
 }
