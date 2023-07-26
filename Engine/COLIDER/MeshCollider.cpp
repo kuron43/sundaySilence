@@ -105,11 +105,11 @@ bool MeshCollider::CheckCollisionRay(const Ray& ray , float* distance , Vector3*
 {
 	Ray localRay;
 
-	localRay.start.x = ray.start.x - objectMatWorld.m[3][0];
-	localRay.start.y = ray.start.y - objectMatWorld.m[3][1];
-	localRay.start.z = ray.start.z - objectMatWorld.m[3][2];
+	localRay.start_.x = ray.start_.x - objectMatWorld.m[3][0];
+	localRay.start_.y = ray.start_.y - objectMatWorld.m[3][1];
+	localRay.start_.z = ray.start_.z - objectMatWorld.m[3][2];
 
-	localRay.dir = ray.dir;
+	localRay.dir_ = ray.dir_;
 
 	std::vector<Triangle>::const_iterator it = triangles.cbegin();
 
@@ -136,8 +136,8 @@ bool MeshCollider::CheckCollisionRay(const Ray& ray , float* distance , Vector3*
 			tempInter.z = interMat.m[3][2];
 			if (distance)
 			{
-				Vector3 sub = tempInter - ray.start;
-				*distance = sub.dot(ray.dir);
+				Vector3 sub = tempInter - ray.start_;
+				*distance = sub.dot(ray.dir_);
 			}
 
 			if (inter)

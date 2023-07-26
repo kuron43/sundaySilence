@@ -2,6 +2,7 @@
 #include "CollisionTypes.h"
 #include "Object3d.h"
 #include "CollisionInfo.h"
+#include "RaycastHit.h"
 
 
 //コライダー基底クラス
@@ -36,7 +37,7 @@ public:
 	inline void OnCllision(const CollisionInfo& info)
 	{
 		isHit = true;
-		info_ = info;
+		colInfo_ = info;
 	}
 
 	inline void SetAttribute(unsigned short attribute)
@@ -65,20 +66,21 @@ public:
 
 	inline CollisionInfo GetCollisionInfo()
 	{
-		return info_;
+		return colInfo_;
 	}
 
 protected:
 	Object3d* object3d_ = nullptr;
-	
+
 	bool isHit = false;
 
-	CollisionInfo info_ = {
+	CollisionInfo colInfo_ = {
 		nullptr ,
 		nullptr ,
-		{0 , 0 , 0}
+		{0 , 0 , 0},
+		0.0f
 	};
-	
+
 	//形状タイプ
 	CollisionShapeType shapeType = SHAPE_UNKNOWN;
 	//当たり判定属性

@@ -1,5 +1,4 @@
 #pragma once
-//#include "MathFunc.h"
 
 class Object3d;
 class BaseCollider;
@@ -8,11 +7,19 @@ class BaseCollider;
 struct CollisionInfo
 {
 public:
-	CollisionInfo(Object3d* object , BaseCollider* collider , const Vector3 inter)
+	CollisionInfo()
+	{
+		object_ = nullptr;
+		collider_ = nullptr;
+		inter_ = {0,0,0};
+		distance_ = 0.0f;
+	}
+	CollisionInfo(Object3d* object , BaseCollider* collider , const Vector3 inter, float distance = 0.0f)
 	{
 		object_ = object;
 		collider_ = collider;
 		inter_ = inter;
+		distance_ = distance;
 	}
 
 	//衝突相手のオブジェクト
@@ -21,5 +28,7 @@ public:
 	BaseCollider* collider_ = nullptr;
 	//衝突ten
 	Vector3 inter_;
+
+	float distance_;
 
 };

@@ -129,6 +129,7 @@
     <ClCompile Include="Engine\COLIDER\MeshCollider.cpp" />
     <ClCompile Include="Engine\COLIDER\ObbCollider.cpp" />
     <ClCompile Include="Engine\COLIDER\QueryCallback.cpp" />
+    <ClCompile Include="Engine\COLIDER\RayCollider.cpp" />
     <ClCompile Include="Engine\COLIDER\SphereCollider.cpp" />
     <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp" />
     <ClCompile Include="Engine\Framework\Framework.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Engine\COLIDER\ObbCollider.h" />
     <ClInclude Include="Engine\COLIDER\QueryCallback.h" />
     <ClInclude Include="Engine\COLIDER\RaycastHit.h" />
+    <ClInclude Include="Engine\COLIDER\RayCollider.h" />
     <ClInclude Include="Engine\COLIDER\SphereCollider.h" />
     <ClInclude Include="Engine\DEBUG\ImGuiManager.h" />
     <ClInclude Include="Engine\Framework\Framework.h" />

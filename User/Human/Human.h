@@ -5,10 +5,12 @@
 #include "Input.h"
 
 #include "DirectXCommon.h"
+#include "imgui.h"
 
 #include "Weapon.h"
 
 #include"SphereCollider.h"
+#include"RayCollider.h"
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
 

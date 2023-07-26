@@ -77,6 +77,7 @@
     <ClCompile Include="Engine\COLIDER\ObbCollider.cpp" />
     <ClCompile Include="User\Objects\Wall.cpp" />
     <ClCompile Include="User\Weapon\BulletManager.cpp" />
+    <ClCompile Include="Engine\COLIDER\RayCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Engine\COLIDER\ObbCollider.h" />
     <ClInclude Include="User\Objects\Wall.h" />
     <ClInclude Include="User\Weapon\BulletManager.h" />
+    <ClInclude Include="Engine\COLIDER\RayCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli" />

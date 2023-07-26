@@ -41,6 +41,8 @@ private:
 	const int Tribe_ = 1;
 	bool isFound = false;
 	bool isFire = false;
+	bool isBlocked = false;
+
 
 	Model* model_;
 	Object3d* reticle;
@@ -71,8 +73,10 @@ private:
 	int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
 	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	std::vector<SphereCollider*> sphere;
-	Ray* ray;
 	std::vector<Vector3> spherePos;
 	std::vector<Object3d*> coliderPosTest_;
+	RayCollider* ray;
+	RaycastHit* rayHit;
+	Vector3 rayvec;
 };
 
