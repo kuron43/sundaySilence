@@ -21,6 +21,9 @@ public:
 	void Update() override;
 	//更新
 	void UpdateObb(Object3d& obj);
+
+	bool CheckOBB2RAY(const OBB& obb, const Ray& ray, float* distance = nullptr, Vector3* inter = nullptr, Vector3* reject = nullptr);
+	static ObbCollider* GetInstance();
 public:
 	//void CreateOBB(Object3d* obj);
 	void CreateOBB(std::vector<VertexPosNormalUv> vertices, Transform* wtfP);
@@ -52,6 +55,8 @@ private:
 	Vector3 m_Pos;              // 位置
 	Vector3 m_NormaDirect[3];   // 方向ベクトル
 	float m_fLength[3];             // 各軸方向の長さ
+
+	FinitePlane plane[6];
 
 //	http://marupeke296.com/COL_3D_No13_OBBvsOBB.html
 };

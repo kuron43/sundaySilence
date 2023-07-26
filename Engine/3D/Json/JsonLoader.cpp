@@ -74,9 +74,9 @@ LevelData* JsonLoader::LoadJsonFile(const std::string& fileName) {
 			objectData.rotation.y = - objectData.rotation.y;
 			objectData.rotation.z = JsonLoader::RadConvert((float)transform["rotation"][0]);
 			// スケーリング
-			objectData.scaling.x = (float)transform["scaling"][1];
-			objectData.scaling.y = (float)transform["scaling"][2];
-			objectData.scaling.z = (float)transform["scaling"][0];
+			objectData.scaling.x = (float)transform["scaling"][0];
+			objectData.scaling.y = (float)transform["scaling"][1];
+			objectData.scaling.z = (float)transform["scaling"][2];
 
 			// TODO: コライダーのパラメータ読み込み
 
