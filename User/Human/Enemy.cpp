@@ -80,7 +80,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 	object_->Update();
 	reticle->Update();
 
-	if (isFire == true) {
+	if (isFire == true && isDead == false) {
 		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
 	weapon_->Update(input, isSlow);
@@ -155,7 +155,7 @@ void Enemy::ColiderUpdate() {
 		coliderPosTest_[i]->Update();
 	}
 	ray->Update();
-	
+
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
 		isFound = false;
 		isBlocked = true;
@@ -172,13 +172,13 @@ void Enemy::ColiderUpdate() {
 			ImGui::Begin("eneRayHitPlayer");
 			ImGui::Text("HIT : dis %f", rayHit->distance);
 			ImGui::End();
-		}				
+		}
 	}
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (isDead) {
+	if (isDead) {
+		for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-			CollisionManager::GetInstance()->RemoveCollider(ray);
 			//delete sphere[i];
 		}
+		CollisionManager::GetInstance()->RemoveCollider(ray);
 	}
 }
