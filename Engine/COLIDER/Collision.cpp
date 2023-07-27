@@ -495,7 +495,7 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 	Vector3 rejeVec;
 
 	rejeVec = sphere.center - obbPos;
-	float len = rejeVec.length();
+	//float len = rejeVec.length();
 	rejeVec.nomalize();
 
 	//float sphereRad = sphere.radius_;
@@ -505,12 +505,12 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 	if ((float)fabs(length) > sphere.radius_) {
 		rejectLen.x = length;
 
-		ImGui::Begin("Sphere2Obb5");
-		ImGui::Text("F pos:A,%f,%f,%f", obb.m_Pos.x, obb.m_Pos.y, obb.m_Pos.z);
-		ImGui::Text("F pos:B,%f,%f,%f\n", sphere.center.x, sphere.center.y, sphere.center.z);
-		ImGui::Text("F RejeVec:,%f,%f,%f\n", rejeVec.x, rejeVec.y, rejeVec.z);
-		ImGui::Text("F len:,%f,rejeLEN%f\n\n", length, len);
-		ImGui::End();
+		//ImGui::Begin("Sphere2Obb5");
+		//ImGui::Text("F pos:A,%f,%f,%f", obb.m_Pos.x, obb.m_Pos.y, obb.m_Pos.z);
+		//ImGui::Text("F pos:B,%f,%f,%f\n", sphere.center.x, sphere.center.y, sphere.center.z);
+		//ImGui::Text("F RejeVec:,%f,%f,%f\n", rejeVec.x, rejeVec.y, rejeVec.z);
+		//ImGui::Text("F len:,%f,rejeLEN%f\n\n", length, len);
+		//ImGui::End();
 
 		return false;
 	}
@@ -531,12 +531,12 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 		
 
 	}
-	ImGui::Begin("Sphere2Obb5");
-	ImGui::Text("T pos:A,%f,%f,%f", obb.m_Pos.x, obb.m_Pos.y, obb.m_Pos.z);
-	ImGui::Text("T pos:B,%f,%f,%f\n", sphere.center.x, sphere.center.y, sphere.center.z);
-	ImGui::Text("T RejeVec:,%f,%f,%f\n", rejeVec.x, rejeVec.y, rejeVec.z);
-	ImGui::Text("T len:,%f,rejeLEN%f\n\n", length, len);
-	ImGui::End();
+	//ImGui::Begin("Sphere2Obb5");
+	//ImGui::Text("T pos:A,%f,%f,%f", obb.m_Pos.x, obb.m_Pos.y, obb.m_Pos.z);
+	//ImGui::Text("T pos:B,%f,%f,%f\n", sphere.center.x, sphere.center.y, sphere.center.z);
+	//ImGui::Text("T RejeVec:,%f,%f,%f\n", rejeVec.x, rejeVec.y, rejeVec.z);
+	//ImGui::Text("T len:,%f,rejeLEN%f\n\n", length, len);
+	//ImGui::End();
 	return true;
 }
 

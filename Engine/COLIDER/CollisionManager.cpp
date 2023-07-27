@@ -54,10 +54,10 @@ void CollisionManager::CheckAllCollisions()
 				Sphere* sphere = dynamic_cast<Sphere*>(colA);
 				OBB* obb = dynamic_cast<OBB*>(colB);
 
-				ImGui::Begin("Sphere2Obb");
-				ImGui::Text("T pos:A,%f,%f,%f", obb->m_Pos.x, obb->m_Pos.y, obb->m_Pos.z);
-				ImGui::Text("T pos:B,%f,%f,%f\n", sphere->center.x, sphere->center.y, sphere->center.z);
-				ImGui::End();
+				//ImGui::Begin("Sphere2Obb");
+				//ImGui::Text("T pos:A,%f,%f,%f", obb->m_Pos.x, obb->m_Pos.y, obb->m_Pos.z);
+				//ImGui::Text("T pos:B,%f,%f,%f\n", sphere->center.x, sphere->center.y, sphere->center.z);
+				//ImGui::End();
 
 				Vector3 inter;
 				if (Collision::CheckOBB2Sphere(*obb, *sphere, &inter)) {
@@ -153,9 +153,9 @@ bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, Raycast
 			it_hit = it;
 			if (distance >= 10) {
 
-			ImGui::Begin("RayDis");
-			ImGui::Text("dis0: %f", distance);
-			ImGui::End();
+			//ImGui::Begin("RayDis");
+			//ImGui::Text("dis0: %f", distance);
+			//ImGui::End();
 			}
 		}
 		else if (colA->GetShapeType() == COLLISIONSHAPE_MESH)
@@ -181,9 +181,9 @@ bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, Raycast
 			inter = tempInter;
 			it_hit = it;
 			if (distance >= 10) {
-				ImGui::Begin("RayDis");
-				ImGui::Text("dis1: %f", distance);
-				ImGui::End();
+				//ImGui::Begin("RayDis");
+				//ImGui::Text("dis1: %f", distance);
+				//ImGui::End();
 			}
 		}
 		else if (colA->GetShapeType() == COLLISIONSHAPE_OBB)
@@ -209,9 +209,9 @@ bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, Raycast
 			inter = tempInter;
 			it_hit = it;
 			if (distance >= 10) {
-				ImGui::Begin("RayDis");
-				ImGui::Text("dis2: %f", distance);
-				ImGui::End();
+				//ImGui::Begin("RayDis");
+				//ImGui::Text("dis2: %f", distance);
+				//ImGui::End();
 			}
 		}
 	}
@@ -222,9 +222,9 @@ bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, Raycast
 		hitInfo->collider = *it_hit;
 		hitInfo->collider->OnCllision(CollisionInfo(hitInfo->collider->GetObject3d(), hitInfo->collider, inter, distance));
 		hitInfo->object = hitInfo->collider->GetObject3d();
-		ImGui::Begin("RayDis");
-		ImGui::Text("disRes: %f,%d", distance,hitInfo->collider->GetAttribute());
-		ImGui::End();
+		//ImGui::Begin("RayDis");
+		//ImGui::Text("disRes: %f,%d", distance,hitInfo->collider->GetAttribute());
+		//ImGui::End();
 	}
 
 	return result;

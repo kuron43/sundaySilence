@@ -132,10 +132,10 @@ void Player::Update(Input* input, bool isTitle) {
 
 	object_->Update();
 
-	ImGui::Begin("PlyPOS");
-	ImGui::Text("Hit:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
-	ImGui::Text("Hit:%f,%f,%f", object_->wtf.scale.x, object_->wtf.scale.y, object_->wtf.scale.z);
-	ImGui::End();
+	//ImGui::Begin("PlyPOS");
+	//ImGui::Text("Hit:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
+	//ImGui::Text("Hit:%f,%f,%f", object_->wtf.scale.x, object_->wtf.scale.y, object_->wtf.scale.z);
+	//ImGui::End();
 }
 
 ///
