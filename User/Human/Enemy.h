@@ -25,6 +25,7 @@ public:
 	//
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
 	void SetReticle(Vector3 ret) { reticle->wtf.position = ret; }
+	void SetRestRotate(Vector3 rot) { restRotate_ = rot; }
 
 	// 種族番号取得
 	int HowTribe() { return Tribe_; }
@@ -56,6 +57,8 @@ private:
 	bool isRun_ = false;
 	//移動ベクトル
 	Vector3 velocity_;
+	// 初期回転向き保存
+	Vector3 restRotate_;
 
 
 	Weapon* weapon_;

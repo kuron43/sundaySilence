@@ -21,7 +21,7 @@ void Enemy::Initialize() {
 	isFound = false;
 	isDead = false;
 	nowTitle = false;
-	model_ = Model::LoadFromOBJ("cube");
+	model_ = Model::LoadFromOBJ("Cube2");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -99,7 +99,7 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 			//reticle->Draw();
 		}
 		for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-			coliderPosTest_[i]->Draw();
+			//coliderPosTest_[i]->Draw();
 		}
 		Object3d::PostDraw();
 		if (nowTitle) {
@@ -124,9 +124,17 @@ void Enemy::Reset() {
 /// </summary>
 void Enemy::FrontFace() {
 	Vector3 faceAngle = { 0,0,0 };
-	{
-		faceAngle.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
+	faceAngle.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
+	if (isFire == true) {
 		frontVec_ = faceAngle;
+	}if (isFire == false) {
+		frontVec_ = restRotate_;
+	}
+	if (!isDead) {
+		ImGui::Begin("faceAngle_Y");
+		ImGui::Text("Angle : Y %f", faceAngle.y);
+		ImGui::End();
+
 	}
 
 	object_->wtf.rotation = frontVec_;
@@ -160,18 +168,18 @@ void Enemy::ColiderUpdate() {
 		isFound = false;
 		isBlocked = true;
 
-		ImGui::Begin("eneRayHitBarrier");
-		ImGui::Text("HIT : dis %f", rayHit->distance);
-		ImGui::End();
+		//ImGui::Begin("eneRayHitBarrier");
+		//ImGui::Text("HIT : dis %f", rayHit->distance);
+		//ImGui::End();
 
 	}
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
 		isFound = true;
 		if (isBlocked == false) {
 			isFire = true;
-			ImGui::Begin("eneRayHitPlayer");
-			ImGui::Text("HIT : dis %f", rayHit->distance);
-			ImGui::End();
+			//ImGui::Begin("eneRayHitPlayer");
+			//ImGui::Text("HIT : dis %f", rayHit->distance);
+			//ImGui::End();
 		}
 	}
 	if (isDead) {

@@ -23,7 +23,7 @@ void GAME1Scene::Initialize() {
 
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("game2");
+		leveData = JsonLoader::LoadJsonFile("game3");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -38,11 +38,12 @@ void GAME1Scene::Initialize() {
 				Vector3 rot;
 				rot = objectData.rotation;
 				newEnemy->object_->wtf.rotation = rot;
+				newEnemy->SetRestRotate(rot);
 				//拡縮
 				Vector3 sca;
 				sca = objectData.scaling;
 				newEnemy->object_->wtf.scale = sca;
-				newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
+				//newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 				_objects->enemys.emplace_back(newEnemy);
 			}
 			if (objectData.fileName == "wall") {
