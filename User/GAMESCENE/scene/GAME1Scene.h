@@ -31,12 +31,12 @@ public:
 
 
 	// json
-	Model* modelcube = nullptr;
+	//Model* modelcube = nullptr;
 	//Model* modelREX = nullptr;
 
 	LevelData* leveData = nullptr;
-	std::map<std::string, Model*> jsonModels;
-	std::vector<Object3d*> JsonObjects;
+	//std::map<std::string, Model*> jsonModels;
+	//std::vector<Object3d*> JsonObjects;
 
 };
 

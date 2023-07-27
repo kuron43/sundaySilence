@@ -49,6 +49,9 @@ public:
 	std::unique_ptr<Player> player;
 
 	std::vector<Enemy*> enemys;
+	int eneCount;
+	std::vector<Boss*> boss;
+	int bossCount;
 
 	Model* wallMD;
 	std::vector<Wall*> walls;
