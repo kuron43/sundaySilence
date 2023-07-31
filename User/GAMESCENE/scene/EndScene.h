@@ -19,7 +19,7 @@ public:
 
 
 private:
-
+	std::unique_ptr <Sprite> end_;
 public:
 
 };

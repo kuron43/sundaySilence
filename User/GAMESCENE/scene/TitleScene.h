@@ -20,5 +20,6 @@ private:
 
 public:
 	
-
+private://リソース
+	std::unique_ptr <Sprite> title_;
 };

@@ -15,11 +15,10 @@ GAME1Scene::~GAME1Scene() {
 }
 
 void GAME1Scene::Initialize() {
-	Vector3 enepos = { -10,0,10 };
-	for (Enemy* enemy : _objects->enemys) {
-		enemy->SetPos(enepos);
-		enepos.x += 5;
-	}
+
+	_objects->player->SetPos(Vector3(0,0,0));
+	_objects->player->MatUpdate();
+
 
 	// Json
 	{

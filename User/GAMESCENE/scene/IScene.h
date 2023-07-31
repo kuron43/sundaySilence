@@ -5,6 +5,7 @@
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "Camera.h"
+#include "Sprite.h"
 
 #include "imgui.h"
 
