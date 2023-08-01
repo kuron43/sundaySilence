@@ -137,7 +137,7 @@ void GAME1Scene::Update(Input* input) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
 	}
 	else if (input->KeyboardTrigger(DIK_RETURN)) {
-		_controller->SetSceneNum(SC_OVER);
+		_controller->SetSceneNum(SCE_OVER);
 	}
 }
 

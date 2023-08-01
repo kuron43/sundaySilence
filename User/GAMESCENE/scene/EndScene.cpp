@@ -23,7 +23,7 @@ void EndScene::Update(Input* input) {
 	end_->Update();
 
 	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
-		_controller->SetSceneNum(SC_TITLE);
+		_controller->SetSceneNum(SCE_TITLE);
 	}
 }
 

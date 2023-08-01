@@ -42,17 +42,17 @@ void SceneManager::ChangeScene() {
 
 		switch (sceneNum)
 		{
-		case SC_TITLE:
+		case SCE_TITLE:
 			_scene.pop();
 			_scene.emplace(new TitleScene(&*this, _objects));
 			SceneInitialize();
 			break;
-		case SC_GAME1:
+		case SCE_GAME1:
 			_scene.pop();
 			_scene.emplace(new GAME1Scene(&*this, _objects));
 			SceneInitialize();
 			break;
-		case SC_OVER:
+		case SCE_OVER:
 			_scene.pop();
 			_scene.emplace(new EndScene(&*this, _objects));
 			SceneInitialize();
