@@ -1,17 +1,25 @@
 #include "GAME1Scene.h"
 #include "SceneManager.h"
 
-#include "SceneIntegrate.h"
-
-
 GAME1Scene::GAME1Scene(SceneManager* controller, SceneObjects* objects) {
 	_controller = controller;
 	_objects = objects;
 }
 
 GAME1Scene::~GAME1Scene() {
+	for (Wall* walls : _objects->walls) {
+		walls->Reset();
+	}
+	for (Enemy* enemy : _objects->enemys) {
+		enemy->Reset();
+	}
+	for (Boss* boss : _objects->boss) {
+		boss->Reset();
+	}
+
 	_objects->walls.clear();
 	_objects->enemys.clear();
+	_objects->boss.clear();
 }
 
 void GAME1Scene::Initialize() {
@@ -92,6 +100,7 @@ void GAME1Scene::Initialize() {
 
 void GAME1Scene::Update(Input* input) {
 	_objects->eneCount = 0;
+	_objects->bossCount = 0;
 
 	_controller->_camera->SetEye(camposEye);
 	_controller->_camera->SetTarget(camposTar);
@@ -120,20 +129,15 @@ void GAME1Scene::Update(Input* input) {
 
 
 	ImGui::Begin("enecount");
-	ImGui::Text("count : %d", _objects->eneCount);
+	ImGui::Text("countE : %d", _objects->eneCount);
+	ImGui::Text("countB : %d", _objects->bossCount);
 	ImGui::End();
 
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
 	}
 	else if (input->KeyboardTrigger(DIK_RETURN)) {
-		for (Enemy* enemy : _objects->enemys) {
-			enemy->Reset();
-		}
-		for (Boss* boss : _objects->boss) {
-			boss->Reset();
-		}
-		_controller->ChangeScene(new EndScene(_controller, _objects));
+		_controller->SetSceneNum(SC_OVER);
 	}
 }
 

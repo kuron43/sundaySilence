@@ -1,5 +1,6 @@
 #pragma once
 #include "IScene.h"
+
 class PauseScene :
     public IScene
 {

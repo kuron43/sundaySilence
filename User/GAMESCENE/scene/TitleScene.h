@@ -1,5 +1,6 @@
 #pragma once
 #include "IScene.h"
+#include "SceneIntegrate.h"
 
 class TitleScene :public IScene
 {

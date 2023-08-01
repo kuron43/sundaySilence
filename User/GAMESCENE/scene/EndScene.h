@@ -1,6 +1,6 @@
 #pragma once
 #include "IScene.h"
-
+#include "SceneIntegrate.h"
 
 class EndScene :
     public IScene

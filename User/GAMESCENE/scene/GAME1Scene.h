@@ -2,6 +2,7 @@
 #include "IScene.h"
 
 #include "JsonLoader.h"
+#include "SceneIntegrate.h"
 
 
 class GAME1Scene :

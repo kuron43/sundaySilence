@@ -57,26 +57,13 @@ private: // メンバ変数 (固定)
 	Input* input_ = nullptr;
 	SpriteCommon* spriteCommon = nullptr;
 	Camera* camera = nullptr;
+	// mane-ja-
 	SceneManager* sceneManager = nullptr;
-	std::unique_ptr<SceneObjects> sceneObjects;
-
-	// json
-	Model* modelcube = nullptr;
-	//Model* modelREX = nullptr;
-
-	LevelData* leveData = nullptr;
-	std::map<std::string, Model*> jsonModels;
-	std::vector<Object3d*> JsonObjects;
-
 	CollisionManager* collisionManager_ = nullptr;
 	BulletManager* bulletManager_ = nullptr;
 
-
 private:	//メンバ変数
-	Transform cam_TF;
-	Vector3 eye = { 0.0f, 10.0f, -10.0f };
-	Vector3 tar = { 0.0f, 0.0f, 0.0f };
-
+	std::unique_ptr<SceneObjects> sceneObjects;
 
 };
 

@@ -110,8 +110,8 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 
 /// リセットを行う
 void Boss::Reset() {
-	delete model_;
-	delete weapon_;
+	//delete model_;
+	//delete weapon_;
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		//delete sphere[i];
