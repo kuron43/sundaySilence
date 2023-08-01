@@ -51,12 +51,12 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, int
 
 
 	//test
-	coliderPosTest_ = Object3d::Create();
-	coliderPosTest_->SetModel(Model::LoadFromOBJ("sphere"));
-	coliderPosTest_->wtf.position = (sphere->center);
-	coliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
-	coliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
-	coliderPosTest_->Update();
+	//coliderPosTest_ = Object3d::Create();
+	//coliderPosTest_->SetModel(model);
+	//coliderPosTest_->wtf.position = (sphere->center);
+	//coliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
+	//coliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+	//coliderPosTest_->Update();
 
 }
 

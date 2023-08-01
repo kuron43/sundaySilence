@@ -37,13 +37,13 @@ public:
 	};
 public:
 
-	Sprite(uint32_t texNum,
-		Vector2 pos,
-		Vector2 size,
-		Vector4 color,
-		Vector2 anchorP,
-		bool swapLR,
-		bool swapUD);
+	//Sprite(uint32_t texNum,
+	//	Vector2 pos,
+	//	Vector2 size,
+	//	Vector4 color,
+	//	Vector2 anchorP,
+	//	bool swapLR,
+	//	bool swapUD);
 
 	//初期化
 	void Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex = UINT32_MAX);

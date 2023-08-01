@@ -24,6 +24,8 @@ public:
 
 	void Move(Input* input);
 
+	void SetPos(Vector3 pos) { object_->wtf.position = pos; };
+	void MatUpdate() { object_->UpdateMatrix(); };
 	Transform GetTransform() { return object_->wtf; };
 
 	// 種族番号取得

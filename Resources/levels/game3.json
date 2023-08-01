@@ -254,7 +254,7 @@
                 ],
                 "rotation": [
                     -0.0,
-                    89.99999237060547,
+                    45.0,
                     0.0
                 ],
                 "scaling": [
@@ -264,6 +264,28 @@
                 ]
             },
             "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "boss",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    19.371007919311523
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "file_name": "boss"
         }
     ]
 }

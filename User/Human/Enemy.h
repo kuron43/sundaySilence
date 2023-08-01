@@ -29,6 +29,7 @@ public:
 
 	// 種族番号取得
 	int HowTribe() { return Tribe_; }
+	bool HowDead() { return isDead; }
 
 	Transform GetTransform() { return object_->wtf; }
 

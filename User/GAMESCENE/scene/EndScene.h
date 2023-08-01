@@ -1,6 +1,6 @@
 #pragma once
 #include "IScene.h"
-
+#include "SceneIntegrate.h"
 
 class EndScene :
     public IScene
@@ -19,7 +19,7 @@ public:
 
 
 private:
-
+	std::unique_ptr <Sprite> end_;
 public:
 
 };

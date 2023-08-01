@@ -11,10 +11,19 @@ void SceneObjects::Initialize() {
 
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
+	{
+		//スプライト初期化
+		spriteCommon_ = std::make_unique<SpriteCommon>();
+		spriteCommon_->Initialize(_dxCommon);
+		// TITLE
+		spriteCommon_->LoadTexture(1, "title.png");
+		spriteCommon_->LoadTexture(2, "inu.png");
+		spriteCommon_->LoadTexture(3, "end.png");
+		spriteCommon_->LoadTexture(4, "clear.png");
+	}
+
 	// fbx テスト
 	{
-
-
 		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("boss_prot4"));
 		bossFbxO_ = std::make_unique<FBXObject3d>();
 		bossFbxO_->SetCamera(_camera);

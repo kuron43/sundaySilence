@@ -1,5 +1,6 @@
 #pragma once
 #include "IScene.h"
+#include "SceneIntegrate.h"
 
 class TitleScene :public IScene
 {
@@ -20,5 +21,6 @@ private:
 
 public:
 	
-
+private://リソース
+	std::unique_ptr <Sprite> title_;
 };
