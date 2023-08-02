@@ -62,7 +62,6 @@ void SceneManager::ChangeScene() {
 		default:
 			break;
 		}
-		assert(_scene);
 		isChange = false;
 	}
 	else {

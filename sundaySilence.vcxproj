@@ -162,6 +162,7 @@
     <ClCompile Include="User\Human\Enemy.cpp" />
     <ClCompile Include="User\Objects\Objects.cpp" />
     <ClCompile Include="User\Objects\Wall.cpp" />
+    <ClCompile Include="User\Skills\SerialDash.cpp" />
     <ClCompile Include="User\Weapon\Assault.cpp" />
     <ClCompile Include="User\Weapon\Bullet.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
@@ -235,6 +236,8 @@
     <ClInclude Include="User\Human\Enemy.h" />
     <ClInclude Include="User\Objects\Objects.h" />
     <ClInclude Include="User\Objects\Wall.h" />
+    <ClInclude Include="User\Skills\SerialDash.h" />
+    <ClInclude Include="User\Skills\SkillIntegrate.h" />
     <ClInclude Include="User\Weapon\Assault.h" />
     <ClInclude Include="User\Weapon\Bullet.h" />
     <ClInclude Include="User\Human\Human.h" />

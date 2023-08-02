@@ -8,20 +8,18 @@ class Player :
 public:
 	Player();
 	~Player()override;
-
-
 	/// シーンの更新を行う
 	void Initialize()override;
-
 	/// シーンの更新を行う
 	void Update(Input* input,bool isTitle = false)override;
-
 	/// シーンの描画を行う
 	void Draw(DirectXCommon* dxCommon)override;
-
 	/// リセットを行う
 	void Reset() override;
 
+
+
+	void ColisionUpdate();
 	void Move(Input* input);
 
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; };
