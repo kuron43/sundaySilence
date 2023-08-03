@@ -67,6 +67,7 @@ void GameScene::Update() {
 	sceneManager->ChangeScene();
 
 	sceneObjects->lightGroup->Update();
+
 	sceneManager->SceneUpdate(input_);
 
 	bulletManager_->DeadUpdate();

@@ -78,7 +78,7 @@
     <ClCompile Include="User\Objects\Wall.cpp" />
     <ClCompile Include="User\Weapon\BulletManager.cpp" />
     <ClCompile Include="Engine\COLIDER\RayCollider.cpp" />
-    <ClCompile Include="User\Skills\SerialDash.cpp" />
+    <ClCompile Include="User\Skills\PointDash.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
@@ -153,7 +153,7 @@
     <ClInclude Include="User\Objects\Wall.h" />
     <ClInclude Include="User\Weapon\BulletManager.h" />
     <ClInclude Include="Engine\COLIDER\RayCollider.h" />
-    <ClInclude Include="User\Skills\SerialDash.h" />
+    <ClInclude Include="User\Skills\PointDash.h" />
     <ClInclude Include="User\Skills\SkillIntegrate.h" />
   </ItemGroup>
   <ItemGroup>
