@@ -67,6 +67,7 @@ void GameScene::Update() {
 	sceneManager->ChangeScene();
 
 	sceneObjects->lightGroup->Update();
+	sceneObjects->skydome_O->Update();
 
 	sceneManager->SceneUpdate(input_);
 
@@ -80,7 +81,9 @@ void GameScene::Update() {
 /// 描画
 /// </summary>
 void GameScene::Draw() {
-
+	Object3d::PreDraw(dxCommon_->GetCommandList());
+	sceneObjects->skydome_O->Draw();
+	Object3d::PostDraw();
 	sceneManager->SceneDraw();
 
 	/*ImGui::Begin("Info");

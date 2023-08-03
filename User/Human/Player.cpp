@@ -23,6 +23,9 @@ void Player::Initialize() {
 	weapon_[0] = new Assault();
 	weapon_[0]->Initialize();
 
+	pointDash_ = new PointDash();
+	pointDash_->points.resize(pointDash_->MAX_POINTNUM);
+
 	//当たり判定用
 	SPHERE_COLISSION_NUM = 1;
 	sphere.resize(SPHERE_COLISSION_NUM);
@@ -57,19 +60,28 @@ void Player::Update(Input* input, bool isTitle) {
 	Vector2 mousepos = input->GetMousePosition();
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_,0,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
-	if (input->MouseButtonPush(0) && !isTitle) {
+	if (input->MouseButtonPush(0) && !isTitle && isSlow == false) {
 		weapon_[0]->Shot(object_->wtf, reticle->wtf, PLAYER);
 	}
 	weapon_[0]->Update(input, isSlow);
-	
+
+	if (input->MouseButtonTrigger(0) && !isTitle && isSlow == true) {
+		pointDash_->SetPoint(reticle->wtf.position, input);
+	}
+
 	ColisionUpdate();
 
 	object_->Update();
 
-	//ImGui::Begin("PlyPOS");
-	//ImGui::Text("Hit:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
-	//ImGui::Text("Hit:%f,%f,%f", object_->wtf.scale.x, object_->wtf.scale.y, object_->wtf.scale.z);
-	//ImGui::End();
+	ImGui::Begin("pointD");
+	ImGui::Text("ply:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
+	ImGui::Text("pointNUM :%d", pointDash_->registNum);
+	ImGui::InputFloat3("pos0", &pointDash_->points[0].x);
+	ImGui::InputFloat3("pos0", &pointDash_->points[1].x);
+	ImGui::InputFloat3("pos0", &pointDash_->points[2].x);
+	ImGui::InputFloat3("pos0", &pointDash_->points[3].x);
+	ImGui::InputFloat3("pos0", &pointDash_->points[4].x);
+	ImGui::End();
 }
 
 ///
@@ -80,7 +92,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 		reticle->Draw();
 	}
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		
+
 		//coliderPosTest_[i]->Draw();
 	}
 	Object3d::PostDraw();
@@ -425,11 +437,13 @@ void Player::Move(Input* input) {
 
 
 	//////////////////////////////////
-	if (input->KeyboardPush(DIK_R)) {
+	if (input->MouseButtonPush(1)) {
 		isSlow = true;
 	}
-	if (input->KeyboardPush(DIK_T)) {
+	if (input->MouseButtonRelease(1)) {
 		isSlow = false;
+		pointDash_->MakeMoveVec(Affin::GetWorldTrans(object_->wtf.matWorld));
+		//pointDash_->Reset();
 	}
 
 	if (isSlow == true) {
