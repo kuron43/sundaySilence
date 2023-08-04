@@ -42,8 +42,10 @@ void SceneObjects::Initialize() {
 	{
 		wallMD = Model::LoadFromOBJ("wall");
 	}
-
-
+	skydome_O = std::make_unique<Object3d>();
+	skydome_O->SetModel(Model::LoadFromOBJ("skydome"));
+	skydome_O->Initialize();
+	skydome_O->wtf.scale = Vector3(1000.0f, 1000.0f, 1000.0f);
 	//ライトの生成
 	lightGroup = std::make_unique< LightGroup>();
 	lightGroup->Initialize();

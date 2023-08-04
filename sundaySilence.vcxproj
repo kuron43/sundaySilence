@@ -61,7 +61,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;$(SolutionDir)External\imgui;$(SolutionDir)External\DirectXTex;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;$(SolutionDir)External\imgui;$(SolutionDir)External\DirectXTex;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -84,7 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;$(SolutionDir)External\imgui;$(SolutionDir)External\DirectXTex;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;%(AdditionalIncludeDirectories);$(SolutionDir)User\Objects</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;$(SolutionDir)External\imgui;$(SolutionDir)External\DirectXTex;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;%(AdditionalIncludeDirectories);$(SolutionDir)User\Objects</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -144,6 +144,7 @@
     <ClCompile Include="Engine\LIGHT\PointLight.cpp" />
     <ClCompile Include="Engine\MATH\Affin.cpp" />
     <ClCompile Include="Engine\MATH\ConvertXM.cpp" />
+    <ClCompile Include="Engine\MATH\Easing.cpp" />
     <ClCompile Include="Engine\MATH\Matrix4.cpp" />
     <ClCompile Include="Engine\MATH\Quaternion.cpp" />
     <ClCompile Include="Engine\MATH\Vector2.cpp" />
@@ -162,7 +163,7 @@
     <ClCompile Include="User\Human\Enemy.cpp" />
     <ClCompile Include="User\Objects\Objects.cpp" />
     <ClCompile Include="User\Objects\Wall.cpp" />
-    <ClCompile Include="User\Skills\SerialDash.cpp" />
+    <ClCompile Include="User\Skills\PointDash.cpp" />
     <ClCompile Include="User\Weapon\Assault.cpp" />
     <ClCompile Include="User\Weapon\Bullet.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Engine\LIGHT\SpotLight.h" />
     <ClInclude Include="Engine\MATH\Affin.h" />
     <ClInclude Include="Engine\MATH\ConvertXM.h" />
+    <ClInclude Include="Engine\MATH\Easing.h" />
     <ClInclude Include="Engine\MATH\Matrix4.h" />
     <ClInclude Include="Engine\MATH\Quaternion.h" />
     <ClInclude Include="Engine\MATH\Vector2.h" />
@@ -236,7 +238,7 @@
     <ClInclude Include="User\Human\Enemy.h" />
     <ClInclude Include="User\Objects\Objects.h" />
     <ClInclude Include="User\Objects\Wall.h" />
-    <ClInclude Include="User\Skills\SerialDash.h" />
+    <ClInclude Include="User\Skills\PointDash.h" />
     <ClInclude Include="User\Skills\SkillIntegrate.h" />
     <ClInclude Include="User\Weapon\Assault.h" />
     <ClInclude Include="User\Weapon\Bullet.h" />

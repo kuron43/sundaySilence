@@ -1,6 +1,8 @@
 #pragma once
 #include "Human.h"
 
+#include "SkillIntegrate.h"
+
 
 class Player :
 	public Human
@@ -50,6 +52,9 @@ private:
 
 	Weapon* weapon_[2];
 	bool isWeaponOn = true;
+	// スキル用
+private:
+	PointDash* pointDash_;
 
 	//コライダー
 public:

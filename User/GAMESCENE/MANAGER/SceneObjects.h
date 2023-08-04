@@ -38,8 +38,8 @@ public:
 	std::unique_ptr<ParticleManager> particleManager_;
 	std::unique_ptr<ParticleManager> particleManager2_;
 
-	std::unique_ptr <Object3d> object3d;
-	std::unique_ptr <Model> model;
+	std::unique_ptr <Object3d> skydome_O;
+	std::unique_ptr <Model> skydome_M;
 
 	//FBXモデル
 	std::unique_ptr<FBXModel> bossFbxM_;
