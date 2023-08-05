@@ -1,10 +1,15 @@
 #include "PointDash.h"
 
+void PointDash::Update(Vector3 pos)
+{
+
+}
+
 void PointDash::SetPoint(Vector3& point, Input* input) {
 	if (input) {
 
 	}
-	if (registNum==0) {
+	if (registNum == 0) {
 		points[0] = point;
 		registNum = 1;
 		isActive = true;
@@ -30,14 +35,14 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	}
 }
 void PointDash::MakeMoveVec(Vector3 pos) {
-	for (int i = 0; i <= registNum; i++) {
+	for (int i = 0; i < registNum; i++) {
 		if (registNum == 0) {
 			break;
 		}
 		else if (i == 0) {
 			moveVec[0] = pos - points[0];
 		}
-		else if(i<=1)
+		else if (0 < i && i < 5)
 		{
 			moveVec[i] = Vector3(points[i - 1] - points[i]);
 		}
@@ -46,7 +51,8 @@ void PointDash::MakeMoveVec(Vector3 pos) {
 		}
 	}
 	for (int i = 0; i <= registNum; i++) {
-			moveVec[i].nomalize();
+		moveVec[i].nomalize();
+
 	}
 }
 void PointDash::GoToPoint() {
@@ -57,4 +63,7 @@ void PointDash::Reset() {
 	registNum = 0;
 	isActive = false;
 	points.resize(MAX_POINTNUM);
+	for (int i = 0; i <= _countof(moveVec); i++) {
+		moveVec[i] = Vector3(0,0,0);
+	}
 }

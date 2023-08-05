@@ -8,7 +8,7 @@ class PointDash
 public:
 	const int MAX_POINTNUM = 5;
 	std::vector<Vector3> points;
-	Vector3 moveVec[6];
+	Vector3 moveVec[5];
 	float dashSpeed;
 	int nowPointNum;
 	int registNum;
