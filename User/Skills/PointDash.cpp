@@ -2,7 +2,8 @@
 
 void PointDash::Update(Vector3 pos)
 {
-
+	Vector3 a = pos;
+	a.x++;
 }
 
 void PointDash::SetPoint(Vector3& point, Input* input) {

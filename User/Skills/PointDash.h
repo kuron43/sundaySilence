@@ -2,6 +2,7 @@
 #include "Affin.h"
 #include "Input.h"
 #include <vector>
+#include "Easing.h"
 
 class PointDash
 {
