@@ -69,9 +69,18 @@ void Player::Update(Input* input, bool isTitle) {
 		pointDash_->SetPoint(reticle->wtf.position, input);
 	}
 
+	if (!isTitle && isSlow == false && pointDash_->isActive == true) {
+		pointDash_->GoToPoint();
+	}
+
 	ColisionUpdate();
 
 	object_->Update();
+
+	if (input->KeyboardTrigger(DIK_R)) {
+		Reset();
+		pointDash_->Reset();
+	}
 
 	ImGui::Begin("pointD");
 	ImGui::Text("ply:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
@@ -86,7 +95,11 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::InputFloat3("Vec2", &pointDash_->moveVec[2].x);
 	ImGui::InputFloat3("Vec3", &pointDash_->moveVec[3].x);
 	ImGui::InputFloat3("Vec4", &pointDash_->moveVec[4].x);
-	ImGui::InputFloat3("Vec5", &pointDash_->moveVec[5].x);
+	ImGui::End();
+
+	ImGui::Begin("pointRes");
+	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
+	ImGui::Text("spe :%f", pointDash_->easeSpeed);
 	ImGui::End();
 }
 

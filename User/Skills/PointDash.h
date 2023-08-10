@@ -11,6 +11,7 @@ public:
 	std::vector<Vector3> points;
 	Vector3 moveVec[5];
 	float dashSpeed;
+	float easeSpeed;
 	int nowPointNum;
 	int registNum;
 	bool isReset;
@@ -18,6 +19,9 @@ public:
 	bool moveEnd;
 	bool isActive;
 
+	int time;
+	float easetime;
+	Vector3 resultVec;
 
 public:
 	void Update(Vector3 pos);

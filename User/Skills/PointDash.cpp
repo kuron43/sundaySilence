@@ -1,4 +1,5 @@
 #include "PointDash.h"
+#include "imgui.h"
 
 void PointDash::Update(Vector3 pos)
 {
@@ -55,16 +56,29 @@ void PointDash::MakeMoveVec(Vector3 pos) {
 		moveVec[i].nomalize();
 
 	}
+	nowPointNum = 0;
 }
 void PointDash::GoToPoint() {
+	if (isActive) {
+		time++;
+		
+		easetime = (float)time / 30;
+		if (nowPointNum == 0 && time <=30) {
+			resultVec = Easing::OutQuintVec3(points[0], points[1], (float)easetime);
+			easeSpeed = Easing::OutQuadFloat(0.0f, 1.0f, (float)easetime);
+		}
+	}
 
 }
 void PointDash::Reset() {
 	points.clear();
 	registNum = 0;
-	isActive = false;
+	isActive = false; 
 	points.resize(MAX_POINTNUM);
-	for (int i = 0; i <= _countof(moveVec); i++) {
-		moveVec[i] = Vector3(0,0,0);
+	for (int i = 0; i < _countof(moveVec); i++) {
+		moveVec[i] = Vector3(0, 0, 0);
 	}
+	time = 0;
+	easeSpeed = 0;
+	easetime = 0;
 }
