@@ -14,7 +14,6 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	if (registNum == 0) {
 		points[0] = point;
 		registNum = 1;
-		isActive = true;
 	}
 	else if (registNum == 1) {
 		points[1] = point;
@@ -57,6 +56,7 @@ void PointDash::MakeMoveVec(Vector3 pos) {
 		moveVec[i].nomalize();
 
 	}
+	isActive = true;
 	nowPointNum = 0;
 }
 void PointDash::GoToPoint() {
