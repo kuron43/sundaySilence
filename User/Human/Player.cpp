@@ -56,7 +56,9 @@ void Player::Initialize() {
 ///
 void Player::Update(Input* input, bool isTitle) {
 	nowTitle = isTitle;
-	Move(input);
+	if (pointDash_->isActive == false) {
+		Move(input);
+	}
 	Vector2 mousepos = input->GetMousePosition();
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_,0,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
@@ -67,10 +69,12 @@ void Player::Update(Input* input, bool isTitle) {
 
 	if (input->MouseButtonTrigger(0) && !isTitle && isSlow == true) {
 		pointDash_->SetPoint(reticle->wtf.position, input);
+		nowSetPoint = true;
 	}
 
-	if (!isTitle && isSlow == false && pointDash_->isActive == true) {
+	if (!isTitle && pointDash_->isActive == true ) {
 		pointDash_->GoToPoint();
+		object_->wtf.position = pointDash_->resultVec;
 	}
 
 	ColisionUpdate();
@@ -461,6 +465,7 @@ void Player::Move(Input* input) {
 	}
 	if (input->MouseButtonRelease(1)) {
 		isSlow = false;
+		nowSetPoint = false;
 		pointDash_->MakeMoveVec(Affin::GetWorldTrans(object_->wtf.matWorld));
 		//pointDash_->Reset();
 	}

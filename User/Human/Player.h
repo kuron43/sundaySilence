@@ -55,6 +55,7 @@ private:
 	// スキル用
 private:
 	PointDash* pointDash_;
+	bool nowSetPoint;
 
 	//コライダー
 public:

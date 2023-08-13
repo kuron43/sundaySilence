@@ -37,6 +37,7 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	}
 }
 void PointDash::MakeMoveVec(Vector3 pos) {
+	startPos = pos;
 	for (int i = 0; i < registNum; i++) {
 		if (registNum == 0) {
 			break;
@@ -64,8 +65,44 @@ void PointDash::GoToPoint() {
 		
 		easetime = (float)time / 30;
 		if (nowPointNum == 0 && time <=30) {
+			resultVec = Easing::OutQuintVec3(startPos, points[0], (float)easetime);
+			easeSpeed = Easing::OutQuadFloat(0.0f, 1.0f, (float)easetime);
+			if (time == 30) {
+				nowPointNum = 1;
+				time = 0;
+			}
+		}
+		if (nowPointNum == 1 && time <= 30) {
 			resultVec = Easing::OutQuintVec3(points[0], points[1], (float)easetime);
 			easeSpeed = Easing::OutQuadFloat(0.0f, 1.0f, (float)easetime);
+			if (time == 30) {
+				nowPointNum = 2;
+				time = 0;
+			}
+		}
+		if (nowPointNum == 2 && time <= 30) {
+			resultVec = Easing::OutQuintVec3(points[1], points[2], (float)easetime);
+			easeSpeed = Easing::OutQuadFloat(0.0f, 1.0f, (float)easetime);
+			if (time == 30) {
+				nowPointNum = 3;
+				time = 0;
+			}
+		}
+		if (nowPointNum == 3 && time <= 30) {
+			resultVec = Easing::OutQuintVec3(points[2], points[3], (float)easetime);
+			easeSpeed = Easing::OutQuadFloat(0.0f, 1.0f, (float)easetime);
+			if (time == 30) {
+				nowPointNum = 4;
+				time = 0;
+			}
+		}
+		if (nowPointNum == 4 && time <= 30) {
+			resultVec = Easing::OutQuintVec3(points[3], points[4], (float)easetime);
+			easeSpeed = Easing::OutQuadFloat(0.0f, 1.0f, (float)easetime);
+			if (time >= 29) {
+				nowPointNum = 5;
+				isActive = false;
+			}
 		}
 	}
 
@@ -78,6 +115,7 @@ void PointDash::Reset() {
 	for (int i = 0; i < _countof(moveVec); i++) {
 		moveVec[i] = Vector3(0, 0, 0);
 	}
+	resultVec = Vector3(0, 0, 0);
 	time = 0;
 	easeSpeed = 0;
 	easetime = 0;
