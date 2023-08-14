@@ -136,7 +136,7 @@ void GAME1Scene::Update(Input* input) {
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
 	}
-	else if (input->KeyboardTrigger(DIK_RETURN)) {
+	else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
 		_controller->SetSceneNum(SCE_OVER);
 	}
 }
