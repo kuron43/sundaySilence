@@ -52,6 +52,13 @@ void SceneManager::ChangeScene() {
 			_scene.emplace(new GAME1Scene(&*this, _objects));
 			SceneInitialize();
 			break;
+
+		case SCE_GAME2:
+			_scene.pop();
+			_scene.emplace(new GAME2Scene(&*this, _objects));
+			SceneInitialize();
+			break;
+
 		case SCE_OVER:
 			_scene.pop();
 			_scene.emplace(new EndScene(&*this, _objects));
