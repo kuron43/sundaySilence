@@ -11,7 +11,7 @@ Player::~Player() {
 
 ///
 void Player::Initialize() {
-	model_ = Model::LoadFromOBJ("cube");
+	model_ = Model::LoadFromOBJ("prayer");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -486,6 +486,7 @@ void Player::Move(Input* input) {
 	object_->wtf.position += velocity_;
 
 }
+
 void Player::ColisionUpdate() {
 	// コライダーのアップデート
 	object_->UpdateMatrix();
