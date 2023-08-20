@@ -45,6 +45,7 @@ public:
 public:
 	bool isChange = false;
 	int sceneNum = 0;
+	bool goToTitle = false;
 };
 
 //	参照元

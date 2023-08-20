@@ -97,5 +97,5 @@ float4 main(VSOutput input) : SV_TARGET
         col.a = 1;
         return col;
     }
-    return float4(1, 1, 1, 1);
+    return float4(1, 1, 0, 1);
 }

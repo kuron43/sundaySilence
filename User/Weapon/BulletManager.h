@@ -25,6 +25,11 @@ public:
 	{
 		bullets.remove(bullet);
 	}
+	// 弾のオールクリア
+	inline void AllClearBullet()
+	{
+		bullets.clear();
+	}
 
 	static void SetSpeed(float speed) { speed_ = speed; }
 	void Update();

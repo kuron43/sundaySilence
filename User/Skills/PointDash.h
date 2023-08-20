@@ -23,6 +23,7 @@ public:
 	int time;
 	float easetime;
 	int easeMaxTime = 30;
+	bool timeEnd = false;
 	Vector3 resultVec;
 
 public:

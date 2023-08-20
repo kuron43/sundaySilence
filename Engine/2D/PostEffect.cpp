@@ -36,7 +36,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::constDataBuff_;
 // マッピング済みアドレス
 PostEffect::SendDataGPU* PostEffect::dataMap = nullptr;
 
-const float PostEffect::clearColor[4] = { 0.25f,0.5f,0.1f,0 };
+const float PostEffect::clearColor[4] = { 0.0f,0.0f,0.0f,0 };
 
 void PostEffect::Initialize(DirectXCommon* dxCommon)
 {

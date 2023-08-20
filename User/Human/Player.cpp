@@ -82,7 +82,7 @@ void Player::Update(Input* input, bool isTitle) {
 	object_->Update();
 
 	if (input->KeyboardTrigger(DIK_R)) {
-		Reset();
+		//Reset();
 		pointDash_->Reset();
 	}
 

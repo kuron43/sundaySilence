@@ -64,51 +64,62 @@ void PointDash::MakeMoveVec(Vector3 pos) {
 	nowPointNum = 0;
 }
 void PointDash::GoToPoint() {
+	timeEnd = false;
 	if (isActive) {
 		time++;
 
 		easetime = (float)time / easeMaxTime;
-		if (nowPointNum == 0 && time <= easeMaxTime) {
+		if (nowPointNum == 0 && time <= easeMaxTime && registNum >= 1) {
 			resultVec = Easing::InOutQuintVec3(startPos, points[0], (float)easetime);
 			if (time == easeMaxTime - 1) {
 				nowPointNum = 1;
 				time = 1;
+				timeEnd = true;
 			}
 		}
-		if (nowPointNum == 1 && time <= easeMaxTime) {
+		if (nowPointNum == 1 && time <= easeMaxTime && registNum >= 2) {
 			resultVec = Easing::InOutQuintVec3(points[0], points[1], (float)easetime);
 			if (time == easeMaxTime - 1) {
 				resultVec = points[1];
 				nowPointNum = 2;
 				time = 1;
+				timeEnd = true;
 			}
 		}
-		if (nowPointNum == 2 && time <= easeMaxTime) {
+		if (nowPointNum == 2 && time <= easeMaxTime && registNum >= 3) {
 			resultVec = Easing::InOutQuintVec3(points[1], points[2], (float)easetime);
 			if (time == easeMaxTime - 1) {
 				resultVec = points[2];
 				nowPointNum = 3;
 				time = 1;
+				timeEnd = true;
 			}
 		}
-		if (nowPointNum == 3 && time <= easeMaxTime) {
+		if (nowPointNum == 3 && time <= easeMaxTime && registNum >= 4) {
 			resultVec = Easing::InOutQuintVec3(points[2], points[3], (float)easetime);
 			if (time == easeMaxTime - 1) {
 				resultVec = points[3];
 				nowPointNum = 4;
 				time = 1;
+				timeEnd = true;
 			}
 		}
-		if (nowPointNum == 4 && time <= 60) {
+		if (nowPointNum == 4 && time <= 60 && registNum == 5) {
 			resultVec = Easing::InOutQuintVec3(points[3], points[4], (float)easetime);
 			if (time >= easeMaxTime - 1) {
 				resultVec = points[4];
 				nowPointNum = 5;
-				isActive = false;
+				time = 1;
+				timeEnd = true;
 			}
 		}
 	}
-
+	if (nowPointNum == registNum) {
+		isActive = false;
+		timeEnd = false;
+		Reset();
+	}
+	
 }
 void PointDash::Reset() {
 	points.clear();
@@ -118,7 +129,7 @@ void PointDash::Reset() {
 	for (int i = 0; i < _countof(moveVec); i++) {
 		moveVec[i] = Vector3(0, 0, 0);
 	}
-	resultVec = Vector3(0, 0, 0);
+	//resultVec = Vector3(0, 0, 0);
 	time = 0;
 	easeSpeed = 0;
 	easetime = 0;

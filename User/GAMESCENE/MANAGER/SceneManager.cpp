@@ -37,8 +37,14 @@ void SceneManager::SceneDraw() {
 }
 
 void SceneManager::ChangeScene() {
+	if (goToTitle == true) {
+		_scene.pop();
+		_scene.emplace(new TitleScene(&*this, _objects));
+		SceneInitialize();
+		goToTitle = false;
+	}
 
-	if (isChange) {
+	if (isChange == true && goToTitle == false) {
 
 		switch (sceneNum)
 		{
