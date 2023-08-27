@@ -57,7 +57,7 @@ void TitleScene::Update(Input* input) {
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
 	}else if (input->KeyboardTrigger(DIK_SPACE)) {
-		_controller->SetSceneNum(SCE_GAME1);
+		_controller->SetSceneNum(SCE_SELECT);
 	}
 
 	
@@ -70,3 +70,4 @@ void TitleScene::Draw() {
 	//_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
 	_objects->player->Draw(_controller->_dxCommon);
 }
+

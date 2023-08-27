@@ -70,6 +70,11 @@ void SceneManager::ChangeScene() {
 			_scene.emplace(new EndScene(&*this, _objects));
 			SceneInitialize();
 			break;
+		case SCE_SELECT:
+			_scene.pop();
+			_scene.emplace(new SelectScene(&*this, _objects));
+			SceneInitialize();
+			break;
 			/////////////////////////////////////////////////////
 		case 0:
 		default:

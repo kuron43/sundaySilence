@@ -81,6 +81,7 @@
     <ClCompile Include="User\Skills\PointDash.cpp" />
     <ClCompile Include="Engine\MATH\Easing.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\GAME2Scene.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\SelectScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="User\Skills\SkillIntegrate.h" />
     <ClInclude Include="Engine\MATH\Easing.h" />
     <ClInclude Include="User\GAMESCENE\scene\GAME2Scene.h" />
+    <ClInclude Include="User\GAMESCENE\scene\SelectScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli" />

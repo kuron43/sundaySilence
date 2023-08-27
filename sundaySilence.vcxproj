@@ -159,6 +159,7 @@
     <ClCompile Include="User\GAMESCENE\scene\GAME2Scene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\IScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\PauseScene.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\SelectScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
     <ClCompile Include="User\Human\Boss.cpp" />
     <ClCompile Include="User\Human\Enemy.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="User\GAMESCENE\scene\GAME2Scene.h" />
     <ClInclude Include="User\GAMESCENE\scene\IScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\PauseScene.h" />
+    <ClInclude Include="User\GAMESCENE\scene\SelectScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />
     <ClInclude Include="User\Human\Boss.h" />
     <ClInclude Include="User\Human\Enemy.h" />
