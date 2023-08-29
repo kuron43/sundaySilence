@@ -125,11 +125,7 @@ private: // 静的メンバ変数
 
 private:// メンバ関数
 
-	/// <summary>
-	/// 3Dオブジェクト生成
-	/// </summary>
-	/// <returns></returns>
-	ParticleManager* Create();
+	
 
 	/// <summary>
 	/// デスクリプタヒープの初期化
@@ -147,6 +143,12 @@ private:// メンバ関数
 	void CreateModel();
 
 public: // メンバ関数
+	/// <summary>
+	/// 3Dオブジェクト生成
+	/// </summary>
+	/// <returns></returns>
+	ParticleManager* Create();
+	static ParticleManager* GetInstance();
 
 	ParticleManager();
 	~ParticleManager();
@@ -167,6 +169,7 @@ public: // メンバ関数
 	/// マネージャーの座標をもとにランダムに放出する
 	/// </summary>
 	void RandParticle();
+	void RandParticle(Vector3 pos);
 
 	/// <summary>
 	/// パーティクルの追加

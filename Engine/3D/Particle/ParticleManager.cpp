@@ -18,6 +18,12 @@ ComPtr<ID3D12RootSignature> ParticleManager::rootsignature;
 ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate;
 Camera* ParticleManager::camera_ = nullptr;
 
+ParticleManager* ParticleManager::GetInstance()
+{
+	static ParticleManager instance;
+	return &instance;
+}
+
 ParticleManager::ParticleManager() {
 
 }
@@ -601,7 +607,9 @@ void ParticleManager::Draw()
 void ParticleManager::Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale)
 {
 	assert(start_scale);
-	assert(end_scale);
+	if (end_scale) {
+
+	}
 	Vector2 scale ;
 	scale = { start_scale,end_scale };
 	//リストに要素を追加
@@ -626,6 +634,39 @@ void ParticleManager::RandParticle()
 		pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 		pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 		pos += wtf_.position;
+		//X,Y,Z全て[-0.05f,+0.05f]でランダムに分布
+		const float rnd_vel = 0.3f;
+		Vector3 vel{};
+		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		// 重力に見立ててYのみ[-0.001f,0]でランダムに分布
+		Vector3 acc{};
+		const float rnd_acc = 0.001f;
+		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+
+		Vector4 col{};
+		const float rnd_col = 1.0f;
+		col.x = (float)rand() / RAND_MAX * rnd_col;
+		col.y = (float)rand() / RAND_MAX * rnd_col;
+		col.z = (float)rand() / RAND_MAX * rnd_col;
+
+		// 追加
+		Add(60, pos, vel, acc, 1.0f, 0.0f);
+	}
+}
+
+void ParticleManager::RandParticle(Vector3 posO)
+{
+	for (int i = 0; i < 30; i++)
+	{
+		//X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
+		const float rnd_pos = 10.0f;
+		Vector3 pos{};
+		pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		pos += posO;
 		//X,Y,Z全て[-0.05f,+0.05f]でランダムに分布
 		const float rnd_vel = 0.3f;
 		Vector3 vel{};

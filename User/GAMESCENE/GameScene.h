@@ -61,6 +61,7 @@ private: // メンバ変数 (固定)
 	SceneManager* sceneManager = nullptr;
 	CollisionManager* collisionManager_ = nullptr;
 	BulletManager* bulletManager_ = nullptr;
+	ParticleManager* particleManager_ = nullptr;
 
 private:	//メンバ変数
 	std::unique_ptr<SceneObjects> sceneObjects;

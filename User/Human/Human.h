@@ -8,6 +8,7 @@
 #include "imgui.h"
 
 #include "Weapon.h"
+#include "ParticleManager.h"
 
 #include"SphereCollider.h"
 #include"RayCollider.h"
