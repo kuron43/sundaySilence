@@ -656,6 +656,7 @@ void ParticleManager::RandParticle()
 	}
 }
 
+
 void ParticleManager::RandParticle(Vector3 posO)
 {
 	for (int i = 0; i < 30; i++)
