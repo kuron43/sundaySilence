@@ -79,7 +79,7 @@ void SelectScene::SelectSceneNum(Input* input) {
 			selectNum = 0;
 		}
 	}
-	if (input->KeyboardTrigger(DIK_RETURN)) {
+	if (input->KeyboardTrigger(DIK_SPACE)) {
 		resultNum = selectNum;
 		isConfirm = true;
 	}

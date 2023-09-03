@@ -86,7 +86,7 @@ void Player::Update(Input* input, bool isTitle) {
 		pointDash_->Reset();
 	}
 
-	ImGui::Begin("pointD");
+	/*ImGui::Begin("pointD");
 	ImGui::Text("ply:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
 	ImGui::Text("pointNUM :%d", pointDash_->registNum);
 	ImGui::InputFloat3("pos0", &pointDash_->points[0].x);
@@ -104,7 +104,7 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::Begin("pointRes");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
 	ImGui::Text("spe :%f", pointDash_->easeSpeed);
-	ImGui::End();
+	ImGui::End();*/
 }
 
 ///
