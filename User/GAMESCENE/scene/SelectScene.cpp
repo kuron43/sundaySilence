@@ -17,26 +17,41 @@ void SelectScene::Initialize() {
 	isConfirm = false;
 
 
-	titele_ = std::make_unique<Sprite>();
-	titele_->Initialize(_objects->spriteCommon_.get(), 3);
-	titele_->SetSize({ 256,128 });
-	titele_->SetPozition({ 200,100 });
+	selectTitele_ = std::make_unique<Sprite>();
+	selectTitele_->Initialize(_objects->spriteCommon_.get(), 5);
+	selectTitele_->SetSize({ 256,128 });
+	selectTitele_->SetPozition({ 200,100 });
+
+	stage1_ = std::make_unique<Sprite>();
+	stage1_->Initialize(_objects->spriteCommon_.get(), 5);
+	stage1_->SetSize({ 300,300 });
+	stage1_->SetPozition({ (WinApp::window_width / 2)-150,WinApp::window_height - 300 });
 }
 
 void SelectScene::Update(Input* input) {
-	titele_->Update();
+	selectTitele_->Update();
+	stage1_->Update();
 
 	SelectSceneNum(input);
 	MoveScene();
 
-
+	if (selectNum == 0) {
+		stage1_->SetTextureIndex(1);
+	}
+	else if (selectNum == 1) {
+		stage1_->SetTextureIndex(16);
+	}
+	else if (selectNum == 2) {
+		stage1_->SetTextureIndex(17);
+	}
 	ImGui::Begin("SELECT NUM");
 	ImGui::Text("SelectNum : %d", selectNum);
 	ImGui::End();
 }
 
 void SelectScene::Draw() {
-	titele_->Draw();
+	selectTitele_->Draw();
+	stage1_->Draw();
 
 }
 void SelectScene::SelectSceneNum(Input* input) {

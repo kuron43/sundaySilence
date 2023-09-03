@@ -20,8 +20,13 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(2, "inu.png");
 		spriteCommon_->LoadTexture(3, "end.png");
 		spriteCommon_->LoadTexture(4, "clear.png");
+		spriteCommon_->LoadTexture(5, "select.png");
+		spriteCommon_->LoadTexture(6, "gray.png");
 
-		spriteCommon_->LoadTexture(5, "gray.png");
+
+		spriteCommon_->LoadTexture(16, "1.png");
+		spriteCommon_->LoadTexture(17, "2.png");
+		spriteCommon_->LoadTexture(18, "3.png");
 	}
 
 	// fbx テスト

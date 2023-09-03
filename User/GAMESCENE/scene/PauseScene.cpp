@@ -7,7 +7,7 @@ PauseScene::PauseScene(SceneManager* controller, SceneObjects* objects) {
 	_objects = objects;
 
 	pauseGray = std::make_unique<Sprite>();
-	pauseGray->Initialize(_objects->spriteCommon_.get(), 5);
+	pauseGray->Initialize(_objects->spriteCommon_.get(), 6);
 	pauseGray->SetSize({ WinApp::window_width,WinApp::window_height });
 	pauseGray->SetPozition({ 0,0 });
 }

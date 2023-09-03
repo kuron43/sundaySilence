@@ -21,7 +21,7 @@ public:
 	void MoveScene();
 
 private:
-	std::unique_ptr <Sprite> titele_;
+	std::unique_ptr <Sprite> selectTitele_;
 	std::unique_ptr <Sprite> stage1_;
 	std::unique_ptr <Sprite> stage2_;
 
