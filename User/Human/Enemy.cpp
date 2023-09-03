@@ -34,6 +34,10 @@ void Enemy::Initialize() {
 	weapon_ = new Assault();
 	weapon_->Initialize();
 
+	particle_ = new ParticleManager();
+	particle_->Initialize();
+	particle_->LoadTexture("1.png");
+
 	//当たり判定用
 	SPHERE_COLISSION_NUM = 1;
 	sphere.resize(SPHERE_COLISSION_NUM);
@@ -80,6 +84,9 @@ void Enemy::Update(Input* input, bool isTitle) {
 	object_->Update();
 	reticle->Update();
 
+	particle_->SetTransform(object_->wtf);
+	particle_->Update();
+
 	if (isFire == true && isDead == false) {
 		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
@@ -106,6 +113,7 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 			weapon_->Draw(dxCommon);
 		}
 	}
+	particle_->Draw();
 }
 
 /// リセットを行う
@@ -153,7 +161,7 @@ void Enemy::ColiderUpdate() {
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			isDead = true;
-			ParticleManager::GetInstance()->RandParticle(object_->wtf.position);
+			particle_->RandParticle();
 		}
 	}
 

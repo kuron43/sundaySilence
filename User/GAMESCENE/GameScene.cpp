@@ -39,7 +39,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 
 	collisionManager_ = CollisionManager::GetInstance();
 	bulletManager_ = BulletManager::GetInstance();
-	particleManager_ = ParticleManager::GetInstance()->Create();
+	//particleManager_ = ParticleManager::GetInstance()->Create();
 
 	//FBX
 	// デバイスをセット
@@ -68,7 +68,7 @@ void GameScene::Update() {
 
 	sceneManager->ChangeScene();
 
-	particleManager_->Update();
+	//particleManager_->Update();
 
 	sceneObjects->lightGroup->Update();
 	sceneObjects->skydome_O->Update();
@@ -88,8 +88,8 @@ void GameScene::Draw() {
 	Object3d::PreDraw(dxCommon_->GetCommandList());
 	sceneObjects->skydome_O->Draw();
 	Object3d::PostDraw();
-	particleManager_->Draw();
 	sceneManager->SceneDraw();
+	//particleManager_->Draw();
 
 	/*ImGui::Begin("Info");
 	ImGui::Text("E : particle");

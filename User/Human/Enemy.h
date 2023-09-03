@@ -69,6 +69,8 @@ private:
 	bool nowTitle = false;
 
 
+	ParticleManager* particle_ = nullptr;
+
 	//コライダー
 public:
 	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
