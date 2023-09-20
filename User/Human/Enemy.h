@@ -36,6 +36,7 @@ public:
 private:
 	void FrontFace();
 	void ColiderUpdate();
+	void OnColision();
 	
 public:
 	Object3d* object_;
@@ -51,6 +52,7 @@ private:
 
 	Vector3 frontVec_;
 	bool isDead = false;
+	uint32_t hp = 3;
 
 	
 	//移動速度

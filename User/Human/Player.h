@@ -30,7 +30,8 @@ public:
 
 	// 種族番号取得
 	int HowTribe() { return Tribe_; };
-
+private:
+	void OnColision();
 private:
 	const int Tribe_ = 0;
 	bool nowTitle = false;

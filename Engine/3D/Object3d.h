@@ -31,7 +31,7 @@ private: // エイリアス
 		Matrix4 veiwproj;  //ビュープロジェクション行列
 		Matrix4 world;		//ワールド行列
 		Vector3 cameraPos;	//カメラ座標 (ワールド座標)
-		Vector4 color;
+		Vector3 color;
 	};
 
 
@@ -151,11 +151,11 @@ public: // メンバ関数
 
 	//setter
 	void SetModel(Model* model) { model_ = model; }
-	void SetColor(Vector4 color) { color_ = color; }
+	void SetColor(Vector3 color) { color_ = color; }
 	Model& GetModel() { return *model_; }
 
 private: // メンバ変数
-	Vector4 color_ = {0.0f,0.0f,0.0f,1};
+	Vector3 color_ = {0.0f,0.0f,0.0f};
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 
 	// 色

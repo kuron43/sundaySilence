@@ -24,10 +24,10 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, int
 	timeCount = 0;
 	isDead = false;
 	if (team_ == PLAYER) {
-		Vector4 color(0.0f, 0.0f, 1.0f, 1.0f);  // カラーなぜかARGB の順番
+		Vector3 color(0.0f, 0.0f, 1.0f);  // カラーなぜかARGB の順番
 		bulletObj_->SetColor(color);
 	}if (team_ == ENEMY) {
-		Vector4 color(0.0f, 1.0f, 1.0f, 0.0f);
+		Vector3 color(1.0f, 0.0f, 0.0f);
 		bulletObj_->SetColor(color);
 	}
 

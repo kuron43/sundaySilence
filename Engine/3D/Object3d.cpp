@@ -301,7 +301,7 @@ bool Object3d::Initialize()
 	assert(SUCCEEDED(result));
 
 	wtf.Initialize();
-	color_ = Vector4(0,0,0,0);
+	color_ = Vector3(0,0,0);
 
 	return true;
 }

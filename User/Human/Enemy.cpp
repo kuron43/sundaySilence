@@ -72,11 +72,12 @@ void Enemy::Initialize() {
 	ray->SetObject3d(object_);
 	CollisionManager::GetInstance()->AddCollider(ray);
 	rayHit = new RaycastHit;
-
+	hp = 3;
 }
 
 ///
 void Enemy::Update(Input* input, bool isTitle) {
+	object_->SetColor({ 0,0,0 });
 	assert(input);
 	nowTitle = false;
 	nowTitle = !isTitle;
@@ -160,7 +161,7 @@ void Enemy::ColiderUpdate() {
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
-			isDead = true;
+			OnColision();
 			particle_->RandParticle();
 		}
 	}
@@ -197,5 +198,14 @@ void Enemy::ColiderUpdate() {
 			//delete sphere[i];
 		}
 		CollisionManager::GetInstance()->RemoveCollider(ray);
+	}
+}
+
+void Enemy::OnColision()
+{
+	object_->SetColor({ 1,0,0 });
+	hp -= 1;
+	if (hp < 1) {
+		isDead = true;
 	}
 }
