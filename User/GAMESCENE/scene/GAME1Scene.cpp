@@ -96,15 +96,17 @@ void GAME1Scene::Initialize() {
 		}
 
 	}
+
+	_controller->_camera->SetEye(camposEye);
+	_controller->_camera->SetTarget(camposTar);
 }
 
 void GAME1Scene::Update(Input* input) {
 	_objects->eneCount = 0;
 	_objects->bossCount = 0;
 
-	_controller->_camera->SetEye(camposEye);
-	_controller->_camera->SetTarget(camposTar);
-	_controller->_camera->Update();
+
+	//_controller->_camera->Update();
 
 	_objects->player->Update(input);
 	for (Wall* walls : _objects->walls) {

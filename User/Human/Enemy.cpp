@@ -37,6 +37,7 @@ void Enemy::Initialize() {
 	particle_ = new ParticleManager();
 	particle_->Initialize();
 	particle_->LoadTexture("1.png");
+	particle_->Update();
 
 	//当たり判定用
 	SPHERE_COLISSION_NUM = 1;
@@ -85,7 +86,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 	object_->Update();
 	reticle->Update();
 
-	particle_->SetTransform(object_->wtf);
+	//particle_->SetTransform(object_->wtf);
 	particle_->Update();
 
 	if (isFire == true && isDead == false) {
@@ -95,6 +96,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 
 	FrontFace();
 	ColiderUpdate();
+
 }
 
 ///
@@ -162,7 +164,8 @@ void Enemy::ColiderUpdate() {
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			OnColision();
-			particle_->RandParticle();
+			Vector3 a = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
+			particle_->RandParticle(a);
 		}
 	}
 

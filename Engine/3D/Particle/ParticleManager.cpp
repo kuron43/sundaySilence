@@ -503,6 +503,8 @@ bool ParticleManager::Initialize()
 	// モデル生成
 	CreateModel();
 
+	wtf_.Initialize();
+
 	return true;
 }
 
@@ -563,7 +565,7 @@ void ParticleManager::Update()
 	
 	wtf_.UpdateMat();
 
-	constMap->mat = (wtf_.matWorld * camera_->GetViewProjectionMatrix());
+	constMap->mat = ( camera_->GetViewProjectionMatrix());
 	constMap->matBillboard = (camera_->GetBillboardMatrix());	// 行列の合成
 	constBuff->Unmap(0, nullptr);
 }
@@ -628,12 +630,12 @@ void ParticleManager::RandParticle()
 	for (int i = 0; i < 30; i++)
 	{
 		//X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
-		const float rnd_pos = 10.0f;
+		//const float rnd_pos = 10.0f;
 		Vector3 pos{};
-		pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		pos += wtf_.position;
+		//pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		//pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		//pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		pos = Affin::GetWorldTrans(wtf_.matWorld);
 		//X,Y,Z全て[-0.05f,+0.05f]でランダムに分布
 		const float rnd_vel = 0.3f;
 		Vector3 vel{};
@@ -659,33 +661,42 @@ void ParticleManager::RandParticle()
 
 void ParticleManager::RandParticle(Vector3 posO)
 {
-	for (int i = 0; i < 30; i++)
-	{
-		//X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
-		const float rnd_pos = 10.0f;
-		Vector3 pos{};
-		pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		pos += posO;
-		//X,Y,Z全て[-0.05f,+0.05f]でランダムに分布
-		const float rnd_vel = 0.3f;
-		Vector3 vel{};
-		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		// 重力に見立ててYのみ[-0.001f,0]でランダムに分布
-		Vector3 acc{};
-		const float rnd_acc = 0.001f;
-		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
 
-		Vector4 col{};
-		const float rnd_col = 1.0f;
-		col.x = (float)rand() / RAND_MAX * rnd_col;
-		col.y = (float)rand() / RAND_MAX * rnd_col;
-		col.z = (float)rand() / RAND_MAX * rnd_col;
+	for (int i = 0; i < 20; i++)
+	{
+		////X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
+		//const float rnd_pos = 5.0f;
+		//Vector3 pos{};
+		///*pos = wtf_.translation_;*/
+		//pos.x += (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		//pos.y += (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		//pos.z += (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		////X,Y,Z全て[-0.05f,+0.05f]でランダムに分布
+		//const float rnd_vel = 0.05f;
+		//Vector3 vel{};
+		//vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		//vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		//vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		//// 重力に見立ててYのみ[-0.001f,0]でランダムに分布
+		//Vector3 acc{};
+		//const float rnd_acc = 0.001f;
+		//acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+
+		//Vector4 col{};
+		//const float rnd_col = 1.0f;
+		//col.x = (float)rand() / RAND_MAX * rnd_col;
+		//col.y = (float)rand() / RAND_MAX * rnd_col;
+		//col.z = (float)rand() / RAND_MAX * rnd_col;
 
 		// 追加
-		Add(60, pos, vel, acc, 1.0f, 0.0f);
+		wtf_.position = posO;
+		wtf_.UpdateMat();
+		Add(10, wtf_.position,
+			{ static_cast<float>((rand() % 20 - 10) / 10.0f),
+			static_cast<float>((rand() % 20 - 10) / 10.0f) ,
+			static_cast<float>((rand() % 20 - 10) / 10.0f) },
+			{ static_cast<float>((rand() % 20 - 10) / 100.0f),
+			static_cast<float>((rand() % 20 - 10) / 100.0f),
+			static_cast<float>((rand() % 20 - 10) / 100.0f) }, 0.4f, 0.0f);
 	}
 }
