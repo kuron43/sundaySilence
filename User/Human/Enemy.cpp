@@ -164,8 +164,9 @@ void Enemy::ColiderUpdate() {
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			OnColision();
-			Vector3 a = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-			particle_->RandParticle(a);
+			// パーティクルなぜかXそのままYZ入れ替えると治る
+			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
+			particle_->RandParticle(patPos);
 		}
 	}
 
