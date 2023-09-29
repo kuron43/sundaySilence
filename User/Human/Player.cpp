@@ -81,10 +81,10 @@ void Player::Update(Input* input, bool isTitle) {
 
 	object_->Update();
 
-	if (input->KeyboardTrigger(DIK_R)) {
-		//Reset();
-		pointDash_->Reset();
-	}
+	//if (input->KeyboardTrigger(DIK_R)) {
+	//	//Reset();
+	//	pointDash_->Reset();
+	//}
 
 	/*ImGui::Begin("pointD");
 	ImGui::Text("ply:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
@@ -477,6 +477,11 @@ void Player::Move(Input* input) {
 		velocity_ = speed;
 	}
 
+	if (wallHit == true) {
+		wallHit = false;
+		velocity_ = -oldVelocity_;
+	}
+
 	{
 		faceAngle_.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
 		faceAngle = faceAngle_;
@@ -484,12 +489,19 @@ void Player::Move(Input* input) {
 
 	object_->wtf.rotation = faceAngle;
 	object_->wtf.position += velocity_;
+	oldVelocity_ = velocity_;
 
 }
 
 void Player::ColisionUpdate() {
 	// コライダーのアップデート
 	object_->UpdateMatrix();
+
+	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		if (sphere[0]->GetIsHit() == true && sphere[0]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
+			wallHit = true;
+		}
+	}
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
@@ -499,16 +511,7 @@ void Player::ColisionUpdate() {
 		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
 		coliderPosTest_[i]->Update();
-	}
-
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
-			Vector3 a{ 0,0,0 };
-			ImGui::Begin("plyHitWall");
-			ImGui::Text("Hit:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
-			ImGui::End();
-		}
-	}
+	}	
 
 	// クエリーコールバッククラス
 	class PlayerQueryCallback :public QueryCallback

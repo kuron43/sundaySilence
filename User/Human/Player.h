@@ -57,6 +57,9 @@ private:
 private:
 	PointDash* pointDash_;
 	bool nowSetPoint;
+	bool wallHit;
+	// 前フレーム移動ベクトル
+	Vector3 oldVelocity_;
 
 	//コライダー
 public:

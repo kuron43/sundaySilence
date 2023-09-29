@@ -36,7 +36,7 @@ void Enemy::Initialize() {
 
 	particle_ = new ParticleManager();
 	particle_->Initialize();
-	particle_->LoadTexture("1.png");
+	particle_->LoadTexture("red.png");
 	particle_->Update();
 
 	//当たり判定用
