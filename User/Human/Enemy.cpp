@@ -38,6 +38,8 @@ void Enemy::Initialize() {
 	particle_->Initialize();
 	particle_->LoadTexture("red.png");
 	particle_->Update();
+	onPatTime_ = 0;
+	onPat_ = false;
 
 	//当たり判定用
 	SPHERE_COLISSION_NUM = 1;
@@ -202,6 +204,14 @@ void Enemy::ColiderUpdate() {
 			//delete sphere[i];
 		}
 		CollisionManager::GetInstance()->RemoveCollider(ray);
+		if (onPat_) {
+			onPatTime_--;
+			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
+			particle_->RandParticle(patPos, 15);
+		}
+	}
+	if (onPatTime_ < 1) {
+		onPat_ = false;
 	}
 }
 
@@ -211,5 +221,7 @@ void Enemy::OnColision()
 	hp -= 1;
 	if (hp < 1) {
 		isDead = true;
+		onPat_ = true;
+		onPatTime_ = 5;
 	}
 }

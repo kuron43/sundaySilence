@@ -51,9 +51,9 @@ public: // サブクラス
 		//加速度
 		Vector3 accel = {};
 		//現在フレーム
-		int frame = 0;
+		uint32_t frame = 0;
 		//過去フレーム
-		int num_frame = 0;
+		uint32_t num_frame = 0;
 
 		//スケール
 		float scale = 1.0f;
@@ -169,7 +169,7 @@ public: // メンバ関数
 	/// マネージャーの座標をもとにランダムに放出する
 	/// </summary>
 	void RandParticle();
-	void RandParticle(Vector3 pos);
+	void RandParticle(Vector3 pos, uint32_t life = 10);
 
 	/// <summary>
 	/// パーティクルの追加
@@ -178,7 +178,7 @@ public: // メンバ関数
 	///	<param name="m_Pos">初期座標</param>
 	///	<param name="velocity">速度</param>
 	///	<param name="accel">加速度</param>
-	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale);
+	void Add(uint32_t life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale);
 
 	static void SetCamera(Camera* camera) { ParticleManager::camera_ = camera; }
 

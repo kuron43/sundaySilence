@@ -109,9 +109,6 @@ void GAME1Scene::Update(Input* input) {
 	//_controller->_camera->Update();
 
 	_objects->player->Update(input);
-	for (Wall* walls : _objects->walls) {
-		walls->Update();
-	}
 
 	BulletManager::GetInstance()->Update();
 	for (Enemy* enemy : _objects->enemys) {
@@ -127,6 +124,9 @@ void GAME1Scene::Update(Input* input) {
 		if (!boss->HowDead()) {
 			_objects->bossCount++;
 		}
+	}
+	for (Wall* walls : _objects->walls) {
+		walls->Update();
 	}
 
 

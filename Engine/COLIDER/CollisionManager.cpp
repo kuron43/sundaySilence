@@ -291,11 +291,11 @@ void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback
 			}
 		}//OBB
 		else if (col->GetShapeType() == COLLISIONSHAPE_OBB) {
-			OBB* sphereB = dynamic_cast<OBB*>(col);
+			OBB* obb = dynamic_cast<OBB*>(col);
 
 			Vector3 tempInter;
 			Vector3 tempReject;
-			if (!Collision::CheckOBB2Sphere(*sphereB, sphere, &tempInter, &tempReject))continue;
+			if (!Collision::CheckOBB2Sphere(*obb, sphere, &tempInter, &tempReject))continue;
 
 			// 交差情報をセット
 			QueryHit info;

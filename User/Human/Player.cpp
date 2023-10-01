@@ -498,8 +498,10 @@ void Player::ColisionUpdate() {
 	object_->UpdateMatrix();
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (sphere[0]->GetIsHit() == true && sphere[0]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
-			wallHit = true;
+		if (sphere[i]->GetIsHit() == true) {
+			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
+				wallHit = true;
+			}
 		}
 	}
 

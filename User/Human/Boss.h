@@ -3,7 +3,7 @@
 #include "Weaponlist.h"
 
 class Boss :
-    public Human
+	public Human
 {
 public:
 	Boss();
@@ -35,6 +35,7 @@ public:
 private:
 	void FrontFace();
 	void ColiderUpdate();
+	void OnColision();
 
 public:
 	Object3d* object_;
@@ -50,6 +51,7 @@ private:
 
 	Vector3 frontVec_;
 	bool isDead = false;
+	uint32_t hp = 10;
 
 
 	//移動速度
@@ -67,6 +69,10 @@ private:
 	// タイトル用の処理と切り分けるためのやつ
 	bool nowTitle = false;
 
+	// パーティクル関係
+	ParticleManager* particle_ = nullptr;
+	uint32_t onPatTime_;
+	bool onPat_;
 
 	//コライダー
 public:

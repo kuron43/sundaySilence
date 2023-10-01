@@ -72,6 +72,8 @@ private:
 
 
 	ParticleManager* particle_ = nullptr;
+	uint32_t onPatTime_;
+	bool onPat_;
 
 	//コライダー
 public:
