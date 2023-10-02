@@ -24,7 +24,7 @@ void MyGame::Initialize() {
 	LightGroup::StaticInitialize(dxCommon->GetDevice());
 
 
-	
+
 
 	// ゲームシーンの初期化
 	gameScene = new GameScene();
@@ -84,9 +84,10 @@ void MyGame::Draw() {
 
 	// Imgui受付終了
 	imgui->End();
+#ifdef _DEBUG
 	// Imgui描画
 	imgui->Draw();
-
+#endif
 	// 描画終了
 	dxCommon->PostDraw();
 
