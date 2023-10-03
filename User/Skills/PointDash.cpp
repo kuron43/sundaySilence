@@ -13,36 +13,36 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	if (input) {
 
 	}
+	if (registNum == 0) {
+		points[0] = point;
+		registNum = 1;
+	}
+	else if (registNum == 1) {
+		points[1] = point;
+		registNum = 2;
+	}
+	else if (registNum == 2) {
+		points[2] = point;
+		registNum = 3;
+	}
+	else if (registNum == 3) {
+		points[3] = point;
+		registNum = 4;
+	}
+	else if (registNum == 4) {
+		points[4] = point;
+		registNum = 5;
+	}
+	else {
 
-		if (registNum == 0) {
-			points[0] = point;
-			registNum = 1;
-		}
-		else if (registNum == 1) {
-			points[1] = point;
-			registNum = 2;
-		}
-		else if (registNum == 2) {
-			points[2] = point;
-			registNum = 3;
-		}
-		else if (registNum == 3) {
-			points[3] = point;
-			registNum = 4;
-		}
-		else if (registNum == 4) {
-			points[4] = point;
-			registNum = 5;
-		}
-		else {
+	}
 
-		}
-	
 }
 void PointDash::MakeMoveVec(Vector3 pos) {
 	startPos = pos;
-	for (uint32_t i = 0; i < registNum; i++) {
+	for (uint32_t i = 0; i <= registNum; i++) {
 		if (registNum == 0) {
+			resultVec = pos;
 			break;
 		}
 		else if (i == 0) {
@@ -119,7 +119,7 @@ void PointDash::GoToPoint() {
 		timeEnd = false;
 		Reset();
 	}
-	
+
 }
 void PointDash::Reset() {
 	points.clear();

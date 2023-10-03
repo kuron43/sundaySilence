@@ -1,6 +1,6 @@
 #include "BulletManager.h"
 
-float BulletManager::speed_ = 1.5f;
+float BulletManager::speed_ = 1.0f;
 
 BulletManager* BulletManager::GetInstance()
 {

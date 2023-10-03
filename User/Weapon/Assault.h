@@ -14,7 +14,7 @@ private:
 	uint32_t team_;
 
 private:
-	const float nomalSpeed = 1.5f;
+	const float nomalSpeed = 1.0f;
 	float speed_ = nomalSpeed;
 	uint32_t coolTime = 0;
 	uint32_t mag = 0;

@@ -9,6 +9,7 @@ SceneObjects::~SceneObjects() {
 }
 void SceneObjects::Initialize() {
 
+
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
 	{
@@ -22,12 +23,16 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(4, "clear.png");
 		spriteCommon_->LoadTexture(5, "select.png");
 		spriteCommon_->LoadTexture(6, "gray.png");
+		spriteCommon_->LoadTexture(7, "Cursor.png");
 
 
 		spriteCommon_->LoadTexture(16, "1.png");
 		spriteCommon_->LoadTexture(17, "2.png");
 		spriteCommon_->LoadTexture(18, "3.png");
 	}
+
+	mouseCursor_ = std::make_unique<Cursor>();
+	mouseCursor_->Initialize(spriteCommon_.get());
 
 	// fbx テスト
 	{

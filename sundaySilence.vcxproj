@@ -167,6 +167,7 @@
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
     <ClCompile Include="User\Human\Boss.cpp" />
     <ClCompile Include="User\Human\Enemy.cpp" />
+    <ClCompile Include="User\Objects\Cursor.cpp" />
     <ClCompile Include="User\Objects\Objects.cpp" />
     <ClCompile Include="User\Objects\Wall.cpp" />
     <ClCompile Include="User\Skills\PointDash.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />
     <ClInclude Include="User\Human\Boss.h" />
     <ClInclude Include="User\Human\Enemy.h" />
+    <ClInclude Include="User\Objects\Cursor.h" />
     <ClInclude Include="User\Objects\Objects.h" />
     <ClInclude Include="User\Objects\Wall.h" />
     <ClInclude Include="User\Skills\PointDash.h" />

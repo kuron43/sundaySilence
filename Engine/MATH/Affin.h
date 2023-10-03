@@ -48,6 +48,7 @@ namespace Affin {
 	Vector3 GetWorldTrans(Matrix4 matrix);
 
 	// W 除算
+	const Vector3 division(const Vector3& v, Matrix4 mat);
 	Vector3 wDivision(Vector3 vector, Matrix4 matrix);
 
 	// ベクトルと行列の掛け算
