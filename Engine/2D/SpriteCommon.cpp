@@ -1,6 +1,7 @@
 #include"SpriteCommon.h"
 #include <string>
 #include <d3dcompiler.h>
+#include <d3dx12.h>
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -90,10 +91,16 @@ void SpriteCommon::Initialize(DirectXCommon* dxcommon)
 	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
 
 	// ラスタライザの設定
+	pipelineDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
 	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE; // カリングしない
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 
+	// デプスステンシルステート
+	pipelineDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
+	pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS; // 常に上書きルール
+	// ブレンドステート
 	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = pipelineDesc.BlendState.RenderTarget[0];
 	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;// RBGA全てのチャンネルを描画
 
@@ -126,6 +133,8 @@ void SpriteCommon::Initialize(DirectXCommon* dxcommon)
 	pipelineDesc.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
 
 	// デスクリプタレンジの設定
+	CD3DX12_DESCRIPTOR_RANGE descRangeSRV;
+	descRangeSRV.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0); // t0 レジスタ
 	D3D12_DESCRIPTOR_RANGE descriptorRange{};
 	descriptorRange.NumDescriptors = 1;         //一度の描画に使うテクスチャが1枚なので1
 	descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
@@ -283,6 +292,7 @@ void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
 	srvDesc.Texture2D.MipLevels = resDesc.MipLevels;
 	srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
 	srvHandle.ptr += (incrementSize * index);
+	srvHeap->SetName(L"textureManagerSrvHeap");
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成
 	dxcommon_->GetDevice()->CreateShaderResourceView(texBuff[index].Get(), &srvDesc, srvHandle);
@@ -290,17 +300,42 @@ void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
 
 void SpriteCommon::SetTextureCommands(uint32_t index)
 {
-	// パイプラインステートとルートシグネチャの設定コマンド
-	dxcommon_->GetCommandList()->SetPipelineState(pipelineState.Get());
-	dxcommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+	//// パイプラインステートとルートシグネチャの設定コマンド
+	//dxcommon_->GetCommandList()->SetPipelineState(pipelineState.Get());
+	//dxcommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
 
-	//プリミティブ形状の設定コマンド
-	dxcommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);//三角リスト
-	// SRVヒープの設定コマンド
-	dxcommon_->GetCommandList()->SetDescriptorHeaps(1, srvHeap.GetAddressOf());
+	////プリミティブ形状の設定コマンド
+	//dxcommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);//三角リスト
+	//// SRVヒープの設定コマンド
+	//dxcommon_->GetCommandList()->SetDescriptorHeaps(1, srvHeap.GetAddressOf());
+
+	//// SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
+	//D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+	//// SRVヒープの先頭にあるSRVをルートパラメータ1番に設定
+	//srvGpuHandle.ptr += (incrementSize * index);
+	//dxcommon_->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+
 	// SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
 	// SRVヒープの先頭にあるSRVをルートパラメータ1番に設定
 	srvGpuHandle.ptr += (incrementSize * index);
 	dxcommon_->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+}
+
+void SpriteCommon::PreDraw()
+{
+	// パイプラインステートとルートシグネチャの設定コマンド
+	dxcommon_->GetCommandList()->SetPipelineState(pipelineState.Get());
+	dxcommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+	//プリミティブ形状の設定コマンド
+	dxcommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);//三角リスト
+	// SRVヒープの設定コマンド
+	ID3D12DescriptorHeap* ppHeap[] = { srvHeap.Get() };
+	dxcommon_->GetCommandList()->SetDescriptorHeaps(_countof(ppHeap), ppHeap);
+
+}
+
+void SpriteCommon::PostDraw()
+{
+
 }

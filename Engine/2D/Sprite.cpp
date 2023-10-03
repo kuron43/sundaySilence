@@ -1,38 +1,8 @@
 #include"Sprite.h"
 
-//Sprite::Sprite(
-//	size_t texNum,
-//	Vector2 pos,
-//	Vector2 size,
-//	Vector4 color_,
-//	Vector2 anchorP,
-//	bool flipX,
-//	bool flipY) {
-//	size_ = size;
-//	m_Pos = pos;
-//	color = color_;
-//	anchorPoint = anchorP;
-//	//テクスチャ番号
-//	textureIndex_ = texNum;
-//	// アンカーポイント
-//	anchorpoint = anchorP;
-//	// 左右反転
-//	isFlipX = flipX;
-//	// 上下反転
-//	isFlipY = flipY;
-//}
-
 void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
 {
 	spritecomon = spritecommon_;
-
-	//テクスチャサイズをイメージに合わせる
-	if (textureIndex != UINT32_MAX) {
-		textureIndex_ = textureIndex;
-		AdjustTextureSize();
-		//テクスチャサイズをスプライトのサイズに適用
-		size_ = textureSize;
-	}
 
 	// 頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
@@ -135,7 +105,15 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
 	assert(SUCCEEDED(result));
 
 	// 値を書き込むと自動的に転送される
-	constMapMaterial->color = Vector4(1, 1, 1, 1);              // RGBAで半透明の赤
+	constMapMaterial->color = Vector4(1, 1, 0, 0.5f);              // RGBAで半透明の赤
+
+	//テクスチャサイズをイメージに合わせる
+	if (textureIndex != UINT32_MAX) {
+		textureIndex_ = textureIndex;
+		AdjustTextureSize();
+		//テクスチャサイズをスプライトのサイズに適用
+		size_ = textureSize;
+	}
 }
 
 void Sprite::Draw()
@@ -158,7 +136,7 @@ void Sprite::Draw()
 	if (SUCCEEDED(result)) {
 		constMapMaterial->color = color;
 	}
-
+	spritecomon->PreDraw();
 	spritecomon->SetTextureCommands(textureIndex_);
 
 	//頂点バッファビューの設定コマンド
@@ -169,7 +147,7 @@ void Sprite::Draw()
 	spritecomon->GetDxCommon()->GetCommandList()->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
 	// 描画コマンド
 	spritecomon->GetDxCommon()->GetCommandList()->DrawInstanced(_countof(vertices), 1, 0, 0); // 全ての頂点を使って描画
-
+	spritecomon->PostDraw();
 }
 
 void Sprite::Update()

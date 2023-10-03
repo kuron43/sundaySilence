@@ -51,6 +51,9 @@ public:
 
 	void SetTextureCommands(uint32_t index);
 
+	void PreDraw();
+	void PostDraw();
+
 	//Microsoft::WRL::ComPtr<ID3D12Resource> GetTexBuff(uint32_t index) { return texBuff[index]; }
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> GetTextureBuffer(uint32_t index)const { return texBuff[index].Get(); }

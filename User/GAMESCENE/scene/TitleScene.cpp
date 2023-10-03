@@ -40,7 +40,6 @@ void TitleScene::Update(Input* input) {
 }
 
 void TitleScene::Draw() {
-	
 	title_->Draw();
 
 	_objects->player->Draw(_controller->_dxCommon);

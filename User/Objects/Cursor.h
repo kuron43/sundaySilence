@@ -22,6 +22,7 @@ private:
 	Transform cameraWTF_;
 	Model* model_;
 	Object3d* object_;
+	Transform worldTransform3DReticle_;
 
 	float mouseSensitivity_ = 0.099f;	//マウス感度 0.05
 

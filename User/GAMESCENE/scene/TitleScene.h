@@ -16,7 +16,7 @@ public:
 	void Update(Input* input) override;
 	void Draw() override;
 private:
-	Vector3 camposEye = { 0.0f,50.0f,-50.01f };
+	Vector3 camposEye = { 0.0f,0.0f,-50.01f };
 	Vector3 camposTar = { 0,0,0 };
 
 public:
