@@ -35,7 +35,7 @@ public: // サブクラス
 		XMFLOAT3 cameraPos; // カメラ座標（ワールド座標）
 	};
 	//ボーンの最大数
-	static const int MAX_BONES = 320;
+	static const uint32_t MAX_BONES = 320;
 
 	//定数バッファ用のデータ構造体(スキニング)
 	struct ConstBufferDataSkin
@@ -119,7 +119,7 @@ public: // メンバ関数
 	/// フレームカウント指定
 	/// </summary>
 	/// <param name="flame"></param>
-	void SetFlame(int flame);
+	void SetFlame(uint32_t flame);
 
 	/// <summary>
 	/// アニメーション再生用
@@ -141,7 +141,7 @@ public: // メンバ関数
 	FbxTime GetCurrentTimer();
 	FbxTime GetEndTime();
 	bool GetIsAnimRot();
-	int ConvertFbxTimeToInt(FbxTime time);	//FbxTime型変数をintに変換
+	uint32_t ConvertFbxTimeToInt(FbxTime time);	//FbxTime型変数をintに変換
 
 	/// <summary>
 	/// ワールドトランスフォーム取得
@@ -163,7 +163,7 @@ public: // メンバ関数
 	/// <summary>
 	/// アニメーション開始
 	/// </summary>
-	void PlayAnimation(int animationNum);
+	void PlayAnimation(uint32_t animationNum);
 
 	//補間アニメーションカウント
 	void AnimFlameInter(FbxTime nowCount, FbxTime maxCount);

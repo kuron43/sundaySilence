@@ -33,7 +33,7 @@ void Player::Initialize() {
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
 	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
@@ -114,7 +114,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	if (!nowTitle) {
 		reticle->Draw();
 	}
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 
 		//coliderPosTest_[i]->Draw();
 	}
@@ -127,7 +127,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 /// リセットを行う
 void Player::Reset() {
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 	}
 
@@ -497,7 +497,7 @@ void Player::ColisionUpdate() {
 	// コライダーのアップデート
 	object_->UpdateMatrix();
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true) {
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
 				wallHit = true;
@@ -505,7 +505,7 @@ void Player::ColisionUpdate() {
 		}
 	}
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
 
@@ -548,7 +548,7 @@ void Player::ColisionUpdate() {
 	};
 
 	//クエリーコールバックの関数オブジェクト
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		PlayerQueryCallback callback(sphere[i]);
 		//
 		CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback);

@@ -2,7 +2,7 @@
 
 Matrix4 ConvertXM::ConvertXMMATtoMat4(XMMATRIX XMMat) {
 	Matrix4 result;
-	for (int i = 0; i < 4; i++) {
+	for (uint32_t i = 0; i < 4; i++) {
 
 		result.m[i][0] = XMVectorGetX(XMMat.r[i]);
 		result.m[i][1] = XMVectorGetY(XMMat.r[i]);

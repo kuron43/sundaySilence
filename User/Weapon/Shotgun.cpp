@@ -65,7 +65,7 @@ void Shotgun::Reset() {
 }
 
 // 発射を行う
-void Shotgun::Shot(Transform& player, Transform& reticle,int team) {
+void Shotgun::Shot(Transform& player, Transform& reticle, uint32_t team) {
 	model_ = Model::LoadFromOBJ("cube");
 	if (mag < 30) {
 		if (coolTime <= 0) {

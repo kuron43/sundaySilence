@@ -41,7 +41,7 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 }
 void PointDash::MakeMoveVec(Vector3 pos) {
 	startPos = pos;
-	for (int i = 0; i < registNum; i++) {
+	for (uint32_t i = 0; i < registNum; i++) {
 		if (registNum == 0) {
 			break;
 		}
@@ -56,7 +56,7 @@ void PointDash::MakeMoveVec(Vector3 pos) {
 
 		}
 	}
-	for (int i = 0; i <= registNum; i++) {
+	for (uint32_t i = 0; i <= registNum; i++) {
 		moveVec[i].nomalize();
 
 	}
@@ -126,7 +126,7 @@ void PointDash::Reset() {
 	registNum = 0;
 	isActive = false;
 	points.resize(MAX_POINTNUM);
-	for (int i = 0; i < _countof(moveVec); i++) {
+	for (uint32_t i = 0; i < _countof(moveVec); i++) {
 		moveVec[i] = Vector3(0, 0, 0);
 	}
 	//resultVec = Vector3(0, 0, 0);

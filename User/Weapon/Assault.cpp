@@ -91,7 +91,7 @@ void Assault::Reset() {
 }
 
 // 発射を行う
-void Assault::Shot(Transform& player, Transform& reticle,int team) {
+void Assault::Shot(Transform& player, Transform& reticle, uint32_t team) {
 	
 	if (coolTime <= 0 && goShot == true) {
 		//弾を生成し、初期化

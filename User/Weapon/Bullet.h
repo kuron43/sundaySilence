@@ -16,13 +16,13 @@ enum Team
 class Bullet
 {
 public:
-	int team_;
-	int weapon;
+	uint32_t team_;
+	uint32_t weapon;
 	bool isTeam;
 	bool isDead;
 
-	const int deathTime = 50;
-	int timeCount;
+	const uint32_t deathTime = 50;
+	uint32_t timeCount;
 	
 	Object3d* bulletObj_;
 	static Model* bulletModel_;
@@ -32,7 +32,7 @@ public:
 public:
 	Bullet();
 	~Bullet();
-	void Initialize(Model* model,const Vector3& position, Vector3 move,int team);
+	void Initialize(Model* model,const Vector3& position, Vector3 move, uint32_t team);
 
 	void Update(float speed);
 	void DeadUpdate();

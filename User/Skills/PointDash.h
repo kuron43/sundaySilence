@@ -7,22 +7,22 @@
 class PointDash
 {
 public:
-	const int MAX_POINTNUM = 5;
+	const uint32_t MAX_POINTNUM = 5;
 	std::vector<Vector3> points;
 	Vector3 startPos;
 	Vector3 moveVec[5];
 	float dashSpeed;
 	float easeSpeed;
-	int nowPointNum;
-	int registNum;
+	uint32_t nowPointNum;
+	uint32_t registNum;
 	bool isReset;
 	bool pointsMax;
 	bool moveEnd;
 	bool isActive;
 
-	int time;
+	uint32_t time;
 	float easetime;
-	int easeMaxTime = 30;
+	uint32_t easeMaxTime = 30;
 	bool timeEnd = false;
 	Vector3 resultVec;
 

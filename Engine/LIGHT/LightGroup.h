@@ -20,16 +20,16 @@ private://エイリアス
 	using XMMATRIX = DirectX::XMMATRIX;
 
 public: 
-	static const int DirLightNum = 1;
+	static const uint32_t DirLightNum = 1;
 
 	//点光源の数
-	static const int PointLightNum = 3;
+	static const uint32_t PointLightNum = 3;
 
 	//スポットライトの数
-	static const int SpotLightNum = 3;
+	static const uint32_t SpotLightNum = 3;
 
 	//丸影の数
-	static const int CircleShadowNum = 1;
+	static const uint32_t CircleShadowNum = 1;
 
 public://サブクラス
 	struct ConstBufferData
@@ -92,72 +92,72 @@ public:
 		dirty = true;
 	}
 
-	void SetDirLightActive(int index, bool active) {
+	void SetDirLightActive(uint32_t index, bool active) {
 		assert(0 <= index && index < DirLightNum);
 		dirLights[index].SetActive(active);
 	}
 
-	void SetDirLightDir(int index, const Vector4& lightdir) {
+	void SetDirLightDir(uint32_t index, const Vector4& lightdir) {
 		assert(0 <= index && index < DirLightNum);
 		dirLights[index].SetLightDir(lightdir);
 		dirty = true;
 	}
-	void SetDirLightColor(int index, const Vector3& lightcolor) {
+	void SetDirLightColor(uint32_t index, const Vector3& lightcolor) {
 		assert(0 <= index && index < DirLightNum);
 		dirLights[index].SetLightColor(lightcolor);
 		dirty = true;
 	}
 
 	//点光源
-	void SetPointLightActive(int index, bool active) {
+	void SetPointLightActive(uint32_t index, bool active) {
 		assert(0 <= index && index < PointLightNum);
 		pointLights[index].SetActive(active);
 	}
 
-	void SetPointLightPos(int index, const XMFLOAT3& lightpos) {
+	void SetPointLightPos(uint32_t index, const XMFLOAT3& lightpos) {
 		assert(0 <= index && index < PointLightNum);
 		pointLights[index].SetLightPos(lightpos);
 		dirty = true;
 	}
 
-	void SetPointLightColor(int index, const XMFLOAT3& lightcolor) {
+	void SetPointLightColor(uint32_t index, const XMFLOAT3& lightcolor) {
 		assert(0 <= index && index < PointLightNum);
 		pointLights[index].SetLightColor(lightcolor);
 		dirty = true;
 	}
 
-	void SetPointLightAtten(int index, const XMFLOAT3& lightAtten) {
+	void SetPointLightAtten(uint32_t index, const XMFLOAT3& lightAtten) {
 		assert(0 <= index && index < PointLightNum);
 		pointLights[index].SetLightAtten(lightAtten);
 		dirty = true;
 	}
 
 	//スポットライト
-	void SetSpotLightActive(int index, bool active) {
+	void SetSpotLightActive(uint32_t index, bool active) {
 		assert(0 <= index && index < SpotLightNum);
 		spotLights[index].SetActive(active);
 	}
-	void SetSpotLightDir(int index, const XMVECTOR& lightdir) {
+	void SetSpotLightDir(uint32_t index, const XMVECTOR& lightdir) {
 		assert(0 <= index && index < SpotLightNum);
 		spotLights[index].SetLightDir(lightdir);
 		dirty = true;
 	}
-	void SetSpotLightPos(int index, const XMFLOAT3& lightpos) {
+	void SetSpotLightPos(uint32_t index, const XMFLOAT3& lightpos) {
 		assert(0 <= index && index < SpotLightNum);
 		spotLights[index].SetLightPos(lightpos);
 		dirty = true;
 	}
-	void SetSpotLightColor(int index, const XMFLOAT3& lightcolor) {
+	void SetSpotLightColor(uint32_t index, const XMFLOAT3& lightcolor) {
 		assert(0 <= index && index < SpotLightNum);
 		spotLights[index].SetLightColor(lightcolor);
 		dirty = true;
 	}
-	void SetSpotLightAtten(int index, const XMFLOAT3& lightAtten) {
+	void SetSpotLightAtten(uint32_t index, const XMFLOAT3& lightAtten) {
 		assert(0 <= index && index < SpotLightNum);
 		spotLights[index].SetLightAtten(lightAtten);
 		dirty = true;
 	}
-	void SetSpotLightFactorAngle(int index, const XMFLOAT2& lightFactorAngle) {
+	void SetSpotLightFactorAngle(uint32_t index, const XMFLOAT2& lightFactorAngle) {
 		assert(0 <= index && index < SpotLightNum);
 		spotLights[index].SetLightFactorAngle(lightFactorAngle);
 		dirty = true;
@@ -165,36 +165,36 @@ public:
 
 
 	//シャドウ
-	void SetCircleShadowActive(int index, bool active) {
+	void SetCircleShadowActive(uint32_t index, bool active) {
 		assert(0 <= index && index < CircleShadowNum);
 		circleShadows[index].SetActive(active);
 	}
 
-	void SetCircleShadowCasterPos(int index, const XMFLOAT3& casterPos) {
+	void SetCircleShadowCasterPos(uint32_t index, const XMFLOAT3& casterPos) {
 		assert(0 <= index && index < CircleShadowNum);
 		circleShadows[index].SetCasterPos(casterPos);
 		dirty = true;
 	}
 
-	void SetCircleShadowDir(int index, const XMVECTOR& lightdir) {
+	void SetCircleShadowDir(uint32_t index, const XMVECTOR& lightdir) {
 		assert(0 <= index && index < CircleShadowNum);
 		circleShadows[index].SetDir(lightdir);
 		dirty = true;
 	}
 
-	void SetCircleShadowDistanceCasterLight(int index, float distanceCasterLight) {
+	void SetCircleShadowDistanceCasterLight(uint32_t index, float distanceCasterLight) {
 		assert(0 <= index && index < CircleShadowNum);
 		circleShadows[index].SetDistanceCasterLight(distanceCasterLight);
 		dirty = true;
 	}
 
-	void SetCircleShadowAtten(int index, const XMFLOAT3& lightAtten) {
+	void SetCircleShadowAtten(uint32_t index, const XMFLOAT3& lightAtten) {
 		assert(0 <= index && index < CircleShadowNum);
 		circleShadows[index].SetAtten(lightAtten);
 		dirty = true;
 	}
 
-	void SetCircleShadowFactorAngle(int index, const XMFLOAT2& lightFactorAngle) {
+	void SetCircleShadowFactorAngle(uint32_t index, const XMFLOAT2& lightFactorAngle) {
 		assert(0 <= index && index < CircleShadowNum);
 		circleShadows[index].SetFactorAngle(lightFactorAngle);
 		dirty = true;

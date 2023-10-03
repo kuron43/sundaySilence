@@ -29,11 +29,11 @@ public:
 	Transform GetTransform() { return object_->wtf; };
 
 	// 種族番号取得
-	int HowTribe() { return Tribe_; };
+	uint32_t HowTribe() { return Tribe_; };
 private:
 	void OnColision();
 private:
-	const int Tribe_ = 0;
+	const uint32_t Tribe_ = 0;
 	bool nowTitle = false;
 
 	Model* model_;
@@ -66,7 +66,7 @@ public:
 	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
 	std::vector<SphereCollider*> GetSphere() { return sphere; }
 private:
-	int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	uint32_t SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
 	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	std::vector<SphereCollider*> sphere;
 	Ray* ray;

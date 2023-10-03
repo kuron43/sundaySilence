@@ -230,7 +230,7 @@ void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
 	std::string fullPath = kDefaultTextureDirectoryPath + fileName;
 
 	//ワイド文字列に変換した際の文字列バッファサイズの計算
-	int filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
+	uint32_t filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
 
 	//ワイド文字列に変換
 	std::vector<wchar_t> wfilePath(filePathBufferSize);

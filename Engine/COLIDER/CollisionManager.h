@@ -55,7 +55,7 @@ private:
 	std::forward_list<BaseCollider*> colliders;
 
 public:
-	int OBBHitFace(OBB& obb, Sphere& sphere);
+	uint32_t OBBHitFace(OBB& obb, Sphere& sphere);
 	bool OBBToSphereCollision(OBB& obb, Sphere& sphere);
 	float LenOBBToPoint(OBB& obb,Vector3 & p);
 	bool PlaneToSphere(FinitePlane plane, Sphere& sphere);

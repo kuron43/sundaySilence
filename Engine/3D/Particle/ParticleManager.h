@@ -67,12 +67,12 @@ public: // サブクラス
 	};
 
 private: // 定数
-	//const int division = 50;					// 分割数
+	//const uint32_t division = 50;					// 分割数
 	//const float radius;				// 底面の半径
 	//const float prizmHeight;			// 柱の高さ
-	//const int planeCount = division * 2 + division * 2;		// 面の数
-	//static const int vertexCount = 30;//頂点数
-	const int vertexCount = _countof(vertices);
+	//const uint32_t planeCount = division * 2 + division * 2;		// 面の数
+	//static const uint32_t vertexCount = 30;//頂点数
+	const uint32_t vertexCount = _countof(vertices);
 
 public: // 静的メンバ関数
 	/// <summary>

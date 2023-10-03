@@ -9,16 +9,16 @@ private:
 	std::list<Bullet*> bullets_;
 	Model* model_;
 	bool active_ = false;
-	const int WeaponNum = 1;
+	const uint32_t WeaponNum = 1;
 
-	int team_;
+	uint32_t team_;
 
 private:
 	const float nomalSpeed = 1.5f;
 	float speed_ = nomalSpeed;
-	int coolTime = 0;
-	int mag = 0;
-	int roadingTime = 0;
+	uint32_t coolTime = 0;
+	uint32_t mag = 0;
+	uint32_t roadingTime = 0;
 	bool goShot;
 
 
@@ -40,6 +40,6 @@ public:
 	void Reset() override;
 
 	// 発射を行う
-	void Shot(Transform& player, Transform& reticle,int team) override;
+	void Shot(Transform& player, Transform& reticle, uint32_t team) override;
 };
 

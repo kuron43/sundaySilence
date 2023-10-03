@@ -25,8 +25,8 @@ private:
 	std::unique_ptr <Sprite> stage1_;
 	std::unique_ptr <Sprite> stage2_;
 
-	int selectNum;
-	int resultNum;
+	uint32_t selectNum;
+	uint32_t resultNum;
 	bool isConfirm = false;
 
 public:

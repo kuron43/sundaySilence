@@ -94,7 +94,7 @@ void LightGroup::TransferConstBuffer()
 		constMap->ambientColor = ambientColor;
 
 		//平行ライト
-		for (int i = 0; i < DirLightNum; i++) {
+		for (uint32_t i = 0; i < DirLightNum; i++) {
 			//ライトが有効なら設定を転送
 			if (dirLights[i].IsActive()) {
 				constMap->dirLights[i].active = 1;
@@ -107,7 +107,7 @@ void LightGroup::TransferConstBuffer()
 
 		}
 		//点ライト
-		for (int i = 0; i < PointLightNum; i++) {
+		for (uint32_t i = 0; i < PointLightNum; i++) {
 			if (pointLights[i].IsActive()) {
 				constMap->pointLights[i].active = 1;
 				constMap->pointLights[i].lightpos = pointLights[i].GetLightPos();
@@ -119,7 +119,7 @@ void LightGroup::TransferConstBuffer()
 			}
 		}
 		//スポットライト
-		for (int i = 0; i < SpotLightNum; i++) {
+		for (uint32_t i = 0; i < SpotLightNum; i++) {
 			//ライトが有効なら設定を転送
 			if (spotLights[i].IsActive()) {
 				constMap->spotLights[i].active = 1;
@@ -134,7 +134,7 @@ void LightGroup::TransferConstBuffer()
 			}
 		}
 		//丸影
-		for (int i = 0; i < CircleShadowNum; i++) {
+		for (uint32_t i = 0; i < CircleShadowNum; i++) {
 			//有効なら設定を転送
 			if (circleShadows[i].IsActive()) {
 				constMap->circleShadows[i].active = 1;

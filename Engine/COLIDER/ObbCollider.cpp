@@ -62,7 +62,7 @@ void ObbCollider::CreateOBB(std::vector<VertexPosNormalUv> vertices,Transform* w
 	m_fLength[2] *= wtf_->scale.z;
 	//球形状をセット
 	shapeType = COLLISIONSHAPE_OBB;
-	for (int i = 0; i < 6; i++) {
+	for (uint32_t i = 0; i < 6; i++) {
 		plane[i].pos = m_Pos;
 	}
 
@@ -115,8 +115,8 @@ void ObbCollider::CreateOBB(std::vector<VertexPosNormalUv> vertices,Transform* w
 		plane[4].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  M
 	}
 
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 4; j++)
+	for (uint32_t i = 0; i < 6; i++) {
+		for (uint32_t j = 0; j < 4; j++)
 		{
 			//plane[i].vertex[j] = Affin::VecMat()
 		}
@@ -156,8 +156,8 @@ void ObbCollider::Update()
 		OBB::m_fLength[1] = m_fLength[1];
 		OBB::m_fLength[2] = m_fLength[2];
 
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 4; j++)
+		for (uint32_t i = 0; i < 6; i++) {
+			for (uint32_t j = 0; j < 4; j++)
 			{
 
 			}

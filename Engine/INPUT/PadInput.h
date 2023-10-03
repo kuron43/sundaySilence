@@ -38,7 +38,7 @@ private:
 	//コントローラー振動強さ
 	float shakePower = 0.0f;
 	//コントローラー振動長さ(フレーム数)
-	int shakeTimer = 0;
+	uint32_t shakeTimer = 0;
 
 	//デッドゾーンに入っているか(DeadRate : デッドゾーン判定の度合い、1.0fだとデフォルト)
 	bool StickInDeadZone(Vector2& thumb, const Vector2& deadRate);
@@ -128,7 +128,7 @@ public:
 	/// </summary>
 	/// <param name="power">振動の強さ0.0f～1.0f</param>
 	/// <param name="span">振動の時間フレーム</param>
-	void ShakeController(const float& power, const int& span);
+	void ShakeController(const float& power, const uint32_t& span);
 
 };
 

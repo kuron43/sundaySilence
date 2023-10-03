@@ -37,7 +37,7 @@ public:
 
 	// シーンを変更する
 	void SetSceneNum(uint32_t num) { sceneNum = num; isChange = true; };
-	int GetSceneNum() { return sceneNum; };
+	uint32_t GetSceneNum() { return sceneNum; };
 	void ChangeScene();
 
 	void PushScene(IScene*);

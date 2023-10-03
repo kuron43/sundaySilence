@@ -71,7 +71,7 @@ public: // サブクラス
 	};
 
 	//ボーンインデックスの最大数
-	static const int MAX_BONE_INDICES = 4;
+	static const uint32_t MAX_BONE_INDICES = 4;
 
 
 	// 頂点データ構造体

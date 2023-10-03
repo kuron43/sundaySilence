@@ -7,7 +7,7 @@ Boss::~Boss() {
 	delete model_;
 	delete weapon_;
 	delete rayHit;
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
 
@@ -51,7 +51,7 @@ void Boss::Initialize() {
 	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
 	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
@@ -110,7 +110,7 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 		if (nowTitle) {
 			//reticle->Draw();
 		}
-		for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 			//coliderPosTest_[i]->Draw();
 		}
 		Object3d::PostDraw();
@@ -125,7 +125,7 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 void Boss::Reset() {
 	//delete model_;
 	//delete weapon_;
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		//delete sphere[i];
 
@@ -163,7 +163,7 @@ void Boss::ColiderUpdate() {
 	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
 	ray->SetDir(Affin::GetWorldTrans(reticle->wtf.matWorld));
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			OnColision();
 			// パーティクルなぜかXそのままYZ入れ替えると治る
@@ -172,7 +172,7 @@ void Boss::ColiderUpdate() {
 		}
 	}
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		coliderPosTest_[i]->wtf.position = ray->GetDir();
 		sphere[i]->Update();
@@ -199,7 +199,7 @@ void Boss::ColiderUpdate() {
 		}
 	}
 	if (isDead) {
-		for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 			//delete sphere[i];
 		}

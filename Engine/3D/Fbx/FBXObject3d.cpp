@@ -266,7 +266,7 @@ void FBXObject3d::Update()
 	if (bones.size() != bonesMat.size()) {
 		ResizeBonesMat(bones);
 	}
-	for (int i = 0; i < bones.size(); i++) {
+	for (uint32_t i = 0; i < bones.size(); i++) {
 		//今の姿勢行列
 		XMMATRIX matCurrentPose;
 		//今の姿勢行列を取得
@@ -330,7 +330,7 @@ std::unique_ptr<FBXObject3d> FBXObject3d::Create()
 }
 
 
-void FBXObject3d::SetFlame(int flame)
+void FBXObject3d::SetFlame(uint32_t flame)
 {
 	isChangeFlame = true;
 	currentTime = frameTime * flame;
@@ -377,10 +377,10 @@ bool FBXObject3d::GetIsAnimRot()
 	return animRot;
 }
 
-int FBXObject3d::ConvertFbxTimeToInt(FbxTime time)
+uint32_t FBXObject3d::ConvertFbxTimeToInt(FbxTime time)
 {
 	FbxLongLong frameCount = time.GetFrameCount();
-	return static_cast<int>(frameCount);
+	return static_cast<uint32_t>(frameCount);
 }
 
 
@@ -412,7 +412,7 @@ void FBXObject3d::SetIsBonesWorldMatCalc(bool isCalc)
 	isBonesWorldMatCalc = isCalc;
 }
 
-void FBXObject3d::PlayAnimation(int animationNum)
+void FBXObject3d::PlayAnimation(uint32_t animationNum)
 {
 	FbxScene* fbxScene = fbxmodel_->GetFbxScene();
 	//0番のアニメーションを取得

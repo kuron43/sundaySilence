@@ -29,11 +29,11 @@ public:
 	void CreateOBB(std::vector<VertexPosNormalUv> vertices, Transform* wtfP);
 
 	// 指定軸番号の方向ベクトルを取得
-	Vector3 GetDirect(int elem) {
+	Vector3 GetDirect(uint32_t elem) {
 		return m_NormaDirect[elem];
 	}
 	// 指定軸方向の長さを取得
-	float GetLength(int elem) {
+	float GetLength(uint32_t elem) {
 		return m_fLength[elem];
 	}
 	Vector3 GetVec3Length() {

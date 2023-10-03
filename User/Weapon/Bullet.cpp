@@ -9,7 +9,7 @@ Bullet::Bullet() {
 Bullet::~Bullet() {
 
 }
-void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, int team)
+void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uint32_t team)
 {
 	//NULLチェック
 	assert(model);

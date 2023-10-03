@@ -358,7 +358,7 @@ void ParticleManager::LoadTexture(const std::string& fileName)
 	std::string fullPath = kDefaultTextureDirectoryPath + fileName;
 
 	//ワイド文字列に変換した際の文字列バッファサイズの計算
-	int filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
+	uint32_t filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
 
 	//ワイド文字列に変換
 	std::vector<wchar_t> wfilePath(filePathBufferSize);
@@ -627,7 +627,7 @@ void ParticleManager::Add(uint32_t life, Vector3 position, Vector3 velociy, Vect
 
 void ParticleManager::RandParticle()
 {
-	for (int i = 0; i < 30; i++)
+	for (uint32_t i = 0; i < 30; i++)
 	{
 		//X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
 		//const float rnd_pos = 10.0f;
@@ -659,7 +659,7 @@ void ParticleManager::RandParticle()
 }
 void ParticleManager::RandParticle(Vector3 posO, uint32_t life)
 {
-	for (int i = 0; i < 20; i++)
+	for (uint32_t i = 0; i < 20; i++)
 	{
 		// 追加
 		wtf_.position = posO;

@@ -311,7 +311,7 @@ float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
 	//float result = 0;
 
 	// 各軸についてはみ出た部分のベクトルを算出
-	for (int i = 0; i < 3; i++)
+	for (uint32_t i = 0; i < 3; i++)
 	{
 		//float L = obb.m_fLength[i]/2;
 		float L = obb.m_fLength[i];
