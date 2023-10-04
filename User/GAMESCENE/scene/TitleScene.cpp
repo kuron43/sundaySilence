@@ -37,10 +37,14 @@ void TitleScene::Update(Input* input) {
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
 	}
-	if (_objects->mouseCursor_->Cursor2Sprite(*titleButton_)) {
+	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
 		if (input->MouseButtonTrigger(0)) {
 			_controller->SetSceneNum(SCE_SELECT);
 		}
+		titleButton_->SetTextureIndex(9);
+	}
+	else {
+		titleButton_->SetTextureIndex(8);
 	}
 }
 
@@ -49,7 +53,7 @@ void TitleScene::Draw() {
 	titleButton_->Draw();
 
 	_objects->player->Draw(_controller->_dxCommon);
-	_objects->mouseCursor_->Draw(_controller->_dxCommon);
+	_objects->mouseCursor_->Draw();
 }
 
 

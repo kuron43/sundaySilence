@@ -25,6 +25,7 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(6, "gray.png");
 		spriteCommon_->LoadTexture(7, "Cursor.png");
 		spriteCommon_->LoadTexture(8, "START.png");
+		spriteCommon_->LoadTexture(9, "START2.png");
 
 
 
