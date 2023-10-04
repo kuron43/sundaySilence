@@ -83,7 +83,7 @@ void SelectScene::SelectSceneNum(Input* input) {
 			selectNum = 0;
 		}
 	}
-	if (input->KeyboardTrigger(DIK_SPACE)) {
+	if (_objects->mouseCursor_->Cursor2Sprite(stage1_.get()) && input->MouseButtonTrigger(0)) {
 		resultNum = selectNum;
 		isConfirm = true;
 	}
