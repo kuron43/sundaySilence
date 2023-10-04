@@ -31,6 +31,8 @@ void SelectScene::Initialize() {
 void SelectScene::Update(Input* input) {
 	selectTitele_->Update();
 	stage1_->Update();
+	_objects->mouseCursor_->Update(input);
+	
 
 	SelectSceneNum(input);
 	MoveScene();
@@ -44,6 +46,7 @@ void SelectScene::Update(Input* input) {
 	else if (selectNum == 2) {
 		stage1_->SetTextureIndex(21);
 	}
+
 	ImGui::Begin("SELECT NUM");
 	ImGui::Text("SelectNum : %d", selectNum);
 	ImGui::End();
@@ -53,6 +56,7 @@ void SelectScene::Draw() {
 	selectTitele_->Draw();
 	stage1_->Draw();
 
+	_objects->mouseCursor_->Draw();
 }
 void SelectScene::SelectSceneNum(Input* input) {
 	if (selectNum == 0) {

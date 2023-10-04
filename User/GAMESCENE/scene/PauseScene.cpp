@@ -22,6 +22,7 @@ void PauseScene::Initialize() {
 
 void PauseScene::Update(Input* input) {
 	pauseGray->Update();
+	_objects->mouseCursor_->Update(input);
 
 	if (input->KeyboardTrigger(DIK_NUMPAD2)) {
 
@@ -41,7 +42,7 @@ void PauseScene::Update(Input* input) {
 
 		_controller->goToTitle = true;
 		_controller->PopScene();
-	}else if (input->KeyboardTrigger(DIK_NUMPAD1) || input->Pad_X_ButtonTrigger(LB)) {
+	}else if (input->KeyboardTrigger(DIK_TAB) || input->Pad_X_ButtonTrigger(LB)) {
 		_controller->PopScene();
 	}
 }
@@ -66,4 +67,6 @@ void PauseScene::Draw() {
 	Object3d::PostDraw();
 
 	pauseGray->Draw();
+	//ここより下にポーズシーン用の描画処理
+	_objects->mouseCursor_->Draw();
 }

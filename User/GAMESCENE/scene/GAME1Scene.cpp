@@ -135,7 +135,7 @@ void GAME1Scene::Update(Input* input) {
 	ImGui::Text("countB : %d", _objects->bossCount);
 	ImGui::End();
 
-	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
+	if (input->KeyboardTrigger(DIK_TAB)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
 	}
 	else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
