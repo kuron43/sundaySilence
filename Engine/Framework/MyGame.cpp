@@ -51,16 +51,6 @@ void MyGame::Update() {
 	// ゲームシーンの毎フレーム処理
 	gameScene->Update();
 
-	/*if (input->KeyboardTrigger(DIK_1)) {
-		postEffect->SetShadeNumber(0);
-	}
-	if (input->KeyboardTrigger(DIK_2)) {
-		postEffect->SetShadeNumber(1);
-	}
-	if (input->KeyboardTrigger(DIK_3)) {
-		postEffect->SetShadeNumber(3);
-	}*/
-
 }
 
 // 描画のフレームワークのポストエフェクトの扱いわからん

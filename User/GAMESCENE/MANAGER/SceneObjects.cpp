@@ -23,13 +23,17 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(4, "clear.png");
 		spriteCommon_->LoadTexture(5, "select.png");
 		spriteCommon_->LoadTexture(6, "gray.png");
-		//spriteCommon_->LoadTexture(7, "Cursor.png");
-		spriteCommon_->LoadTexture(7, "mouse.png");
+		spriteCommon_->LoadTexture(7, "Cursor.png");
+		spriteCommon_->LoadTexture(8, "START.png");
 
 
-		spriteCommon_->LoadTexture(16, "1.png");
-		spriteCommon_->LoadTexture(17, "2.png");
-		spriteCommon_->LoadTexture(18, "3.png");
+
+	}
+	// スプライトロード  20~
+	{
+		spriteCommon_->LoadTexture(20, "1.png");
+		spriteCommon_->LoadTexture(21, "2.png");
+		spriteCommon_->LoadTexture(22, "3.png");
 	}
 
 	mouseCursor_ = std::make_unique<Cursor>();

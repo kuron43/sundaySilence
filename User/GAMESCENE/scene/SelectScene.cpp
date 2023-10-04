@@ -39,10 +39,10 @@ void SelectScene::Update(Input* input) {
 		stage1_->SetTextureIndex(1);
 	}
 	else if (selectNum == 1) {
-		stage1_->SetTextureIndex(16);
+		stage1_->SetTextureIndex(20);
 	}
 	else if (selectNum == 2) {
-		stage1_->SetTextureIndex(17);
+		stage1_->SetTextureIndex(21);
 	}
 	ImGui::Begin("SELECT NUM");
 	ImGui::Text("SelectNum : %d", selectNum);

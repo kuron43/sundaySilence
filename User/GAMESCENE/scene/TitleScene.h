@@ -23,4 +23,5 @@ public:
 	
 private://リソース
 	std::unique_ptr <Sprite> title_;
+	std::unique_ptr <Sprite> titleButton_;
 };
