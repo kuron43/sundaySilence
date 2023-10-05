@@ -1,10 +1,14 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4820)
+
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
-#include "WinApp.h"
 #include <vector>
+#pragma warning(pop)
 
+#include "WinApp.h"
 //DirectX基盤
 class DirectXCommon
 {

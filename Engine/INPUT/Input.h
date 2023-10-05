@@ -1,5 +1,6 @@
 #pragma once
 #include "WinApp.h"
+#include <stdint.h>
 
 #include "Keyboard_Input.h"
 #include "PadInput.h"

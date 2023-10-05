@@ -1,6 +1,6 @@
 #include "SceneObjects.h"
 
-SceneObjects::SceneObjects(DirectXCommon*DXCommon,Camera* camera) {
+SceneObjects::SceneObjects(DirectXCommon* DXCommon, Camera* camera) {
 	_dxCommon = DXCommon;
 	_camera = camera;
 }
@@ -13,6 +13,18 @@ void SceneObjects::Initialize() {
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
 	{
+		enum spriteNum
+		{
+			title = 1,
+			inu = 2,
+			end = 3,
+			clear = 4,
+			select = 5,
+			gray = 6,
+			Cursor = 7,
+			START = 8,
+			START2 = 9,
+		};
 		//スプライト初期化
 		spriteCommon_ = std::make_unique<SpriteCommon>();
 		spriteCommon_->Initialize(_dxCommon);
@@ -27,14 +39,20 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(8, "START.png");
 		spriteCommon_->LoadTexture(9, "START2.png");
 
-
-
 	}
-	// スプライトロード  20~
+	// スプライトロード  20~ //セレクトステージ
 	{
 		spriteCommon_->LoadTexture(20, "1.png");
 		spriteCommon_->LoadTexture(21, "2.png");
 		spriteCommon_->LoadTexture(22, "3.png");
+	}
+	// スプライトロード  30~ //一時的な画像用
+	{
+		spriteCommon_->LoadTexture(30, "red.png");
+		spriteCommon_->LoadTexture(31, "orange.png");
+		spriteCommon_->LoadTexture(32, "purple.png");
+		spriteCommon_->LoadTexture(33, "yellow.png");
+		spriteCommon_->LoadTexture(34, "black.png");
 	}
 
 	mouseCursor_ = std::make_unique<Cursor>();
@@ -78,4 +96,11 @@ void SceneObjects::Initialize() {
 
 	//3Dオブジェクトにライトをセット
 	Object3d::SetLight(lightGroup.get());
+}
+
+void SceneObjects::Reset()
+{
+	enemys.clear();
+	boss.clear();
+	walls.clear();
 }

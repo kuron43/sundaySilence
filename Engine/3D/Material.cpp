@@ -1,6 +1,11 @@
 #include "Material.h"
+
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <DirectXTex.h>
 #include <cassert>
+#pragma warning(pop)
 
 using namespace DirectX;
 using namespace std;

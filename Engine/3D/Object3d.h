@@ -1,14 +1,18 @@
 #pragma once
-
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
+#pragma warning(disable: 4514)
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include <d3dx12.h>
 #include <string.h>
+#pragma warning(pop)
 #include "Model.h"
 #include "LightGroup.h"
-
 #include "Affin.h"
 #include "Transform.h"
 #include "Camera.h"

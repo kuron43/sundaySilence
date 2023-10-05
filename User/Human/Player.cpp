@@ -1,24 +1,26 @@
 #include "Player.h"
 #include "Assault.h"
-#include "imgui.h"
+
 
 Player::Player() {
 
 }
 Player::~Player() {
 	delete model_;
+	delete reticleMD_;
 }
 
 ///
 void Player::Initialize() {
 	model_ = Model::LoadFromOBJ("prayer");
+	reticleMD_ = Model::LoadFromOBJ("Cube2");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
 	object_->Initialize();
 
 	reticle = Object3d::Create();
-	reticle->SetModel(model_);
+	reticle->SetModel(reticleMD_);
 	reticle->Initialize();
 	weapon_[0] = new Assault();
 	weapon_[0]->Initialize();

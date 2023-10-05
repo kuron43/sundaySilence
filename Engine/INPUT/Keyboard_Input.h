@@ -1,10 +1,15 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4820)
+
 #include <windows.h>
 #include <wrl.h>
+#include <dinput.h>
+#pragma warning(pop)
+
 #include "WinApp.h"
 
 //#define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
-#include <dinput.h>
 
 class Keyboard_Input
 {

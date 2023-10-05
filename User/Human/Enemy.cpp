@@ -21,7 +21,7 @@ void Enemy::Initialize() {
 	isFound = false;
 	isDead = false;
 	nowTitle = false;
-	model_ = Model::LoadFromOBJ("Cube2");
+	model_ = Model::LoadFromOBJ("ene");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);

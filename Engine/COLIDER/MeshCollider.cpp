@@ -1,6 +1,9 @@
 #include "MeshCollider.h"
 #include "Collision.h"
-#include "imgui.h"
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
 
 //三角形の配列を構築する
 void MeshCollider::ConstructTriangles(Model* model)

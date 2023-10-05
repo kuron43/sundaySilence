@@ -1,6 +1,11 @@
-#include "Cursor.h"
-#include "imgui.h"
+#pragma warning(push)
+#pragma warning(disable: 4625)
+#pragma warning(disable: 4626)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
 #include "Affin.h"
+#include "Cursor.h"
 
 Cursor::Cursor() {
 }

@@ -1,11 +1,17 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4820)
 #include <windows.h>
+#include <xinput.h>
+#include <winerror.h>
+#include <cassert>
+#include <stdint.h>
+#pragma warning(pop)
 
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
 
-#include <xinput.h>
 #pragma comment (lib, "xinput.lib")
 
 enum ControllerButton

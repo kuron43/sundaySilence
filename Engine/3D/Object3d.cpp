@@ -1,11 +1,14 @@
 #include "Object3d.h"
-
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 

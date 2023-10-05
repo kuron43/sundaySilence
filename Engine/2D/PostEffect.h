@@ -1,10 +1,14 @@
 #pragma once
-#include"DirectXCommon.h"
-#include "WinApp.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <DirectXTex.h>
 #include <array>
 #include <string>
+#pragma warning(pop)
 
+#include"DirectXCommon.h"
+#include "WinApp.h"
 #include "Affin.h"
 
 class PostEffect

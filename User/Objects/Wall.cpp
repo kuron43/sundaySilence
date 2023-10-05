@@ -1,6 +1,9 @@
 #include "Wall.h"
 #include "DirectXCommon.h"
-#include "imgui.h"
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
 
 Wall::Wall() {
 

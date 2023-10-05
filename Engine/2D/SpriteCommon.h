@@ -1,9 +1,13 @@
 #pragma once
-#include"DirectXCommon.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <DirectXTex.h>
 #include <array>
 #include <string>
+#pragma warning(pop)
 
+#include"DirectXCommon.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"

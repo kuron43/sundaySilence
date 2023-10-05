@@ -1,8 +1,14 @@
 #include "PostEffect.h"
-#include<d3dx12.h>
 #include"WinApp.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
+#include<d3dx12.h>
 #include <cassert>
 #include <d3dcompiler.h>
+
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 

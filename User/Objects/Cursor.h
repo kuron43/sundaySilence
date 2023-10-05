@@ -4,7 +4,6 @@
 #include "Object3d.h"
 #include "Sprite.h"
 #include "SpriteCommon.h"
-
 class Cursor
 {
 public:
@@ -27,5 +26,10 @@ private://リソース
 
 public:
 	bool Cursor2Sprite(Sprite* sprite);
+private:
+	//代入演算子削除
+	Cursor& operator=(const Cursor&) = delete;
+	//コピーコンストラクタ削除
+	Cursor(const Cursor&) = delete;
 };
 

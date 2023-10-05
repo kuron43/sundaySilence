@@ -1,10 +1,13 @@
 #include "GameScene.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4514)
 
 #include<sstream>
 #include<fstream>
 #include<iomanip>
-#include"imgui.h"
+#include <imgui.h>
+#pragma warning(pop)
 
 /// <summary>
 	/// コンストクラタ

@@ -1,15 +1,20 @@
 #pragma once
-
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <forward_list>
+#include <array>
+
+#pragma warning(pop)
+
 #include "Affin.h"
 #include "Transform.h"
-
 #include "Camera.h"
-#include <array>
 
 /// <summary>
 /// 3Dオブジェクト

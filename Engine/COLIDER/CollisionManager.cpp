@@ -3,8 +3,10 @@
 #include "MeshCollider.h"
 #include "Collision.h"
 #include "Vector3.h"
-#include "imgui.h"
-
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
 CollisionManager* CollisionManager::GetInstance()
 {
 	static CollisionManager instance;

@@ -1,10 +1,17 @@
 #include "Model.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
+#pragma warning(disable: 4514)
 #include <cassert>
 #include <fstream>
 #include <sstream>
 #include <Windows.h>
 #include <DirectXTex.h>
 #include <d3dx12.h>
+
+#pragma warning(pop)
 
 using namespace DirectX;
 using namespace Microsoft::WRL;

@@ -88,5 +88,11 @@ private:
 	RayCollider* ray;
 	RaycastHit* rayHit;
 	Vector3 rayvec;
+
+
+	//代入演算子削除
+	Enemy& operator=(const Enemy&) = delete;
+	//コピーコンストラクタ削除
+	Enemy(const Enemy&) = delete;
 };
 

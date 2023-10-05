@@ -8,23 +8,23 @@ Assault::~Assault() {
 
 }
 
-Assault* Assault::Create()
-{
-	// 3Dオブジェクトのインスタンスを生成
-	Assault* instans = new Assault();
-	if (instans == nullptr) {
-		return nullptr;
-	}
-
-	// 初期化
-	if (!instans->Initialize()) {
-		delete instans;
-		assert(0);
-		return nullptr;
-	}
-
-	return instans;
-}
+//Assault* Assault::Create()
+//{
+//	// 3Dオブジェクトのインスタンスを生成
+//	Assault* instans = new Assault();
+//	if (instans == nullptr) {
+//		return nullptr;
+//	}
+//
+//	// 初期化
+//	if (!instans->Initialize()) {
+//		delete instans;
+//		assert(0);
+//		return nullptr;
+//	}
+//
+//	return instans;
+//}
 
 /// 更新を行う
 bool Assault::Initialize() {

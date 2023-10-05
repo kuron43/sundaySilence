@@ -1,7 +1,5 @@
 #pragma once
 
-#include <DirectXMath.h>
-
 class Vector3
 {
 public:
@@ -35,9 +33,6 @@ public:
 	Vector3& operator-=(const Vector3& v);
 	Vector3& operator*=(float s);
 	Vector3& operator/=(float s);
-
-	//Vector3& operator=(const XMFLOAT3& v);
-	//XMFLOAT3& operator=(const Vector3& v);
 };
 
 const Vector3 operator+(const Vector3& v1, const Vector3& v2);

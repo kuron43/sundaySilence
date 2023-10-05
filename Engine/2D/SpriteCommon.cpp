@@ -1,7 +1,13 @@
 #include"SpriteCommon.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
 #include <string>
 #include <d3dcompiler.h>
 #include <d3dx12.h>
+
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 

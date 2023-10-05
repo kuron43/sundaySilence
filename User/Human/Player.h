@@ -37,6 +37,7 @@ private:
 	bool nowTitle = false;
 
 	Model* model_;
+	Model* reticleMD_;
 	Object3d* object_;
 	Object3d* reticle;
 	Transform shotPos;

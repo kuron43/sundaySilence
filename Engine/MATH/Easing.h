@@ -1,7 +1,8 @@
 #pragma once
+#include <math.h>
+
 #include "Vector2.h"
 #include "Vector3.h"
-#include <math.h>
 
 namespace Easing
 {

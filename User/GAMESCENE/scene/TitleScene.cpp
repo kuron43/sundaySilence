@@ -19,6 +19,11 @@ void TitleScene::Initialize() {
 	titleButton_->Initialize(_objects->spriteCommon_.get(), 8);
 	titleButton_->SetSize({ 256,128 });
 	titleButton_->SetPozition({ WinApp::window_width / 2.5f,WinApp::window_height / 1.5f });
+
+	red_ = std::make_unique<Sprite>();
+	red_->Initialize(_objects->spriteCommon_.get(), 8);
+	red_->SetSize({ 24,24 });
+	red_->SetPozition({ WinApp::window_width / 2.5f,WinApp::window_height / 1.5f });
 }
 
 void TitleScene::Update(Input* input) {
@@ -32,8 +37,6 @@ void TitleScene::Update(Input* input) {
 
 	_objects->player->Update(input, true);
 
-
-
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
 	}
@@ -46,6 +49,20 @@ void TitleScene::Update(Input* input) {
 	else {
 		titleButton_->SetTextureIndex(8);
 	}
+
+	//timeEnd = false;
+	//if (isActive) {
+	//	nowTime++;
+	//	easetime = (float)nowTime / easeMaxTime;
+	//	if (nowPointNum == 0 && nowTime <= easeMaxTime) {
+	//		resultVec = Easing::InOutQuintVec3(startPos, points[0], (float)easetime);
+	//		if (time == easeMaxTime - 1) {
+	//			nowPointNum = 1;
+	//			nowTime = 1;
+	//			timeEnd = true;
+	//		}
+	//	}
+	//}
 }
 
 void TitleScene::Draw() {

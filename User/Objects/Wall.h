@@ -23,12 +23,6 @@ public:
 	/// リセットを行う
 	void Reset() override;
 
-public:
-	Object3d* object_;
-	Model* model_;
-private:
-	ObbCollider GetObb() { return *obb_; }
-	bool isHit;
 	//コライダー
 public:
 	void SetSphere(ObbCollider* obb) { obb_ = obb; }
@@ -37,5 +31,11 @@ private:
 
 	ObbCollider* obb_;
 	Object3d* coliderPosTest_;
+public:
+	Object3d* object_;
+	Model* model_;
+private:
+	ObbCollider GetObb() { return *obb_; }
+	bool isHit;
 };
 

@@ -1,5 +1,8 @@
 #include "PointDash.h"
-#include "imgui.h"
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
 
 void PointDash::Update(Vector3 pos)
 {

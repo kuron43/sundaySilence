@@ -4,6 +4,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4819)
 #pragma warning(disable: 4828)
+#pragma warning(disable: 4820)
 #include <forward_list>
 #include <d3d12.h>
 

@@ -8,10 +8,9 @@ class Assault :
 private:
 	std::list<Bullet*> bullets_;
 	Model* model_;
-	bool active_ = false;
 	const uint32_t WeaponNum = 1;
-
 	uint32_t team_;
+
 
 private:
 	const float nomalSpeed = 1.0f;
@@ -19,14 +18,15 @@ private:
 	uint32_t coolTime = 0;
 	uint32_t mag = 0;
 	uint32_t roadingTime = 0;
-	bool goShot;
 
+	bool active_ = false;
+	bool goShot;
 
 public:
 	Assault();
 	~Assault();
 
-	static Assault* Create();
+	//static Assault* Create();
 	/// 更新を行う
 	bool Initialize() override;
 
@@ -41,5 +41,13 @@ public:
 
 	// 発射を行う
 	void Shot(Transform& player, Transform& reticle, uint32_t team) override;
+
+private:
+
+	//代入演算子削除
+	Assault& operator=(const Assault&) = delete;
+
+	//コピーコンストラクタ削除
+	Assault(const Assault&) = delete;
 };
 

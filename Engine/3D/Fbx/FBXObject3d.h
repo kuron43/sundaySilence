@@ -1,9 +1,8 @@
 #pragma once
-#include "FBXModel.h"
-#include "FBXLoader.h"
-#include "Transform.h"
-#include "Camera.h"
-
+#pragma warning(push)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4514)
+#pragma warning(disable: 4061)
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
@@ -11,6 +10,11 @@
 #include <DirectXMath.h>
 #include <string>
 
+#pragma warning(pop)
+#include "FBXModel.h"
+#include "FBXLoader.h"
+#include "Transform.h"
+#include "Camera.h"
 
 
 
@@ -204,4 +208,5 @@ protected: // メンバ変数
 	bool isAnim = true;
 	//アニメーション繰り返すか
 	bool animRot = true;
+
 };

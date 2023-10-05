@@ -1,5 +1,8 @@
 #include "Collision.h"
-#include "imgui.h"
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
 using namespace DirectX;
 
 bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, Vector3* inter, Vector3* reject)

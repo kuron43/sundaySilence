@@ -1,6 +1,11 @@
-#include "ParticleManager.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
+#pragma warning(pop)
+
+#include "ParticleManager.h"
 #include "Affin.h"
 
 
