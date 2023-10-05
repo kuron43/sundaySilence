@@ -1,13 +1,18 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
+
 #include "Object3d.h"
 #include "Transform.h"
 #include "Affin.h"
 #include "Input.h"
 
 #include "DirectXCommon.h"
-#include "imgui.h"
 
 #include "Weapon.h"
+#include "ParticleManager.h"
 
 #include"SphereCollider.h"
 #include"RayCollider.h"

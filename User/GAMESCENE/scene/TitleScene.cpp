@@ -15,58 +15,63 @@ void TitleScene::Initialize() {
 	title_->Initialize(_objects->spriteCommon_.get(), 1);
 	title_->SetSize({ 256,128 });
 	title_->SetPozition({ 200,100 });
+	titleButton_ = std::make_unique<Sprite>();
+	titleButton_->Initialize(_objects->spriteCommon_.get(), 8);
+	titleButton_->SetSize({ 256,128 });
+	titleButton_->SetPozition({ WinApp::window_width / 2.5f,WinApp::window_height / 1.5f });
+
+	red_ = std::make_unique<Sprite>();
+	red_->Initialize(_objects->spriteCommon_.get(), 8);
+	red_->SetSize({ 24,24 });
+	red_->SetPozition({ WinApp::window_width / 2.5f,WinApp::window_height / 1.5f });
 }
 
-void TitleScene::Update(Input* input) {	
+void TitleScene::Update(Input* input) {
 	_controller->_camera->SetEye(camposEye);
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
+	_objects->mouseCursor_->Update(input);
 
 	title_->Update();
+	titleButton_->Update();
 
-	_objects->bossFbxO_->Update();
-	_objects->player->Update(input,true);
-	
-	{
-		//if (input->KeyboardTrigger(DIK_0)) {
-		//	_objects->bossFbxO_->PlayAnimation(0);
-		//}
-		//if (input->KeyboardTrigger(DIK_1)) {
-		//	_objects->bossFbxO_->PlayAnimation(1);
-		//}
-		//if (input->KeyboardTrigger(DIK_2)) {
-		//	_objects->bossFbxO_->PlayAnimation(2);
-		//}
-		//if (input->KeyboardTrigger(DIK_3)) {
-		//	_objects->bossFbxO_->PlayAnimation(3);
-		//}
-		//if (input->KeyboardTrigger(DIK_4)) {
-		//	_objects->bossFbxO_->PlayAnimation(4);
-		//}
-		//if (input->KeyboardTrigger(DIK_5)) {
-		//	_objects->bossFbxO_->PlayAnimation(5);
-		//}
-		//if (input->KeyboardTrigger(DIK_6)) {
-		//	_objects->bossFbxO_->PlayAnimation(6);
-		//}
-		//if (input->KeyboardTrigger(DIK_7)) {
-		//	_objects->bossFbxO_->PlayAnimation(7);
-		//}
-	}
+	_objects->player->Update(input, true);
 
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
-	}else if (input->KeyboardTrigger(DIK_SPACE)) {
-		_controller->SetSceneNum(SCE_GAME1);
+	}
+	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
+		if (input->MouseButtonTrigger(0)) {
+			_controller->SetSceneNum(SCE_SELECT);
+		}
+		titleButton_->SetTextureIndex(9);
+	}
+	else {
+		titleButton_->SetTextureIndex(8);
 	}
 
-	
+	//timeEnd = false;
+	//if (isActive) {
+	//	nowTime++;
+	//	easetime = (float)nowTime / easeMaxTime;
+	//	if (nowPointNum == 0 && nowTime <= easeMaxTime) {
+	//		resultVec = Easing::InOutQuintVec3(startPos, points[0], (float)easetime);
+	//		if (time == easeMaxTime - 1) {
+	//			nowPointNum = 1;
+	//			nowTime = 1;
+	//			timeEnd = true;
+	//		}
+	//	}
+	//}
 }
 
 void TitleScene::Draw() {
-	
 	title_->Draw();
+	titleButton_->Draw();
 
-	//_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
 	_objects->player->Draw(_controller->_dxCommon);
+	_objects->mouseCursor_->Draw();
 }
+
+
+

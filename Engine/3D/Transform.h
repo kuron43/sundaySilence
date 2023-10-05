@@ -23,4 +23,9 @@ public:
 
 private:
 	Matrix4 rotMat = Affin::matUnit();
+
+	////代入演算子削除
+	//Transform& operator=(const Transform&) = delete;
+	////コピーコンストラクタ削除
+	//Transform(const Transform&) = delete;
 };

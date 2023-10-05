@@ -214,6 +214,20 @@ Vector3 Affin::GetWorldTrans(Matrix4 matrix) {
 
 	return mat;
 }
+const Vector3 Affin::division(const Vector3& v, Matrix4 mat)
+{
+	Vector4 devision;
+	devision.x = mat.m[0][0] * v.x + mat.m[1][0] * v.y + mat.m[2][0] * v.z + mat.m[3][0] * 1;
+	devision.y = mat.m[0][1] * v.x + mat.m[1][1] * v.y + mat.m[2][1] * v.z + mat.m[3][1] * 1;
+	devision.z = mat.m[0][2] * v.x + mat.m[1][2] * v.y + mat.m[2][2] * v.z + mat.m[3][2] * 1;
+	devision.w = mat.m[0][3] * v.x + mat.m[1][3] * v.y + mat.m[2][3] * v.z + mat.m[3][3] * 1;
+
+	devision.x = devision.x / devision.w;
+	devision.y = devision.y / devision.w;
+	devision.z = devision.z / devision.w;
+
+	return { devision.x, devision.y, devision.z };
+}
 
 /// <summary>
 ///	W 除算

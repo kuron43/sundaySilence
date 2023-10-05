@@ -1,5 +1,6 @@
 #pragma once
 #include "WinApp.h"
+#include <stdint.h>
 
 #include "Keyboard_Input.h"
 #include "PadInput.h"
@@ -124,7 +125,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="power">振動の強さ0.0f～1.0f</param>
 	/// <param name="span">振動の時間フレーム</param>
-	void Pad_X_ShakeController(const float& power, const int& span);
+	void Pad_X_ShakeController(const float& power, const uint32_t& span);
 
 #pragma endregion Xbox Pad用関数
 #pragma region マウス用関数

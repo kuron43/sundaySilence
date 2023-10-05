@@ -1,14 +1,18 @@
 #pragma once
-
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
+#pragma warning(disable: 4514)
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include <d3dx12.h>
 #include <string.h>
+#pragma warning(pop)
 #include "Model.h"
 #include "LightGroup.h"
-
 #include "Affin.h"
 #include "Transform.h"
 #include "Camera.h"
@@ -31,17 +35,17 @@ private: // エイリアス
 		Matrix4 veiwproj;  //ビュープロジェクション行列
 		Matrix4 world;		//ワールド行列
 		Vector3 cameraPos;	//カメラ座標 (ワールド座標)
-		Vector4 color;
+		Vector3 color;
 	};
 
 
 
 private: // 定数
-	static const int division = 50;					// 分割数
+	static const uint32_t division = 50;					// 分割数
 	static const float radius;				// 底面の半径
 	static const float prizmHeight;			// 柱の高さ
-	static const int planeCount = division * 2 + division * 2;		// 面の数
-	static const int vertexCount = planeCount * 3;		// 頂点数
+	static const uint32_t planeCount = division * 2 + division * 2;		// 面の数
+	static const uint32_t vertexCount = planeCount * 3;		// 頂点数
 
 public: // 静的メンバ関数
 	/// <summary>
@@ -151,11 +155,11 @@ public: // メンバ関数
 
 	//setter
 	void SetModel(Model* model) { model_ = model; }
-	void SetColor(Vector4 color) { color_ = color; }
+	void SetColor(Vector3 color) { color_ = color; }
 	Model& GetModel() { return *model_; }
 
 private: // メンバ変数
-	Vector4 color_ = {0.0f,0.0f,0.0f,1};
+	Vector3 color_ = {0.0f,0.0f,0.0f};
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 
 	// 色

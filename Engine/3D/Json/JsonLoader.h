@@ -1,14 +1,20 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
+#pragma warning(disable: 4514)
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <map>
+#include <DirectXMath.h>
+
+#pragma warning(pop)
 
 #include "Affin.h"
-#include <DirectXMath.h>
-#include <map>
-
 #include "Model.h"
 #include "Object3d.h"
 

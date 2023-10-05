@@ -1,9 +1,13 @@
 #pragma once
-#include"DirectXCommon.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <DirectXTex.h>
 #include <array>
 #include <string>
+#pragma warning(pop)
 
+#include"DirectXCommon.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -50,6 +54,9 @@ public:
 	void LoadTexture(uint32_t index, const std::string& fileName);
 
 	void SetTextureCommands(uint32_t index);
+
+	void PreDraw();
+	void PostDraw();
 
 	//Microsoft::WRL::ComPtr<ID3D12Resource> GetTexBuff(uint32_t index) { return texBuff[index]; }
 

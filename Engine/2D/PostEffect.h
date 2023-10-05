@@ -1,10 +1,14 @@
 #pragma once
-#include"DirectXCommon.h"
-#include "WinApp.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <DirectXTex.h>
 #include <array>
 #include <string>
+#pragma warning(pop)
 
+#include"DirectXCommon.h"
+#include "WinApp.h"
 #include "Affin.h"
 
 class PostEffect
@@ -71,11 +75,11 @@ public:
     /// <param name="cmdList">コマンド処理</param>
     static void PostDrawScene();
 
-    static void SetShadeNumber(int SetShadeNumber);
+    static void SetShadeNumber(uint32_t SetShadeNumber);
 
-    static void SetKernelSize(int range);
+    static void SetKernelSize(uint32_t range);
 
-    static void SetRadialBlur(Vector2 senter, float intensity, int sample);
+    static void SetRadialBlur(Vector2 senter, float intensity, uint32_t sample);
 
 private://静的メンバ変数
     static const float clearColor[4];

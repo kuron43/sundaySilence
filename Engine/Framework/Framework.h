@@ -6,7 +6,10 @@
 #include "FPS.h"
 #include "ImGuiManager.h"
 #include "PadInput.h"
+#pragma warning(push)
+#pragma warning(disable: 4514)
 #include <imgui.h>
+#pragma warning(pop)
 
 class Framework
 {

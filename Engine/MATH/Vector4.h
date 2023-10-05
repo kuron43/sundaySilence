@@ -1,7 +1,5 @@
 #pragma once
 
-//class XMVECTOR;
-
 //4次元ベクトル
 class Vector4
 {

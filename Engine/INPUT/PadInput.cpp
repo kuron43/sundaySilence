@@ -1,5 +1,5 @@
 #include "PadInput.h"
-#include <winerror.h>
+
 
 Pad_X_Input::Pad_X_Input() {
 
@@ -279,7 +279,7 @@ bool Pad_X_Input::StickOffTrigger(ControllerStick stickInput, const float& deadR
 	return result / STICK_INPUT_MAX;;
 }
 
-void Pad_X_Input::ShakeController(const float& power, const int& span)
+void Pad_X_Input::ShakeController(const float& power, const uint32_t& span)
 {
 	if (!(0 < power && power <= 1.0f))
 	{

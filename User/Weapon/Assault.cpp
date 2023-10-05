@@ -8,23 +8,23 @@ Assault::~Assault() {
 
 }
 
-Assault* Assault::Create()
-{
-	// 3Dオブジェクトのインスタンスを生成
-	Assault* instans = new Assault();
-	if (instans == nullptr) {
-		return nullptr;
-	}
-
-	// 初期化
-	if (!instans->Initialize()) {
-		delete instans;
-		assert(0);
-		return nullptr;
-	}
-
-	return instans;
-}
+//Assault* Assault::Create()
+//{
+//	// 3Dオブジェクトのインスタンスを生成
+//	Assault* instans = new Assault();
+//	if (instans == nullptr) {
+//		return nullptr;
+//	}
+//
+//	// 初期化
+//	if (!instans->Initialize()) {
+//		delete instans;
+//		assert(0);
+//		return nullptr;
+//	}
+//
+//	return instans;
+//}
 
 /// 更新を行う
 bool Assault::Initialize() {
@@ -91,7 +91,7 @@ void Assault::Reset() {
 }
 
 // 発射を行う
-void Assault::Shot(Transform& player, Transform& reticle,int team) {
+void Assault::Shot(Transform& player, Transform& reticle, uint32_t team) {
 	
 	if (coolTime <= 0 && goShot == true) {
 		//弾を生成し、初期化

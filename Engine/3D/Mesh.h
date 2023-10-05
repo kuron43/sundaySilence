@@ -1,6 +1,9 @@
 #pragma once
-
-#include "Material.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
+#pragma warning(disable: 4514)
 #include <DirectXMath.h>
 #include <Windows.h>
 #include <d3d12.h>
@@ -8,6 +11,9 @@
 #include <vector>
 #include <wrl.h>
 #include <unordered_map>
+
+#pragma warning(pop)
+#include "Material.h"
 #include "Affin.h"
 
 /// <summary>

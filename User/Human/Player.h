@@ -29,13 +29,15 @@ public:
 	Transform GetTransform() { return object_->wtf; };
 
 	// 種族番号取得
-	int HowTribe() { return Tribe_; };
-
+	uint32_t HowTribe() { return Tribe_; };
 private:
-	const int Tribe_ = 0;
+	void OnColision();
+private:
+	const uint32_t Tribe_ = 0;
 	bool nowTitle = false;
 
 	Model* model_;
+	Model* reticleMD_;
 	Object3d* object_;
 	Object3d* reticle;
 	Transform shotPos;
@@ -55,13 +57,17 @@ private:
 	// スキル用
 private:
 	PointDash* pointDash_;
+	bool nowSetPoint;
+	bool wallHit;
+	// 前フレーム移動ベクトル
+	Vector3 oldVelocity_;
 
 	//コライダー
 public:
 	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
 	std::vector<SphereCollider*> GetSphere() { return sphere; }
 private:
-	int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	uint32_t SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
 	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	std::vector<SphereCollider*> sphere;
 	Ray* ray;

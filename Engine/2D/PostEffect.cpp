@@ -1,8 +1,14 @@
 #include "PostEffect.h"
-#include<d3dx12.h>
 #include"WinApp.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
+#include<d3dx12.h>
 #include <cassert>
 #include <d3dcompiler.h>
+
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -36,7 +42,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::constDataBuff_;
 // マッピング済みアドレス
 PostEffect::SendDataGPU* PostEffect::dataMap = nullptr;
 
-const float PostEffect::clearColor[4] = { 0.25f,0.5f,0.1f,0 };
+const float PostEffect::clearColor[4] = { 0.0f,0.0f,0.0f,0 };
 
 void PostEffect::Initialize(DirectXCommon* dxCommon)
 {
@@ -47,7 +53,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	D3D12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		WinApp::window_width,
-		(UINT)WinApp::window_height,
+		WinApp::window_height,
 		1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 	{
 
@@ -58,7 +64,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 
 		CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor);
 
-		for (int i = 0; i < 2; i++) {
+		for (uint32_t i = 0; i < 2; i++) {
 
 			result = device_->CreateCommittedResource(
 				&heapProp,
@@ -78,7 +84,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 				const UINT depthPitch = rowPitch * WinApp::window_height;
 				//画像イメージ
 				UINT* img = new UINT[pixelCount];
-				for (int j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
+				for (uint32_t j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
 
 
 				result = texBuff[i]->WriteToSubresource(0, nullptr,
@@ -105,7 +111,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
 
-	for (int i = 0; i < 2; i++) {
+	for (uint32_t i = 0; i < 2; i++) {
 		//デスクリプタヒープにSRVを作成
 		device_->CreateShaderResourceView(texBuff[i].Get(),
 			&srvDesc,
@@ -123,7 +129,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	result = device_->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
 	assert(SUCCEEDED(result));
 	//RTV用のデスクリプタヒープを生成
-	for (int i = 0; i < 2; i++) {
+	for (uint32_t i = 0; i < 2; i++) {
 		//デスクリプタヒープにRTVを作成
 		device_->CreateRenderTargetView(texBuff[i].Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
 			descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
@@ -140,7 +146,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 		{{+1.0f,-1.0f,0.0f},{1.0f,1.0f}},
 		{{+1.0f,+1.0f,0.0f},{1.0f,0.0f}},
 	};
-	for (int i = 0; i < 4; i++)
+	for (uint32_t i = 0; i < 4; i++)
 	{
 		vertices[i] = vertices_[i];
 	}
@@ -173,7 +179,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	//前頂点に対して
-	for (int i = 0; i < _countof(vertices); i++) {
+	for (uint32_t i = 0; i < _countof(vertices); i++) {
 		vertMap[i] = vertices[i]; //座標コピー
 	}
 
@@ -218,7 +224,7 @@ void PostEffect::Finalize()
 {
 
 	vertBuff.Reset();
-	for (int i = 0; i < 2; i++) {
+	for (uint32_t i = 0; i < 2; i++) {
 		texBuff[i].Reset();
 	}
 	descHeapSRV.Reset();
@@ -374,9 +380,6 @@ void PostEffect::CreatGraphicsPipeline()
 	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算
 	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;//ソースのアルファ値
 	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;//1.0f-ソースのアルファ値
-	////ブレンドステート
-	//pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask
-	//	= D3D12_COLOR_WRITE_ENABLE_ALL;//RBGAすべてのチャンネルを描画
 	//頂点レイアウトの設定
 	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
 	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
@@ -398,7 +401,7 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 {
 	commandList = cmdList;
 
-	for (int i = 0; i < 2; i++) {
+	for (uint32_t i = 0; i < 2; i++) {
 		CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
 			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 			D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -410,7 +413,7 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 
 	//レンダーターゲットビュー用のディスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs[2];
-	for (int i = 0; i < 2; i++) {
+	for (uint32_t i = 0; i < 2; i++) {
 		rtvHs[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i,
 			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
 	}
@@ -423,7 +426,7 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 	CD3DX12_VIEWPORT viewPorts[2];
 	CD3DX12_RECT scissorRects[2];
 
-	for (int i = 0; i < 2; i++) {
+	for (uint32_t i = 0; i < 2; i++) {
 		viewPorts[i] = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
 		scissorRects[i] = CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
 	}
@@ -432,7 +435,7 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 	commandList->RSSetViewports(2, viewPorts);
 	//シザリング矩形の設定
 	commandList->RSSetScissorRects(2, scissorRects);
-	for (int i = 0; i < 2; i++) {
+	for (uint32_t i = 0; i < 2; i++) {
 		//全画面のクリア
 		commandList->ClearRenderTargetView(rtvHs[i], clearColor, 0, nullptr);
 	}
@@ -472,7 +475,7 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 
 void PostEffect::PostDrawScene()
 {
-	for (int i = 0; i < 2; i++) {
+	for (uint32_t i = 0; i < 2; i++) {
 		CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
 			D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
@@ -480,18 +483,18 @@ void PostEffect::PostDrawScene()
 	}
 }
 
-void PostEffect::SetShadeNumber(int SetShadeNumber)
+void PostEffect::SetShadeNumber(uint32_t SetShadeNumber)
 {
 	dataMap->shadeNumber = SetShadeNumber;
 }
 
-void PostEffect::SetKernelSize(int range) {
+void PostEffect::SetKernelSize(uint32_t range) {
 
 	dataMap->kernelSize = range;
 
 }
 
-void PostEffect::SetRadialBlur(Vector2 center, float intensity, int sample)
+void PostEffect::SetRadialBlur(Vector2 center, float intensity, uint32_t sample)
 {
 	dataMap->center = center;
 	dataMap->intensity = intensity;

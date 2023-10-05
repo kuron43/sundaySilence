@@ -38,7 +38,7 @@ void MouseInput::Update() {
 	mouse->Acquire();
 
 	//全キーの入力状態を取得する
-	for (int i = 0; i < sizeof(DIMOUSESTATE::rgbButtons); i++) {
+	for (uint32_t i = 0; i < sizeof(DIMOUSESTATE::rgbButtons); i++) {
 		oldMouseButton.rgbButtons[i] = mouseButton.rgbButtons[i];
 	}
 

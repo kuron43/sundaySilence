@@ -28,7 +28,7 @@ public:
 	void SetRestRotate(Vector3 rot) { restRotate_ = rot; }
 
 	// 種族番号取得
-	int HowTribe() { return Tribe_; }
+	uint32_t HowTribe() { return Tribe_; }
 	bool HowDead() { return isDead; }
 
 	Transform GetTransform() { return object_->wtf; }
@@ -36,11 +36,12 @@ public:
 private:
 	void FrontFace();
 	void ColiderUpdate();
+	void OnColision();
 	
 public:
 	Object3d* object_;
 private:
-	const int Tribe_ = 1;
+	const uint32_t Tribe_ = 1;
 	bool isFound = false;
 	bool isFire = false;
 	bool isBlocked = false;
@@ -51,6 +52,7 @@ private:
 
 	Vector3 frontVec_;
 	bool isDead = false;
+	uint32_t hp = 3;
 
 	
 	//移動速度
@@ -69,12 +71,16 @@ private:
 	bool nowTitle = false;
 
 
+	ParticleManager* particle_ = nullptr;
+	uint32_t onPatTime_;
+	bool onPat_;
+
 	//コライダー
 public:
 	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
 	std::vector<SphereCollider*> GetSphere() { return sphere; }
 private:
-	int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	uint32_t SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
 	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	std::vector<SphereCollider*> sphere;
 	std::vector<Vector3> spherePos;
@@ -82,5 +88,11 @@ private:
 	RayCollider* ray;
 	RaycastHit* rayHit;
 	Vector3 rayvec;
+
+
+	//代入演算子削除
+	Enemy& operator=(const Enemy&) = delete;
+	//コピーコンストラクタ削除
+	Enemy(const Enemy&) = delete;
 };
 

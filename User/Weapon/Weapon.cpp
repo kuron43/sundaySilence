@@ -45,8 +45,8 @@ void Weapon::Reset() {
 /// <param name="player"></param>
 /// <param name="reticle"></param>
 /// <param name="team">0 = 敵：1 ＝ 自</param>
-void Weapon::Shot(Transform& player, Transform& reticle,int team) {
-	player;
-	reticle;
-	team;
+void Weapon::Shot(Transform& player, Transform& reticle, uint32_t team) {
+	if (player.scale.x == 0) {};
+	if (reticle.scale.x == 0) {};
+	if(team){};
 }

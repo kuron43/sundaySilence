@@ -20,8 +20,8 @@ float4 main(VSOutput input) : SV_TARGET
     if (shadeNumber == 0)
     {
         float4 texcolor = tex0.Sample(smp, input.uv);
-        //return float4(texcolor.rgb, 1);
-        return texcolor;
+        return float4(texcolor.rgb, 1);
+        //return texcolor;
     }
     else if (shadeNumber == 1)      // CG4 評価課題用
     {
@@ -97,5 +97,5 @@ float4 main(VSOutput input) : SV_TARGET
         col.a = 1;
         return col;
     }
-    return float4(1, 1, 1, 1);
+    return float4(0, 0, 0, 1);
 }

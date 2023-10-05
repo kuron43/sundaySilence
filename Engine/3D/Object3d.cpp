@@ -1,11 +1,14 @@
 #include "Object3d.h"
-
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -301,7 +304,7 @@ bool Object3d::Initialize()
 	assert(SUCCEEDED(result));
 
 	wtf.Initialize();
-	color_ = Vector4(0,0,0,0);
+	color_ = Vector3(0,0,0);
 
 	return true;
 }

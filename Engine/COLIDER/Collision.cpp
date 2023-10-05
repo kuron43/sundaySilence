@@ -1,5 +1,8 @@
 #include "Collision.h"
-#include "imgui.h"
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
 using namespace DirectX;
 
 bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, Vector3* inter, Vector3* reject)
@@ -311,7 +314,7 @@ float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
 	//float result = 0;
 
 	// 各軸についてはみ出た部分のベクトルを算出
-	for (int i = 0; i < 3; i++)
+	for (uint32_t i = 0; i < 3; i++)
 	{
 		//float L = obb.m_fLength[i]/2;
 		float L = obb.m_fLength[i];

@@ -1,24 +1,26 @@
 #include "Player.h"
 #include "Assault.h"
-#include "imgui.h"
+
 
 Player::Player() {
 
 }
 Player::~Player() {
 	delete model_;
+	delete reticleMD_;
 }
 
 ///
 void Player::Initialize() {
-	model_ = Model::LoadFromOBJ("cube");
+	model_ = Model::LoadFromOBJ("prayer");
+	reticleMD_ = Model::LoadFromOBJ("Cube2");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
 	object_->Initialize();
 
 	reticle = Object3d::Create();
-	reticle->SetModel(model_);
+	reticle->SetModel(reticleMD_);
 	reticle->Initialize();
 	weapon_[0] = new Assault();
 	weapon_[0]->Initialize();
@@ -33,7 +35,7 @@ void Player::Initialize() {
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
 	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
@@ -56,7 +58,9 @@ void Player::Initialize() {
 ///
 void Player::Update(Input* input, bool isTitle) {
 	nowTitle = isTitle;
-	Move(input);
+	if (pointDash_->isActive == false) {
+		Move(input);
+	}
 	Vector2 mousepos = input->GetMousePosition();
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_,0,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
@@ -67,20 +71,41 @@ void Player::Update(Input* input, bool isTitle) {
 
 	if (input->MouseButtonTrigger(0) && !isTitle && isSlow == true) {
 		pointDash_->SetPoint(reticle->wtf.position, input);
+		nowSetPoint = true;
+	}
+
+	if (!isTitle && pointDash_->isActive == true ) {
+		pointDash_->GoToPoint();
+		object_->wtf.position = pointDash_->resultVec;
 	}
 
 	ColisionUpdate();
 
 	object_->Update();
 
-	ImGui::Begin("pointD");
-	ImGui::Text("ply:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
-	ImGui::Text("pointNUM :%d", pointDash_->registNum);
-	ImGui::InputFloat3("pos0", &pointDash_->points[0].x);
-	ImGui::InputFloat3("pos0", &pointDash_->points[1].x);
-	ImGui::InputFloat3("pos0", &pointDash_->points[2].x);
-	ImGui::InputFloat3("pos0", &pointDash_->points[3].x);
-	ImGui::InputFloat3("pos0", &pointDash_->points[4].x);
+	//if (input->KeyboardTrigger(DIK_R)) {
+	//	//Reset();
+	//	pointDash_->Reset();
+	//}
+
+	//ImGui::Begin("pointD");
+	//ImGui::Text("ply:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
+	//ImGui::Text("pointNUM :%d", pointDash_->registNum);
+	//ImGui::InputFloat3("pos0", &pointDash_->points[0].x);
+	//ImGui::InputFloat3("pos1", &pointDash_->points[1].x);
+	//ImGui::InputFloat3("pos2", &pointDash_->points[2].x);
+	//ImGui::InputFloat3("pos3", &pointDash_->points[3].x);
+	//ImGui::InputFloat3("pos4", &pointDash_->points[4].x);
+	//ImGui::InputFloat3("Vec0", &pointDash_->moveVec[0].x);
+	//ImGui::InputFloat3("Vec1", &pointDash_->moveVec[1].x);
+	//ImGui::InputFloat3("Vec2", &pointDash_->moveVec[2].x);
+	//ImGui::InputFloat3("Vec3", &pointDash_->moveVec[3].x);
+	//ImGui::InputFloat3("Vec4", &pointDash_->moveVec[4].x);
+	//ImGui::End();
+
+	ImGui::Begin("pointRes");
+	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
+	ImGui::Text("spe :%f", pointDash_->easeSpeed);
 	ImGui::End();
 }
 
@@ -91,7 +116,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	if (!nowTitle) {
 		reticle->Draw();
 	}
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 
 		//coliderPosTest_[i]->Draw();
 	}
@@ -104,7 +129,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 /// リセットを行う
 void Player::Reset() {
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 	}
 
@@ -437,11 +462,12 @@ void Player::Move(Input* input) {
 
 
 	//////////////////////////////////
-	if (input->MouseButtonPush(1)) {
+	if (input->MouseButtonTrigger(1)) {
 		isSlow = true;
 	}
 	if (input->MouseButtonRelease(1)) {
 		isSlow = false;
+		nowSetPoint = false;
 		pointDash_->MakeMoveVec(Affin::GetWorldTrans(object_->wtf.matWorld));
 		//pointDash_->Reset();
 	}
@@ -453,6 +479,11 @@ void Player::Move(Input* input) {
 		velocity_ = speed;
 	}
 
+	if (wallHit == true) {
+		wallHit = false;
+		velocity_ = -oldVelocity_;
+	}
+
 	{
 		faceAngle_.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
 		faceAngle = faceAngle_;
@@ -460,13 +491,23 @@ void Player::Move(Input* input) {
 
 	object_->wtf.rotation = faceAngle;
 	object_->wtf.position += velocity_;
+	oldVelocity_ = velocity_;
 
 }
+
 void Player::ColisionUpdate() {
 	// コライダーのアップデート
 	object_->UpdateMatrix();
 
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		if (sphere[i]->GetIsHit() == true) {
+			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
+				wallHit = true;
+			}
+		}
+	}
+
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
 
@@ -474,16 +515,7 @@ void Player::ColisionUpdate() {
 		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
 		coliderPosTest_[i]->Update();
-	}
-
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
-			Vector3 a{ 0,0,0 };
-			ImGui::Begin("plyHitWall");
-			ImGui::Text("Hit:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
-			ImGui::End();
-		}
-	}
+	}	
 
 	// クエリーコールバッククラス
 	class PlayerQueryCallback :public QueryCallback
@@ -518,7 +550,7 @@ void Player::ColisionUpdate() {
 	};
 
 	//クエリーコールバックの関数オブジェクト
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		PlayerQueryCallback callback(sphere[i]);
 		//
 		CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback);

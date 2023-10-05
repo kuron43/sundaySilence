@@ -21,5 +21,9 @@ public:
 private:
 	std::unique_ptr <Sprite> end_;
 public:
+	//代入演算子削除
+	EndScene& operator=(const EndScene&) = delete;
 
+	//コピーコンストラクタ削除
+	EndScene(const EndScene&) = delete;
 };

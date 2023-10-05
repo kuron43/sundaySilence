@@ -1,15 +1,20 @@
 #pragma once
-
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <forward_list>
+#include <array>
+
+#pragma warning(pop)
+
 #include "Affin.h"
 #include "Transform.h"
-
 #include "Camera.h"
-#include <array>
 
 /// <summary>
 /// 3Dオブジェクト
@@ -51,9 +56,9 @@ public: // サブクラス
 		//加速度
 		Vector3 accel = {};
 		//現在フレーム
-		int frame = 0;
+		uint32_t frame = 0;
 		//過去フレーム
-		int num_frame = 0;
+		uint32_t num_frame = 0;
 
 		//スケール
 		float scale = 1.0f;
@@ -67,12 +72,12 @@ public: // サブクラス
 	};
 
 private: // 定数
-	//const int division = 50;					// 分割数
+	//const uint32_t division = 50;					// 分割数
 	//const float radius;				// 底面の半径
 	//const float prizmHeight;			// 柱の高さ
-	//const int planeCount = division * 2 + division * 2;		// 面の数
-	//static const int vertexCount = 30;//頂点数
-	const int vertexCount = _countof(vertices);
+	//const uint32_t planeCount = division * 2 + division * 2;		// 面の数
+	//static const uint32_t vertexCount = 30;//頂点数
+	const uint32_t vertexCount = _countof(vertices);
 
 public: // 静的メンバ関数
 	/// <summary>
@@ -125,11 +130,7 @@ private: // 静的メンバ変数
 
 private:// メンバ関数
 
-	/// <summary>
-	/// 3Dオブジェクト生成
-	/// </summary>
-	/// <returns></returns>
-	ParticleManager* Create();
+	
 
 	/// <summary>
 	/// デスクリプタヒープの初期化
@@ -147,6 +148,12 @@ private:// メンバ関数
 	void CreateModel();
 
 public: // メンバ関数
+	/// <summary>
+	/// 3Dオブジェクト生成
+	/// </summary>
+	/// <returns></returns>
+	ParticleManager* Create();
+	static ParticleManager* GetInstance();
 
 	ParticleManager();
 	~ParticleManager();
@@ -167,6 +174,7 @@ public: // メンバ関数
 	/// マネージャーの座標をもとにランダムに放出する
 	/// </summary>
 	void RandParticle();
+	void RandParticle(Vector3 pos, uint32_t life = 10);
 
 	/// <summary>
 	/// パーティクルの追加
@@ -175,7 +183,7 @@ public: // メンバ関数
 	///	<param name="m_Pos">初期座標</param>
 	///	<param name="velocity">速度</param>
 	///	<param name="accel">加速度</param>
-	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale);
+	void Add(uint32_t life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale);
 
 	static void SetCamera(Camera* camera) { ParticleManager::camera_ = camera; }
 

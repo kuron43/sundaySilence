@@ -68,7 +68,7 @@ void GAME1Scene::Initialize() {
 				Vector3 sca;
 				sca = objectData.scaling;
 				newWall->object_->wtf.scale = sca;
-				newWall->object_->SetColor(Vector4(0.5f, 0.3f, 0.3f, 0.3f));
+				newWall->object_->SetColor(Vector3(0.5f, 0.3f, 0.3f));
 				newWall->object_->Update();
 				newWall->CollideInitialize();
 				_objects->walls.emplace_back(newWall);
@@ -96,20 +96,19 @@ void GAME1Scene::Initialize() {
 		}
 
 	}
+
+	_controller->_camera->SetEye(camposEye);
+	_controller->_camera->SetTarget(camposTar);
 }
 
 void GAME1Scene::Update(Input* input) {
 	_objects->eneCount = 0;
 	_objects->bossCount = 0;
 
-	_controller->_camera->SetEye(camposEye);
-	_controller->_camera->SetTarget(camposTar);
-	_controller->_camera->Update();
+
+	//_controller->_camera->Update();
 
 	_objects->player->Update(input);
-	for (Wall* walls : _objects->walls) {
-		walls->Update();
-	}
 
 	BulletManager::GetInstance()->Update();
 	for (Enemy* enemy : _objects->enemys) {
@@ -126,6 +125,9 @@ void GAME1Scene::Update(Input* input) {
 			_objects->bossCount++;
 		}
 	}
+	for (Wall* walls : _objects->walls) {
+		walls->Update();
+	}
 
 
 	ImGui::Begin("enecount");
@@ -133,11 +135,11 @@ void GAME1Scene::Update(Input* input) {
 	ImGui::Text("countB : %d", _objects->bossCount);
 	ImGui::End();
 
-	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
+	if (input->KeyboardTrigger(DIK_TAB)) {
 		_controller->PushScene(new PauseScene(_controller, _objects));
 	}
-	else if (input->KeyboardTrigger(DIK_RETURN)) {
-		_controller->SetSceneNum(SCE_OVER);
+	else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
+		_controller->SetSceneNum(SCE_GAME2);
 	}
 }
 

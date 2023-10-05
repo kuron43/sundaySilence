@@ -1,5 +1,10 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <DirectXMath.h>
+#pragma warning(pop)
+
 #include "Matrix4.h"
 #include "Vector4.h"
 

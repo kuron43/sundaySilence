@@ -1,4 +1,9 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
+#pragma warning(disable: 4514)
 #include <string>
 #include <DirectXMath.h>
 #include <vector>
@@ -9,6 +14,7 @@
 #include <d3dx12.h>
 #include <fbxsdk.h>
 
+#pragma warning(pop)
 #include "Affin.h"
 
 
@@ -71,7 +77,7 @@ public: // サブクラス
 	};
 
 	//ボーンインデックスの最大数
-	static const int MAX_BONE_INDICES = 4;
+	static const uint32_t MAX_BONE_INDICES = 4;
 
 
 	// 頂点データ構造体

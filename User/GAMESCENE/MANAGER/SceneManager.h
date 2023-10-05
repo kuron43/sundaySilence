@@ -36,15 +36,16 @@ public:
 	void SceneDraw();
 
 	// シーンを変更する
-	void SetSceneNum(int num) { sceneNum = num; isChange = true; };
-	int GetSceneNum() { return sceneNum; };
+	void SetSceneNum(uint32_t num) { sceneNum = num; isChange = true; };
+	uint32_t GetSceneNum() { return sceneNum; };
 	void ChangeScene();
 
 	void PushScene(IScene*);
 	void PopScene();
 public:
 	bool isChange = false;
-	int sceneNum = 0;
+	uint32_t sceneNum = 0;
+	bool goToTitle = false;
 };
 
 //	参照元

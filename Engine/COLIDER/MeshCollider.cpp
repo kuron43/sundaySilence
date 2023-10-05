@@ -1,6 +1,9 @@
 #include "MeshCollider.h"
 #include "Collision.h"
-#include "imgui.h"
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
 
 //三角形の配列を構築する
 void MeshCollider::ConstructTriangles(Model* model)
@@ -12,7 +15,7 @@ void MeshCollider::ConstructTriangles(Model* model)
 	const std::vector<unsigned short>& indices = model->GetInidices();
 	const std::vector<VertexPosNormalUv>& vertices = model->GetVertices();
 
-	int start = 0;
+	uint32_t start = 0;
 
 	std::vector<unsigned short>::const_iterator it = indices.cbegin();
 
@@ -22,12 +25,12 @@ void MeshCollider::ConstructTriangles(Model* model)
 
 		triangles.resize(triangles.size() + triangleNum);
 
-		for (int i = 0; i < triangleNum; i++)
+		for (uint32_t i = 0; i < triangleNum; i++)
 		{
 			Triangle& tri = triangles[start + i];
-			int idx0 = indices[i * 3 + 0];
-			int idx1 = indices[i * 3 + 1];
-			int idx2 = indices[i * 3 + 2];
+			uint32_t idx0 = indices[i * 3 + 0];
+			uint32_t idx1 = indices[i * 3 + 1];
+			uint32_t idx2 = indices[i * 3 + 2];
 
 			tri.p0 = {vertices[idx0].pos.x , vertices[idx0].pos.y , vertices[idx0].pos.z};
 			tri.p1 = {vertices[idx1].pos.x , vertices[idx1].pos.y , vertices[idx1].pos.z};
@@ -36,7 +39,7 @@ void MeshCollider::ConstructTriangles(Model* model)
 			tri.ComputeNormal();
 		}
 
-		start += (int)triangleNum;
+		start += (uint32_t)triangleNum;
 	}
 
 }
@@ -63,7 +66,7 @@ bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter,Ve
 
 	if (localSphere.radius_ < 1.0f)
 	{
-		int a = 0;
+		uint32_t a = 0;
 		a++;
 	}
 

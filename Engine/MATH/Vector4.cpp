@@ -1,6 +1,8 @@
 #include "Vector4.h"
-
+#pragma warning(push)
+#pragma warning(disable: 4819)
 #include<cmath>  //sprt
+#pragma warning(pop)
 
 Vector4::Vector4() :x(0), y(0), z(0), w(0)
 {

@@ -17,6 +17,8 @@
 
 #include "Wall.h"
 
+#include "Cursor.h"
+
 // ゲーム使用のオブジェクト一括宣言クラス
 class SceneObjects
 {
@@ -34,6 +36,7 @@ public:
 	std::unique_ptr <LightGroup> lightGroup;
 	std::unique_ptr <Audio> audio;
 	std::unique_ptr <SpriteCommon> spriteCommon_;
+	std::unique_ptr<Cursor> mouseCursor_;
 
 	std::unique_ptr<ParticleManager> particleManager_;
 	std::unique_ptr<ParticleManager> particleManager2_;
@@ -49,9 +52,9 @@ public:
 	std::unique_ptr<Player> player;
 
 	std::vector<Enemy*> enemys;
-	int eneCount;
+	uint32_t eneCount;
 	std::vector<Boss*> boss;
-	int bossCount;
+	uint32_t bossCount;
 
 	Model* wallMD;
 	std::vector<Wall*> walls;

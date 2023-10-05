@@ -1,8 +1,14 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4820)
+
 #include <wrl.h>
 #include <Windows.h>
 #include <dinput.h>
 #include <WinUser.h>
+#pragma warning(pop)
+
+
 #include "WinApp.h"
 #include "Vector2.h"
 

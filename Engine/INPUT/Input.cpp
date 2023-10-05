@@ -1,7 +1,4 @@
 #include "Input.h"
-#include <cassert>
-//#pragma comment(lib, "dinput8.lib")
-//#pragma comment(lib, "dxguid.lib")
 
 Input::Input() {
 
@@ -88,7 +85,7 @@ Vector2 Input::Pad_X_GetRightStickVec(const Vector2& deadRate) {
 
 void Input::Pad_X_ShakeController(
 	const float& power,
-	const int& span) {
+	const uint32_t& span) {
 	return Xpad_->ShakeController(power, span);
 }
 

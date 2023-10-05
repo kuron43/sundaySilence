@@ -80,6 +80,9 @@
     <ClCompile Include="Engine\COLIDER\RayCollider.cpp" />
     <ClCompile Include="User\Skills\PointDash.cpp" />
     <ClCompile Include="Engine\MATH\Easing.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\GAME2Scene.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\SelectScene.cpp" />
+    <ClCompile Include="User\Objects\Cursor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
@@ -157,6 +160,9 @@
     <ClInclude Include="User\Skills\PointDash.h" />
     <ClInclude Include="User\Skills\SkillIntegrate.h" />
     <ClInclude Include="Engine\MATH\Easing.h" />
+    <ClInclude Include="User\GAMESCENE\scene\GAME2Scene.h" />
+    <ClInclude Include="User\GAMESCENE\scene\SelectScene.h" />
+    <ClInclude Include="User\Objects\Cursor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli" />

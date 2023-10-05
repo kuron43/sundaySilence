@@ -3,8 +3,10 @@
 #include "MeshCollider.h"
 #include "Collision.h"
 #include "Vector3.h"
-#include "imgui.h"
-
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
 CollisionManager* CollisionManager::GetInstance()
 {
 	static CollisionManager instance;
@@ -291,11 +293,11 @@ void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback
 			}
 		}//OBB
 		else if (col->GetShapeType() == COLLISIONSHAPE_OBB) {
-			OBB* sphereB = dynamic_cast<OBB*>(col);
+			OBB* obb = dynamic_cast<OBB*>(col);
 
 			Vector3 tempInter;
 			Vector3 tempReject;
-			if (!Collision::CheckOBB2Sphere(*sphereB, sphere, &tempInter, &tempReject))continue;
+			if (!Collision::CheckOBB2Sphere(*obb, sphere, &tempInter, &tempReject))continue;
 
 			// 交差情報をセット
 			QueryHit info;
@@ -324,16 +326,16 @@ void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback
 					  8：右面が当たっている	16：前面が当たっている	32：背面が当たっている
 					  64：当っていない)
 ===============================================================================================================-----------*/
-int CollisionManager::OBBHitFace(OBB& obb, Sphere& sphere)
+uint32_t CollisionManager::OBBHitFace(OBB& obb, Sphere& sphere)
 {
 	if (!OBBToSphereCollision(obb, sphere))
 	{
 		/*return IMPINGEMENT_FACE::NOT_HIT */;
 	}
 
-	int result = 0;
+	uint32_t result = 0;
 
-	for (int i = 0; i < 6; i++)
+	for (uint32_t i = 0; i < 6; i++)
 	{
 		(PlaneToSphere(obb.plane[i], sphere))
 			? result += 1 << i : false;
@@ -364,7 +366,7 @@ float CollisionManager::LenOBBToPoint(OBB& obb, Vector3& p)
 	Vector3 Vec(0.0f, 0.0f, 0.0f);   //　最終的に長さを求めるベクトル
 
 	// 各軸についてはみ出た部分のベクトルを算出
-	for (int i = 0; i < 3; i++)
+	for (uint32_t i = 0; i < 3; i++)
 	{
 		float L = obb.m_fLength[i] / 2;
 

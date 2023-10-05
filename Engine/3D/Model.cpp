@@ -1,10 +1,17 @@
 #include "Model.h"
+#pragma warning(push)
+#pragma warning(disable: 4819)
+#pragma warning(disable: 4820)
+#pragma warning(disable: 4061)
+#pragma warning(disable: 4514)
 #include <cassert>
 #include <fstream>
 #include <sstream>
 #include <Windows.h>
 #include <DirectXTex.h>
 #include <d3dx12.h>
+
+#pragma warning(pop)
 
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -124,7 +131,7 @@ void Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 
 	//ユニコード文字列に変換する
 	wchar_t wfilepath[128];
-	int iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
+	uint32_t iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
 
 
 	//// WICテクスチャのロード

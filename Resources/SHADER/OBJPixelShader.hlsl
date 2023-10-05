@@ -18,7 +18,7 @@ float4 main(VSOutput input) : sv_TARGET
 {
 	//テクスチャマッピング
     float4 texcolor = tex.Sample(smp, input.uv);
-    float4 objcolor = color_;
+    float4 objcolor = float4(color_,0);
 	//光沢度
     const float shininess = 4.0f;
 	//頂点から視点への方向ベクトル
@@ -84,8 +84,8 @@ float4 main(VSOutput input) : sv_TARGET
 
 			//全て加算する
 			//shadecolor = (1 - Rim) * (_ambient + diffuse + specular) + Rim * _RimColor;
-            shadecolor = ads + objcolor;
-            //shadecolor = color_;
+            shadecolor = float4(ads.rgb+color_ ,  m_alpha);
+            //shadecolor = color_ + texcolor;
         }
     }
 	////点光源
