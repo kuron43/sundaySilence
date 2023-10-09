@@ -1,7 +1,10 @@
 #pragma once
-#include "WinApp.h"
+#pragma warning(push)
+#pragma warning(disable: 4514)
 #include <stdint.h>
+#pragma warning(pop)
 
+#include "WinApp.h"
 #include "Keyboard_Input.h"
 #include "PadInput.h"
 #include "MouseInput.h"

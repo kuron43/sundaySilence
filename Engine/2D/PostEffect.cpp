@@ -115,7 +115,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 		//デスクリプタヒープにSRVを作成
 		device_->CreateShaderResourceView(texBuff[i].Get(),
 			&srvDesc,
-			CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), i,
+			CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), (INT)i,
 				device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
 		);
 	}
@@ -132,7 +132,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	for (uint32_t i = 0; i < 2; i++) {
 		//デスクリプタヒープにRTVを作成
 		device_->CreateRenderTargetView(texBuff[i].Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
-			descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
+			descHeapRTV->GetCPUDescriptorHandleForHeapStart(), (INT)i, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
 	}
 
 
@@ -414,7 +414,7 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 	//レンダーターゲットビュー用のディスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs[2];
 	for (uint32_t i = 0; i < 2; i++) {
-		rtvHs[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i,
+		rtvHs[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), (INT)i,
 			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
 	}
 
@@ -485,18 +485,18 @@ void PostEffect::PostDrawScene()
 
 void PostEffect::SetShadeNumber(uint32_t SetShadeNumber)
 {
-	dataMap->shadeNumber = SetShadeNumber;
+	dataMap->shadeNumber = (int)SetShadeNumber;
 }
 
 void PostEffect::SetKernelSize(uint32_t range) {
 
-	dataMap->kernelSize = range;
+	dataMap->kernelSize = (int)range;
 
 }
 
 void PostEffect::SetRadialBlur(Vector2 center, float intensity, uint32_t sample)
 {
 	dataMap->center = center;
-	dataMap->intensity = intensity;
-	dataMap->samples = sample;
+	dataMap->intensity = (float)intensity;
+	dataMap->samples = (int)sample;
 }

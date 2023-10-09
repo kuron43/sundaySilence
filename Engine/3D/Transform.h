@@ -7,7 +7,7 @@ class Transform
 {
 public:
 	Transform();
-	~Transform();
+	//~Transform();
 	void Initialize();
 	void UpdateMat();
 	Matrix4 GetRotMat() { return rotMat; };

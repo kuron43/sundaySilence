@@ -10,7 +10,7 @@ Transform::Transform() {
 	// ローカルワールド変換行列
 	matWorld = Affin::matUnit();
 }
-Transform::~Transform() {}
+//Transform::~Transform() {}
 
 void Transform::Initialize() {
 	// ローカルスケール

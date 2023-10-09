@@ -1,6 +1,7 @@
 #pragma once
 #pragma warning(push)
 #pragma warning(disable: 4820)
+#pragma warning(disable: 4514)
 #include <windows.h>
 #include <xinput.h>
 #include <winerror.h>

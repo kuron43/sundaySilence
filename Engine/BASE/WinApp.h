@@ -1,6 +1,7 @@
 #pragma once
 #pragma warning(push)
 #pragma warning(disable: 4819)
+#pragma warning(disable: 4514)
 #include <Windows.h>
 
 #pragma warning(pop)
