@@ -14,7 +14,7 @@ void TitleScene::Initialize() {
 	title_ = std::make_unique<Sprite>();
 	title_->Initialize(_objects->spriteCommon_.get(), 1);
 	title_->SetSize({ 600,300 });
-	title_->SetPozition({ 20,10 });
+	title_->SetPozition(titlePos);
 	titleButton_ = std::make_unique<Sprite>();
 	titleButton_->Initialize(_objects->spriteCommon_.get(), 8);
 	titleButton_->SetSize({ 256,128 });
@@ -24,6 +24,10 @@ void TitleScene::Initialize() {
 	red_->Initialize(_objects->spriteCommon_.get(), 8);
 	red_->SetSize({ 24,24 });
 	red_->SetPozition({ WinApp::window_width / 2.5f,WinApp::window_height / 1.5f });
+
+	titleTime_ = 0;
+	sinMoveTitle = 0.0f;
+	titlePos = { 20,10 };
 }
 
 void TitleScene::Update(Input* input) {
@@ -31,6 +35,11 @@ void TitleScene::Update(Input* input) {
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
 	_objects->mouseCursor_->Update(input);
+
+	sinMoveTitle = 10 + sin(3.1415f / 2 / 120 * titleTime_) * 30;
+	titleTime_++;
+	titlePos.y = sinMoveTitle;
+	title_->SetPozition(titlePos);
 
 	title_->Update();
 	titleButton_->Update();

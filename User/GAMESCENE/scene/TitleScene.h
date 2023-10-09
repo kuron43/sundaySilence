@@ -28,6 +28,10 @@ public:
 	
 private://リソース
 	std::unique_ptr <Sprite> title_;
+	Vector2 titlePos = { 20.0f,10.0f };
 	std::unique_ptr <Sprite> titleButton_;
 	std::unique_ptr <Sprite> red_;
+
+	uint32_t titleTime_;
+	float sinMoveTitle;
 };
