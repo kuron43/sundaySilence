@@ -140,6 +140,7 @@ void TitleScene::Update(Input* input) {
 	particle_->Update();
 
 	_objects->mouseCursor_->Update(input);
+	_objects->floorGround->Update();
 
 	sinMoveTitle = 10 + sin(3.1415f / 2 / 120 * titleTime_) * 30;
 	titleTime_++;
@@ -166,6 +167,7 @@ void TitleScene::Update(Input* input) {
 }
 
 void TitleScene::Draw() {
+	_objects->floorGround->Draw(_controller->_dxCommon);
 	for (Enemy* enemy : _objects->enemys) {
 		enemy->Draw(_controller->_dxCommon);
 	}

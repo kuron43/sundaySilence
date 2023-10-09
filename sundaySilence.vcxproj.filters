@@ -243,6 +243,7 @@
     <ClCompile Include="User\GAMESCENE\scene\SelectScene.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
+    <ClCompile Include="User\Objects\Floor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -479,6 +480,7 @@
     <ClInclude Include="User\Skills\SkillIntegrate.h">
       <Filter>user\skils</Filter>
     </ClInclude>
+    <ClInclude Include="User\Objects\Floor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

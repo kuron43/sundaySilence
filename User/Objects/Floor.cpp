@@ -1,0 +1,46 @@
+#include "Floor.h"
+
+#include "DirectXCommon.h"
+#pragma warning(push)
+#pragma warning(disable: 4514)
+#include <imgui.h>
+#pragma warning(pop)
+
+Floor::Floor() {
+
+}
+Floor::~Floor() {
+
+}
+
+/// 更新を行う
+void Floor::Initialize(Model* model) {
+	object_ = Object3d::Create();
+	object_->SetModel(model);
+	object_->Initialize();
+	object_->wtf.position.y = -10.0f;
+	object_->wtf.scale.x = 1.5f;
+	object_->wtf.scale.z = 1.5f;
+	object_->UpdateMatrix();
+}
+
+void Floor::CollideInitialize() {
+
+}
+
+/// 更新を行う
+void Floor::Update() {
+	isHit = false;
+	object_->Update();
+}
+
+/// 描画を行う
+void Floor::Draw(DirectXCommon* dxCommon) {
+	Object3d::PreDraw(dxCommon->GetCommandList());
+	object_->Draw();
+	Object3d::PostDraw();
+}
+
+/// リセットを行う
+void Floor::Reset() {
+}
