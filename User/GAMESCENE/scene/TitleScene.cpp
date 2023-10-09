@@ -13,8 +13,8 @@ TitleScene::~TitleScene() {
 void TitleScene::Initialize() {
 	title_ = std::make_unique<Sprite>();
 	title_->Initialize(_objects->spriteCommon_.get(), 1);
-	title_->SetSize({ 256,128 });
-	title_->SetPozition({ 200,100 });
+	title_->SetSize({ 600,300 });
+	title_->SetPozition({ 20,10 });
 	titleButton_ = std::make_unique<Sprite>();
 	titleButton_->Initialize(_objects->spriteCommon_.get(), 8);
 	titleButton_->SetSize({ 256,128 });
