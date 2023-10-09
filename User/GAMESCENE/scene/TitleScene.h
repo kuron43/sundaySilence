@@ -1,5 +1,6 @@
 #pragma once
 #include "IScene.h"
+#include "JsonLoader.h"
 #include "SceneIntegrate.h"
 
 class TitleScene :public IScene
@@ -24,6 +25,8 @@ private:
 	Vector3 camposEye = { 0.0f,50.0f,-100.01f };
 	Vector3 camposTar = { 0,0,0 };
 
+	LevelData* leveData = nullptr;
+	ParticleManager* particle_ = nullptr;
 public:
 	
 private://リソース

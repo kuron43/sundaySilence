@@ -8,9 +8,31 @@ TitleScene::TitleScene(SceneManager* controller, SceneObjects* objects) {
 }
 TitleScene::~TitleScene() {
 
+	for (Wall* walls : _objects->walls) {
+		walls->Reset();
+	}
+	for (Enemy* enemy : _objects->enemys) {
+		enemy->Reset();
+	}
+	for (Boss* boss : _objects->boss) {
+		boss->Reset();
+	}
+
+	_objects->walls.clear();
+	_objects->enemys.clear();
+	_objects->boss.clear();
 }
 
 void TitleScene::Initialize() {
+	_controller->_camera->SetEye(camposEye);
+	_controller->_camera->SetTarget(camposTar);
+	_controller->_camera->Update();
+
+	particle_ = new ParticleManager();
+	particle_->Initialize();
+	particle_->LoadTexture("yellow.png");
+	particle_->Update();
+
 	title_ = std::make_unique<Sprite>();
 	title_->Initialize(_objects->spriteCommon_.get(), 1);
 	title_->SetSize({ 600,300 });
@@ -28,12 +50,95 @@ void TitleScene::Initialize() {
 	titleTime_ = 0;
 	sinMoveTitle = 0.0f;
 	titlePos = { 20,10 };
+
+	// Json
+	{
+		leveData = JsonLoader::LoadJsonFile("gamedemo");
+
+		for (auto& objectData : leveData->JsonObjects) {
+
+			if (objectData.fileName == "enemy") {
+				Enemy* newEnemy = new Enemy();
+				newEnemy->Initialize();
+				//座標
+				Vector3 pos;
+				pos = objectData.translation;
+				newEnemy->object_->wtf.position = pos;
+				//回転
+				Vector3 rot;
+				rot = objectData.rotation;
+				newEnemy->object_->wtf.rotation = rot;
+				newEnemy->SetRestRotate(rot);
+				//拡縮
+				Vector3 sca;
+				sca = objectData.scaling;
+				newEnemy->object_->wtf.scale = sca;
+				//newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
+				_objects->enemys.emplace_back(newEnemy);
+			}
+			if (objectData.fileName == "wall") {
+				Wall* newWall = new Wall();
+				newWall->Initialize(_objects->wallMD);
+				//座標
+				Vector3 pos;
+				pos = objectData.translation;
+				newWall->object_->wtf.position = pos;
+				//回転
+				Vector3 rot;
+				rot = objectData.rotation;
+				newWall->object_->wtf.rotation = rot;
+				//拡縮
+				Vector3 sca;
+				sca = objectData.scaling;
+				newWall->object_->wtf.scale = sca;
+				newWall->object_->SetColor(Vector3(0.5f, 0.3f, 0.3f));
+				newWall->object_->Update();
+				newWall->CollideInitialize();
+				_objects->walls.emplace_back(newWall);
+			}
+			if (objectData.fileName == "boss") {
+				Boss* newBoss = new Boss();
+				newBoss->Initialize();
+				//座標
+				Vector3 pos;
+				pos = objectData.translation;
+				newBoss->object_->wtf.position = pos;
+				//回転
+				Vector3 rot;
+				rot = objectData.rotation;
+				newBoss->object_->wtf.rotation = rot;
+				newBoss->SetRestRotate(rot);
+				//拡縮
+				Vector3 sca;
+				sca = objectData.scaling;
+				newBoss->object_->wtf.scale = sca;
+				//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
+				_objects->boss.emplace_back(newBoss);
+			}
+
+		}
+
+	}
+	for (Wall* walls : _objects->walls) {
+		walls->Update();
+	}
+	for (Enemy* enemy : _objects->enemys) {
+		enemy->Update();
+	}
+	for (Boss* boss : _objects->boss) {
+		boss->Update();
+	}
 }
 
 void TitleScene::Update(Input* input) {
 	_controller->_camera->SetEye(camposEye);
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
+	if (titleTime_ % 50 == 0) {
+		particle_->RandParticle(Vector3(0, 100, 0), 100);
+	}
+	particle_->Update();
+
 	_objects->mouseCursor_->Update(input);
 
 	sinMoveTitle = 10 + sin(3.1415f / 2 / 120 * titleTime_) * 30;
@@ -58,23 +163,20 @@ void TitleScene::Update(Input* input) {
 	else {
 		titleButton_->SetTextureIndex(8);
 	}
-
-	//timeEnd = false;
-	//if (isActive) {
-	//	nowTime++;
-	//	easetime = (float)nowTime / easeMaxTime;
-	//	if (nowPointNum == 0 && nowTime <= easeMaxTime) {
-	//		resultVec = Easing::InOutQuintVec3(startPos, points[0], (float)easetime);
-	//		if (time == easeMaxTime - 1) {
-	//			nowPointNum = 1;
-	//			nowTime = 1;
-	//			timeEnd = true;
-	//		}
-	//	}
-	//}
 }
 
 void TitleScene::Draw() {
+	for (Enemy* enemy : _objects->enemys) {
+		enemy->Draw(_controller->_dxCommon);
+	}
+	for (Boss* boss : _objects->boss) {
+		boss->Draw(_controller->_dxCommon);
+	}
+	for (Wall* walls : _objects->walls) {
+		walls->Draw(_controller->_dxCommon);
+	}
+
+	particle_->Draw();
 	title_->Draw();
 	titleButton_->Draw();
 

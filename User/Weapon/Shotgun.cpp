@@ -33,7 +33,6 @@ bool Shotgun::Initialize() {
 
 /// 更新を行う
 void Shotgun::Update(Input* input, bool isSlow) {
-	assert(input);
 	if (isSlow) {
 		speed_ = nomalSpeed / 2;
 	}

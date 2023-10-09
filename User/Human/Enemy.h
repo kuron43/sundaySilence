@@ -14,7 +14,7 @@ public:
 	void Initialize()override;
 
 	/// シーンの更新を行う
-	void Update(Input* input, bool isTitle = false)override;
+	void Update(Input* input = nullptr, bool isTitle = false)override;
 
 	/// シーンの描画を行う
 	void Draw(DirectXCommon* dxCommon)override;

@@ -35,7 +35,7 @@ bool Assault::Initialize() {
 
 /// 更新を行う
 void Assault::Update(Input* input, bool isSlow) {
-	assert(input);
+	
 	isSlow_ = isSlow;
 	if (input) {
 
