@@ -21,6 +21,7 @@ private:
 
 	bool active_ = false;
 	bool goShot;
+	uint16_t padding;
 
 public:
 	Assault();

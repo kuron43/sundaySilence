@@ -16,6 +16,7 @@
 #include "Boss.h"
 
 #include "Wall.h"
+#include "Floor.h"
 
 #include "Cursor.h"
 
@@ -58,6 +59,9 @@ public:
 
 	Model* wallMD;
 	std::vector<Wall*> walls;
+
+	std::unique_ptr<Floor> floorGround;
+	Model* floorGroundMD;
 
 private:
 	float ambientColor0[3] = { 1,1,1 };

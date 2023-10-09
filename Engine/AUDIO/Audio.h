@@ -1,6 +1,7 @@
 #pragma once
 #pragma warning(push)
 #pragma warning(disable: 4668)
+#pragma warning(disable: 4514)
 #include <xaudio2.h>
 #include <cstdint>
 #include <wrl.h>

@@ -1,5 +1,6 @@
 #pragma once
 #include "IScene.h"
+#include "JsonLoader.h"
 #include "SceneIntegrate.h"
 
 class TitleScene :public IScene
@@ -21,13 +22,19 @@ private:
 	//コピーコンストラクタ削除
 	TitleScene(const TitleScene&) = delete;
 
-	Vector3 camposEye = { 0.0f,50.0f,-100.01f };
+	Vector3 camposEye = { 0.0f,40.0f,-90.01f };
 	Vector3 camposTar = { 0,0,0 };
 
+	LevelData* leveData = nullptr;
+	ParticleManager* particle_ = nullptr;
 public:
 	
 private://リソース
 	std::unique_ptr <Sprite> title_;
+	Vector2 titlePos = { 20.0f,10.0f };
 	std::unique_ptr <Sprite> titleButton_;
 	std::unique_ptr <Sprite> red_;
+
+	uint32_t titleTime_;
+	float sinMoveTitle;
 };

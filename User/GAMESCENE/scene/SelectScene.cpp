@@ -12,7 +12,7 @@ SelectScene::~SelectScene() {
 
 void SelectScene::Initialize() {
 
-	selectNum = 0;
+	selectNum = 1;
 	resultNum = 0;
 	isConfirm = false;
 
@@ -38,7 +38,7 @@ void SelectScene::Update(Input* input) {
 	MoveScene();
 
 	if (selectNum == 0) {
-		stage1_->SetTextureIndex(1);
+		stage1_->SetTextureIndex(10);
 	}
 	else if (selectNum == 1) {
 		stage1_->SetTextureIndex(20);

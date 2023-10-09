@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "External\Dire
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sundaySilence", "sundaySilence.vcxproj", "{48B4C92D-4208-456F-BE3E-F526BE2371CA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{053CD492-E6E4-41D6-8C09-B3EF969AFD36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -30,6 +32,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EFF8CFE2-34CA-4153-A28F-E6C23291DD46} = {053CD492-E6E4-41D6-8C09-B3EF969AFD36}
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77} = {053CD492-E6E4-41D6-8C09-B3EF969AFD36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92F3BB21-DF33-4854-A0C3-583641ABAE3D}

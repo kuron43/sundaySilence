@@ -5,36 +5,18 @@
 class RayCollider : public BaseCollider, public Ray
 {
 public:
-	RayCollider(Vector3 start = { 0.0f , 0.0f , 0.0f }, Vector3 dir = { 0.0f,0.0f,0.0f }) :
-		start_(start),
-		dir_(dir)
-	{
-		//球形状をセット
-		shapeType = COLLISIONSHAPE_RAY;
-	}
+	RayCollider(Vector3 start = { 0.0f , 0.0f , 0.0f }, Vector3 dir = { 0.0f,0.0f,0.0f });
 
 	//更新
 	void Update() override;
 
-	inline void SetStart(Vector3 start)
-	{
-		start_ = start;
-	}
+	void SetStart(Vector3 start);
 
-	Vector3 GetStart()
-	{
-		return start_;
-	}
+	Vector3 GetStart();
 
-	inline void SetDir(Vector3 dir)
-	{
-		dir_ = dir;
-	}
+	void SetDir(Vector3 dir);
 
-	Vector3 GetDir()
-	{
-		return dir_;
-	}
+	Vector3 GetDir();
 
 private:
 	//オブジェクト中心からのオフセット

@@ -81,7 +81,6 @@ void Enemy::Initialize() {
 ///
 void Enemy::Update(Input* input, bool isTitle) {
 	object_->SetColor({ 0,0,0 });
-	assert(input);
 	nowTitle = false;
 	nowTitle = !isTitle;
 
@@ -144,9 +143,9 @@ void Enemy::FrontFace() {
 		frontVec_ = restRotate_;
 	}
 	if (!isDead) {
-		ImGui::Begin("faceAngle_Y");
-		ImGui::Text("Angle : Y %f", faceAngle.y);
-		ImGui::End();
+		//ImGui::Begin("faceAngle_Y");
+		//ImGui::Text("Angle : Y %f", faceAngle.y);
+		//ImGui::End();
 
 	}
 

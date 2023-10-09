@@ -38,6 +38,7 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(7, "Cursor.png");
 		spriteCommon_->LoadTexture(8, "START.png");
 		spriteCommon_->LoadTexture(9, "START2.png");
+		spriteCommon_->LoadTexture(10,"BACK.png");
 
 	}
 	// スプライトロード  20~ //セレクトステージ
@@ -77,6 +78,9 @@ void SceneObjects::Initialize() {
 	}
 	{
 		wallMD = Model::LoadFromOBJ("wall");
+		floorGroundMD = Model::LoadFromOBJ("floor");
+		floorGround = std::make_unique<Floor>();
+		floorGround->Initialize(floorGroundMD);
 	}
 	skydome_O = std::make_unique<Object3d>();
 	skydome_O->SetModel(Model::LoadFromOBJ("skydome"));

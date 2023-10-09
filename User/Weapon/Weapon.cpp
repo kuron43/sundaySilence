@@ -19,7 +19,6 @@ bool Weapon::Initialize() {
 
 /// 更新を行う
 void Weapon::Update(Input* input, bool isSlow) {
-	assert(input);
 	if (isSlow == false) {
 
 	}
