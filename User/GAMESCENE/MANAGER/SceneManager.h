@@ -43,8 +43,8 @@ public:
 	void PushScene(IScene*);
 	void PopScene();
 public:
-	bool isChange = false;
 	uint32_t sceneNum = 0;
+	bool isChange = false;
 	bool goToTitle = false;
 };
 

@@ -70,7 +70,7 @@ private:
 	bool nowTitle = false;
 
 	// パーティクル関係
-	ParticleManager* particle_ = nullptr;
+	std::unique_ptr <ParticleManager>  particle_;
 	uint32_t onPatTime_;
 	bool onPat_;
 

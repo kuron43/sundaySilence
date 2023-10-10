@@ -17,23 +17,19 @@ SceneManager::SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects
 
 }
 SceneManager::~SceneManager() {
-
+	
 }
 
 void SceneManager::SceneInitialize() {
 	_scene.top().get()->Initialize();
-
 }
 
 void SceneManager::SceneUpdate(Input* input) {
-
-
 	_scene.top().get()->Update(input);
 }
 
 void SceneManager::SceneDraw() {
 	_scene.top().get()->Draw();
-
 }
 
 void SceneManager::ChangeScene() {

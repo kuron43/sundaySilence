@@ -33,7 +33,7 @@ ParticleManager::ParticleManager() {
 
 }
 ParticleManager::~ParticleManager() {
-
+	particles.clear();
 }
 //XMFLOAT3同士の加算処理
 const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::XMFLOAT3& rhs) {

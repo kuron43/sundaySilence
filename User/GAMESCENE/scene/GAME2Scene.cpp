@@ -20,6 +20,7 @@ GAME2Scene::~GAME2Scene() {
 	_objects->walls.clear();
 	_objects->enemys.clear();
 	_objects->boss.clear();
+	delete leveData;
 }
 
 void GAME2Scene::Initialize() {
