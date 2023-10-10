@@ -47,6 +47,10 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(20, "1.png");
 		spriteCommon_->LoadTexture(21, "2.png");
 		spriteCommon_->LoadTexture(22, "3.png");
+		spriteCommon_->LoadTexture(26, "Left.png");
+		spriteCommon_->LoadTexture(27, "Left2.png");
+		spriteCommon_->LoadTexture(28, "Right.png");
+		spriteCommon_->LoadTexture(29, "Right2.png");
 	}
 	// スプライトロード  30~ //一時的な画像用
 	{
