@@ -1,6 +1,7 @@
 #pragma once
 #include "IScene.h"
 #include "SceneIntegrate.h"
+
 class TransitionsScene :
     public IScene
 {
@@ -11,7 +12,6 @@ public:
 	TransitionsScene(SceneManager* controller, SceneObjects* objects);
 	~TransitionsScene() override;
 
-	//void Cleate(SceneManager& controller) override;
 	void Initialize() override;
 	void Update(Input* input) override;
 	void Draw() override;
@@ -19,11 +19,17 @@ public:
 
 private:
 	std::unique_ptr <Sprite> transSP_;
+	Vector2 transSPpos_;
+	Vector3 transSPscale_;
+	std::unique_ptr <Sprite> titleSP_;
+	Vector2 titleSPpos_;
 
+	uint32_t sceneTimer = 0;
 	// イージング用
-	uint32_t time;
 	float easetime;
-	uint32_t easeMaxTime = 30;
+	uint32_t time;
+	uint32_t easeMaxTime = 50;
+	bool on = false;
 public:
 	//代入演算子削除
 	TransitionsScene& operator=(const TransitionsScene&) = delete;

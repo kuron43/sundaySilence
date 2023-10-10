@@ -35,8 +35,10 @@ void SceneManager::SceneDraw() {
 void SceneManager::ChangeScene() {
 	if (goToTitle == true) {
 		_scene.pop();
+		_scene.pop();
 		_scene.emplace(new TitleScene(&*this, _objects));
 		SceneInitialize();
+		TransScene();
 		goToTitle = false;
 	}
 
@@ -48,28 +50,33 @@ void SceneManager::ChangeScene() {
 			_scene.pop();
 			_scene.emplace(new TitleScene(&*this, _objects));
 			SceneInitialize();
+			TransScene();
 			break;
 		case SCE_GAME1:
 			_scene.pop();
 			_scene.emplace(new GAME1Scene(&*this, _objects));
 			SceneInitialize();
+			TransScene();
 			break;
 
 		case SCE_GAME2:
 			_scene.pop();
 			_scene.emplace(new GAME2Scene(&*this, _objects));
 			SceneInitialize();
+			TransScene();
 			break;
 
 		case SCE_OVER:
 			_scene.pop();
 			_scene.emplace(new EndScene(&*this, _objects));
 			SceneInitialize();
+			TransScene();
 			break;
 		case SCE_SELECT:
 			_scene.pop();
 			_scene.emplace(new SelectScene(&*this, _objects));
 			SceneInitialize();
+			TransScene();
 			break;
 		case SCE_PAUSE:
 			Pause();

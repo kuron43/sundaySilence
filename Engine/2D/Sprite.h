@@ -115,7 +115,7 @@ protected:
 	Matrix4  matTrans;//平行移動行列
 
 	//座標
-	Vector3 scale{ 0.5f, 0.5f, 1.0f };
+	Vector3 scale{ 1.0f, 1.0f, 1.0f };
 
 	Vector2 size_ = { 100.0f,100.0f };
 

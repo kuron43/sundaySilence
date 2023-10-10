@@ -39,7 +39,7 @@ void PauseScene::Update(Input* input) {
 		_objects->boss.clear();
 
 		_controller->goToTitle = true;
-		_controller->PopScene();
+		//_controller->PopScene();
 	}else if (input->KeyboardTrigger(DIK_TAB) || input->Pad_X_ButtonTrigger(LB)) {
 		_controller->PopScene();
 	}

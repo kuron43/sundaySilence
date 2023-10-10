@@ -39,6 +39,7 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(8, "START.png");
 		spriteCommon_->LoadTexture(9, "START2.png");
 		spriteCommon_->LoadTexture(10,"BACK.png");
+		spriteCommon_->LoadTexture(11, "title2.png");
 
 	}
 	// スプライトロード  20~ //セレクトステージ
@@ -54,6 +55,8 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(32, "purple.png");
 		spriteCommon_->LoadTexture(33, "yellow.png");
 		spriteCommon_->LoadTexture(34, "black.png");
+		spriteCommon_->LoadTexture(35, "white1x1.png");
+		spriteCommon_->LoadTexture(36, "lightgray.png");
 	}
 
 	mouseCursor_ = std::make_unique<Cursor>();
