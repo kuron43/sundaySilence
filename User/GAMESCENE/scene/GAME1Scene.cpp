@@ -137,7 +137,7 @@ void GAME1Scene::Update(Input* input) {
 	ImGui::End();
 
 	if (input->KeyboardTrigger(DIK_TAB)) {
-		_controller->PushScene(new PauseScene(_controller, _objects));
+		_controller->SetSceneNum(SCE_PAUSE);
 	}
 	else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
 		_controller->SetSceneNum(SCE_GAME2);

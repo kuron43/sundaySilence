@@ -39,6 +39,8 @@ public:
 	void SetSceneNum(uint32_t num) { sceneNum = num; isChange = true; };
 	uint32_t GetSceneNum() { return sceneNum; };
 	void ChangeScene();
+	void TransScene();
+	void Pause();
 
 	void PushScene(IScene*);
 	void PopScene();

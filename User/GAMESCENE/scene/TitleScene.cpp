@@ -156,7 +156,7 @@ void TitleScene::Update(Input* input) {
 
 
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
-		_controller->PushScene(new PauseScene(_controller, _objects));
+		_controller->SetSceneNum(SCE_PAUSE);
 	}
 	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
 		if (input->MouseButtonTrigger(0)) {

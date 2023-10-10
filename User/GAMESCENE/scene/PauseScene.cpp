@@ -5,11 +5,6 @@
 PauseScene::PauseScene(SceneManager* controller, SceneObjects* objects) {
 	_controller = controller;
 	_objects = objects;
-
-	pauseGray = std::make_unique<Sprite>();
-	pauseGray->Initialize(_objects->spriteCommon_.get(), 6);
-	pauseGray->SetSize({ WinApp::window_width,WinApp::window_height });
-	pauseGray->SetPozition({ 0,0 });
 }
 PauseScene::~PauseScene() {
 
@@ -17,7 +12,10 @@ PauseScene::~PauseScene() {
 }
 
 void PauseScene::Initialize() {
-	
+	pauseGray = std::make_unique<Sprite>();
+	pauseGray->Initialize(_objects->spriteCommon_.get(), 6);
+	pauseGray->SetSize({ WinApp::window_width,WinApp::window_height });
+	pauseGray->SetPozition({ 0,0 });
 }
 
 void PauseScene::Update(Input* input) {

@@ -71,6 +71,9 @@ void SceneManager::ChangeScene() {
 			_scene.emplace(new SelectScene(&*this, _objects));
 			SceneInitialize();
 			break;
+		case SCE_PAUSE:
+			Pause();
+			break;
 			/////////////////////////////////////////////////////
 		case 0:
 		default:
@@ -81,6 +84,18 @@ void SceneManager::ChangeScene() {
 	else {
 		isChange = false;
 	}
+}
+
+void SceneManager::TransScene()
+{
+	_scene.emplace(new TransitionsScene(&*this, _objects));
+	SceneInitialize();
+}
+
+void SceneManager::Pause()
+{
+	_scene.emplace(new PauseScene(&*this, _objects));
+	SceneInitialize();
 }
 
 void SceneManager::PushScene(IScene* scene) {
