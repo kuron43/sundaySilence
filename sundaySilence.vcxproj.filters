@@ -111,10 +111,10 @@
     <ClCompile Include="Engine\BASE\FPS.cpp">
       <Filter>engine\base</Filter>
     </ClCompile>
-    <ClCompile Include="User\GAMESCENE\scene\GAME1Scene.cpp">
+    <ClCompile Include="User\GAMESCENE\stage\GAME1Scene.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
-    <ClCompile Include="User\GAMESCENE\scene\GAME2Scene.cpp">
+    <ClCompile Include="User\GAMESCENE\stage\GAME2Scene.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
     <ClCompile Include="User\GAMESCENE\GameScene.cpp">
@@ -334,10 +334,10 @@
     <ClInclude Include="Engine\BASE\FPS.h">
       <Filter>engine\base</Filter>
     </ClInclude>
-    <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h">
+    <ClInclude Include="User\GAMESCENE\stage\GAME1Scene.h">
       <Filter>user\scene</Filter>
     </ClInclude>
-    <ClInclude Include="User\GAMESCENE\scene\GAME2Scene.h">
+    <ClInclude Include="User\GAMESCENE\stage\GAME2Scene.h">
       <Filter>user\scene</Filter>
     </ClInclude>
     <ClInclude Include="User\GAMESCENE\GameScene.h">

@@ -12,7 +12,7 @@ SelectScene::~SelectScene() {
 
 void SelectScene::Initialize() {
 
-	selectNum = 0;
+	selectNum = 1;
 	resultNum = 0;
 	isConfirm = false;
 
@@ -23,7 +23,7 @@ void SelectScene::Initialize() {
 	selectTitele_->SetPozition({ 200,100 });
 
 	stage1_ = std::make_unique<Sprite>();
-	stage1_->Initialize(_objects->spriteCommon_.get(), 5);
+	stage1_->Initialize(_objects->spriteCommon_.get(), 20);
 	stage1_->SetSize({ 300,300 });
 	stage1_->SetPozition({ (WinApp::window_width / 2)-150,WinApp::window_height - 300 });
 
@@ -77,6 +77,8 @@ void SelectScene::Update(Input* input) {
 }
 
 void SelectScene::Draw() {
+	_objects->floorGround->Draw(_controller->_dxCommon);
+
 	selectTitele_->Draw();
 	stage1_->Draw();
 	left_->Draw();

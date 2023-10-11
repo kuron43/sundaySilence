@@ -29,7 +29,7 @@ private:
 	float easetime;
 	uint32_t time;
 	uint32_t easeMaxTime = 50;
-	bool on = false;
+	bool isEaseOut = true;
 public:
 	//代入演算子削除
 	TransitionsScene& operator=(const TransitionsScene&) = delete;

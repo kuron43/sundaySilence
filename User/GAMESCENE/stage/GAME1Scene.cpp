@@ -1,12 +1,12 @@
-#include "GAME2Scene.h"
+#include "GAME1Scene.h"
 #include "SceneManager.h"
 
-GAME2Scene::GAME2Scene(SceneManager* controller, SceneObjects* objects) {
+GAME1Scene::GAME1Scene(SceneManager* controller, SceneObjects* objects) {
 	_controller = controller;
 	_objects = objects;
 }
 
-GAME2Scene::~GAME2Scene() {
+GAME1Scene::~GAME1Scene() {
 	for (Wall* walls : _objects->walls) {
 		walls->Reset();
 	}
@@ -23,7 +23,7 @@ GAME2Scene::~GAME2Scene() {
 	delete leveData;
 }
 
-void GAME2Scene::Initialize() {
+void GAME1Scene::Initialize() {
 
 	_objects->player->SetPos(Vector3(0, 0, 0));
 	_objects->player->MatUpdate();
@@ -31,7 +31,7 @@ void GAME2Scene::Initialize() {
 
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("gamedemo");
+		leveData = JsonLoader::LoadJsonFile("game3");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -97,20 +97,24 @@ void GAME2Scene::Initialize() {
 		}
 
 	}
+
+	{
+		_controller->_camera->SetEye(camposEye);
+		_controller->_camera->SetTarget(camposTar);
+		_controller->_camera->Update();
+		_objects->floorGround->Update();
+	}
 }
 
-void GAME2Scene::Update(Input* input) {
+void GAME1Scene::Update(Input* input) {
 	_objects->eneCount = 0;
 	_objects->bossCount = 0;
+	_objects->floorGround->Update();
 
-	_controller->_camera->SetEye(camposEye);
-	_controller->_camera->SetTarget(camposTar);
-	_controller->_camera->Update();
+
+
 
 	_objects->player->Update(input);
-	for (Wall* walls : _objects->walls) {
-		walls->Update();
-	}
 
 	BulletManager::GetInstance()->Update();
 	for (Enemy* enemy : _objects->enemys) {
@@ -127,6 +131,9 @@ void GAME2Scene::Update(Input* input) {
 			_objects->bossCount++;
 		}
 	}
+	for (Wall* walls : _objects->walls) {
+		walls->Update();
+	}
 
 
 	ImGui::Begin("enecount");
@@ -138,12 +145,12 @@ void GAME2Scene::Update(Input* input) {
 		_controller->SetSceneNum(SCE_PAUSE);
 	}
 	else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
-		_controller->SetSceneNum(SCE_OVER);
+		_controller->SetSceneNum(SCE_GAME2);
 	}
 }
 
-void GAME2Scene::Draw() {
-
+void GAME1Scene::Draw() {
+	_objects->floorGround->Draw(_controller->_dxCommon);
 	_objects->player->Draw(_controller->_dxCommon);
 	for (Enemy* enemy : _objects->enemys) {
 		enemy->Draw(_controller->_dxCommon);
