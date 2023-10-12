@@ -469,7 +469,6 @@ void Player::Move(Input* input) {
 		isSlow = false;
 		nowSetPoint = false;
 		pointDash_->MakeMoveVec(Affin::GetWorldTrans(object_->wtf.matWorld));
-		//pointDash_->Reset();
 	}
 
 	if (isSlow == true) {

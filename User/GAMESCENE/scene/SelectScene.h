@@ -23,7 +23,8 @@ public:
 private:
 	std::unique_ptr <Sprite> selectTitele_;
 	std::unique_ptr <Sprite> stage1_;
-	std::unique_ptr <Sprite> stage2_;
+	std::unique_ptr <Sprite> left_;
+	std::unique_ptr <Sprite> right_;
 
 	uint32_t selectNum;
 	uint32_t resultNum;

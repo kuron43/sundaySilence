@@ -71,7 +71,7 @@ private:
 	bool nowTitle = false;
 
 
-	ParticleManager* particle_ = nullptr;
+	std::unique_ptr <ParticleManager>  particle_;
 	uint32_t onPatTime_;
 	bool onPat_;
 

@@ -5,11 +5,6 @@
 PauseScene::PauseScene(SceneManager* controller, SceneObjects* objects) {
 	_controller = controller;
 	_objects = objects;
-
-	pauseGray = std::make_unique<Sprite>();
-	pauseGray->Initialize(_objects->spriteCommon_.get(), 6);
-	pauseGray->SetSize({ WinApp::window_width,WinApp::window_height });
-	pauseGray->SetPozition({ 0,0 });
 }
 PauseScene::~PauseScene() {
 
@@ -17,7 +12,10 @@ PauseScene::~PauseScene() {
 }
 
 void PauseScene::Initialize() {
-	
+	pauseGray = std::make_unique<Sprite>();
+	pauseGray->Initialize(_objects->spriteCommon_.get(), 6);
+	pauseGray->SetSize({ WinApp::window_width,WinApp::window_height });
+	pauseGray->SetPozition({ 0,0 });
 }
 
 void PauseScene::Update(Input* input) {
@@ -41,7 +39,7 @@ void PauseScene::Update(Input* input) {
 		_objects->boss.clear();
 
 		_controller->goToTitle = true;
-		_controller->PopScene();
+		//_controller->PopScene();
 	}else if (input->KeyboardTrigger(DIK_TAB) || input->Pad_X_ButtonTrigger(LB)) {
 		_controller->PopScene();
 	}

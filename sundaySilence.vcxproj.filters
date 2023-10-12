@@ -244,6 +244,7 @@
       <Filter>user\scene</Filter>
     </ClCompile>
     <ClCompile Include="User\Objects\Floor.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\TransitionsScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -481,6 +482,7 @@
       <Filter>user\skils</Filter>
     </ClInclude>
     <ClInclude Include="User\Objects\Floor.h" />
+    <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

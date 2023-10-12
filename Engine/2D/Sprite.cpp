@@ -121,9 +121,11 @@ void Sprite::Draw()
 	matRot = Affin::matUnit();
 	matRot *= Affin::matRotateZ(XMConvertToRadians(rotation));//Z軸周りに0度回転してから
 	matTrans = Affin::matTrans(position.x, position.y, 0.0f);//(-50,0,0)平行移動
+	matScale = Affin::matScale(scale);
 
 	matWorld = Affin::matUnit();//変形をリセット
-	matWorld *= matRot;//ワールド行列にスケーリングを反映
+	matWorld *= matScale;//ワールド行列にスケーリングを反映
+	matWorld *= matRot;
 	matWorld *= matTrans;
 
 

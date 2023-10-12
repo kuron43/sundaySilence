@@ -9,7 +9,7 @@ protected:
 	SceneManager* _controller;
 	SceneObjects* _objects;
 public:
-	
+
 	TitleScene(SceneManager* controller, SceneObjects* objects);
 	~TitleScene() override;
 
@@ -26,15 +26,15 @@ private:
 	Vector3 camposTar = { 0,0,0 };
 
 	LevelData* leveData = nullptr;
-	ParticleManager* particle_ = nullptr;
+	std::unique_ptr <ParticleManager>  particle_;
 public:
-	
+
 private://リソース
 	std::unique_ptr <Sprite> title_;
 	Vector2 titlePos = { 20.0f,10.0f };
 	std::unique_ptr <Sprite> titleButton_;
 	std::unique_ptr <Sprite> red_;
 
-	uint32_t titleTime_;
-	float sinMoveTitle;
+	uint32_t titleTime_ = 0;
+	float sinMoveTitle = 0.0f;
 };

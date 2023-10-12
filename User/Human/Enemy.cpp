@@ -34,7 +34,7 @@ void Enemy::Initialize() {
 	weapon_ = new Assault();
 	weapon_->Initialize();
 
-	particle_ = new ParticleManager();
+	particle_ = std::make_unique<ParticleManager>();
 	particle_->Initialize();
 	particle_->LoadTexture("red.png");
 	particle_->Update();
@@ -122,13 +122,16 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 
 /// リセットを行う
 void Enemy::Reset() {
-	//delete model_;
-	//delete weapon_;
+	delete model_;
+	delete weapon_;
+	delete rayHit;
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-		//delete sphere[i];
+		delete sphere[i];
 
 	}
+	CollisionManager::GetInstance()->RemoveCollider(ray);
+	delete ray;
 }
 
 /// <summary>

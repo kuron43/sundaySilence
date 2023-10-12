@@ -21,6 +21,11 @@ TitleScene::~TitleScene() {
 	_objects->walls.clear();
 	_objects->enemys.clear();
 	_objects->boss.clear();
+	delete leveData;
+	particle_.reset();
+	titleButton_.reset();
+	title_.reset();
+	red_.reset();
 }
 
 void TitleScene::Initialize() {
@@ -28,10 +33,10 @@ void TitleScene::Initialize() {
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
 
-	particle_ = new ParticleManager();
+	particle_ = std::make_unique<ParticleManager>();
 	particle_->Initialize();
 	particle_->LoadTexture("yellow.png");
-	particle_->Update();
+	
 
 	title_ = std::make_unique<Sprite>();
 	title_->Initialize(_objects->spriteCommon_.get(), 1);
@@ -115,9 +120,7 @@ void TitleScene::Initialize() {
 				//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 				_objects->boss.emplace_back(newBoss);
 			}
-
 		}
-
 	}
 	for (Wall* walls : _objects->walls) {
 		walls->Update();
@@ -141,8 +144,9 @@ void TitleScene::Update(Input* input) {
 
 	_objects->mouseCursor_->Update(input);
 	_objects->floorGround->Update();
+	_objects->player->Update(input, true);
 
-	sinMoveTitle = 10 + sin(3.1415f / 2 / 120 * titleTime_) * 30;
+	sinMoveTitle = 10.0f + sin(3.1415f / 2.0f / 120.0f * titleTime_) * 30.0f;
 	titleTime_++;
 	titlePos.y = sinMoveTitle;
 	title_->SetPozition(titlePos);
@@ -150,10 +154,9 @@ void TitleScene::Update(Input* input) {
 	title_->Update();
 	titleButton_->Update();
 
-	_objects->player->Update(input, true);
 
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
-		_controller->PushScene(new PauseScene(_controller, _objects));
+		_controller->SetSceneNum(SCE_PAUSE);
 	}
 	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
 		if (input->MouseButtonTrigger(0)) {
