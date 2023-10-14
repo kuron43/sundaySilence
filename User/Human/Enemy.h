@@ -22,7 +22,7 @@ public:
 	/// リセットを行う
 	void Reset() override;
 
-	//
+	// セッター
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
 	void SetReticle(Vector3 ret) { reticle->wtf.position = ret; }
 	void SetRestRotate(Vector3 rot) { restRotate_ = rot; }
@@ -34,7 +34,9 @@ public:
 	Transform GetTransform() { return object_->wtf; }
 
 private:
+	//正面をレティクル方向に向かせる
 	void FrontFace();
+	// 当たり判定用のアップデート
 	void ColiderUpdate();
 	void OnColision();
 	
@@ -89,7 +91,7 @@ private:
 	RaycastHit* rayHit;
 	Vector3 rayvec;
 
-
+private:
 	//代入演算子削除
 	Enemy& operator=(const Enemy&) = delete;
 	//コピーコンストラクタ削除

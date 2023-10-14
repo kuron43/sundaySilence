@@ -11,6 +11,7 @@
 #include "GAME1Scene.h"
 #include "GAME2Scene.h"
 
+// チェンジシーン用のenum
 enum _SCENE_ {
 	SCE_TITLE = 1,
 	SCE_OVER = 2,

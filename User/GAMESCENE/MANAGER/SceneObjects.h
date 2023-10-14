@@ -33,7 +33,7 @@ public:
 	void Initialize();
 	void Reset();
 
-public:
+public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;
 	std::unique_ptr <Audio> audio;
 	std::unique_ptr <SpriteCommon> spriteCommon_;
@@ -63,7 +63,7 @@ public:
 	std::unique_ptr<Floor> floorGround;
 	Model* floorGroundMD;
 
-private:
+private: // ライト用 
 	float ambientColor0[3] = { 1,1,1 };
 
 	//光線方向初期値

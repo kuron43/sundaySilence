@@ -9,7 +9,9 @@ Wall::Wall() {
 
 }
 Wall::~Wall() {
-
+	//delete model_;
+	CollisionManager::GetInstance()->RemoveCollider(obb_);
+	delete obb_;
 }
 
 /// 更新を行う
@@ -21,9 +23,9 @@ void Wall::Initialize(Model* model) {
 
 void Wall::CollideInitialize() {
 	obb_ = new ObbCollider;
+	obb_->SetObject3d(object_);
 	obb_->CreateOBB(object_->model_->GetVertices(), &object_->wtf);
 	CollisionManager::GetInstance()->AddCollider(obb_);
-	obb_->SetObject3d(coliderPosTest_);
 	obb_->Update();
 	obb_->SetAttribute(COLLISION_ATTR_BARRIEROBJECT);
 	//test

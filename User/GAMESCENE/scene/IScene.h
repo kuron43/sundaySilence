@@ -30,7 +30,7 @@ public:
 	virtual ~IScene();
 
 	//virtual Scene Create(SceneManager& controller) = 0;
-	/// シーンの更新を行う
+	/// シーンの初期化を行う
 	virtual void Initialize() = 0;
 
 	/// シーンの更新を行う

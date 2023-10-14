@@ -21,8 +21,6 @@ public:
 
 
 
-	void ColisionUpdate();
-	void Move(Input* input);
 
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; };
 	void MatUpdate() { object_->UpdateMatrix(); };
@@ -31,6 +29,8 @@ public:
 	// 種族番号取得
 	uint32_t HowTribe() { return Tribe_; };
 private:
+	void Move(Input* input);
+	void ColisionUpdate();
 	void OnColision();
 private:
 	const uint32_t Tribe_ = 0;
