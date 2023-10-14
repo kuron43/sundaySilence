@@ -9,6 +9,7 @@
 
 class DirectXCommon;
 
+// オブジェクト基底クラス
 class Objects
 {
 public:

@@ -9,7 +9,7 @@ public:
 	~Floor()override;
 
 
-	/// シーンの更新を行う
+	/// シーンの初期化を行う
 	void Initialize(Model* model)override;
 
 	void CollideInitialize();
@@ -23,10 +23,7 @@ public:
 	/// リセットを行う
 	void Reset() override;
 
-	//コライダー
-public:
 
-private:
 public:
 	Object3d* object_;
 private:

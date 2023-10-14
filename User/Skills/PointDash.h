@@ -4,6 +4,7 @@
 #include <vector>
 #include "Easing.h"
 
+// ポイントダッシュスキル
 class PointDash
 {
 public:
@@ -27,10 +28,15 @@ public:
 	Vector3 resultVec;
 
 public:
+	// 更新
 	void Update(Vector3 pos);
+	// 地点登録
 	void SetPoint(Vector3& point, Input* input);
+	// 向かう方向のベクトル作成
 	void MakeMoveVec(Vector3 pos);
+	// 移動
 	void GoToPoint();
+	// リセット
 	void Reset();
 
 

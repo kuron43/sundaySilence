@@ -10,6 +10,7 @@
 
 #pragma warning(pop)
 
+// 弾管理クラス
 class BulletManager
 {
 public:

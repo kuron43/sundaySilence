@@ -6,6 +6,7 @@
 #include "Bullet.h"
 #include "BulletManager.h"
 
+// 武器基底クラス
 class Weapon
 {
 protected:

@@ -13,6 +13,7 @@ enum Team
 	
 };
 
+// 弾クラス
 class Bullet
 {
 public:

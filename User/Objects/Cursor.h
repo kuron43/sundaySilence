@@ -9,7 +9,7 @@ class Cursor
 public:
 	Cursor();
 	~Cursor();
-	/// シーンの更新を行う
+	/// シーンの初期化を行う
 	void Initialize(SpriteCommon* spriteCommon);
 	/// シーンの更新を行う
 	void Update(Input* input);
@@ -25,6 +25,7 @@ private://リソース
 	std::unique_ptr <Sprite> cursorPic_;
 
 public:
+	// カーソルと画像の当たり判定
 	bool Cursor2Sprite(Sprite* sprite);
 private:
 	//代入演算子削除

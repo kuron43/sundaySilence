@@ -2,6 +2,7 @@
 #include "Weapon.h"
 #include "Bullet.h"
 
+// アサルトライフル
 class Assault :
     public Weapon
 {

@@ -19,7 +19,7 @@
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
 
-// 基底クラス
+// ヒトガタ基底クラス
 class Human
 {
 
