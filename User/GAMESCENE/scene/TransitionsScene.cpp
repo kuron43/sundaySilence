@@ -1,3 +1,8 @@
+/**
+ * @file TransitionsScene.cpp
+ * @brief
+ */
+
 #include "TransitionsScene.h"
 #include "Easing.h"
 #include "Affin.h"

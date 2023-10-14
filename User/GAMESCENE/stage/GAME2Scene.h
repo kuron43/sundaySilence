@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file GAME2Scene.h
+ * @brief ゲーム実行2ステージ目
+ */
 #include "IScene.h"
 
 #include "JsonLoader.h"

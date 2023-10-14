@@ -1,3 +1,7 @@
+/**
+ * @file BulletManager.h
+ * @brief
+ */
 #pragma once
 #include "Bullet.h"
 

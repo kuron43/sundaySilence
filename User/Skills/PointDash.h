@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file PointDash.h
+ * @brief
+ */
 #include "Affin.h"
 #include "Input.h"
 #include <vector>

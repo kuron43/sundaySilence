@@ -1,3 +1,7 @@
+/**
+ * @file Weapon.h
+ * @brief
+ */
 #pragma once
 #include "Model.h"
 #include "DirectXCommon.h"

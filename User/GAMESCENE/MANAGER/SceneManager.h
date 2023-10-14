@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file SceneManager.h
+ * @brief シーン管理クラス
+ */
 #pragma warning(push)
 #pragma warning(disable: 4819)
 #pragma warning(disable: 4828)

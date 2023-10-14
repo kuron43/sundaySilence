@@ -1,6 +1,12 @@
+/**
+ * @file SceneManager.cpp
+ * @brief シーン管理クラス
+ */
+
+#include <cassert>
+
 #include "SceneManager.h"
 #include "Input.h"
-#include <cassert>
 #include "DirectXCommon.h"
 #include "Camera.h"
 #include "SceneObjects.h"

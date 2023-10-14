@@ -1,6 +1,8 @@
+/**
+ * @file TitleScene.cpp
+ * @brief
+ */
 #include "SceneIntegrate.h"
-
-
 
 TitleScene::TitleScene(SceneManager* controller, SceneObjects* objects) {
 	_controller = controller;

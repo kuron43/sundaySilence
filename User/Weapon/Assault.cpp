@@ -1,30 +1,14 @@
+/**
+ * @file Assault.cpp
+ * @brief
+ */
 #include "Assault.h"
 
 
 Assault::Assault() {
-	//model_ = Model::LoadFromOBJ("cube");
 }
 Assault::~Assault() {
-
 }
-
-//Assault* Assault::Create()
-//{
-//	// 3Dオブジェクトのインスタンスを生成
-//	Assault* instans = new Assault();
-//	if (instans == nullptr) {
-//		return nullptr;
-//	}
-//
-//	// 初期化
-//	if (!instans->Initialize()) {
-//		delete instans;
-//		assert(0);
-//		return nullptr;
-//	}
-//
-//	return instans;
-//}
 
 /// 更新を行う
 bool Assault::Initialize() {
@@ -67,21 +51,11 @@ void Assault::Update(Input* input, bool isSlow) {
 	roadingTime--;
 
 	BulletManager::GetInstance()->SetSpeed(speed_);
-	//for (Bullet* bullet : bullets_) {
-	//	bullet->Update(speed_);
-	//}
-	////デスフラグの立った弾を削除
-	//bullets_.remove_if([](Bullet* bullet) { return bullet->IsDead(); });
 }
 
 /// 描画を行う
 void Assault::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
-	//for (Bullet* bullet : bullets_) {
-	//	if (bullet->IsDead() == false) {
-	//		//bullet->Draw();
-	//	}
-	//}
 	Object3d::PostDraw();
 }
 
@@ -107,8 +81,6 @@ void Assault::Shot(Transform& player, Transform& reticle, uint32_t team) {
 
 		//弾を登録
 		BulletManager::GetInstance()->AddBullet(std::move(newBullet));
-		//bullets_.push_back(std::move(newBullet));
-		//delete newBullet;
 		mag++;
 
 		//クールタイムをリセット

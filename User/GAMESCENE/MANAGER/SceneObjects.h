@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file SceneObject.h
+ * @brief シーンオブジェクト所持クラス
+ */
 
 #include "LightGroup.h"
 #include "FBXObject3d.h"

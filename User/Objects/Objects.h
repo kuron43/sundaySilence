@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Objects.h
+ * @brief
+ */
+
 #include "Object3d.h"
 #include "Transform.h"
 #include "Affin.h"

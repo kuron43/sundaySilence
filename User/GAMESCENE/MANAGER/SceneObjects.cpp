@@ -1,4 +1,9 @@
+/**
+ * @file SceneObject.cpp
+ * @brief シーンオブジェクト所持クラス
+ */
 #include "SceneObjects.h"
+
 
 SceneObjects::SceneObjects(DirectXCommon* DXCommon, Camera* camera) {
 	_dxCommon = DXCommon;

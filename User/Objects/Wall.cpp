@@ -1,3 +1,7 @@
+/**
+ * @file Wall.cpp
+ * @brief
+ */
 #include "Wall.h"
 #include "DirectXCommon.h"
 #pragma warning(push)

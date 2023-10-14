@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file Human.h
+ * @brief ヒトガタ基底クラス
+ */
 #pragma warning(push)
 #pragma warning(disable: 4514)
 #include <imgui.h>

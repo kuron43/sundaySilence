@@ -1,5 +1,9 @@
 #pragma once
-// シーンを選択しやすいようにシーンの一括インクルード
+/**
+ * @file SceneIntegrate
+ * @brief シーンを選択しやすいようにシーンの一括インクルード
+ */
+
 // 要らないなら消しておk
 
 #include "TitleScene.h"

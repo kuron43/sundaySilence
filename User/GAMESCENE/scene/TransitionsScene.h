@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file TransitionsScene.h
+ * @brief
+ */
 #include "IScene.h"
 #include "SceneIntegrate.h"
 

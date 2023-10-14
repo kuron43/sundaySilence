@@ -1,3 +1,7 @@
+/**
+ * @file Shotgun.cpp
+ * @brief
+ */
 #include "Shotgun.h"
 
 Shotgun::Shotgun() {

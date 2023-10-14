@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file IScene.h
+ * @brief
+ */
 #include "SceneManager.h"
 #include "SceneObjects.h"
 #include "ParticleManager.h"

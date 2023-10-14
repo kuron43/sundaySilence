@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file Cursor.h
+ * @brief
+ */
 #include "Input.h"
 #include "DirectXCommon.h"
 #include "Object3d.h"

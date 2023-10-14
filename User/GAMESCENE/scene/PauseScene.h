@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file PauseScene.h
+ * @brief
+ */
 #include "IScene.h"
 
 class PauseScene :

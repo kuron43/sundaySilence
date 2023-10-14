@@ -1,3 +1,7 @@
+/**
+ * @file Weaponlist.h
+ * @brief
+ */
 #pragma once
 
 // 武器クラスインクルードまとめ

@@ -1,3 +1,7 @@
+/**
+ * @file IScene.cpp
+ * @brief
+ */
 #include "IScene.h"
 #include "SceneManager.h"
 

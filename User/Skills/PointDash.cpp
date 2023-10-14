@@ -1,3 +1,7 @@
+/**
+ * @file PointDash.cpp
+ * @brief
+ */
 #include "PointDash.h"
 #pragma warning(push)
 #pragma warning(disable: 4514)

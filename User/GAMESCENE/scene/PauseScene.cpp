@@ -1,3 +1,7 @@
+/**
+ * @file PauseScene.cpp
+ * @brief
+ */
 #include "PauseScene.h"
 #include "SceneManager.h"
 #include "SceneIntegrate.h"

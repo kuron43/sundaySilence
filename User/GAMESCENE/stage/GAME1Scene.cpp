@@ -1,3 +1,7 @@
+/**
+ * @file GAME1Scene.cpp
+ * @brief ゲーム実行１ステージ目
+ */
 #include "GAME1Scene.h"
 #include "SceneManager.h"
 

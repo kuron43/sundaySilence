@@ -1,3 +1,7 @@
+/**
+ * @file BulletManager.cpp
+ * @brief
+ */
 #include "BulletManager.h"
 
 float BulletManager::speed_ = 1.0f;

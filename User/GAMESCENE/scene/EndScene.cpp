@@ -1,3 +1,7 @@
+/**
+ * @file EndScene.cpp
+ * @brief
+ */
 #include "EndScene.h"
 #include "SceneManager.h"
 

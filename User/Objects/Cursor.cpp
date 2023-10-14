@@ -1,3 +1,7 @@
+/**
+ * @file Cursor.cpp
+ * @brief
+ */
 #pragma warning(push)
 #pragma warning(disable: 4625)
 #pragma warning(disable: 4626)
