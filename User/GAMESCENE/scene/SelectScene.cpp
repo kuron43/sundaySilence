@@ -16,7 +16,7 @@ SelectScene::~SelectScene() {
 
 void SelectScene::Initialize() {
 
-	selectNum = 1;
+	selectNum = 0;
 	resultNum = 0;
 	isConfirm = false;
 

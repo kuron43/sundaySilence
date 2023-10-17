@@ -124,14 +124,30 @@ void TitleScene::Initialize() {
 			}
 		}
 	}
-	for (Wall* walls : _objects->walls) {
-		walls->Update();
-	}
-	for (Enemy* enemy : _objects->enemys) {
-		enemy->Update();
-	}
-	for (Boss* boss : _objects->boss) {
-		boss->Update();
+	{
+		_controller->_camera->SetEye(camposEye);
+		_controller->_camera->SetTarget(camposTar);
+		_controller->_camera->Update();
+		_objects->floorGround->Update();
+
+		BulletManager::GetInstance()->Update();
+		for (Enemy* enemy : _objects->enemys) {
+			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
+			enemy->Update();
+			if (!enemy->HowDead()) {
+				_objects->eneCount++;
+			}
+		}
+		for (Boss* boss : _objects->boss) {
+			boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
+			boss->Update();
+			if (!boss->HowDead()) {
+				_objects->bossCount++;
+			}
+		}
+		for (Wall* walls : _objects->walls) {
+			walls->Update();
+		}
 	}
 }
 
