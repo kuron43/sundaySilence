@@ -115,13 +115,13 @@ void Player::Update(Input* input, bool isTitle) {
 ///
 void Player::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
-	//object_->Draw();
+	object_->Draw();
 	if (!nowTitle) {
 		reticle->Draw();
 	}
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 
-		coliderPosTest_[i]->Draw();
+		//coliderPosTest_[i]->Draw();
 	}
 	Object3d::PostDraw();
 	if (!nowTitle) {
