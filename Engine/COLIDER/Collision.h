@@ -35,7 +35,7 @@ public:
 private:
 
 	// 3次元OBBと点の最短距離算出関数
-	static float LenOBBToPoint(OBB& obb, Vector3& p);
+	static float LenOBBToPoint(OBB& obb, Vector3& p, Vector3* reject = nullptr);
 	// http://marupeke296.com/COL_3D_No12_OBBvsPoint.html
 	
 

@@ -309,9 +309,12 @@ void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback
 			// クエリーコールバック呼び出し
 			if (!callback->OnQueryHit(info)) {
 				// 戻り値がfalseの場合、継続せず終了
+				int a = 1;
+				a += a;
 				return;
 			}
 		}
+
 	}
 }
 

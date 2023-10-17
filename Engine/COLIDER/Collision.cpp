@@ -308,7 +308,7 @@ bool Collision::CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* dis
 }
 
 // 3次元OBBと点の最短距離算出関数
-float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
+float Collision::LenOBBToPoint(OBB& obb, Vector3& p, Vector3* reject)
 {
 	Vector3 Vec(0, 0, 0);   // 最終的に長さを求めるベクトル
 	//float result = 0;
@@ -328,6 +328,7 @@ float Collision::LenOBBToPoint(OBB& obb, Vector3& p)
 		s = (float)fabs(s);
 		if (s > 1) {
 			Vec += (1 - s) * L * obb.m_NormaDirect[i];   // はみ出した部分のベクトル算出
+			*reject =  s * L * obb.m_NormaDirect[i];
 		}
 	}
 	//result = Vec.length();
@@ -496,13 +497,14 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 	Vector3 spherePos = sphere.center;
 	Vector3 obbPos = obb_.m_Pos;
 	Vector3 rejeVec;
+	Vector3 reje1;
 
 	rejeVec = sphere.center - obbPos;
 	//float len = rejeVec.length();
 	rejeVec.nomalize();
 
 	//float sphereRad = sphere.radius_;
-	length = LenOBBToPoint(obb_, spherePos);////
+	length = LenOBBToPoint(obb_, spherePos,&reje1);////
 
 	inter_ = obb_.m_Pos + (rejeVec * (length-sphere.radius_));
 	if ((float)fabs(length) > sphere.radius_) {
@@ -525,14 +527,27 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 		*inter = obb_.m_Pos + (rejeVec * length);		
 	}
 	if (reject) {
-	
-		//float ds = spherePos.dot(obb_.m_NormaDirect[2]);
-		//float dt = obbPos.dot(obb_.m_NormaDirect[2]);
-		//float rejelen = dt - ds + sphere.radius_;
-		//rejeVec =  sphere.center - inter_;
-		//*reject = obb_.m_NormaDirect[2] * rejelen;
-		
+		//*reject = sphere.center - obbPos;
+			/*ImGui::Begin("obb lengs");
+			ImGui::Text("%f", reje1.length());
+			ImGui::End();*/
 
+		// ここが正しいのかはわからないのでいい感じにお願いします
+
+		if (reje1.length() < 2.5f) {
+
+			float ds = spherePos.dot(obb_.m_NormaDirect[2]);
+			float dt = obbPos.dot(obb_.m_NormaDirect[2]);
+			float rejelen = dt - ds + sphere.radius_;
+			rejeVec = sphere.center - inter_;
+			*reject = -((obb_.m_NormaDirect[2] * rejelen) * (0.5f + length));
+		}else if(reje1.length() > 2.5f) {
+			float ds = spherePos.dot(obb_.m_NormaDirect[0]);
+			float dt = obbPos.dot(obb_.m_NormaDirect[0]);
+			float rejelen = dt - ds + sphere.radius_;
+			rejeVec = sphere.center - inter_;
+			*reject = -((obb_.m_NormaDirect[0] * rejelen) * (0.3f + length));
+		}
 	}
 	//ImGui::Begin("Sphere2Obb5");
 	//ImGui::Text("T pos:A,%f,%f,%f", obb.m_Pos.x, obb.m_Pos.y, obb.m_Pos.z);
