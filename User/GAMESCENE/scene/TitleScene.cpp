@@ -198,12 +198,12 @@ void TitleScene::Draw() {
 	for (Wall* walls : _objects->walls) {
 		walls->Draw(_controller->_dxCommon);
 	}
+	_objects->player->Draw(_controller->_dxCommon);
 
 	particle_->Draw();
 	title_->Draw();
 	titleButton_->Draw();
 
-	_objects->player->Draw(_controller->_dxCommon);
 	_objects->mouseCursor_->Draw();
 }
 

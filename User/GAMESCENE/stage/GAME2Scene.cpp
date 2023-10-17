@@ -138,10 +138,10 @@ void GAME2Scene::Update(Input* input) {
 	_controller->_camera->Update();
 
 	_objects->floorGround->Update();
-	_objects->player->Update(input);
 	for (Wall* walls : _objects->walls) {
 		walls->Update();
 	}
+	_objects->player->Update(input);
 
 	BulletManager::GetInstance()->Update();
 	for (Enemy* enemy : _objects->enemys) {

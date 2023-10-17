@@ -46,6 +46,7 @@ void Wall::CollideInitialize() {
 /// 更新を行う
 void Wall::Update() {
 	isHit = false;
+	obb_->Update();
 	object_->Update();
 	coliderPosTest_->wtf.position = obb_->GetPos_();
 	coliderPosTest_->wtf.scale.x = obb_->GetLength(0);
@@ -54,15 +55,6 @@ void Wall::Update() {
 	coliderPosTest_->wtf.rotation = obb_->Getrotate_();
 	coliderPosTest_->Update();
 
-	if (obb_->GetIsHit() == true && obb_->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER) {
-		//CollisionManager::GetInstance()->RemoveCollider(obb_);
-		Vector3 a = { 0,0,0 };
-		ImGui::Begin("Wall");
-		ImGui::Text("Hit");
-		ImGui::End();
-		isHit = true;
-	}
-	obb_->Update();
 }
 
 /// 描画を行う

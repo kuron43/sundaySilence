@@ -50,25 +50,20 @@ void CollisionManager::CheckAllCollisions()
 				}
 
 			}
-			if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&
+			else if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&
 				colB->GetShapeType() == COLLISIONSHAPE_OBB)
 			{
 				Sphere* sphere = dynamic_cast<Sphere*>(colA);
 				OBB* obb = dynamic_cast<OBB*>(colB);
 
-				//ImGui::Begin("Sphere2Obb");
-				//ImGui::Text("T pos:A,%f,%f,%f", obb->m_Pos.x, obb->m_Pos.y, obb->m_Pos.z);
-				//ImGui::Text("T pos:B,%f,%f,%f\n", sphere->center.x, sphere->center.y, sphere->center.z);
-				//ImGui::End();
-
 				Vector3 inter;
-				if (Collision::CheckOBB2Sphere(*obb, *sphere, &inter)) {
+				if (Collision::CheckOBB2Sphere(*obb, *sphere, &inter))
+				{
 					colA->OnCllision(CollisionInfo(colB->GetObject3d(), colB, inter));
 					colB->OnCllision(CollisionInfo(colA->GetObject3d(), colA, inter));
 				}
 
 			}
-
 			else if (colA->GetShapeType() == COLLISIONSHAPE_MESH &&
 				colB->GetShapeType() == COLLISIONSHAPE_SPHERE)
 			{
@@ -109,7 +104,7 @@ void CollisionManager::CheckAllCollisions()
 
 			}
 		}
-	}		
+	}
 }
 
 bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, RaycastHit* hitInfo, float maxDistance)
@@ -155,9 +150,9 @@ bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, Raycast
 			it_hit = it;
 			if (distance >= 10) {
 
-			//ImGui::Begin("RayDis");
-			//ImGui::Text("dis0: %f", distance);
-			//ImGui::End();
+				//ImGui::Begin("RayDis");
+				//ImGui::Text("dis0: %f", distance);
+				//ImGui::End();
 			}
 		}
 		else if (colA->GetShapeType() == COLLISIONSHAPE_MESH)
@@ -309,8 +304,6 @@ void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback
 			// クエリーコールバック呼び出し
 			if (!callback->OnQueryHit(info)) {
 				// 戻り値がfalseの場合、継続せず終了
-				int a = 1;
-				a += a;
 				return;
 			}
 		}
@@ -333,15 +326,15 @@ uint32_t CollisionManager::OBBHitFace(OBB& obb, Sphere& sphere)
 {
 	if (!OBBToSphereCollision(obb, sphere))
 	{
-		/*return IMPINGEMENT_FACE::NOT_HIT */;
+		return 1 << 7;
 	}
 
-	uint32_t result = 0;
+	int result = 0;
 
 	for (uint32_t i = 0; i < 6; i++)
 	{
 		(PlaneToSphere(obb.plane[i], sphere))
-			? result += 1 << i : false;
+			? result += 1 << i : false;		
 	}
 
 	return result;
@@ -355,7 +348,6 @@ uint32_t CollisionManager::OBBHitFace(OBB& obb, Sphere& sphere)
 bool CollisionManager::OBBToSphereCollision(OBB& obb, Sphere& sphere)
 {
 	float length = LenOBBToPoint(obb, sphere.center);
-
 	return (length <= sphere.radius_) ? true : false;
 }
 
@@ -366,26 +358,28 @@ bool CollisionManager::OBBToSphereCollision(OBB& obb, Sphere& sphere)
 ===============================================================================================================*/
 float CollisionManager::LenOBBToPoint(OBB& obb, Vector3& p)
 {
-	Vector3 Vec(0.0f, 0.0f, 0.0f);   //　最終的に長さを求めるベクトル
+	Vector3 Vec(0, 0, 0);   // 最終的に長さを求めるベクトル
+	//float result = 0;
 
 	// 各軸についてはみ出た部分のベクトルを算出
 	for (uint32_t i = 0; i < 3; i++)
 	{
-		float L = obb.m_fLength[i] / 2;
+		//float L = obb.m_fLength[i] / 2;
+		float L = obb.m_fLength[i];
 
 		// L=0は計算できない
-		if (L <= 0) continue;
+		if (L <= 0)	continue;
 
-		float s = obb.m_NormaDirect[i].dot(p - obb.m_Pos) / L;
+		float s = Vector3(p - obb.m_Pos).dot(obb.m_NormaDirect[i]) / L;
+		//float s = obb.m_NormaDirect[i].dot(p - obb.m_Pos) / L;
 
 		// sの値から、はみ出した部分があればそのベクトルを加算
-		s = fabsf(s);
-		if (s > 1)
-		{
-			// はみ出した部分のベクトル算出
-			Vec = Vec + ((1 - s) * L * obb.m_NormaDirect[i]);
+		s = (float)fabs(s);
+		if (s > 1) {
+			Vec = Vec + ((1 - s) * L * obb.m_NormaDirect[i]);  // はみ出した部分のベクトル算出
 		}
 	}
+	//result = Vec.length();
 
 	return Vec.length();   // 長さを出力
 }
@@ -444,11 +438,11 @@ float CollisionManager::PlaneToPointLeng(FinitePlane plane, Vector3 pos, float r
 	bool result = false;
 
 	// 平面との内外判定を行う
-	if (angle < DirectX::XM_PIDIV2)
+	if (angle < Affin::radConvert(90))
 	{
 		result |= PlaneToPointInside(plane, pos - (nomalizeCross * L));
 	}
-	else if (angle > DirectX::XM_PIDIV2)
+	else if (angle > Affin::radConvert(90))
 	{
 		result |= PlaneToPointInside(plane, pos + (nomalizeCross * L));
 	}
@@ -484,14 +478,22 @@ bool CollisionManager::PlaneToPointInside(FinitePlane plane, Vector3 pos)
 	// 三角ポリゴン1
 	std::vector<Vector3> vertex1;
 
-	vertex1.push_back(plane.vertex[0]);
+	//vertex1.push_back(plane.vertex[0]);// my
+	//vertex1.push_back(plane.vertex[1]);
+	//vertex1.push_back(plane.vertex[2]);
+
+	vertex1.push_back(plane.vertex[0]); // web の式
 	vertex1.push_back(plane.vertex[3]);
 	vertex1.push_back(plane.vertex[1]);
 
 	// 三角ポリゴン2
 	std::vector<Vector3> vertex2;
 
-	vertex2.push_back(plane.vertex[2]);
+	//vertex2.push_back(plane.vertex[1]);
+	//vertex2.push_back(plane.vertex[3]);
+	//vertex2.push_back(plane.vertex[2]);
+
+	vertex2.push_back(plane.vertex[2]); // web 
 	vertex2.push_back(plane.vertex[1]);
 	vertex2.push_back(plane.vertex[3]);
 

@@ -5,7 +5,6 @@
 #include "Player.h"
 #include "Assault.h"
 
-
 Player::Player() {
 
 }
@@ -116,13 +115,13 @@ void Player::Update(Input* input, bool isTitle) {
 ///
 void Player::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
-	object_->Draw();
+	//object_->Draw();
 	if (!nowTitle) {
 		reticle->Draw();
 	}
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 
-		//coliderPosTest_[i]->Draw();
+		coliderPosTest_[i]->Draw();
 	}
 	Object3d::PostDraw();
 	if (!nowTitle) {
@@ -227,50 +226,53 @@ void Player::ColisionUpdate() {
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
 		coliderPosTest_[i]->Update();
 	}	
-
-	// クエリーコールバッククラス
-	class PlayerQueryCallback :public QueryCallback
 	{
-	public:
-		PlayerQueryCallback(Sphere* sphere) :sphereQ(sphere) {};
-		// 衝突時コールバック
-		bool OnQueryHit(const QueryHit& info) {
-			// ワールドの上方向
-			const Vector3 up = { 0,1,0 };
-			// 排斥方向			
-			Vector3 rejectDir = info.reject;
-			rejectDir.nomalize();
-			// 上方向と排斥方向の角度差のコサイン値
-			float cos = rejectDir.dot(up);
+		// クエリーコールバッククラス
+		class PlayerQueryCallback :public QueryCallback
+		{
+		public:
+			PlayerQueryCallback(Sphere* sphere) :sphereQ(sphere) {};
+			// 衝突時コールバック
+			bool OnQueryHit(const QueryHit& info) {
+				// ワールドの上方向
+				const Vector3 up = { 0,1,0 };
+				// 排斥方向			
+				Vector3 rejectDir = info.reject;
+				rejectDir.nomalize();
+				// 上方向と排斥方向の角度差のコサイン値
+				float cos = rejectDir.dot(up);
 
-			// 地面判定しきい値
-			const float threshold = cosf(Affin::radConvert(30.0f));
-			// 角度差によって天井または地面と判定される場合を除いて
-			if (-threshold < cos && cos < threshold) {
-				// 球を排斥 （押し出す）
-				sphereQ->center += info.reject;
-				move += info.reject;
+				// 地面判定しきい値
+				const float threshold = cosf(Affin::radConvert(30.0f));
+				// 角度差によって天井または地面と判定される場合を除いて
+				if (-threshold < cos && cos < threshold) {
+					// 球を排斥 （押し出す）
+					sphereQ->center += info.reject;
+					move += info.reject;
+					colider_ = info.coloder;
+				}
+				return true;
 			}
-			return true;
+
+			// クエリーに使用する球
+			Sphere* sphereQ = nullptr;
+			// 排斥による移動量
+			Vector3 move = {};
+			// 衝突相手のコライダー
+			BaseCollider* colider_ = nullptr;
+		};
+
+		//クエリーコールバックの関数オブジェクト
+		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+			PlayerQueryCallback callback(sphere[i]);
+			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback);
+			object_->wtf.position.x += callback.move.x;
+			object_->wtf.position.y += callback.move.y;
+			object_->wtf.position.z += callback.move.z;
+
+			object_->UpdateMatrix();
+			sphere[i]->Update();
 		}
-
-		// クエリーに使用する球
-		Sphere* sphereQ = nullptr;
-		// 排斥による移動量
-		Vector3 move = {};
-	};
-
-	//クエリーコールバックの関数オブジェクト
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		PlayerQueryCallback callback(sphere[i]);
-		//
-		CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback);
-		object_->wtf.position.x += callback.move.x;
-		object_->wtf.position.y += callback.move.y;
-		object_->wtf.position.z += callback.move.z;
-
-		object_->UpdateMatrix();
-		sphere[i]->Update();
 	}
 }
 
