@@ -8,10 +8,71 @@
 #include <imgui.h>
 #pragma warning(pop)
 
-void PointDash::Update(Vector3 pos)
+void PointDash::Initialize()
 {
-	Vector3 a = pos;
-	a.x++;
+	ray = new RayCollider;
+	CollisionManager::GetInstance()->AddCollider(ray);
+	rayHit = new RaycastHit;
+}
+
+bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
+{
+	ray->Update();
+
+	if (registNum == 0) {
+		ray->SetStart(pos);
+		ray->SetDir(ret);
+		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+			ImGui::Begin("eneRayHitBarrier");
+			ImGui::Text("HIT 1 : dis %f", rayHit->distance);
+			ImGui::End();
+			return false;
+		}
+	}
+	else if (registNum == 1) {
+		ray->SetStart(points[0]);
+		ray->SetDir(ret);
+		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+			ImGui::Begin("eneRayHitBarrier");
+			ImGui::Text("HIT 2 : dis %f", rayHit->distance);
+			ImGui::End();
+			return false;
+		}
+	}
+	else if (registNum == 2) {
+		ray->SetStart(points[1]);
+		ray->SetDir(ret);
+		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+			ImGui::Begin("eneRayHitBarrier");
+			ImGui::Text("HIT 3 : dis %f", rayHit->distance);
+			ImGui::End();
+			return false;
+		}
+	}
+	else if (registNum == 3) {
+		ray->SetStart(points[2]);
+		ray->SetDir(ret);
+		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+			ImGui::Begin("eneRayHitBarrier");
+			ImGui::Text("HIT 4 : dis %f", rayHit->distance);
+			ImGui::End();
+			return false;
+		}
+	}
+	else if (registNum == 4) {
+		ray->SetStart(points[3]);
+		ray->SetDir(ret);
+		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+			ImGui::Begin("eneRayHitBarrier");
+			ImGui::Text("HIT 5 : dis %f", rayHit->distance);
+			ImGui::End();
+			return false;
+		}
+	}
+	else {
+		
+	}
+	return true;
 }
 
 void PointDash::SetPoint(Vector3& point, Input* input) {
@@ -23,6 +84,7 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	if (registNum == 0) {
 		points[0] = point;
 		registNum = 1;
+		return;
 	}
 	else if (registNum == 1) {
 		points[1] = point;

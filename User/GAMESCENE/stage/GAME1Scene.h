@@ -41,20 +41,10 @@ private:
 	bool stageFailed = false;
 
 	// カメラ座標
-	//Vector3 camposEye = { 0.0f,100.0f,-10.0f };
 	Vector3 camposEye = { 0.0f,100.0f,-0.1f };
 	Vector3 camposTar = { 0,0,0 };
 
 public:
-
-
-	// json
-	//Model* modelcube = nullptr;
-	//Model* modelREX = nullptr;
-
 	LevelData* leveData = nullptr;
-	//std::map<std::string, Model*> jsonModels;
-	//std::vector<Object3d*> JsonObjects;
-
 };
 

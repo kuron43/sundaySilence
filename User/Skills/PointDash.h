@@ -3,10 +3,14 @@
  * @file PointDash.h
  * @brief
  */
+#include <vector>
+
 #include "Affin.h"
 #include "Input.h"
-#include <vector>
 #include "Easing.h"
+#include"RayCollider.h"
+#include"CollisionManager.h"
+#include"CollisionAttribute.h"
 
 // ポイントダッシュスキル
 class PointDash
@@ -26,14 +30,15 @@ public:
 	bool isActive;
 
 	uint32_t time;
-	float easetime;
 	uint32_t easeMaxTime = 30;
-	bool timeEnd = false;
+	float easetime;
 	Vector3 resultVec;
+	bool timeEnd = false;
 
 public:
+	void Initialize();
 	// 更新
-	void Update(Vector3 pos);
+	bool PointRayUpdate(Vector3 pos,Vector3 ret);
 	// 地点登録
 	void SetPoint(Vector3& point, Input* input);
 	// 向かう方向のベクトル作成
@@ -43,6 +48,10 @@ public:
 	// リセット
 	void Reset();
 
-
+	//コライダー
+private:
+	RayCollider* ray;
+	RaycastHit* rayHit;
+	Vector3 rayvec;
 };
 

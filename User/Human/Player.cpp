@@ -11,6 +11,8 @@ Player::Player() {
 Player::~Player() {
 	delete model_;
 	delete reticleMD_;
+	delete pointDash_;
+	delete weapon_[0];
 }
 
 ///
@@ -29,6 +31,7 @@ void Player::Initialize() {
 	weapon_[0]->Initialize();
 
 	pointDash_ = new PointDash();
+	pointDash_->Initialize();
 	pointDash_->points.resize(pointDash_->MAX_POINTNUM);
 
 	//当たり判定用
@@ -72,12 +75,14 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 	weapon_[0]->Update(input, isSlow);
 
-	if (input->MouseButtonTrigger(0) && !isTitle && isSlow == true) {
-		pointDash_->SetPoint(reticle->wtf.position, input);
+	if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
+		if (input->MouseButtonTrigger(0) && !isTitle && isSlow == true) {
+			pointDash_->SetPoint(reticle->wtf.position, input);
 		nowSetPoint = true;
+		}
 	}
 
-	if (!isTitle && pointDash_->isActive == true ) {
+	if (!isTitle && pointDash_->isActive == true) {
 		pointDash_->GoToPoint();
 		object_->wtf.position = pointDash_->resultVec;
 	}
@@ -225,7 +230,7 @@ void Player::ColisionUpdate() {
 		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
 		coliderPosTest_[i]->Update();
-	}	
+	}
 	{
 		// クエリーコールバッククラス
 		class PlayerQueryCallback :public QueryCallback
