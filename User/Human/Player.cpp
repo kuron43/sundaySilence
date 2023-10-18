@@ -13,6 +13,10 @@ Player::~Player() {
 	delete reticleMD_;
 	delete pointDash_;
 	delete weapon_[0];
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+		delete sphere[i];		
+	}
 }
 
 ///
