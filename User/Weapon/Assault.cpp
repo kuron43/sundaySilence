@@ -77,7 +77,7 @@ void Assault::Shot(Transform& player, Transform& reticle, uint32_t team) {
 		velo.nomalize();
 		moveVec = velo * speed_;
 		moveVec.nomalize();
-		newBullet->Initialize(model_, startPos, moveVec, team);
+		newBullet->Initialize(model_, startPos+velo, moveVec, team);
 
 		//弾を登録
 		BulletManager::GetInstance()->AddBullet(std::move(newBullet));

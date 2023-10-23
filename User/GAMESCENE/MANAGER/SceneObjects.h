@@ -59,7 +59,7 @@ private: // 演出用
 	// イージング用
 	float easetime = 0.0f;
 	uint32_t time = 0;
-	uint32_t easeMaxTime = 120;
+	uint32_t easeMaxTime = 50;
 	bool isEaseOut = true;
 
 public: // オブジェクトの管理

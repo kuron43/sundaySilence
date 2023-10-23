@@ -14,7 +14,7 @@ SceneObjects::~SceneObjects() {
 }
 void SceneObjects::Initialize() {
 
-
+	ShowCursor(false);
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
 	{

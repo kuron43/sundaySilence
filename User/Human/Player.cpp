@@ -95,26 +95,6 @@ void Player::Update(Input* input, bool isTitle) {
 
 	object_->Update();
 
-	//if (input->KeyboardTrigger(DIK_R)) {
-	//	//Reset();
-	//	pointDash_->Reset();
-	//}
-
-	//ImGui::Begin("pointD");
-	//ImGui::Text("ply:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
-	//ImGui::Text("pointNUM :%d", pointDash_->registNum);
-	//ImGui::InputFloat3("pos0", &pointDash_->points[0].x);
-	//ImGui::InputFloat3("pos1", &pointDash_->points[1].x);
-	//ImGui::InputFloat3("pos2", &pointDash_->points[2].x);
-	//ImGui::InputFloat3("pos3", &pointDash_->points[3].x);
-	//ImGui::InputFloat3("pos4", &pointDash_->points[4].x);
-	//ImGui::InputFloat3("Vec0", &pointDash_->moveVec[0].x);
-	//ImGui::InputFloat3("Vec1", &pointDash_->moveVec[1].x);
-	//ImGui::InputFloat3("Vec2", &pointDash_->moveVec[2].x);
-	//ImGui::InputFloat3("Vec3", &pointDash_->moveVec[3].x);
-	//ImGui::InputFloat3("Vec4", &pointDash_->moveVec[4].x);
-	//ImGui::End();
-
 	ImGui::Begin("pointRes");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
 	ImGui::Text("spe :%f", pointDash_->easeSpeed);

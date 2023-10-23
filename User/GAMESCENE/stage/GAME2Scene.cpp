@@ -31,7 +31,7 @@ void GAME2Scene::Initialize() {
 
 	_objects->player->SetPos(Vector3(0, 0, 0));
 	_objects->player->MatUpdate();
-
+	startTime_ = true;
 
 	// Json
 	{
@@ -136,40 +136,45 @@ void GAME2Scene::Update(Input* input) {
 	_controller->_camera->SetEye(camposEye);
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
-
-	_objects->floorGround->Update();
-	for (Wall* walls : _objects->walls) {
-		walls->Update();
+	if (startTime_) {
+		startTime_ = _objects->Ready();
 	}
-	_objects->player->Update(input);
+	else {
 
-	BulletManager::GetInstance()->Update();
-	for (Enemy* enemy : _objects->enemys) {
-		enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
-		enemy->Update(input);
-		if (!enemy->HowDead()) {
-			_objects->eneCount++;
+		_objects->floorGround->Update();
+		for (Wall* walls : _objects->walls) {
+			walls->Update();
 		}
-	}
-	for (Boss* boss : _objects->boss) {
-		boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
-		boss->Update(input);
-		if (!boss->HowDead()) {
-			_objects->bossCount++;
+		_objects->player->Update(input);
+
+		BulletManager::GetInstance()->Update();
+		for (Enemy* enemy : _objects->enemys) {
+			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
+			enemy->Update(input);
+			if (!enemy->HowDead()) {
+				_objects->eneCount++;
+			}
 		}
-	}
+		for (Boss* boss : _objects->boss) {
+			boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
+			boss->Update(input);
+			if (!boss->HowDead()) {
+				_objects->bossCount++;
+			}
+		}
 
 
-	ImGui::Begin("enecount");
-	ImGui::Text("countE : %d", _objects->eneCount);
-	ImGui::Text("countB : %d", _objects->bossCount);
-	ImGui::End();
+		ImGui::Begin("enecount");
+		ImGui::Text("countE : %d", _objects->eneCount);
+		ImGui::Text("countB : %d", _objects->bossCount);
+		ImGui::End();
 
-	if (input->KeyboardTrigger(DIK_TAB)) {
-		_controller->SetSceneNum(SCE_PAUSE);
-	}
-	else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
-		_controller->SetSceneNum(SCE_OVER);
+		if (input->KeyboardTrigger(DIK_TAB)) {
+			_controller->SetSceneNum(SCE_PAUSE);
+		}
+		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
+			_controller->SetSceneNum(SCE_OVER);
+		}
 	}
 }
 
@@ -192,4 +197,7 @@ void GAME2Scene::Draw() {
 
 	Object3d::PostDraw();
 
+	if (startTime_) {
+		_objects->ReadyDraw();
+	}
 }

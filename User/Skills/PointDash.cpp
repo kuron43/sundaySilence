@@ -143,6 +143,7 @@ void PointDash::GoToPoint() {
 			if (time == easeMaxTime - 1) {
 				nowPointNum = 1;
 				time = 1;
+				easetime = 0;
 				timeEnd = true;
 			}
 		}
@@ -152,6 +153,7 @@ void PointDash::GoToPoint() {
 				resultVec = points[1];
 				nowPointNum = 2;
 				time = 1;
+				easetime = 0;
 				timeEnd = true;
 			}
 		}
@@ -161,6 +163,7 @@ void PointDash::GoToPoint() {
 				resultVec = points[2];
 				nowPointNum = 3;
 				time = 1;
+				easetime = 0;
 				timeEnd = true;
 			}
 		}
@@ -170,6 +173,7 @@ void PointDash::GoToPoint() {
 				resultVec = points[3];
 				nowPointNum = 4;
 				time = 1;
+				easetime = 0;
 				timeEnd = true;
 			}
 		}
@@ -179,6 +183,7 @@ void PointDash::GoToPoint() {
 				resultVec = points[4];
 				nowPointNum = 5;
 				time = 1;
+				easetime = 0;
 				timeEnd = true;
 			}
 		}
