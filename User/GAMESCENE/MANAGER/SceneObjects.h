@@ -37,6 +37,30 @@ public:
 	void Initialize();
 	void Reset();
 
+public: // 演出用
+
+	void ReadyDraw();
+	bool Ready();
+
+
+private: // 演出用
+	std::unique_ptr <Sprite> readyBuckSP_;
+	Vector2 readyBuckSPpos_;
+	Vector3 readyBuckSPscale_;
+	std::unique_ptr <Sprite> readyBuck2SP_;
+	Vector2 readyBuck2SPpos_;
+	Vector3 readyBuck2SPscale_;
+
+	std::unique_ptr <Sprite> readySP_;
+	Vector2 readySPpos_;
+
+	uint32_t readyTimer = 0;
+	// イージング用
+	float easetime = 0.0f;
+	uint32_t time = 0;
+	uint32_t easeMaxTime = 50;
+	bool isEaseOut = true;
+
 public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;
 	std::unique_ptr <Audio> audio;

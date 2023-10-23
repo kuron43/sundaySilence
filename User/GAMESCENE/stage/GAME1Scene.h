@@ -37,6 +37,7 @@ public:
 	void Draw() override;
 
 private:
+	bool startTime_ = false;
 	bool stageClear = false;
 	bool stageFailed = false;
 

@@ -43,8 +43,9 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(7, "Cursor.png");
 		spriteCommon_->LoadTexture(8, "START.png");
 		spriteCommon_->LoadTexture(9, "START2.png");
-		spriteCommon_->LoadTexture(10,"BACK.png");
+		spriteCommon_->LoadTexture(10, "BACK.png");
 		spriteCommon_->LoadTexture(11, "title2.png");
+		spriteCommon_->LoadTexture(12, "readyBuck.png");
 
 	}
 	// スプライトロード  20~ //セレクトステージ
@@ -98,6 +99,29 @@ void SceneObjects::Initialize() {
 	skydome_O->SetModel(Model::LoadFromOBJ("skydome"));
 	skydome_O->Initialize();
 	skydome_O->wtf.scale = Vector3(1000.0f, 1000.0f, 1000.0f);
+
+
+	// 演出用の初期化
+	{
+		readyBuckSP_ = std::make_unique<Sprite>();
+		readyBuckSP_->Initialize(spriteCommon_.get(), 12);
+		readyBuckSP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
+		readyBuckSPpos_ = { 0,WinApp::window_height / 2.0f };
+		readyBuckSPscale_ = Vector3(1.0f, 0001.0f, 1.0f);
+		readyBuckSP_->SetPozition(readyBuckSPpos_);
+		readyBuckSP_->SetScale(readyBuckSPscale_);
+	}
+	{
+		readyBuck2SP_ = std::make_unique<Sprite>();
+		readyBuck2SP_->Initialize(spriteCommon_.get(), 12);
+		readyBuck2SP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
+		readyBuck2SPpos_ = { WinApp::window_width / 2.0f,WinApp::window_height / 2.0f };
+		readyBuck2SPscale_ = Vector3(1.0f, 0.0001f, 1.0f);
+		readyBuck2SP_->SetPozition(readyBuck2SPpos_);
+		readyBuck2SP_->SetScale(readyBuck2SPscale_);
+	}
+
+
 	//ライトの生成
 	lightGroup = std::make_unique< LightGroup>();
 	lightGroup->Initialize();
@@ -119,4 +143,45 @@ void SceneObjects::Reset()
 	enemys.clear();
 	boss.clear();
 	walls.clear();
+}
+
+bool SceneObjects::Ready()
+{
+
+	readyTimer++;
+	time++;
+	easetime = (float)time / easeMaxTime;
+	if (isEaseOut) {
+		readyBuckSPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
+		readyBuckSPpos_ = Easing::OutQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(0.0f, WinApp::window_height / 2.0f + 50.0f), (float)easetime);
+		readyBuck2SPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
+		readyBuck2SPpos_ = Easing::OutQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f + 50.0f), (float)easetime);
+	}
+	else {
+		readyBuckSPpos_ = Easing::InQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f + 50.0f), Vector2(-(WinApp::window_width / 2.0f), WinApp::window_height / 2.0f + 50.0f), (float)easetime);
+		readyBuck2SPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f + 50.0f), Vector2(WinApp::window_width, WinApp::window_height / 2.0f + 50.0f), (float)easetime);
+	}
+	readyBuckSP_->SetScale(readyBuckSPscale_);
+	readyBuckSP_->SetPozition(readyBuckSPpos_);
+	readyBuck2SP_->SetScale(readyBuck2SPscale_);
+	readyBuck2SP_->SetPozition(readyBuck2SPpos_);
+
+	readyBuckSP_->Update();
+	readyBuck2SP_->Update();
+
+	if (time >= easeMaxTime && isEaseOut == true) {
+		time = 0;
+		isEaseOut = false;
+	}
+	if (time >= easeMaxTime && isEaseOut == false) {
+		time = 0;
+		isEaseOut = true;
+		return false;
+	}
+	return true;
+}
+void SceneObjects::ReadyDraw()
+{
+	readyBuckSP_->Draw();
+	readyBuck2SP_->Draw();
 }
