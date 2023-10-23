@@ -46,6 +46,7 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(10, "BACK.png");
 		spriteCommon_->LoadTexture(11, "title2.png");
 		spriteCommon_->LoadTexture(12, "readyBuck.png");
+		spriteCommon_->LoadTexture(13, "readySTART.png");
 
 	}
 	// スプライトロード  20~ //セレクトステージ
@@ -120,6 +121,15 @@ void SceneObjects::Initialize() {
 		readyBuck2SP_->SetPozition(readyBuck2SPpos_);
 		readyBuck2SP_->SetScale(readyBuck2SPscale_);
 	}
+	{
+		readyStartSP_ = std::make_unique<Sprite>();
+		readyStartSP_->Initialize(spriteCommon_.get(), 13);
+		readyStartSP_->SetSize({ 300.0f ,100.0f });
+		readyStartSPpos_ = { -300.0f, WinApp::window_height / 2.0f };
+		readyStartSPscale_ = Vector3(1.0f, 1.0f, 1.0f);
+		readyStartSP_->SetPozition(readyStartSPpos_);
+		readyStartSP_->SetScale(readyStartSPscale_);
+	}
 
 
 	//ライトの生成
@@ -153,21 +163,27 @@ bool SceneObjects::Ready()
 	easetime = (float)time / easeMaxTime;
 	if (isEaseOut) {
 		readyBuckSPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
-		readyBuckSPpos_ = Easing::OutQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(0.0f, WinApp::window_height / 2.0f + 50.0f), (float)easetime);
+		readyBuckSPpos_ = Easing::OutQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(0.0f, WinApp::window_height / 2.0f ), (float)easetime);
 		readyBuck2SPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
-		readyBuck2SPpos_ = Easing::OutQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f + 50.0f), (float)easetime);
+		readyBuck2SPpos_ = Easing::OutQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), (float)easetime);
+		readyStartSPpos_ = Easing::OutQuintVec2(Vector2(-300.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), (float)easetime);
 	}
 	else {
-		readyBuckSPpos_ = Easing::InQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f + 50.0f), Vector2(-(WinApp::window_width / 2.0f), WinApp::window_height / 2.0f + 50.0f), (float)easetime);
-		readyBuck2SPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f + 50.0f), Vector2(WinApp::window_width, WinApp::window_height / 2.0f + 50.0f), (float)easetime);
+		readyBuckSPpos_ = Easing::InQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(-(WinApp::window_width / 2.0f), WinApp::window_height / 2.0f ), (float)easetime);
+		readyBuck2SPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width, WinApp::window_height / 2.0f), (float)easetime);
+		readyStartSPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, -100.0f), (float)easetime);
 	}
 	readyBuckSP_->SetScale(readyBuckSPscale_);
 	readyBuckSP_->SetPozition(readyBuckSPpos_);
 	readyBuck2SP_->SetScale(readyBuck2SPscale_);
 	readyBuck2SP_->SetPozition(readyBuck2SPpos_);
+	readyStartSP_->SetScale(readyStartSPscale_);
+	readyStartSP_->SetPozition(readyStartSPpos_);
 
 	readyBuckSP_->Update();
 	readyBuck2SP_->Update();
+	readyStartSP_->Update();
+
 
 	if (time >= easeMaxTime && isEaseOut == true) {
 		time = 0;
@@ -184,4 +200,5 @@ void SceneObjects::ReadyDraw()
 {
 	readyBuckSP_->Draw();
 	readyBuck2SP_->Draw();
+	readyStartSP_->Draw();
 }

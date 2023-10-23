@@ -51,14 +51,15 @@ private: // 演出用
 	Vector2 readyBuck2SPpos_;
 	Vector3 readyBuck2SPscale_;
 
-	std::unique_ptr <Sprite> readySP_;
-	Vector2 readySPpos_;
+	std::unique_ptr <Sprite> readyStartSP_;
+	Vector2 readyStartSPpos_;
+	Vector3 readyStartSPscale_;
 
 	uint32_t readyTimer = 0;
 	// イージング用
 	float easetime = 0.0f;
 	uint32_t time = 0;
-	uint32_t easeMaxTime = 50;
+	uint32_t easeMaxTime = 120;
 	bool isEaseOut = true;
 
 public: // オブジェクトの管理
