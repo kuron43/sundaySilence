@@ -8,6 +8,7 @@
 Assault::Assault() {
 }
 Assault::~Assault() {
+	delete model_;
 }
 
 /// 更新を行う

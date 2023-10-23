@@ -5,7 +5,7 @@
 #include "Shotgun.h"
 
 Shotgun::Shotgun() {
-	
+
 }
 Shotgun::~Shotgun() {
 
@@ -31,34 +31,50 @@ Shotgun* Shotgun::Create()
 
 /// 更新を行う
 bool Shotgun::Initialize() {
-	//model_ = Model::LoadFromOBJ("cube");
+	model_ = Model::LoadFromOBJ("cube");
+	goShot = true;
 	return true;
 }
 
 /// 更新を行う
 void Shotgun::Update(Input* input, bool isSlow) {
-	if (isSlow) {
+
+	isSlow_ = isSlow;
+	if (input) {
+
+	}
+	if (isSlow == true) {
 		speed_ = nomalSpeed / 2;
 	}
 	else
 	{
 		speed_ = nomalSpeed;
 	}
-	if (input->MouseButtonPush(0)) {
-		
+	// 
+	if (roadingTime <= 0) {
+		if (mag < 3) {
+			goShot = true;
+		}
+		if (mag >= 3) {
+			if (isSlow_ == true) {
+				roadingTime = 150;
+				goShot = false;
+			}
+			else {
+				roadingTime = 50;
+				goShot = false;
+			}
+			mag = 0;
+		}
 	}
+	roadingTime--;
 
-	for (std::unique_ptr<Bullet>& bullet : bullets_) {
-		bullet->Update(speed_);
-	}
+	BulletManager::GetInstance()->SetSpeed(speed_);
 }
 
 /// 描画を行う
 void Shotgun::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
-	for (std::unique_ptr<Bullet>& bullet : bullets_) {
-		bullet->Draw();
-	}
 	Object3d::PostDraw();
 }
 
@@ -69,33 +85,42 @@ void Shotgun::Reset() {
 
 // 発射を行う
 void Shotgun::Shot(Transform& player, Transform& reticle, uint32_t team) {
-	model_ = Model::LoadFromOBJ("cube");
-	if (mag < 30) {
-		if (coolTime <= 0) {
+	if (coolTime <= 0 && goShot == true) {
+		for (uint32_t i = 0; i < 3; i++) {
 			//弾を生成し、初期化
-			std::unique_ptr<Bullet> newBullet = std::make_unique<Bullet>();
+			Bullet* newBullet = new Bullet();
 			Vector3 startPos, reticleVec, moveVec, velo;
 			startPos = Affin::GetWorldTrans(player.matWorld); // 発射座標
 			reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
-			velo = startPos - reticleVec;
+			velo = reticleVec - startPos;
 			velo.nomalize();
 			moveVec = velo * speed_;
 			moveVec.nomalize();
-			newBullet->Initialize(model_,startPos, moveVec,team);
+			newBullet->Initialize(model_, startPos + velo*(float)i, moveVec, team);
 
 			//弾を登録
-			bullets_.push_back(std::move(newBullet));
-			mag++;
-
-			//クールタイムをリセット
-			coolTime = 3;
+			BulletManager::GetInstance()->AddBullet(std::move(newBullet));
 		}
-		else {
-			coolTime--;
+		mag++;
+
+		//クールタイムをリセット
+		if (team == PLAYER) {
+			if (isSlow_ == true) {
+				coolTime = 100;
+			}
+			else {
+				coolTime = 45;
+			}
+		}if (team == ENEMY) {
+			if (isSlow_ == true) {
+				coolTime = 45 * 5;
+			}
+			else {
+				coolTime = 15 * 5;
+			}
 		}
 	}
-	if (mag >= 30) {
-		roadingTime = 50;
-		mag = 0;
+	else {
+		coolTime--;
 	}
 }

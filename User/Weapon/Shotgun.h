@@ -11,9 +11,9 @@ class Shotgun :
     public Weapon
 {
 private:
-	std::list<std::unique_ptr<Bullet>> bullets_;
 	Model* model_;
 	bool active_ = false;
+	bool goShot;
 	const uint32_t WeaponNum = 2;
 
 private:

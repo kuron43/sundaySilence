@@ -47,7 +47,9 @@ private:
 
 	BulletManager() = default;
 	BulletManager(const BulletManager&) = delete;
-	~BulletManager() = default;
+	~BulletManager() {
+		AllClearBullet();
+	};
 	BulletManager& operator= (const BulletManager&) = delete;
 
 	//弾のリスト

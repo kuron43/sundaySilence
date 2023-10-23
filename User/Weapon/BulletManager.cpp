@@ -35,3 +35,10 @@ void BulletManager::Draw() {
 
 	}
 }
+
+//BulletManager::BulletManager() {
+//
+//}
+//BulletManager::~BulletManager() {
+//	bullets.clear();
+//}
