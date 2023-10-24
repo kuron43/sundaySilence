@@ -188,10 +188,12 @@ bool SceneObjects::Ready()
 
 	if (time >= easeMaxTime && isEaseOut == true) {
 		time = 0;
+		easetime = 0;
 		isEaseOut = false;
 	}
 	if (time >= easeMaxTime && isEaseOut == false) {
 		time = 0;
+		easetime = 0;
 		isEaseOut = true;
 		return false;
 	}
