@@ -22,7 +22,7 @@ Player::~Player() {
 ///
 void Player::Initialize() {
 	model_ = Model::LoadFromOBJ("prayer");
-	reticleMD_ = Model::LoadFromOBJ("Cube2");
+	reticleMD_ = Model::LoadFromOBJ("cursor");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -31,6 +31,7 @@ void Player::Initialize() {
 	reticle = Object3d::Create();
 	reticle->SetModel(reticleMD_);
 	reticle->Initialize();
+	reticle->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
 	weapon_[0] = new Assault();
 	weapon_[0]->Initialize();
 
@@ -104,6 +105,7 @@ void Player::Update(Input* input, bool isTitle) {
 ///
 void Player::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
+	pointDash_->Draw();
 	object_->Draw();
 	if (!nowTitle) {
 		reticle->Draw();

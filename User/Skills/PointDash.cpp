@@ -8,16 +8,44 @@
 #include <imgui.h>
 #pragma warning(pop)
 
+PointDash::~PointDash()
+{
+	delete ray;
+	delete rayHit;
+	delete model_;
+}
+
 void PointDash::Initialize()
 {
+	model_ = Model::LoadFromOBJ("pointCircle");
+	for (uint32_t i = 0; i < 5; i++) {
+		object_[i] = Object3d::Create();
+		object_[i]->SetModel(model_);
+		object_[i]->Initialize();
+		pointActive_[i] = false;
+	}
 	ray = new RayCollider;
 	CollisionManager::GetInstance()->AddCollider(ray);
 	rayHit = new RaycastHit;
 }
 
+void PointDash::Draw()
+{
+	for (uint32_t i = 0; i < 5; i++) {
+		if (pointActive_[i] == true) {
+			object_[i]->Draw();
+		}
+	}
+}
+
 bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 {
 	ray->Update();
+	for (uint32_t i = 0; i < 5; i++) {
+
+		object_[i]->wtf.rotation.y++;
+		object_[i]->Update();
+	}
 
 	if (registNum == 0) {
 		ray->SetStart(pos);
@@ -70,7 +98,7 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 		}
 	}
 	else {
-		
+
 	}
 	return true;
 }
@@ -83,23 +111,33 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	}
 	if (registNum == 0) {
 		points[0] = point;
+		pointActive_[0] = true;
+		object_[0]->wtf.position = point;
 		registNum = 1;
 		return;
 	}
 	else if (registNum == 1) {
 		points[1] = point;
+		pointActive_[1] = true;
+		object_[1]->wtf.position = point;
 		registNum = 2;
 	}
 	else if (registNum == 2) {
 		points[2] = point;
+		pointActive_[2] = true;
+		object_[2]->wtf.position = point;
 		registNum = 3;
 	}
 	else if (registNum == 3) {
 		points[3] = point;
+		pointActive_[3] = true;
+		object_[3]->wtf.position = point;
 		registNum = 4;
 	}
 	else if (registNum == 4) {
 		points[4] = point;
+		pointActive_[4] = true;
+		object_[4]->wtf.position = point;
 		registNum = 5;
 	}
 	else {
@@ -144,6 +182,7 @@ void PointDash::GoToPoint() {
 				nowPointNum = 1;
 				time = 1;
 				easetime = 0;
+				pointActive_[0] = false;
 				timeEnd = true;
 			}
 		}
@@ -154,6 +193,7 @@ void PointDash::GoToPoint() {
 				nowPointNum = 2;
 				time = 1;
 				easetime = 0;
+				pointActive_[1] = false;
 				timeEnd = true;
 			}
 		}
@@ -164,6 +204,7 @@ void PointDash::GoToPoint() {
 				nowPointNum = 3;
 				time = 1;
 				easetime = 0;
+				pointActive_[2] = false;
 				timeEnd = true;
 			}
 		}
@@ -174,6 +215,7 @@ void PointDash::GoToPoint() {
 				nowPointNum = 4;
 				time = 1;
 				easetime = 0;
+				pointActive_[3] = false;
 				timeEnd = true;
 			}
 		}
@@ -184,6 +226,7 @@ void PointDash::GoToPoint() {
 				nowPointNum = 5;
 				time = 1;
 				easetime = 0;
+				pointActive_[4] = false;
 				timeEnd = true;
 			}
 		}
@@ -197,6 +240,10 @@ void PointDash::GoToPoint() {
 }
 void PointDash::Reset() {
 	points.clear();
+	for (uint32_t i = 0; i < 5; i++) {
+		pointActive_[i] = false;
+		object_[i]->wtf.position = Vector3(0, -10, 0);
+	}
 	registNum = 0;
 	isActive = false;
 	points.resize(MAX_POINTNUM);
