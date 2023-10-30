@@ -4,7 +4,7 @@
  */
 #include "BulletManager.h"
 
-float BulletManager::speed_ = 1.0f;
+float BulletManager::speed_ = 0.8f;
 
 BulletManager* BulletManager::GetInstance()
 {
@@ -19,7 +19,6 @@ void BulletManager::Update() {
 		bullet->Update(speed_);
 
 	}
-
 }
 void BulletManager::DeadUpdate() {
 

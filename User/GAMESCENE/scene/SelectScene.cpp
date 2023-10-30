@@ -10,7 +10,7 @@ SelectScene::SelectScene(SceneManager* controller, SceneObjects* objects) {
 	_objects = objects;
 }
 SelectScene::~SelectScene() {
-
+	_objects->player->Reset();
 
 }
 

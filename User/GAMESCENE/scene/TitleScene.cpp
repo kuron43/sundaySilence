@@ -57,6 +57,7 @@ void TitleScene::Initialize() {
 	titleTime_ = 0;
 	sinMoveTitle = 0.0f;
 	titlePos = { 20,10 };
+	_objects->player->Reset();
 
 	// Json
 	{

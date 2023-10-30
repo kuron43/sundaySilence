@@ -47,6 +47,8 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(11, "title2.png");
 		spriteCommon_->LoadTexture(12, "readyBuck.png");
 		spriteCommon_->LoadTexture(13, "readySTART.png");
+		spriteCommon_->LoadTexture(14, "faildBuck.png");
+		spriteCommon_->LoadTexture(15, "faildFAILED.png");
 
 	}
 	// スプライトロード  20~ //セレクトステージ
@@ -91,6 +93,13 @@ void SceneObjects::Initialize() {
 		player->Initialize();
 	}
 	{
+		plDamageRed_ = std::make_unique<Sprite>();
+		plDamageRed_->Initialize(spriteCommon_.get(), 30);
+		plDamageRed_->SetSize({ WinApp::window_width ,WinApp::window_height });
+		plDamageRed_->SetPozition(plDamageRedPos);
+		plDamageRed_->SetColor(Vector4(0, 0, 0, 0));
+	}
+	{
 		wallMD = Model::LoadFromOBJ("wall");
 		floorGroundMD = Model::LoadFromOBJ("floor");
 		floorGround = std::make_unique<Floor>();
@@ -130,6 +139,9 @@ void SceneObjects::Initialize() {
 		readyStartSP_->SetPozition(readyStartSPpos_);
 		readyStartSP_->SetScale(readyStartSPscale_);
 	}
+	{
+		backWall = { 0,2,10,21,0,0, };
+	}
 
 
 	//ライトの生成
@@ -155,24 +167,35 @@ void SceneObjects::Reset()
 	walls.clear();
 }
 
-bool SceneObjects::Ready()
+bool SceneObjects::Ready(bool isStart)
 {
+
+	if (isStart == true) {
+		readyBuckSP_->SetTextureIndex(12);
+		readyBuck2SP_->SetTextureIndex(12);
+		readyStartSP_->SetTextureIndex(13);
+	}
+	if(isStart == false){
+		readyBuckSP_->SetTextureIndex(14);
+		readyBuck2SP_->SetTextureIndex(14);
+		readyStartSP_->SetTextureIndex(15);
+	}
 
 	readyTimer++;
 	time++;
 	easetime = (float)time / easeMaxTime;
 	if (isEaseOut) {
 		readyBuckSPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
-		readyBuckSPpos_ = Easing::OutQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(0.0f, WinApp::window_height / 2.0f ), (float)easetime);
+		readyBuckSPpos_ = Easing::OutQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(0.0f, WinApp::window_height / 2.0f), (float)easetime);
 		readyBuck2SPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
 		readyBuck2SPpos_ = Easing::OutQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), (float)easetime);
 		readyStartSPpos_ = Easing::OutQuintVec2(Vector2(-300.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), (float)easetime);
 	}
 	else {
-		readyBuckSPpos_ = Easing::InQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(-(WinApp::window_width / 2.0f), WinApp::window_height / 2.0f ), (float)easetime);
+		readyBuckSPpos_ = Easing::InQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(-(WinApp::window_width / 2.0f), WinApp::window_height / 2.0f), (float)easetime);
 		readyBuck2SPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width, WinApp::window_height / 2.0f), (float)easetime);
 		//readyStartSPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, -100.0f), (float)easetime);
-		readyStartSP_->SetColor({ 1.0f,1.0f,1.0f,Easing::InQuintFloat(1.0f,0.0f, (float)easetime)});
+		readyStartSP_->SetColor({ 1.0f,1.0f,1.0f,Easing::InQuintFloat(1.0f,0.0f, (float)easetime) });
 	}
 	readyBuckSP_->SetScale(readyBuckSPscale_);
 	readyBuckSP_->SetPozition(readyBuckSPpos_);
@@ -198,6 +221,22 @@ bool SceneObjects::Ready()
 		return false;
 	}
 	return true;
+}
+void SceneObjects::ShakeRand(Shake& shake)
+{
+	//フラグ0
+	if (shake.isShake == 0) {
+		shake.quantity = 23;
+		shake.maxSwing = 10;
+		shake.count = 50;
+	}
+
+	if (shake.isShake == 1) {
+		shake.randX = rand() % shake.quantity - shake.maxSwing;
+		shake.randZ = rand() % shake.quantity - shake.maxSwing;
+		shake.count--;
+	}
+
 }
 void SceneObjects::ReadyDraw()
 {

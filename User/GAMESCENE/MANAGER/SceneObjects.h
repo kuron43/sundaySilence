@@ -24,6 +24,15 @@
 
 #include "Cursor.h"
 
+typedef struct Shake {
+	uint32_t isShake;
+	uint32_t count;
+	uint32_t maxSwing;
+	uint32_t quantity;
+	uint32_t randX;
+	uint32_t randZ;
+}Shake;
+
 // ゲーム使用のオブジェクト一括宣言クラス
 class SceneObjects
 {
@@ -40,7 +49,8 @@ public:
 public: // 演出用
 
 	void ReadyDraw();
-	bool Ready();
+	bool Ready(bool isStart = true);
+	void ShakeRand(Shake& w);
 
 
 private: // 演出用
@@ -62,6 +72,9 @@ private: // 演出用
 	uint32_t easeMaxTime = 50;
 	bool isEaseOut = true;
 
+
+	Shake backWall;
+
 public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;
 	std::unique_ptr <Audio> audio;
@@ -80,6 +93,9 @@ public: // オブジェクトの管理
 
 	// ポリモーフィズムとは...
 	std::unique_ptr<Player> player;
+	std::unique_ptr <Sprite> plDamageRed_;
+	float damageRedAlpha_ = 0.0f;
+	Vector2 plDamageRedPos = { 0.0f,0.0f };
 
 	std::vector<Enemy*> enemys;
 	uint32_t eneCount;

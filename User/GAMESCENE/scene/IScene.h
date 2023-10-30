@@ -14,6 +14,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4514)
 #include <imgui.h>
+#include <random>
 #pragma warning(pop)
 
 class SceneManager;

@@ -6,6 +6,7 @@
 #include "Human.h"
 
 #include "SkillIntegrate.h"
+#include "Sprite.h"
 
 
 class Player :
@@ -23,12 +24,13 @@ public:
 	/// リセットを行う
 	void Reset() override;
 
-
-
-
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; };
 	void MatUpdate() { object_->UpdateMatrix(); };
 	Transform GetTransform() { return object_->wtf; };
+	bool GetIsDeath() { return isDeath_; };
+	uint32_t GetHP() { return hp_; };
+	uint32_t GetHIT() { return hit_; };
+	const uint32_t GetMAXHP() { return MAX_HP; };
 
 	// 種族番号取得
 	uint32_t HowTribe() { return Tribe_; };
@@ -39,6 +41,7 @@ private:
 private:
 	const uint32_t Tribe_ = 0;
 	bool nowTitle = false;
+
 
 	Model* model_;
 	Model* reticleMD_;
@@ -66,6 +69,11 @@ private:
 	// 前フレーム移動ベクトル
 	Vector3 oldVelocity_;
 
+private:
+	const uint32_t MAX_HP = 10;
+	uint32_t hp_ = MAX_HP;
+	uint32_t hit_;
+	bool isDeath_;
 	//コライダー
 public:
 	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }

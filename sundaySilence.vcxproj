@@ -159,6 +159,7 @@
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneManager.cpp" />
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneObjects.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\GameOver.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TransitionsScene.cpp" />
     <ClCompile Include="User\GAMESCENE\stage\GAME1Scene.cpp" />
     <ClCompile Include="User\GAMESCENE\stage\GAME2Scene.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneManager.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneObjects.h" />
     <ClInclude Include="User\GAMESCENE\scene\EndScene.h" />
+    <ClInclude Include="User\GAMESCENE\scene\GameOver.h" />
     <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h" />
     <ClInclude Include="User\GAMESCENE\stage\GAME1Scene.h" />
     <ClInclude Include="User\GAMESCENE\stage\GAME2Scene.h" />

@@ -32,7 +32,7 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 		Vector3 color(0.0f, 0.0f, 1.0f);  // カラーなぜかARGB の順番
 		bulletObj_->SetColor(color);
 	}if (team_ == ENEMY) {
-		Vector3 color(1.0f, 0.0f, 0.0f);
+		Vector3 color(0.0f, 1.0f, 0.5f);
 		bulletObj_->SetColor(color);
 	}
 

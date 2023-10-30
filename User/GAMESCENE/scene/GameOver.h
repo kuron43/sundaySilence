@@ -1,25 +1,23 @@
 #pragma once
 /**
- * @file GAME1Scene.h
- * @brief ゲーム実行１ステージ目
+ * @file GameOverScene.h
+ * @brief
  */
 #include "IScene.h"
-
-#include "JsonLoader.h"
 #include "SceneIntegrate.h"
 
-
-class GAME1Scene :
-    public IScene
+class GameOver :
+	public IScene
 {
 protected:
 	SceneManager* _controller;
 	SceneObjects* _objects;
 public:
-	GAME1Scene(SceneManager* controller, SceneObjects* objects);
-	~GAME1Scene() override;
+	GameOver(SceneManager* controller, SceneObjects* objects);
+	~GameOver() override;
 
 	//void Cleate(SceneManager& controller) override;
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -36,17 +34,16 @@ public:
 	/// </summary>
 	void Draw() override;
 
-private:
-	bool startTime_ = false;
-	bool stageClear = false;
-	bool stageFailed = false;
-	uint32_t randTime_;
 
+private:
 	// カメラ座標
 	Vector3 camposEye = { 0.0f,100.0f,-0.1f };
 	Vector3 camposTar = { 0,0,0 };
-
+	std::unique_ptr <Sprite> end_;
 public:
-	LevelData* leveData = nullptr;
-};
+	//代入演算子削除
+	GameOver& operator=(const GameOver&) = delete;
 
+	//コピーコンストラクタ削除
+	GameOver(const GameOver&) = delete;
+};

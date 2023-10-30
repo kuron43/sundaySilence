@@ -243,8 +243,15 @@
     <ClCompile Include="User\GAMESCENE\scene\SelectScene.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
-    <ClCompile Include="User\Objects\Floor.cpp" />
-    <ClCompile Include="User\GAMESCENE\scene\TransitionsScene.cpp" />
+    <ClCompile Include="User\Objects\Floor.cpp">
+      <Filter>user\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\scene\TransitionsScene.cpp">
+      <Filter>user\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\scene\GameOver.cpp">
+      <Filter>user\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -481,8 +488,15 @@
     <ClInclude Include="User\Skills\SkillIntegrate.h">
       <Filter>user\skils</Filter>
     </ClInclude>
-    <ClInclude Include="User\Objects\Floor.h" />
-    <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h" />
+    <ClInclude Include="User\Objects\Floor.h">
+      <Filter>user\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\scene\GameOver.h">
+      <Filter>user\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h">
+      <Filter>user\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

@@ -21,6 +21,7 @@ void EndScene::Initialize() {
 	end_->Initialize(_objects->spriteCommon_.get(), 3);
 	end_->SetSize({ 256,128 });
 	end_->SetPozition({ 200,100 });
+	_objects->player->Reset();
 }
 
 void EndScene::Update(Input* input) {

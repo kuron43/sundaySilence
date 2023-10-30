@@ -4,7 +4,6 @@
  */
 #include "GAME2Scene.h"
 #include "SceneManager.h"
-
 GAME2Scene::GAME2Scene(SceneManager* controller, SceneObjects* objects) {
 	_controller = controller;
 	_objects = objects;
@@ -20,10 +19,14 @@ GAME2Scene::~GAME2Scene() {
 	for (Boss* boss : _objects->boss) {
 		boss->Reset();
 	}
-
+	BulletManager::GetInstance()->AllClearBullet();
 	_objects->walls.clear();
 	_objects->enemys.clear();
 	_objects->boss.clear();
+	_objects->damageRedAlpha_ = 0;
+	_objects->player->Reset();
+	_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / 10.0f));
+	_objects->plDamageRed_->Update();
 	delete leveData;
 }
 
@@ -32,7 +35,8 @@ void GAME2Scene::Initialize() {
 	_objects->player->SetPos(Vector3(0, 0, 0));
 	_objects->player->MatUpdate();
 	startTime_ = true;
-
+	stageClear = false;
+	stageFailed = false;
 	// Json
 	{
 		leveData = JsonLoader::LoadJsonFile("gamedemo");
@@ -132,20 +136,20 @@ void GAME2Scene::Initialize() {
 void GAME2Scene::Update(Input* input) {
 	_objects->eneCount = 0;
 	_objects->bossCount = 0;
+	_objects->floorGround->Update();
 
-	_controller->_camera->SetEye(camposEye);
-	_controller->_camera->SetTarget(camposTar);
-	_controller->_camera->Update();
-	if (startTime_) {
+
+	if (startTime_ == true && stageClear == false && stageFailed == false) {
 		startTime_ = _objects->Ready();
 	}
-	else {
-
-		_objects->floorGround->Update();
-		for (Wall* walls : _objects->walls) {
-			walls->Update();
-		}
+	else if (startTime_ == false && stageClear == false && stageFailed == false) {
+		_controller->_camera->SetEye(camposEye);
+		_controller->_camera->SetTarget(camposTar);
 		_objects->player->Update(input);
+		stageFailed = _objects->player->GetIsDeath();
+
+		_objects->damageRedAlpha_ = (float)_objects->player->GetHIT() / (float)_objects->player->GetMAXHP();
+		_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / 10.0f));
 
 		BulletManager::GetInstance()->Update();
 		for (Enemy* enemy : _objects->enemys) {
@@ -162,25 +166,26 @@ void GAME2Scene::Update(Input* input) {
 				_objects->bossCount++;
 			}
 		}
-
-
-		ImGui::Begin("enecount");
-		ImGui::Text("countE : %d", _objects->eneCount);
-		ImGui::Text("countB : %d", _objects->bossCount);
-		ImGui::End();
-
+		for (Wall* walls : _objects->walls) {
+			walls->Update();
+		}
 		if (input->KeyboardTrigger(DIK_TAB)) {
 			_controller->SetSceneNum(SCE_PAUSE);
 		}
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
-			_controller->SetSceneNum(SCE_OVER);
+			_controller->SetSceneNum(SCE_SELECT);
+		}
+	}
+	else if (startTime_ == false && stageClear == false && stageFailed == true) {
+		stageFailed = _objects->Ready(false);
+		if (stageFailed == false) {
+			_controller->SetSceneNum(SCE_GAMEOVER);
 		}
 	}
 }
 
 void GAME2Scene::Draw() {
 	_objects->floorGround->Draw(_controller->_dxCommon);
-	_objects->player->Draw(_controller->_dxCommon);
 	for (Enemy* enemy : _objects->enemys) {
 		enemy->Draw(_controller->_dxCommon);
 	}
@@ -197,7 +202,10 @@ void GAME2Scene::Draw() {
 
 	Object3d::PostDraw();
 
-	if (startTime_) {
+	_objects->player->Draw(_controller->_dxCommon);
+	_objects->plDamageRed_->Draw();
+	if (startTime_ == true || stageFailed == true) {
 		_objects->ReadyDraw();
 	}
+
 }

@@ -94,10 +94,10 @@ void Assault::Shot(Transform& player, Transform& reticle, uint32_t team) {
 			}
 		}if (team == ENEMY) {
 			if (isSlow_ == true) {
-				coolTime = 45 * 3;
+				coolTime = 45 * 5;
 			}
 			else {
-				coolTime = 15 * 3;
+				coolTime = 15 * 5;
 			}
 		}
 	}

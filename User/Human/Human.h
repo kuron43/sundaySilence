@@ -28,7 +28,6 @@ class Human
 {
 
 protected:
-
 	bool isSlow = false;
 	float slowSpeed = 0.25f;
 	bool _isTitle;
@@ -48,6 +47,5 @@ public:
 
 	/// リセットを行う
 	virtual void Reset() = 0;
-
 };
 

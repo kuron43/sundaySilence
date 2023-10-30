@@ -15,7 +15,7 @@ Player::~Player() {
 	delete weapon_[0];
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-		delete sphere[i];		
+		delete sphere[i];
 	}
 }
 
@@ -38,6 +38,10 @@ void Player::Initialize() {
 	pointDash_ = new PointDash();
 	pointDash_->Initialize();
 	pointDash_->points.resize(pointDash_->MAX_POINTNUM);
+
+
+	hp_ = MAX_HP;
+
 
 	//当たり判定用
 	SPHERE_COLISSION_NUM = 1;
@@ -83,7 +87,7 @@ void Player::Update(Input* input, bool isTitle) {
 	if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
 		if (input->MouseButtonTrigger(0) && !isTitle && isSlow == true) {
 			pointDash_->SetPoint(reticle->wtf.position, input);
-		nowSetPoint = true;
+			nowSetPoint = true;
 		}
 	}
 
@@ -123,9 +127,10 @@ void Player::Draw(DirectXCommon* dxCommon) {
 /// リセットを行う
 void Player::Reset() {
 
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-	}
+	hp_ = MAX_HP;
+	hit_ = 0;
+	isDeath_ = false;
+	object_->wtf.Initialize();
 
 }
 
@@ -202,8 +207,8 @@ void Player::ColisionUpdate() {
 
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true) {
-			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
-				wallHit = true;
+			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
+				OnColision();
 			}
 		}
 	}
@@ -269,5 +274,9 @@ void Player::ColisionUpdate() {
 
 void Player::OnColision()
 {
-
+	hp_--;
+	hit_++;
+	if (hp_ <= 0) {
+		isDeath_ = true;
+	}
 }

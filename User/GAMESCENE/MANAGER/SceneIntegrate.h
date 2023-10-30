@@ -10,6 +10,7 @@
 #include "EndScene.h"
 #include "PauseScene.h"
 #include "SelectScene.h"
+#include "GameOver.h"
 
 #include "TransitionsScene.h"
 #include "GAME1Scene.h"
@@ -23,6 +24,7 @@ enum _SCENE_ {
 	SCE_PAUSE = 4,
 	SCE_SELECT = 5,
 	SCE_TRANS = 6,
-	SCE_GAME1 = 7,
-	SCE_GAME2 = 8
+	SCE_GAMEOVER = 7,
+	SCE_GAME1 = 8,
+	SCE_GAME2 = 9
 };

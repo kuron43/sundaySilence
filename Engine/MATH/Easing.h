@@ -6,6 +6,8 @@
 
 namespace Easing
 {
+	// 線形補間
+	float lerpFloat(const float start, const float end, const float time);
 	// 二乗
 	float InQuadFloat(const float start, const float end, const float time);
 	float OutQuadFloat(const float start, const float end, const float time);
