@@ -55,7 +55,7 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	}
 
 
-	//test
+	////test
 	//coliderPosTest_ = Object3d::Create();
 	//coliderPosTest_->SetModel(model);
 	//coliderPosTest_->wtf.position = (sphere->center);
@@ -90,7 +90,6 @@ void Bullet::Update(float speed)
 	if (isDead == true) {
 		assert(sphere);
 	}
-
 	sphere->Update();
 }
 
@@ -105,8 +104,8 @@ void Bullet::Draw()
 {
 	if (!isDead) {
 		//モデルの描画
-		bulletObj_->Draw();
 		//coliderPosTest_->Draw();
+		bulletObj_->Draw();
 	}
 }
 

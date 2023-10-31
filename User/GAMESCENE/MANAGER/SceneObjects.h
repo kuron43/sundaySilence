@@ -48,24 +48,24 @@ public:
 
 public: // 演出用
 
-	void ReadyDraw();
-	bool Ready(bool isStart = true);
+	void BannerDraw();
+	bool Banner(uint32_t isStart = 0);
 	void ShakeRand(Shake& w);
 
 
 private: // 演出用
-	std::unique_ptr <Sprite> readyBuckSP_;
-	Vector2 readyBuckSPpos_;
-	Vector3 readyBuckSPscale_;
-	std::unique_ptr <Sprite> readyBuck2SP_;
-	Vector2 readyBuck2SPpos_;
-	Vector3 readyBuck2SPscale_;
+	std::unique_ptr <Sprite> bannerBuckSP_;
+	Vector2 bannerBuckSPpos_;
+	Vector3 bannerBuckSPscale_;
+	std::unique_ptr <Sprite> bannerBuck2SP_;
+	Vector2 bannerBuck2SPpos_;
+	Vector3 bannerBuck2SPscale_;
 
-	std::unique_ptr <Sprite> readyStartSP_;
-	Vector2 readyStartSPpos_;
-	Vector3 readyStartSPscale_;
+	std::unique_ptr <Sprite> bannerWordSP_;
+	Vector2 bannerWordSPpos_;
+	Vector3 bannerWordSPscale_;
 
-	uint32_t readyTimer = 0;
+	uint32_t bannerTimer = 0;
 	// イージング用
 	float easetime = 0.0f;
 	uint32_t time = 0;

@@ -140,7 +140,7 @@ void GAME2Scene::Update(Input* input) {
 
 
 	if (startTime_ == true && stageClear == false && stageFailed == false) {
-		startTime_ = _objects->Ready();
+		startTime_ = _objects->Banner();
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == false) {
 		_controller->_camera->SetEye(camposEye);
@@ -177,9 +177,9 @@ void GAME2Scene::Update(Input* input) {
 		}
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
-		stageFailed = _objects->Ready(false);
+		stageFailed = _objects->Banner(false);
 		if (stageFailed == false) {
-			_controller->SetSceneNum(SCE_GAMEOVER);
+			_controller->SetSceneNum(SCE_GAME2);
 		}
 	}
 }
@@ -205,7 +205,7 @@ void GAME2Scene::Draw() {
 	_objects->player->Draw(_controller->_dxCommon);
 	_objects->plDamageRed_->Draw();
 	if (startTime_ == true || stageFailed == true) {
-		_objects->ReadyDraw();
+		_objects->BannerDraw();
 	}
 
 }

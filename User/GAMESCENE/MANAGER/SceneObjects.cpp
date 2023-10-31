@@ -49,6 +49,8 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(13, "readySTART.png");
 		spriteCommon_->LoadTexture(14, "faildBuck.png");
 		spriteCommon_->LoadTexture(15, "faildFAILED.png");
+		spriteCommon_->LoadTexture(16, "clearBuck.png");
+		spriteCommon_->LoadTexture(17, "clearCLEAR.png");
 
 	}
 	// スプライトロード  20~ //セレクトステージ
@@ -113,31 +115,31 @@ void SceneObjects::Initialize() {
 
 	// 演出用の初期化
 	{
-		readyBuckSP_ = std::make_unique<Sprite>();
-		readyBuckSP_->Initialize(spriteCommon_.get(), 12);
-		readyBuckSP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
-		readyBuckSPpos_ = { 0,WinApp::window_height / 2.0f };
-		readyBuckSPscale_ = Vector3(1.0f, 0001.0f, 1.0f);
-		readyBuckSP_->SetPozition(readyBuckSPpos_);
-		readyBuckSP_->SetScale(readyBuckSPscale_);
+		bannerBuckSP_ = std::make_unique<Sprite>();
+		bannerBuckSP_->Initialize(spriteCommon_.get(), 12);
+		bannerBuckSP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
+		bannerBuckSPpos_ = { 0,WinApp::window_height / 2.0f };
+		bannerBuckSPscale_ = Vector3(1.0f, 0001.0f, 1.0f);
+		bannerBuckSP_->SetPozition(bannerBuckSPpos_);
+		bannerBuckSP_->SetScale(bannerBuckSPscale_);
 	}
 	{
-		readyBuck2SP_ = std::make_unique<Sprite>();
-		readyBuck2SP_->Initialize(spriteCommon_.get(), 12);
-		readyBuck2SP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
-		readyBuck2SPpos_ = { WinApp::window_width / 2.0f,WinApp::window_height / 2.0f };
-		readyBuck2SPscale_ = Vector3(1.0f, 0.0001f, 1.0f);
-		readyBuck2SP_->SetPozition(readyBuck2SPpos_);
-		readyBuck2SP_->SetScale(readyBuck2SPscale_);
+		bannerBuck2SP_ = std::make_unique<Sprite>();
+		bannerBuck2SP_->Initialize(spriteCommon_.get(), 12);
+		bannerBuck2SP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
+		bannerBuck2SPpos_ = { WinApp::window_width / 2.0f,WinApp::window_height / 2.0f };
+		bannerBuck2SPscale_ = Vector3(1.0f, 0.0001f, 1.0f);
+		bannerBuck2SP_->SetPozition(bannerBuck2SPpos_);
+		bannerBuck2SP_->SetScale(bannerBuck2SPscale_);
 	}
 	{
-		readyStartSP_ = std::make_unique<Sprite>();
-		readyStartSP_->Initialize(spriteCommon_.get(), 13);
-		readyStartSP_->SetSize({ 300.0f ,100.0f });
-		readyStartSPpos_ = { -300.0f, WinApp::window_height / 2.0f };
-		readyStartSPscale_ = Vector3(1.0f, 1.0f, 1.0f);
-		readyStartSP_->SetPozition(readyStartSPpos_);
-		readyStartSP_->SetScale(readyStartSPscale_);
+		bannerWordSP_ = std::make_unique<Sprite>();
+		bannerWordSP_->Initialize(spriteCommon_.get(), 13);
+		bannerWordSP_->SetSize({ 300.0f ,100.0f });
+		bannerWordSPpos_ = { -300.0f, WinApp::window_height / 2.0f };
+		bannerWordSPscale_ = Vector3(1.0f, 1.0f, 1.0f);
+		bannerWordSP_->SetPozition(bannerWordSPpos_);
+		bannerWordSP_->SetScale(bannerWordSPscale_);
 	}
 	{
 		backWall = { 0,2,10,21,0,0, };
@@ -167,46 +169,51 @@ void SceneObjects::Reset()
 	walls.clear();
 }
 
-bool SceneObjects::Ready(bool isStart)
+bool SceneObjects::Banner(uint32_t isStart)
 {
 
-	if (isStart == true) {
-		readyBuckSP_->SetTextureIndex(12);
-		readyBuck2SP_->SetTextureIndex(12);
-		readyStartSP_->SetTextureIndex(13);
+	if (isStart == 0) {
+		bannerBuckSP_->SetTextureIndex(12);
+		bannerBuck2SP_->SetTextureIndex(12);
+		bannerWordSP_->SetTextureIndex(13);
 	}
-	if(isStart == false){
-		readyBuckSP_->SetTextureIndex(14);
-		readyBuck2SP_->SetTextureIndex(14);
-		readyStartSP_->SetTextureIndex(15);
+	if(isStart == 1){
+		bannerBuckSP_->SetTextureIndex(14);
+		bannerBuck2SP_->SetTextureIndex(14);
+		bannerWordSP_->SetTextureIndex(15);
+	}
+	if (isStart == 2) {
+		bannerBuckSP_->SetTextureIndex(16);
+		bannerBuck2SP_->SetTextureIndex(16);
+		bannerWordSP_->SetTextureIndex(17);
 	}
 
-	readyTimer++;
+	bannerTimer++;
 	time++;
 	easetime = (float)time / easeMaxTime;
 	if (isEaseOut) {
-		readyBuckSPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
-		readyBuckSPpos_ = Easing::OutQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(0.0f, WinApp::window_height / 2.0f), (float)easetime);
-		readyBuck2SPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
-		readyBuck2SPpos_ = Easing::OutQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), (float)easetime);
-		readyStartSPpos_ = Easing::OutQuintVec2(Vector2(-300.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), (float)easetime);
+		bannerBuckSPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
+		bannerBuckSPpos_ = Easing::OutQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(0.0f, WinApp::window_height / 2.0f), (float)easetime);
+		bannerBuck2SPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
+		bannerBuck2SPpos_ = Easing::OutQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), (float)easetime);
+		bannerWordSPpos_ = Easing::OutQuintVec2(Vector2(-300.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), (float)easetime);
 	}
 	else {
-		readyBuckSPpos_ = Easing::InQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(-(WinApp::window_width / 2.0f), WinApp::window_height / 2.0f), (float)easetime);
-		readyBuck2SPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width, WinApp::window_height / 2.0f), (float)easetime);
+		bannerBuckSPpos_ = Easing::InQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(-(WinApp::window_width / 2.0f), WinApp::window_height / 2.0f), (float)easetime);
+		bannerBuck2SPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width, WinApp::window_height / 2.0f), (float)easetime);
 		//readyStartSPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, -100.0f), (float)easetime);
-		readyStartSP_->SetColor({ 1.0f,1.0f,1.0f,Easing::InQuintFloat(1.0f,0.0f, (float)easetime) });
+		bannerWordSP_->SetColor({ 1.0f,1.0f,1.0f,Easing::InQuintFloat(1.0f,0.0f, (float)easetime) });
 	}
-	readyBuckSP_->SetScale(readyBuckSPscale_);
-	readyBuckSP_->SetPozition(readyBuckSPpos_);
-	readyBuck2SP_->SetScale(readyBuck2SPscale_);
-	readyBuck2SP_->SetPozition(readyBuck2SPpos_);
-	readyStartSP_->SetScale(readyStartSPscale_);
-	readyStartSP_->SetPozition(readyStartSPpos_);
+	bannerBuckSP_->SetScale(bannerBuckSPscale_);
+	bannerBuckSP_->SetPozition(bannerBuckSPpos_);
+	bannerBuck2SP_->SetScale(bannerBuck2SPscale_);
+	bannerBuck2SP_->SetPozition(bannerBuck2SPpos_);
+	bannerWordSP_->SetScale(bannerWordSPscale_);
+	bannerWordSP_->SetPozition(bannerWordSPpos_);
 
-	readyBuckSP_->Update();
-	readyBuck2SP_->Update();
-	readyStartSP_->Update();
+	bannerBuckSP_->Update();
+	bannerBuck2SP_->Update();
+	bannerWordSP_->Update();
 
 
 	if (time >= easeMaxTime && isEaseOut == true) {
@@ -238,9 +245,9 @@ void SceneObjects::ShakeRand(Shake& shake)
 	}
 
 }
-void SceneObjects::ReadyDraw()
+void SceneObjects::BannerDraw()
 {
-	readyBuckSP_->Draw();
-	readyBuck2SP_->Draw();
-	readyStartSP_->Draw();
+	bannerBuckSP_->Draw();
+	bannerBuck2SP_->Draw();
+	bannerWordSP_->Draw();
 }

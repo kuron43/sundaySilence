@@ -41,7 +41,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	input_ = input;
 
 	collisionManager_ = CollisionManager::GetInstance();
-	bulletManager_ = BulletManager::GetInstance();
+	//bulletManager_ = BulletManager::GetInstance();
 	//particleManager_ = ParticleManager::GetInstance()->Create();
 
 	//FBX
@@ -69,7 +69,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 /// </summary>
 void GameScene::Update() {
 
-	bulletManager_->DeadUpdate();
+	BulletManager::GetInstance()->DeadUpdate();
 	sceneManager->ChangeScene();
 
 	//particleManager_->Update();

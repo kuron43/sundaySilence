@@ -26,14 +26,14 @@ GAME1Scene::~GAME1Scene() {
 	_objects->boss.clear();
 	_objects->damageRedAlpha_ = 0;
 	_objects->player->Reset();
-	_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / 10.0f));
+	_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
 	_objects->plDamageRed_->Update();
 	delete leveData;
 }
 
 void GAME1Scene::Initialize() {
 
-	_objects->player->SetPos(Vector3(0, 0, 0));
+	_objects->player->Reset();
 	_objects->player->MatUpdate();
 	startTime_ = true;
 	stageClear = false;
@@ -141,7 +141,7 @@ void GAME1Scene::Update(Input* input) {
 
 
 	if (startTime_ == true && stageClear == false && stageFailed == false) {
-		startTime_ = _objects->Ready();
+		startTime_ = _objects->Banner();
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == false) {
 		_controller->_camera->SetEye(camposEye);
@@ -150,7 +150,7 @@ void GAME1Scene::Update(Input* input) {
 		stageFailed = _objects->player->GetIsDeath();
 
 		_objects->damageRedAlpha_ = (float)_objects->player->GetHIT() / (float)_objects->player->GetMAXHP();
-		_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / 10.0f));
+		_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
 
 		BulletManager::GetInstance()->Update();
 		for (Enemy* enemy : _objects->enemys) {
@@ -174,12 +174,19 @@ void GAME1Scene::Update(Input* input) {
 			_controller->SetSceneNum(SCE_PAUSE);
 		}
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
-			_controller->SetSceneNum(SCE_SELECT);
+			//_controller->SetSceneNum(SCE_SELECT);
+			stageClear = true;
 		}
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
-		stageFailed = _objects->Ready(false);
+		stageFailed = _objects->Banner(1);
 		if (stageFailed == false) {
+			_controller->SetSceneNum(SCE_GAME1);
+		}
+	}
+	else if (startTime_ == false && stageClear == true && stageFailed == false) {
+		stageClear = _objects->Banner(2);
+		if (stageClear == false) {
 			_controller->SetSceneNum(SCE_GAMEOVER);
 		}
 	}
@@ -205,8 +212,8 @@ void GAME1Scene::Draw() {
 
 	_objects->player->Draw(_controller->_dxCommon);
 	_objects->plDamageRed_->Draw();
-	if (startTime_ == true || stageFailed == true) {
-		_objects->ReadyDraw();
+	if (startTime_ == true || stageFailed == true || stageClear == true) {
+		_objects->BannerDraw();
 	}
 
 }

@@ -21,7 +21,6 @@ void BulletManager::Update() {
 	}
 }
 void BulletManager::DeadUpdate() {
-
 	for (Bullet* bullet : bullets)
 	{
 		bullet->DeadUpdate();

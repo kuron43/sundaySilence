@@ -67,7 +67,7 @@ void Enemy::Initialize() {
 		//test
 		coliderPosTest_[i] = Object3d::Create();
 		coliderPosTest_[i]->SetModel(model_);
-		coliderPosTest_[i]->wtf.position = rayvec;
+		coliderPosTest_[i]->wtf.position = Affin::GetWorldTrans(object_->wtf.matWorld);
 		coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
 		coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
 		coliderPosTest_[i]->Update();
@@ -132,7 +132,6 @@ void Enemy::Reset() {
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
-
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
@@ -180,7 +179,7 @@ void Enemy::ColiderUpdate() {
 
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
-		coliderPosTest_[i]->wtf.position = ray->GetDir();
+		coliderPosTest_[i]->wtf.position = Affin::GetWorldTrans(object_->wtf.matWorld);
 		sphere[i]->Update();
 		coliderPosTest_[i]->Update();
 	}
