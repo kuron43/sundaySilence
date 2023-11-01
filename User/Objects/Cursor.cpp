@@ -40,10 +40,12 @@ void Cursor::CusUpdate(Input* input) {
 	if (input) {
 
 	}
+	cursorPic_->SetTextureIndex(7);
 	mousepos_ = input->GetMousePosition();
 	mousepos_.y *= -1;
 	cursorPic_->SetPozition({ mousepos_.x + WinApp::window_width / 2,mousepos_.y + WinApp::window_height / 2 });
 	spritePos_ = cursorPic_->GetPosition();
+	
 
 	ImGui::Begin("cursorPos");
 	ImGui::InputFloat2("mousePos", &mousepos_.x);
@@ -54,13 +56,15 @@ void Cursor::CusUpdate(Input* input) {
 // スプライトとの当たりはんちぇい
 bool Cursor::Cursor2Sprite(Sprite* sprite)
 {
-	{
-		Vector2 spPosLU = sprite->GetPosition();
-		Vector2 spSize = sprite->GetSize();
-		if (spPosLU.x<spritePos_.x && spPosLU.x + spSize.x>spritePos_.x &&
-			spPosLU.y<spritePos_.y && spPosLU.y + spSize.y>spritePos_.y) {
-			return true;
-		}
+
+	Vector2 spPosLU = sprite->GetPosition();
+	Vector2 spSize = sprite->GetSize();
+	if (spPosLU.x<spritePos_.x && spPosLU.x + spSize.x>spritePos_.x &&
+		spPosLU.y<spritePos_.y && spPosLU.y + spSize.y>spritePos_.y) {
+		cursorPic_->SetTextureIndex(18);
+		return true;
+	}
+	else {
 		return false;
 	}
 }

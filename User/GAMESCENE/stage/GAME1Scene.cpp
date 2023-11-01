@@ -187,7 +187,7 @@ void GAME1Scene::Update(Input* input) {
 	else if (startTime_ == false && stageClear == true && stageFailed == false) {
 		stageClear = _objects->Banner(2);
 		if (stageClear == false) {
-			_controller->SetSceneNum(SCE_GAMEOVER);
+			_controller->SetSceneNum(SCE_CLEAR);
 		}
 	}
 }

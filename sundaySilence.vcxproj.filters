@@ -249,7 +249,7 @@
     <ClCompile Include="User\GAMESCENE\scene\TransitionsScene.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
-    <ClCompile Include="User\GAMESCENE\scene\GameOver.cpp">
+    <ClCompile Include="User\GAMESCENE\scene\Clear.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -491,7 +491,7 @@
     <ClInclude Include="User\Objects\Floor.h">
       <Filter>user\objects</Filter>
     </ClInclude>
-    <ClInclude Include="User\GAMESCENE\scene\GameOver.h">
+    <ClInclude Include="User\GAMESCENE\scene\Clear.h">
       <Filter>user\scene</Filter>
     </ClInclude>
     <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h">

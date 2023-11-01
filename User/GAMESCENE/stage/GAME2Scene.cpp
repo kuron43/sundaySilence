@@ -149,7 +149,7 @@ void GAME2Scene::Update(Input* input) {
 		stageFailed = _objects->player->GetIsDeath();
 
 		_objects->damageRedAlpha_ = (float)_objects->player->GetHIT() / (float)_objects->player->GetMAXHP();
-		_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / 10.0f));
+		_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
 
 		BulletManager::GetInstance()->Update();
 		for (Enemy* enemy : _objects->enemys) {
@@ -173,13 +173,20 @@ void GAME2Scene::Update(Input* input) {
 			_controller->SetSceneNum(SCE_PAUSE);
 		}
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
-			_controller->SetSceneNum(SCE_SELECT);
+			//_controller->SetSceneNum(SCE_SELECT);
+			stageClear = true;
 		}
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
-		stageFailed = _objects->Banner(false);
+		stageFailed = _objects->Banner(1);
 		if (stageFailed == false) {
 			_controller->SetSceneNum(SCE_GAME2);
+		}
+	}
+	else if (startTime_ == false && stageClear == true && stageFailed == false) {
+		stageClear = _objects->Banner(2);
+		if (stageClear == false) {
+			_controller->SetSceneNum(SCE_CLEAR);
 		}
 	}
 }
@@ -204,7 +211,7 @@ void GAME2Scene::Draw() {
 
 	_objects->player->Draw(_controller->_dxCommon);
 	_objects->plDamageRed_->Draw();
-	if (startTime_ == true || stageFailed == true) {
+	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();
 	}
 

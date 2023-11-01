@@ -84,9 +84,9 @@ void SceneManager::ChangeScene() {
 			SceneInitialize();
 			TransScene();
 			break;
-		case SCE_GAMEOVER:
+		case SCE_CLEAR:
 			_scene.pop();
-			_scene.emplace(new GameOver(&*this, _objects));
+			_scene.emplace(new Clear(&*this, _objects));
 			SceneInitialize();
 			TransScene();
 			break;

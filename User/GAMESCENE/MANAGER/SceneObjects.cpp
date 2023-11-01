@@ -51,6 +51,7 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(15, "faildFAILED.png");
 		spriteCommon_->LoadTexture(16, "clearBuck.png");
 		spriteCommon_->LoadTexture(17, "clearCLEAR.png");
+		spriteCommon_->LoadTexture(18, "Cursor2.png");
 
 	}
 	// スプライトロード  20~ //セレクトステージ

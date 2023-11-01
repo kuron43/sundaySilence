@@ -1,20 +1,20 @@
 #pragma once
 /**
- * @file GameOverScene.h
+ * @file Clear.h
  * @brief
  */
 #include "IScene.h"
 #include "SceneIntegrate.h"
 
-class GameOver :
+class Clear :
 	public IScene
 {
 protected:
 	SceneManager* _controller;
 	SceneObjects* _objects;
 public:
-	GameOver(SceneManager* controller, SceneObjects* objects);
-	~GameOver() override;
+	Clear(SceneManager* controller, SceneObjects* objects);
+	~Clear() override;
 
 	//void Cleate(SceneManager& controller) override;
 
@@ -39,11 +39,12 @@ private:
 	// カメラ座標
 	Vector3 camposEye = { 0.0f,100.0f,-0.1f };
 	Vector3 camposTar = { 0,0,0 };
-	std::unique_ptr <Sprite> end_;
+	std::unique_ptr <Sprite> clearSP_;
+	std::unique_ptr <Sprite> titleButton_;
 public:
 	//代入演算子削除
-	GameOver& operator=(const GameOver&) = delete;
+	Clear& operator=(const Clear&) = delete;
 
 	//コピーコンストラクタ削除
-	GameOver(const GameOver&) = delete;
+	Clear(const Clear&) = delete;
 };

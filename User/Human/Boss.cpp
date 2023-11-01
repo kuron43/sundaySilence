@@ -25,11 +25,12 @@ void Boss::Initialize() {
 	isFound = false;
 	isDead = false;
 	nowTitle = false;
-	model_ = Model::LoadFromOBJ("Cube2");
+	model_ = Model::LoadFromOBJ("REX");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
 	object_->Initialize();
+	object_->wtf.scale = Vector3(0.3f, 0.3f, 0.3f);
 
 	reticle = Object3d::Create();
 	reticle->SetModel(model_);
@@ -85,6 +86,7 @@ void Boss::Initialize() {
 ///
 void Boss::Update(Input* input, bool isTitle) {
 	object_->SetColor({ 0,0,0 });
+	object_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
 	nowTitle = false;
 	nowTitle = !isTitle;
 
