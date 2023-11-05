@@ -12,6 +12,12 @@
 #include "WinApp.h"
 #include "Vector2.h"
 
+enum mouseInput {
+	LEFT_MOUSE = 0,
+	RIGHT_MOUSE = 1,
+};
+
+
 class MouseInput
 {
 private:

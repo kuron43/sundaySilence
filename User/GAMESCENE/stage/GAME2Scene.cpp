@@ -39,7 +39,7 @@ void GAME2Scene::Initialize() {
 	stageFailed = false;
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("gamedemo");
+		leveData = JsonLoader::LoadJsonFile("stage2");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -100,6 +100,10 @@ void GAME2Scene::Initialize() {
 				newBoss->object_->wtf.scale = sca;
 				//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 				_objects->boss.emplace_back(newBoss);
+			}
+			if (objectData.fileName == "player") {
+				Vector3 position = objectData.translation;
+				_objects->player->SetPos(position);
 			}
 
 		}
@@ -209,7 +213,9 @@ void GAME2Scene::Draw() {
 
 	Object3d::PostDraw();
 
-	_objects->player->Draw(_controller->_dxCommon);
+	if (startTime_ == false) {
+		_objects->player->Draw(_controller->_dxCommon);
+	}
 	_objects->plDamageRed_->Draw();
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();

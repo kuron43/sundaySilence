@@ -10,6 +10,12 @@ Vector2::Vector2(float x, float y) {
 	this->y = y;
 }
 
+void Vector2::Init()
+{
+	x = 0.0f;
+	y = 0.0f;
+}
+
 float Vector2::length()const {
 	return std::sqrt(x * x + y * y);
 }

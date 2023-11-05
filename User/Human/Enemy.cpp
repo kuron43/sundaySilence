@@ -46,13 +46,11 @@ void Enemy::Initialize() {
 	onPat_ = false;
 
 	//当たり判定用
-	SPHERE_COLISSION_NUM = 1;
 	sphere.resize(SPHERE_COLISSION_NUM);
 	spherePos.resize(SPHERE_COLISSION_NUM);
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
 	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
 
-	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
 	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
@@ -66,10 +64,10 @@ void Enemy::Initialize() {
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		//test
 		coliderPosTest_[i] = Object3d::Create();
-		coliderPosTest_[i]->SetModel(model_);
+		coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("Cube"));
 		coliderPosTest_[i]->wtf.position = Affin::GetWorldTrans(object_->wtf.matWorld);
 		coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
-		coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
+		coliderPosTest_[i]->wtf.rotation.InIt();
 		coliderPosTest_[i]->Update();
 	}
 	ray = new RayCollider;
@@ -84,7 +82,6 @@ void Enemy::Initialize() {
 
 ///
 void Enemy::Update(Input* input, bool isTitle) {
-	object_->SetColor({ 0,0,0 });
 	nowTitle = false;
 	nowTitle = !isTitle;
 
@@ -114,7 +111,7 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 			//reticle->Draw();
 		}
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-			//coliderPosTest_[i]->Draw();
+			coliderPosTest_[i]->Draw();
 		}
 		Object3d::PostDraw();
 		if (nowTitle) {
@@ -141,18 +138,13 @@ void Enemy::Reset() {
 /// 撃つ方向に向かせる
 /// </summary>
 void Enemy::FrontFace() {
-	Vector3 faceAngle = { 0,0,0 };
-	faceAngle.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
+	Vector3 faceAngle;
+	faceAngle.InIt();
+	faceAngle.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
 	if (isFire == true) {
 		frontVec_ = faceAngle;
 	}if (isFire == false) {
 		frontVec_ = restRotate_;
-	}
-	if (!isDead) {
-		//ImGui::Begin("faceAngle_Y");
-		//ImGui::Text("Angle : Y %f", faceAngle.y);
-		//ImGui::End();
-
 	}
 
 	object_->wtf.rotation = frontVec_;
@@ -169,11 +161,13 @@ void Enemy::ColiderUpdate() {
 	ray->SetDir(Affin::GetWorldTrans(reticle->wtf.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
-			OnColision();
-			// パーティクルなぜかXそのままYZ入れ替えると治る
-			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-			particle_->RandParticle(patPos);
+		if (sphere[i]->GetIsHit() == true) {
+			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
+				OnColision();
+				// パーティクルなぜかXそのままYZ入れ替えると治る
+				Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
+				particle_->RandParticle(patPos);
+			}
 		}
 	}
 
@@ -188,19 +182,11 @@ void Enemy::ColiderUpdate() {
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
 		isFound = false;
 		isBlocked = true;
-
-		//ImGui::Begin("eneRayHitBarrier");
-		//ImGui::Text("HIT : dis %f", rayHit->distance);
-		//ImGui::End();
-
 	}
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
 		isFound = true;
 		if (isBlocked == false) {
 			isFire = true;
-			//ImGui::Begin("eneRayHitPlayer");
-			//ImGui::Text("HIT : dis %f", rayHit->distance);
-			//ImGui::End();
 		}
 	}
 	if (isDead) {
@@ -222,8 +208,8 @@ void Enemy::ColiderUpdate() {
 
 void Enemy::OnColision()
 {
-	object_->SetColor({ 1,0,0 });
-	hp -= 1;
+	//object_->SetColor({ 1,0,0 });
+	hp--;
 	if (hp < 1) {
 		isDead = true;
 		onPat_ = true;

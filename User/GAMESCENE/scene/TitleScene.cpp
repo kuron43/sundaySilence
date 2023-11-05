@@ -61,7 +61,7 @@ void TitleScene::Initialize() {
 
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("gamedemo");
+		leveData = JsonLoader::LoadJsonFile("title");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -122,6 +122,10 @@ void TitleScene::Initialize() {
 				newBoss->object_->wtf.scale = sca;
 				//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 				_objects->boss.emplace_back(newBoss);
+			}
+			if (objectData.fileName == "player") {
+				Vector3 position = objectData.translation;
+				_objects->player->SetPos(position);
 			}
 		}
 	}

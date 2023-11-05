@@ -40,7 +40,7 @@ void GAME1Scene::Initialize() {
 	stageFailed = false;
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("game3");
+		leveData = JsonLoader::LoadJsonFile("stage1");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -102,6 +102,10 @@ void GAME1Scene::Initialize() {
 				//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 				_objects->boss.emplace_back(newBoss);
 			}
+			if (objectData.fileName == "player") {
+				Vector3 position = objectData.translation;
+				_objects->player->SetPos(position);
+			}
 
 		}
 
@@ -146,6 +150,14 @@ void GAME1Scene::Update(Input* input) {
 	else if (startTime_ == false && stageClear == false && stageFailed == false) {
 		_controller->_camera->SetEye(camposEye);
 		_controller->_camera->SetTarget(camposTar);
+
+		if (Input::get_instance().KeyboardPush(DIK_P)) {
+			Vector3 eyeDebug = _objects->player->GetTransform().position;
+			eyeDebug.y = (float)1;
+			_controller->_camera->SetEye(eyeDebug);
+			_controller->_camera->SetTarget(_objects->player->GetReticleTransform().position);
+			_controller->_camera->Update();
+		}
 		_objects->player->Update(input);
 		stageFailed = _objects->player->GetIsDeath();
 
@@ -209,8 +221,9 @@ void GAME1Scene::Draw() {
 	BulletManager::GetInstance()->Draw();
 
 	Object3d::PostDraw();
-
-	_objects->player->Draw(_controller->_dxCommon);
+	if (startTime_ == false) {
+		_objects->player->Draw(_controller->_dxCommon);
+	}
 	_objects->plDamageRed_->Draw();
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();

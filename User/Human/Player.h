@@ -27,6 +27,7 @@ public:
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; };
 	void MatUpdate() { object_->UpdateMatrix(); };
 	Transform GetTransform() { return object_->wtf; };
+	Transform GetReticleTransform() { return reticle->wtf; };
 	bool GetIsDeath() { return isDeath_; };
 	uint32_t GetHP() { return hp_; };
 	uint32_t GetHIT() { return hit_; };
@@ -55,6 +56,7 @@ private:
 	const float kTurnSpeed_ = Affin::radConvert(10);
 	bool isRun_ = false;
 	//移動ベクトル
+	float slowPalams = 0.25f;
 	Vector3 velocity_;
 	Vector3 faceAngle_;
 
@@ -79,7 +81,7 @@ public:
 	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
 	std::vector<SphereCollider*> GetSphere() { return sphere; }
 private:
-	uint32_t SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	uint32_t SPHERE_COLISSION_NUM = 1;	//コライダー（スフィア）の数
 	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	std::vector<SphereCollider*> sphere;
 	Ray* ray;

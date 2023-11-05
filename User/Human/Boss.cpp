@@ -145,7 +145,7 @@ void Boss::Reset() {
 /// </summary>
 void Boss::FrontFace() {
 	Vector3 faceAngle = { 0,0,0 };
-	faceAngle.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
+	faceAngle.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
 	if (isFire == true) {
 		frontVec_ = faceAngle;
 	}if (isFire == false) {
