@@ -10,7 +10,9 @@
 #pragma warning(disable: 4828)
 #pragma warning(disable: 4820)
 #include <forward_list>
+//#include <vector>
 #include <d3d12.h>
+#include <memory>
 
 #pragma warning(pop)
 
@@ -21,16 +23,16 @@ public:
 	static BulletManager* GetInstance();
 public:
 	//弾の追加
-	inline void AddBullet(Bullet* bullet)
+	inline void AddBullet(std::unique_ptr<Bullet> bullet)
 	{
-		bullets.push_front(bullet);
+		bullets.push_back(std::move(bullet));
 	}
 
-	// 弾の削除
-	inline void RemoveBullet(Bullet* bullet)
-	{
-		bullets.remove(bullet);
-	}
+	//// 弾の削除
+	//inline void RemoveBullet(std::unique_ptr<Bullet> bullet)
+	//{
+	//	bullets.erase(bullets[], bullets);
+	//}
 	// 弾のオールクリア
 	inline void AllClearBullet()
 	{
@@ -39,7 +41,7 @@ public:
 
 	static void SetSpeed(float speed) { speed_ = speed; }
 	void Update();
-	void DeadUpdate();
+	//void DeadUpdate();
 	void Draw();
 
 private:
@@ -53,6 +55,6 @@ private:
 	BulletManager& operator= (const BulletManager&) = delete;
 
 	//弾のリスト
-	std::list<Bullet*> bullets;
+	std::list<std::unique_ptr<Bullet>> bullets;
 };
 

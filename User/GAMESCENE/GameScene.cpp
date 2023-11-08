@@ -69,7 +69,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 /// </summary>
 void GameScene::Update() {
 
-	BulletManager::GetInstance()->DeadUpdate();
 	sceneManager->ChangeScene();
 
 	//particleManager_->Update();

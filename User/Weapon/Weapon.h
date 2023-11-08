@@ -14,7 +14,8 @@
 class Weapon
 {
 protected:
-	bool isSlow_;
+	float _slowSpeed = 0.25f;
+	bool _isSlow;
 public:
 	Weapon();
 	virtual ~Weapon();

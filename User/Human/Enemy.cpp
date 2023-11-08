@@ -185,10 +185,9 @@ void Enemy::ColiderUpdate() {
 	}
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
 		isFound = true;
-
-		if (isBlocked == false) {
-			isFire = true;
-		}
+	}
+	if (isBlocked == false && isFound == true) {
+		isFire = true;
 	}
 	if (isDead) {
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {

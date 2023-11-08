@@ -26,7 +26,7 @@ public:
 	bool isTeam;
 	bool isDead;
 
-	const uint32_t deathTime = 120;
+	const uint32_t DEATH_TIME = 300;
 	uint32_t timeCount;
 	
 	Object3d* bulletObj_;

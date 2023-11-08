@@ -68,7 +68,7 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 void Bullet::Update(float speed)
 {
 	timeCount++;
-	if (timeCount >= deathTime) {
+	if (timeCount >= DEATH_TIME) {
 		Dead();
 	}
 	bulletObj_->wtf.position += (moveVec * speed);
@@ -87,9 +87,6 @@ void Bullet::Update(float speed)
 			isDead = true;
 		}
 	}
-	if (isDead == true) {
-		assert(sphere);
-	}
 	sphere->Update();
 }
 
@@ -102,11 +99,9 @@ void Bullet::DeadUpdate() {
 
 void Bullet::Draw()
 {
-	if (!isDead) {
-		//モデルの描画
-		//coliderPosTest_->Draw();
-		bulletObj_->Draw();
-	}
+	//coliderPosTest_->Draw();
+	//モデルの描画
+	bulletObj_->Draw();
 }
 
 void Bullet::OnColision() {

@@ -21,12 +21,12 @@ bool Assault::Initialize() {
 /// 更新を行う
 void Assault::Update(Input* input, bool isSlow) {
 	
-	isSlow_ = isSlow;
+	_isSlow = isSlow;
 	if (input) {
 
 	}
 	if (isSlow == true) {
-		speed_ = nomalSpeed / 2;
+		speed_ = nomalSpeed * _slowSpeed;
 	}
 	else
 	{
@@ -38,7 +38,7 @@ void Assault::Update(Input* input, bool isSlow) {
 			goShot = true;
 		}
 		if (mag >= 10) {
-			if (isSlow_ == true) {
+			if (_isSlow == true) {
 				roadingTime = 150;
 				goShot = false;
 			}
@@ -70,7 +70,7 @@ void Assault::Shot(Transform& player, Transform& reticle, uint32_t team) {
 	
 	if (coolTime <= 0 && goShot == true) {
 		//弾を生成し、初期化
-		Bullet* newBullet = new Bullet();
+		std::unique_ptr<Bullet> newBullet = std::make_unique<Bullet>();
 		Vector3 startPos, reticleVec, moveVec, velo;
 		startPos = Affin::GetWorldTrans(player.matWorld); // 発射座標
 		reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
@@ -86,14 +86,14 @@ void Assault::Shot(Transform& player, Transform& reticle, uint32_t team) {
 
 		//クールタイムをリセット
 		if (team == PLAYER) {
-			if (isSlow_ == true) {
+			if (_isSlow == true) {
 				coolTime = 45;
 			}
 			else {
 				coolTime = 15;
 			}
 		}if (team == ENEMY) {
-			if (isSlow_ == true) {
+			if (_isSlow == true) {
 				coolTime = 45 * 5;
 			}
 			else {

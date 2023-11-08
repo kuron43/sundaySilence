@@ -14,29 +14,22 @@ BulletManager* BulletManager::GetInstance()
 
 void BulletManager::Update() {
 
-	for (Bullet* bullet : bullets)
+	//デスフラグの立った弾を削除
+	bullets.remove_if([](std::unique_ptr<Bullet>& bullet) {
+		bullet->DeadUpdate();
+		return bullet->IsDead();
+		});
+	//弾の更新
+	for (std::unique_ptr<Bullet>& bullet : bullets)
 	{
 		bullet->Update(speed_);
 
 	}
 }
-void BulletManager::DeadUpdate() {
-	for (Bullet* bullet : bullets)
-	{
-		bullet->DeadUpdate();
-	}
-}
+
 void BulletManager::Draw() {
-	for (Bullet* bullet : bullets)
+	for (std::unique_ptr<Bullet>& bullet : bullets)
 	{
 		bullet->Draw();
-
 	}
 }
-
-//BulletManager::BulletManager() {
-//
-//}
-//BulletManager::~BulletManager() {
-//	bullets.clear();
-//}

@@ -11,7 +11,7 @@ void FPS::FpsControlEnd() {
 	//今の時間を取得
 	QueryPerformanceCounter(&timeEnd);
 	//経過時間
-	float elapsedFrame = static_cast<float>(timeEnd.QuadPart - timeStart.QuadPart) /
+	elapsedFrame = static_cast<float>(timeEnd.QuadPart - timeStart.QuadPart) /
 		static_cast<float>(cpuClock.QuadPart);
 	//余裕があるときは待つ
 	if (elapsedFrame < frameTime) {
@@ -29,3 +29,5 @@ void FPS::FpsControlEnd() {
 void FPS::SetFrameRate(float fps_) { frameTime = 1.0f / fps_; }
 
 float FPS::GetFrameRate() { return fps; }
+
+float FPS::GetElapsedFrame() { return elapsedFrame; }
