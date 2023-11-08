@@ -46,6 +46,9 @@ private:
 	Vector3 camposEye = { 0.0f,100.0f,-0.0001f };
 	Vector3 camposTar = { 0,0,0 };
 
+
+	uint32_t testTime = 0;
+
 public:
 	LevelData* leveData = nullptr;
 };

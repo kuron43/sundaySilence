@@ -56,7 +56,7 @@ private:
 	const float kTurnSpeed_ = Affin::radConvert(10);
 	bool isRun_ = false;
 	//移動ベクトル
-	float slowPalams = 0.25f;
+	//float slowPalams = 0.25f;
 	Vector3 velocity_;
 	Vector3 faceAngle_;
 

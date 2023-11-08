@@ -29,7 +29,7 @@ class Human
 
 protected:
 	bool isSlow = false;
-	float slowSpeed = 0.25f;
+	float _SlowSpeed = 0.25f;
 	bool _isTitle;
 public:
 

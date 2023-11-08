@@ -165,6 +165,7 @@ void GAME1Scene::Update(Input* input) {
 		_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
 
 		BulletManager::GetInstance()->Update();
+
 		for (Enemy* enemy : _objects->enemys) {
 			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			enemy->Update(input);

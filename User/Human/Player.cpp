@@ -175,7 +175,7 @@ void Player::Move(Input* input) {
 	}
 
 	if (isSlow == true) {
-		velocity_ = speed * slowPalams;
+		velocity_ = speed * _SlowSpeed;
 	}
 	else {
 		velocity_ = speed;
