@@ -43,7 +43,7 @@ private:
 	uint32_t randTime_;
 
 	// カメラ座標
-	Vector3 camposEye = { 0.0f,110.0f,-0.0001f };
+	Vector3 camposEye = { 0.0f,70.0f,-0.0001f };
 	Vector3 camposTar = { 0,0,0 };
 
 

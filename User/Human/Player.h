@@ -72,7 +72,7 @@ private:
 	Vector3 oldVelocity_;
 
 private:
-	const uint32_t MAX_HP = 100;
+	const uint32_t MAX_HP = 30;
 	uint32_t hp_ = MAX_HP;
 	uint32_t hit_;
 	bool isDeath_;
