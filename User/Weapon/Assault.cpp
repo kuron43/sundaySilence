@@ -13,7 +13,7 @@ Assault::~Assault() {
 
 /// 更新を行う
 bool Assault::Initialize() {
-	model_ = Model::LoadFromOBJ("cube");
+	model_ = Model::LoadFromOBJ("sphere");
 	goShot = true;
 	return true;
 }

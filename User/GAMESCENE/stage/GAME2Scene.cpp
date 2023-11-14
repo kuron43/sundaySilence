@@ -77,7 +77,7 @@ void GAME2Scene::Initialize() {
 				Vector3 sca;
 				sca = objectData.scaling;
 				newWall->object_->wtf.scale = sca;
-				newWall->object_->SetColor(Vector3(0.5f, 0.3f, 0.3f));
+				newWall->object_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 				newWall->object_->Update();
 				newWall->CollideInitialize();
 				_objects->walls.emplace_back(newWall);

@@ -85,7 +85,7 @@ void Boss::Initialize() {
 
 ///
 void Boss::Update(Input* input, bool isTitle) {
-	object_->SetColor({ 0,0,0 });
+	object_->SetColor({ 1,0,0,1 });
 	object_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
 	nowTitle = false;
 	nowTitle = !isTitle;

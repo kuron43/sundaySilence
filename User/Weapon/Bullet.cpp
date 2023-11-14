@@ -4,6 +4,8 @@
  */
 #include "Bullet.h"
 
+#include "ImGui.h"
+
 Model* Bullet::bulletModel_ = nullptr;
 
 
@@ -29,11 +31,9 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	timeCount = 0;
 	isDead = false;
 	if (team_ == PLAYER) {
-		Vector3 color(0.0f, 0.0f, 1.0f);  // カラーなぜかARGB の順番
-		bulletObj_->SetColor(color);
+		bulletObj_->SetColor({ 0,0,0,1 }); // カラー?RGB の順番
 	}if (team_ == ENEMY) {
-		Vector3 color(0.0f, 1.0f, 0.5f);
-		bulletObj_->SetColor(color);
+		bulletObj_->SetColor({ 0,1,0,0 });
 	}
 
 	//当たり判定用
@@ -63,6 +63,8 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	//coliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
 	//coliderPosTest_->Update();
 
+	
+
 }
 
 void Bullet::Update(float speed)
@@ -88,6 +90,12 @@ void Bullet::Update(float speed)
 		}
 	}
 	sphere->Update();
+
+	//ImGui::Begin("bullet");
+	//ImGui::SetWindowPos({ 600,50 });
+	//ImGui::SetWindowSize({500.0f,200.0f});
+	//ImGui::InputFloat4("color", &bulletObj_->color_.x);
+	//ImGui::End();
 }
 
 void Bullet::DeadUpdate() {

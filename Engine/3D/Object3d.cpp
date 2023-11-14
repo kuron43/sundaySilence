@@ -303,9 +303,11 @@ bool Object3d::Initialize()
 		IID_PPV_ARGS(&constBuffB0));
 	assert(SUCCEEDED(result));
 
-	wtf.Initialize();
-	color_ = Vector3(0,0,0);
 
+
+	wtf.Initialize();
+	
+	color_ = Vector4(1, 1, 1, 1);
 	return true;
 }
 
@@ -316,7 +318,7 @@ void Object3d::Update()
 
 	UpdateMatrix();
 
-
+	
 
 	// 定数バッファへデータ転送
 	Matrix4 resultMat;
@@ -324,9 +326,9 @@ void Object3d::Update()
 	ConstBufferDataB0* constMap = nullptr;
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
 	resultMat = wtf.matWorld * camera_->GetViewProjectionMatrix();	// 行列の合成
-	constMap->cameraPos = camera_->GetEye();
-	constMap->world = wtf.matWorld;
 	constMap->veiwproj = camera_->GetViewProjectionMatrix();
+	constMap->world = wtf.matWorld;
+	constMap->cameraPos = camera_->GetEye();
 	constMap->color = color_;
 	constBuffB0->Unmap(0, nullptr);
 
