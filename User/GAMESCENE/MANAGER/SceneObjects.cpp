@@ -111,7 +111,7 @@ void SceneObjects::Initialize() {
 	skydome_O = std::make_unique<Object3d>();
 	skydome_O->SetModel(Model::LoadFromOBJ("skydome"));
 	skydome_O->Initialize();
-	skydome_O->wtf.scale = Vector3(1000.0f, 1000.0f, 1000.0f);
+	skydome_O->wtf.scale = Vector3(10000.0f, 10000.0f, 10000.0f);
 
 
 	// 演出用の初期化

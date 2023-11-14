@@ -131,7 +131,7 @@ void Player::Reset() {
 	hit_ = NONE;
 	isDeath_ = false;
 	object_->wtf.Initialize();
-
+	pointDash_->Reset();
 }
 
 void Player::Move(Input* input) {
