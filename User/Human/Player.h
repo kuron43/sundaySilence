@@ -29,6 +29,7 @@ public:
 	Transform GetTransform() { return object_->wtf; };
 	Transform GetReticleTransform() { return reticle->wtf; };
 	bool GetIsDeath() { return isDeath_; };
+	bool GetIsSlow() { return _isSlow; }
 	uint32_t GetHP() { return hp_; };
 	uint32_t GetHIT() { return hit_; };
 	const uint32_t GetMAXHP() { return MAX_HP; };

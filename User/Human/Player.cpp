@@ -76,13 +76,13 @@ void Player::Update(Input* input, bool isTitle) {
 	object_->wtf.position.y = NONE;
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
-	if (input->MouseButtonPush(0) && !isTitle && isSlow == false) {
+	if (input->MouseButtonPush(0) && !isTitle && _isSlow == false) {
 		weapon_[0]->Shot(object_->wtf, reticle->wtf, PLAYER);
 	}
-	weapon_[0]->Update(input, isSlow);
+	weapon_[0]->Update(input, _isSlow);
 
 	if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
-		if (input->MouseButtonTrigger(LEFT_MOUSE) && !isTitle && isSlow == true) {
+		if (input->MouseButtonTrigger(LEFT_MOUSE) && !isTitle && _isSlow == true) {
 			pointDash_->SetPoint(reticle->wtf.position, input);
 			nowSetPoint = true;
 		}
@@ -130,6 +130,7 @@ void Player::Reset() {
 	hp_ = MAX_HP;
 	hit_ = NONE;
 	isDeath_ = false;
+	_isSlow = false;
 	object_->wtf.Initialize();
 	pointDash_->Reset();
 }
@@ -166,15 +167,15 @@ void Player::Move(Input* input) {
 
 	//////////////////////////////////
 	if (input->MouseButtonTrigger(RIGHT_MOUSE)) {
-		isSlow = true;
+		_isSlow = true;
 	}
 	if (input->MouseButtonRelease(RIGHT_MOUSE)) {
-		isSlow = false;
+		_isSlow = false;
 		nowSetPoint = false;
 		pointDash_->MakeMoveVec(Affin::GetWorldTrans(object_->wtf.matWorld));
 	}
 
-	if (isSlow == true) {
+	if (_isSlow == true) {
 		velocity_ = speed * _SlowSpeed;
 	}
 	else {

@@ -28,7 +28,7 @@ class Human
 {
 
 protected:
-	bool isSlow = false;
+	bool _isSlow = false;
 	float _SlowSpeed = 0.25f;
 	bool _isTitle;
 public:

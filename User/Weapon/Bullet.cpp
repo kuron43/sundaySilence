@@ -31,9 +31,9 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	timeCount = 0;
 	isDead = false;
 	if (team_ == PLAYER) {
-		bulletObj_->SetColor({ 0,0,0,1 }); // カラー?RGB の順番
+		bulletObj_->SetColor({ 0,1,1,1 }); // カラー?RGB の順番
 	}if (team_ == ENEMY) {
-		bulletObj_->SetColor({ 0,1,0,0 });
+		bulletObj_->SetColor({ 1,1,0,1 });
 	}
 
 	//当たり判定用

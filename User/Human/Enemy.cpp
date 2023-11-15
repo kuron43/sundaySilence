@@ -94,7 +94,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 	if (isFire == true && isDead == false) {
 		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
-	weapon_->Update(input, isSlow);
+	weapon_->Update(input, _isSlow);
 
 	FrontFace();
 	ColiderUpdate();

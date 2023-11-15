@@ -307,7 +307,7 @@ bool Object3d::Initialize()
 
 	wtf.Initialize();
 	
-	color_ = Vector4(1, 1, 1, 1);
+	color_ = Vector4(0.8f, 0.8f, 0.8f, 1.0f);
 	return true;
 }
 

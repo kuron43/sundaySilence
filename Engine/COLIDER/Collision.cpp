@@ -524,8 +524,8 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 	{
 		//平面上の最近接点を疑似交点とする
 		*inter = obb_.m_Pos + (rejeVec * length);
-	}
-	ImGui::Begin("Sphere2Obb5");
+	}	
+	//ImGui::Begin("Sphere2Obb5");
 	if (reject) {
 
 		//uint32_t a = 0;
@@ -568,13 +568,13 @@ bool Collision::CheckOBB2Sphere(const OBB& obb, const Sphere& sphere, Vector3* i
 		}
 
 		//ImGui::Text("T Reje1:,%d\n", a);
-		ImGui::Text("LENGTH : %f", length);
-		ImGui::Text("reje1 LENGTH : %f", rejectLen.y);
+		//ImGui::Text("LENGTH : %f", length);
+		//ImGui::Text("reje1 LENGTH : %f", rejectLen.y);
 	}
-	ImGui::InputFloat3("OBB_POS", &obb_.m_Pos.x);
-	ImGui::InputFloat3("SPHERE", &sphere_.center.x);
-	ImGui::InputFloat3("Vec0", &reje1.x);
-	ImGui::End();
+	//ImGui::InputFloat3("OBB_POS", &obb_.m_Pos.x);
+	//ImGui::InputFloat3("SPHERE", &sphere_.center.x);
+	//ImGui::InputFloat3("Vec0", &reje1.x);
+	//ImGui::End();
 	return true;
 }
 

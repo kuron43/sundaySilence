@@ -43,9 +43,9 @@ void PointDash::Draw()
 bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 {
 	ray->Update();
-	for (uint32_t i = 0; i < 5; i++) {
 
-		object_[i]->wtf.rotation.y++;
+	for (uint32_t i = 0; i < 5; i++) {
+		object_[i]->wtf.rotation.y += registNum;
 		object_[i]->Update();
 	}
 
@@ -53,9 +53,6 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 		ray->SetStart(pos);
 		ray->SetDir(ret);
 		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			ImGui::Begin("eneRayHitBarrier");
-			ImGui::Text("HIT 1 : dis %f", rayHit->distance);
-			ImGui::End();
 			return false;
 		}
 	}
@@ -63,9 +60,6 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 		ray->SetStart(points[0]);
 		ray->SetDir(ret);
 		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			ImGui::Begin("eneRayHitBarrier");
-			ImGui::Text("HIT 2 : dis %f", rayHit->distance);
-			ImGui::End();
 			return false;
 		}
 	}
@@ -73,9 +67,6 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 		ray->SetStart(points[1]);
 		ray->SetDir(ret);
 		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			ImGui::Begin("eneRayHitBarrier");
-			ImGui::Text("HIT 3 : dis %f", rayHit->distance);
-			ImGui::End();
 			return false;
 		}
 	}
@@ -83,9 +74,6 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 		ray->SetStart(points[2]);
 		ray->SetDir(ret);
 		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			ImGui::Begin("eneRayHitBarrier");
-			ImGui::Text("HIT 4 : dis %f", rayHit->distance);
-			ImGui::End();
 			return false;
 		}
 	}
@@ -93,9 +81,6 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 		ray->SetStart(points[3]);
 		ray->SetDir(ret);
 		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			ImGui::Begin("eneRayHitBarrier");
-			ImGui::Text("HIT 5 : dis %f", rayHit->distance);
-			ImGui::End();
 			return false;
 		}
 	}
@@ -111,36 +96,36 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	if (input) {
 
 	}
-	if (registNum == 0) {
-		points[0] = point;
-		pointActive_[0] = true;
-		object_[0]->wtf.position = point;
-		registNum = 1;
+	if (registNum == POINT_1) {
+		points[POINT_1] = point;
+		pointActive_[POINT_1] = true;
+		object_[POINT_1]->wtf.position = point;
+		registNum = POINT_2;
 		return;
 	}
-	else if (registNum == 1) {
-		points[1] = point;
-		pointActive_[1] = true;
-		object_[1]->wtf.position = point;
-		registNum = 2;
+	else if (registNum == POINT_2) {
+		points[POINT_2] = point;
+		pointActive_[POINT_2] = true;
+		object_[POINT_2]->wtf.position = point;
+		registNum = POINT_3;
 	}
-	else if (registNum == 2) {
-		points[2] = point;
-		pointActive_[2] = true;
-		object_[2]->wtf.position = point;
-		registNum = 3;
+	else if (registNum == POINT_3) {
+		points[POINT_3] = point;
+		pointActive_[POINT_3] = true;
+		object_[POINT_3]->wtf.position = point;
+		registNum = POINT_4;
 	}
-	else if (registNum == 3) {
-		points[3] = point;
-		pointActive_[3] = true;
-		object_[3]->wtf.position = point;
-		registNum = 4;
+	else if (registNum == POINT_4) {
+		points[POINT_4] = point;
+		pointActive_[POINT_4] = true;
+		object_[POINT_4]->wtf.position = point;
+		registNum = POINT_5;
 	}
-	else if (registNum == 4) {
-		points[4] = point;
-		pointActive_[4] = true;
-		object_[4]->wtf.position = point;
-		registNum = 5;
+	else if (registNum == POINT_5) {
+		points[POINT_5] = point;
+		pointActive_[POINT_5] = true;
+		object_[POINT_5]->wtf.position = point;
+		registNum = POINT_MAX;
 	}
 	else {
 

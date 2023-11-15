@@ -85,7 +85,7 @@ void Boss::Initialize() {
 
 ///
 void Boss::Update(Input* input, bool isTitle) {
-	object_->SetColor({ 1,0,0,1 });
+	object_->SetColor({ 1,1,1,1.0f });
 	object_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
 	nowTitle = false;
 	nowTitle = !isTitle;
@@ -99,7 +99,7 @@ void Boss::Update(Input* input, bool isTitle) {
 	if (isFire == true && isDead == false) {
 		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
-	weapon_->Update(input, isSlow);
+	weapon_->Update(input, _isSlow);
 
 	FrontFace();
 	ColiderUpdate();

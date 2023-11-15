@@ -6,8 +6,8 @@
 
 #include "LightGroup.h"
 #include "FBXObject3d.h"
-//#include "fbx/FBXLoader.h"
-//#include "FBXModel.h"
+ //#include "fbx/FBXLoader.h"
+ //#include "FBXModel.h"
 #include "Audio.h"
 #include "SpriteCommon.h"
 #include "Model.h"
@@ -52,25 +52,44 @@ public: // 演出用
 	bool Banner(uint32_t isStart = 0);
 	void ShakeRand(Shake& w);
 
+	void SlowEffect(bool isSlow);
+	void SlowReset();
+	void SlowEffectDraw();
 
 private: // 演出用
+	// バナー用
 	std::unique_ptr <Sprite> bannerBuckSP_;
 	Vector2 bannerBuckSPpos_;
 	Vector3 bannerBuckSPscale_;
 	std::unique_ptr <Sprite> bannerBuck2SP_;
 	Vector2 bannerBuck2SPpos_;
 	Vector3 bannerBuck2SPscale_;
-
 	std::unique_ptr <Sprite> bannerWordSP_;
 	Vector2 bannerWordSPpos_;
 	Vector3 bannerWordSPscale_;
-
 	uint32_t bannerTimer = 0;
-	// イージング用
-	float easetime = 0.0f;
-	uint32_t time = 0;
-	uint32_t easeMaxTime = 50;
-	bool isEaseOut = true;
+	// バナーイージング用
+	float bannerEasetime = 0.0f;
+	uint32_t bannerTime = 0;
+	uint32_t bannerEaseMaxTime = 50;
+	bool isBannerEaseOut = true;
+
+	// スロー用
+	std::unique_ptr <Sprite> slowSP_;
+	Vector3 slowSPsize_;
+	const float slowSP_ALPHA_MIN = 0.0f;
+	const float slowSP_ALPHA_MAX = 0.4f;
+	float slowSPAlpha_ = 0.0f;
+	bool slowSPTime_MAX = false;
+	bool slowPlayEase_ = false;
+	bool nowSlowEffect = false;
+	bool changeIsSlow = false;
+	// スローイージング用
+	float slowEasetime = 0.0f;
+	uint32_t slowTime = 0;
+	uint32_t slowEaseMaxTime = 30;
+	bool isSlowEaseOut = false;
+
 
 
 	Shake backWall;

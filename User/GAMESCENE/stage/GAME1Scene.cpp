@@ -26,13 +26,14 @@ GAME1Scene::~GAME1Scene() {
 	_objects->boss.clear();
 	_objects->damageRedAlpha_ = 0;
 	_objects->player->Reset();
+	_objects->SlowReset();
 	_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
 	_objects->plDamageRed_->Update();
 	delete leveData;
 }
 
 void GAME1Scene::Initialize() {
-
+	_objects->SlowReset();
 	_objects->player->Reset();
 	_objects->player->MatUpdate();
 	startTime_ = true;
@@ -184,6 +185,9 @@ void GAME1Scene::Update(Input* input) {
 		for (Wall* walls : _objects->walls) {
 			walls->Update();
 		}
+
+		_objects->SlowEffect(_objects->player->GetIsSlow());
+
 		if (input->KeyboardTrigger(DIK_TAB)) {
 			_controller->SetSceneNum(SCE_PAUSE);
 		}
@@ -226,6 +230,7 @@ void GAME1Scene::Draw() {
 	if (startTime_ == false) {
 		_objects->player->Draw(_controller->_dxCommon);
 	}
+	_objects->SlowEffectDraw();
 	_objects->plDamageRed_->Draw();
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();

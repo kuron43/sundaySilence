@@ -143,6 +143,13 @@ void SceneObjects::Initialize() {
 		bannerWordSP_->SetScale(bannerWordSPscale_);
 	}
 	{
+		slowSP_ = std::make_unique<Sprite>();
+		slowSP_->Initialize(spriteCommon_.get(), 32);
+		slowSP_->SetPozition(Vector2{ 0.0f,0.0f });
+		slowSP_->SetSize({ WinApp::window_width ,WinApp::window_height });
+		slowSP_->SetColor(Vector4{0.1f,0.1f,0.1f,0.0f});
+	}
+	{
 		backWall = { 0,2,10,21,0,0, };
 	}
 
@@ -178,7 +185,7 @@ bool SceneObjects::Banner(uint32_t isStart)
 		bannerBuck2SP_->SetTextureIndex(12);
 		bannerWordSP_->SetTextureIndex(13);
 	}
-	if(isStart == 1){
+	if (isStart == 1) {
 		bannerBuckSP_->SetTextureIndex(14);
 		bannerBuck2SP_->SetTextureIndex(14);
 		bannerWordSP_->SetTextureIndex(15);
@@ -190,20 +197,20 @@ bool SceneObjects::Banner(uint32_t isStart)
 	}
 
 	bannerTimer++;
-	time++;
-	easetime = (float)time / easeMaxTime;
-	if (isEaseOut) {
-		bannerBuckSPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
-		bannerBuckSPpos_ = Easing::OutQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(0.0f, WinApp::window_height / 2.0f), (float)easetime);
-		bannerBuck2SPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)easetime);
-		bannerBuck2SPpos_ = Easing::OutQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), (float)easetime);
-		bannerWordSPpos_ = Easing::OutQuintVec2(Vector2(-300.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), (float)easetime);
+	bannerTime++;
+	bannerEasetime = (float)bannerTime / bannerEaseMaxTime;
+	if (isBannerEaseOut) {
+		bannerBuckSPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)bannerEasetime);
+		bannerBuckSPpos_ = Easing::OutQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(0.0f, WinApp::window_height / 2.0f), (float)bannerEasetime);
+		bannerBuck2SPscale_ = Easing::OutQuintVec3(Vector3(1.0f, 0.0001f, 1.0f), Vector3(1, 1, 1), (float)bannerEasetime);
+		bannerBuck2SPpos_ = Easing::OutQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), (float)bannerEasetime);
+		bannerWordSPpos_ = Easing::OutQuintVec2(Vector2(-300.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), (float)bannerEasetime);
 	}
 	else {
-		bannerBuckSPpos_ = Easing::InQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(-(WinApp::window_width / 2.0f), WinApp::window_height / 2.0f), (float)easetime);
-		bannerBuck2SPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width, WinApp::window_height / 2.0f), (float)easetime);
+		bannerBuckSPpos_ = Easing::InQuintVec2(Vector2(0.0f, WinApp::window_height / 2.0f), Vector2(-(WinApp::window_width / 2.0f), WinApp::window_height / 2.0f), (float)bannerEasetime);
+		bannerBuck2SPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width, WinApp::window_height / 2.0f), (float)bannerEasetime);
 		//readyStartSPpos_ = Easing::InQuintVec2(Vector2(WinApp::window_width / 2.0f - 150.0f, WinApp::window_height / 2.0f), Vector2(WinApp::window_width / 2.0f - 150.0f, -100.0f), (float)easetime);
-		bannerWordSP_->SetColor({ 1.0f,1.0f,1.0f,Easing::InQuintFloat(1.0f,0.0f, (float)easetime) });
+		bannerWordSP_->SetColor({ 1.0f,1.0f,1.0f,Easing::InQuintFloat(1.0f,0.0f, (float)bannerEasetime) });
 	}
 	bannerBuckSP_->SetScale(bannerBuckSPscale_);
 	bannerBuckSP_->SetPozition(bannerBuckSPpos_);
@@ -217,19 +224,26 @@ bool SceneObjects::Banner(uint32_t isStart)
 	bannerWordSP_->Update();
 
 
-	if (time >= easeMaxTime && isEaseOut == true) {
-		time = 0;
-		easetime = 0;
-		isEaseOut = false;
+	if (bannerTime >= bannerEaseMaxTime && isBannerEaseOut == true) {
+		bannerTime = 0;
+		bannerEasetime = 0;
+		isBannerEaseOut = false;
 	}
-	if (time >= easeMaxTime && isEaseOut == false) {
-		time = 0;
-		easetime = 0;
-		isEaseOut = true;
+	if (bannerTime >= bannerEaseMaxTime && isBannerEaseOut == false) {
+		bannerTime = 0;
+		bannerEasetime = 0;
+		isBannerEaseOut = true;
 		return false;
 	}
 	return true;
 }
+void SceneObjects::BannerDraw()
+{
+	bannerBuckSP_->Draw();
+	bannerBuck2SP_->Draw();
+	bannerWordSP_->Draw();
+}
+
 void SceneObjects::ShakeRand(Shake& shake)
 {
 	//フラグ0
@@ -246,9 +260,66 @@ void SceneObjects::ShakeRand(Shake& shake)
 	}
 
 }
-void SceneObjects::BannerDraw()
+void SceneObjects::SlowEffect(bool isSlow)
 {
-	bannerBuckSP_->Draw();
-	bannerBuck2SP_->Draw();
-	bannerWordSP_->Draw();
+	if (isSlowEaseOut == true && slowPlayEase_ == true) {
+		nowSlowEffect = true;
+		slowTime++;
+		slowEasetime = (float)slowTime / slowEaseMaxTime;
+		slowSPAlpha_ = Easing::OutQuintFloat(slowSP_ALPHA_MIN, slowSP_ALPHA_MAX, (float)slowEasetime);
+		if (slowSPAlpha_ == slowSP_ALPHA_MAX) {
+			slowSPTime_MAX = true;
+			nowSlowEffect = false;
+			slowTime = 0;
+			slowEasetime = 0;
+		}
+	}
+	if (isSlowEaseOut == false && slowPlayEase_ == true) {
+		nowSlowEffect = true;
+		slowTime++;
+		slowEasetime = (float)slowTime / slowEaseMaxTime;
+		slowSPAlpha_ = Easing::OutQuintFloat(slowSP_ALPHA_MAX, slowSP_ALPHA_MIN, (float)slowEasetime);
+		if (slowSPAlpha_ == slowSP_ALPHA_MIN) {
+			slowSPTime_MAX = true;
+			nowSlowEffect = false;
+			slowTime = 0;
+			slowEasetime = 0;
+		}
+	}
+
+	if (isSlowEaseOut != isSlow && changeIsSlow == false) {
+		changeIsSlow = true;
+	}
+	else {
+		changeIsSlow = false;
+	}
+	if (nowSlowEffect == false && slowSPTime_MAX == true) {
+		slowPlayEase_ = false;
+	}
+	if (changeIsSlow == true && slowPlayEase_ == false) {
+		slowTime = 0;
+		slowEasetime = 0;
+		slowPlayEase_ = true;
+		isSlowEaseOut = isSlow;
+	}
+
+	slowSP_->SetColorAlpha(slowSPAlpha_);
+	slowSP_->Update();
+}
+void SceneObjects::SlowReset()
+{
+	slowSPAlpha_ = 0.0f;
+	slowSPTime_MAX = false;
+	slowPlayEase_ = false;
+	nowSlowEffect = false;
+	changeIsSlow = false;
+	isSlowEaseOut = false;
+	slowEasetime = 0.0f;
+	slowTime = 0;
+	slowSP_->SetColorAlpha(0.0f);
+	slowSP_->Update();
+}
+void SceneObjects::SlowEffectDraw()
+{
+	slowSP_->Draw();
 }

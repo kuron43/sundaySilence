@@ -15,6 +15,16 @@
 // ポイントダッシュスキル
 class PointDash
 {
+public:
+	// 配列用
+	enum POINTS {
+		POINT_1 = 0,
+		POINT_2 = 1,
+		POINT_3 = 2,
+		POINT_4 = 3,
+		POINT_5 = 4,
+		POINT_MAX = 5
+	};
 
 public:
 	const uint32_t MAX_POINTNUM = 5;
