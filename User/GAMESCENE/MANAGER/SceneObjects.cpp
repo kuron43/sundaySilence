@@ -64,7 +64,7 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(28, "Right.png");
 		spriteCommon_->LoadTexture(29, "Right2.png");
 	}
-	// スプライトロード  30~ //一時的な画像用
+	// スプライトロード  30~ // 色画像用
 	{
 		spriteCommon_->LoadTexture(30, "red.png");
 		spriteCommon_->LoadTexture(31, "orange.png");
@@ -73,6 +73,16 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(34, "black.png");
 		spriteCommon_->LoadTexture(35, "white1x1.png");
 		spriteCommon_->LoadTexture(36, "lightgray.png");
+	}
+	// スプライトロード  40~ // UI画像用
+	{
+		spriteCommon_->LoadTexture(40, "UIbase.png");
+		//spriteCommon_->LoadTexture(41, "orange.png");
+		//spriteCommon_->LoadTexture(42, "purple.png");
+		//spriteCommon_->LoadTexture(43, "yellow.png");
+		//spriteCommon_->LoadTexture(44, "black.png");
+		//spriteCommon_->LoadTexture(45, "white1x1.png");
+		//spriteCommon_->LoadTexture(46, "lightgray.png");
 	}
 
 	mouseCursor_ = std::make_unique<Cursor>();
@@ -148,6 +158,14 @@ void SceneObjects::Initialize() {
 		slowSP_->SetPozition(Vector2{ 0.0f,0.0f });
 		slowSP_->SetSize({ WinApp::window_width ,WinApp::window_height });
 		slowSP_->SetColor(Vector4{0.1f,0.1f,0.1f,0.0f});
+	}
+	{
+		UIBuckSP_ = std::make_unique<Sprite>();
+		UIBuckSP_->Initialize(spriteCommon_.get(), 40);
+		UIBuckSPpos_ = Vector2();
+		UIBuckSPsize_ = Vector2{ WinApp::window_width ,WinApp::window_height };
+		UIBuckSP_->SetPozition(UIBuckSPpos_);
+		UIBuckSP_->SetSize(UIBuckSPsize_);		
 	}
 	{
 		backWall = { 0,2,10,21,0,0, };
@@ -322,4 +340,14 @@ void SceneObjects::SlowReset()
 void SceneObjects::SlowEffectDraw()
 {
 	slowSP_->Draw();
+}
+
+void SceneObjects::UIUpdate()
+{
+	UIBuckSP_->Update();
+}
+
+void SceneObjects::UIDraw()
+{
+	UIBuckSP_->Draw();
 }

@@ -62,6 +62,9 @@ void TransitionsScene::Update(Input* input) {
 		time = 0;
 		isEaseOut = false;
 	}
+	if (_objects->GetIsUIDraw()) {
+		_objects->UIUpdate();
+	}
 
 	if (sceneTimer >= easeMaxTime * (uint32_t)2) {
 		_controller->PopScene();
@@ -80,6 +83,9 @@ void TransitionsScene::Draw() {
 		}
 		for (Wall* walls : _objects->walls) {
 			walls->Draw(_controller->_dxCommon);
+		}
+		if (_objects->GetIsUIDraw()) {
+			_objects->UIDraw();
 		}
 	}
 

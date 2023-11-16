@@ -192,7 +192,6 @@ void GAME1Scene::Update(Input* input) {
 			_controller->SetSceneNum(SCE_PAUSE);
 		}
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
-			//_controller->SetSceneNum(SCE_SELECT);
 			stageClear = true;
 		}
 	}
@@ -208,6 +207,7 @@ void GAME1Scene::Update(Input* input) {
 			_controller->SetSceneNum(SCE_CLEAR);
 		}
 	}
+	_objects->UIUpdate();
 }
 
 void GAME1Scene::Draw() {
@@ -232,8 +232,8 @@ void GAME1Scene::Draw() {
 	}
 	_objects->SlowEffectDraw();
 	_objects->plDamageRed_->Draw();
+	_objects->UIDraw();
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();
 	}
-
 }

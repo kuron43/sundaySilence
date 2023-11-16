@@ -94,6 +94,24 @@ private: // 演出用
 
 	Shake backWall;
 
+	
+public: // UI用
+	void UIUpdate();
+	void UIDraw();
+
+	void ONIsUIDraw() { isUIDraw_ = true; };
+	void OFFIsUIDraw() { isUIDraw_ = false; };
+	bool GetIsUIDraw() { return isUIDraw_; };
+
+private: // UI用
+	bool isUIDraw_ = false;
+
+	// ベース
+	std::unique_ptr <Sprite> UIBuckSP_;
+	Vector2 UIBuckSPpos_;
+	Vector2 UIBuckSPsize_;
+
+
 public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;
 	std::unique_ptr <Audio> audio;

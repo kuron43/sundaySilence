@@ -98,6 +98,9 @@ void Player::Update(Input* input, bool isTitle) {
 	object_->Update();
 
 	ImGui::Begin("player");
+	ImGui::Text("window W :%d", WinApp::window_width);
+	ImGui::Text("window H :%d", WinApp::window_height);
+
 	ImGui::Text("Palams");
 	ImGui::InputFloat3("Position", &object_->wtf.position.x);
 	ImGui::Text("PointDash");

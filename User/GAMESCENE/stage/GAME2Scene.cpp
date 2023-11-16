@@ -31,8 +31,8 @@ GAME2Scene::~GAME2Scene() {
 }
 
 void GAME2Scene::Initialize() {
-
-	_objects->player->SetPos(Vector3(0, 0, 0));
+	_objects->SlowReset();
+	_objects->player->Reset();
 	_objects->player->MatUpdate();
 	startTime_ = true;
 	stageClear = false;
@@ -113,6 +113,7 @@ void GAME2Scene::Initialize() {
 	{
 		_controller->_camera->SetEye(camposEye);
 		_controller->_camera->SetTarget(camposTar);
+		_controller->_camera->SetFocalLengs(30.0f);
 		_controller->_camera->Update();
 		_objects->floorGround->Update();
 
@@ -149,6 +150,14 @@ void GAME2Scene::Update(Input* input) {
 	else if (startTime_ == false && stageClear == false && stageFailed == false) {
 		_controller->_camera->SetEye(camposEye);
 		_controller->_camera->SetTarget(camposTar);
+
+		if (Input::get_instance().KeyboardPush(DIK_P)) {
+			Vector3 eyeDebug = _objects->player->GetTransform().position;
+			eyeDebug.y = (float)1;
+			_controller->_camera->SetEye(eyeDebug);
+			_controller->_camera->SetTarget(_objects->player->GetReticleTransform().position);
+			_controller->_camera->Update();
+		}
 		_objects->player->Update(input);
 		stageFailed = _objects->player->GetIsDeath();
 
@@ -156,6 +165,7 @@ void GAME2Scene::Update(Input* input) {
 		_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
 
 		BulletManager::GetInstance()->Update();
+
 		for (Enemy* enemy : _objects->enemys) {
 			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			enemy->Update(input);
@@ -173,6 +183,9 @@ void GAME2Scene::Update(Input* input) {
 		for (Wall* walls : _objects->walls) {
 			walls->Update();
 		}
+
+		_objects->SlowEffect(_objects->player->GetIsSlow());
+
 		if (input->KeyboardTrigger(DIK_TAB)) {
 			_controller->SetSceneNum(SCE_PAUSE);
 		}
@@ -184,7 +197,7 @@ void GAME2Scene::Update(Input* input) {
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
 		stageFailed = _objects->Banner(1);
 		if (stageFailed == false) {
-			_controller->SetSceneNum(SCE_GAME2);
+			_controller->SetSceneNum(SCE_GAME1);
 		}
 	}
 	else if (startTime_ == false && stageClear == true && stageFailed == false) {
@@ -212,10 +225,10 @@ void GAME2Scene::Draw() {
 	BulletManager::GetInstance()->Draw();
 
 	Object3d::PostDraw();
-
 	if (startTime_ == false) {
 		_objects->player->Draw(_controller->_dxCommon);
 	}
+	_objects->SlowEffectDraw();
 	_objects->plDamageRed_->Draw();
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();
