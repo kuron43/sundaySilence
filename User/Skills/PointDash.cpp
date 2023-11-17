@@ -126,6 +126,7 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 		pointActive_[POINT_5] = true;
 		object_[POINT_5]->wtf.position = point;
 		registNum = POINT_MAX;
+		pointsMax = true;
 	}
 	else {
 
@@ -241,4 +242,5 @@ void PointDash::Reset() {
 	time = 0;
 	easeSpeed = 0;
 	easetime = 0;
+	pointsMax = false;
 }

@@ -78,6 +78,10 @@ void Player::Update(Input* input, bool isTitle) {
 	reticle->Update();
 	if (input->MouseButtonPush(0) && !isTitle && _isSlow == false) {
 		weapon_[0]->Shot(object_->wtf, reticle->wtf, PLAYER);
+		isOnFire = true;
+	}
+	else {
+		isOnFire = false;
 	}
 	weapon_[0]->Update(input, _isSlow);
 

@@ -30,6 +30,8 @@ public:
 	Transform GetReticleTransform() { return reticle->wtf; };
 	bool GetIsDeath() { return isDeath_; };
 	bool GetIsSlow() { return _isSlow; }
+	bool GetOnFire() { return isOnFire; }
+	bool GetPointMAX() { return pointDash_->pointsMax; }
 	uint32_t GetHP() { return hp_; };
 	uint32_t GetHIT() { return hit_; };
 	const uint32_t GetMAXHP() { return MAX_HP; };
@@ -63,7 +65,7 @@ private:
 
 
 	Weapon* weapon_[2];
-	bool isWeaponOn = true;
+	bool isOnFire = true;
 	// スキル用
 private:
 	PointDash* pointDash_;

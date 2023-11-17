@@ -77,12 +77,13 @@ void SceneObjects::Initialize() {
 	// スプライトロード  40~ // UI画像用
 	{
 		spriteCommon_->LoadTexture(40, "UIbase.png");
-		//spriteCommon_->LoadTexture(41, "orange.png");
-		//spriteCommon_->LoadTexture(42, "purple.png");
-		//spriteCommon_->LoadTexture(43, "yellow.png");
-		//spriteCommon_->LoadTexture(44, "black.png");
-		//spriteCommon_->LoadTexture(45, "white1x1.png");
-		//spriteCommon_->LoadTexture(46, "lightgray.png");
+		spriteCommon_->LoadTexture(41, "Weapon1ICON.png");
+		spriteCommon_->LoadTexture(42, "Weapon2ICON.png");
+		spriteCommon_->LoadTexture(43, "Weapon3ICON.png");
+		spriteCommon_->LoadTexture(44, "Slow1ICON.png");
+		spriteCommon_->LoadTexture(45, "Slow2ICON.png");
+		spriteCommon_->LoadTexture(46, "Point1ICON.png");
+		spriteCommon_->LoadTexture(47, "Point2ICON.png");
 	}
 
 	mouseCursor_ = std::make_unique<Cursor>();
@@ -125,6 +126,7 @@ void SceneObjects::Initialize() {
 
 
 	// 演出用の初期化
+	// バナー
 	{
 		bannerBuckSP_ = std::make_unique<Sprite>();
 		bannerBuckSP_->Initialize(spriteCommon_.get(), 12);
@@ -157,15 +159,40 @@ void SceneObjects::Initialize() {
 		slowSP_->Initialize(spriteCommon_.get(), 32);
 		slowSP_->SetPozition(Vector2{ 0.0f,0.0f });
 		slowSP_->SetSize({ WinApp::window_width ,WinApp::window_height });
-		slowSP_->SetColor(Vector4{0.1f,0.1f,0.1f,0.0f});
+		slowSP_->SetColor(Vector4{ 0.1f,0.1f,0.1f,0.0f });
 	}
+	// UI
 	{
 		UIBuckSP_ = std::make_unique<Sprite>();
 		UIBuckSP_->Initialize(spriteCommon_.get(), 40);
 		UIBuckSPpos_ = Vector2();
 		UIBuckSPsize_ = Vector2{ WinApp::window_width ,WinApp::window_height };
 		UIBuckSP_->SetPozition(UIBuckSPpos_);
-		UIBuckSP_->SetSize(UIBuckSPsize_);		
+		UIBuckSP_->SetSize(UIBuckSPsize_);
+	}
+	{
+		UIWeaponSP_ = std::make_unique<Sprite>();
+		UIWeaponSP_->Initialize(spriteCommon_.get(), 41);
+		UIWeaponSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 4.8f ,WinApp::window_height / 4.0f };
+		UIWeaponSPsize_ = Vector2{ 80.0f ,80.0f };
+		UIWeaponSP_->SetPozition(UIWeaponSPpos_);
+		UIWeaponSP_->SetSize(UIWeaponSPsize_);
+	}
+	{
+		UISlowSP_ = std::make_unique<Sprite>();
+		UISlowSP_->Initialize(spriteCommon_.get(), 44);
+		UISlowSPpos_ = Vector2{ UIWeaponSPpos_.x + UIWeaponSPsize_.x + WinApp::window_width / 98 ,WinApp::window_height / 4.0f };
+		UISlowSPsize_ = Vector2{ 80.0f ,80.0f };
+		UISlowSP_->SetPozition(UISlowSPpos_);
+		UISlowSP_->SetSize(UISlowSPsize_);
+	}
+	{
+		UIPointSP_ = std::make_unique<Sprite>();
+		UIPointSP_->Initialize(spriteCommon_.get(), 46);
+		UIPointSPpos_ = Vector2{ UISlowSPpos_.x + UISlowSPsize_.x + WinApp::window_width / 98 ,WinApp::window_height / 4.0f };
+		UIPointSPsize_ = Vector2{ 80.0f ,80.0f };
+		UIPointSP_->SetPozition(UIPointSPpos_);
+		UIPointSP_->SetSize(UIPointSPsize_);
 	}
 	{
 		backWall = { 0,2,10,21,0,0, };
@@ -344,10 +371,36 @@ void SceneObjects::SlowEffectDraw()
 
 void SceneObjects::UIUpdate()
 {
+	if (player->GetOnFire()) {
+		UIWeaponSP_->SetTextureIndex(42);
+	}
+	else {
+		UIWeaponSP_->SetTextureIndex(41);
+		UIPointSP_->SetTextureIndex(46);
+	}
+	if (player->GetIsSlow()) {
+		UIWeaponSP_->SetTextureIndex(43);
+		UISlowSP_->SetTextureIndex(45);
+		UIPointSP_->SetTextureIndex(47);
+		if (player->GetPointMAX()) {
+			UIPointSP_->SetTextureIndex(46);
+		}
+	}
+	else {
+		UISlowSP_->SetTextureIndex(44);
+	}
+
+
 	UIBuckSP_->Update();
+	UIWeaponSP_->Update();
+	UISlowSP_->Update();
+	UIPointSP_->Update();
 }
 
 void SceneObjects::UIDraw()
 {
 	UIBuckSP_->Draw();
+	UIWeaponSP_->Draw();
+	UISlowSP_->Draw();
+	UIPointSP_->Draw();
 }

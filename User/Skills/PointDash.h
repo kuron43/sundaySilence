@@ -32,6 +32,7 @@ public:
 	Vector3 resultVec;
 	float easeSpeed;
 	bool isActive;
+	bool pointsMax;
 private:
 	Object3d* object_[5];
 	bool pointActive_[5];
@@ -43,7 +44,6 @@ private:
 	uint32_t nowPointNum;
 	uint32_t registNum;
 	bool isReset;
-	bool pointsMax;
 	bool moveEnd;
 
 	uint32_t time;

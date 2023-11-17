@@ -111,6 +111,19 @@ private: // UI用
 	Vector2 UIBuckSPpos_;
 	Vector2 UIBuckSPsize_;
 
+	// 武器
+	std::unique_ptr <Sprite> UIWeaponSP_;
+	Vector2 UIWeaponSPpos_;
+	Vector2 UIWeaponSPsize_;
+	bool isFire_;
+	// スロー
+	std::unique_ptr <Sprite> UISlowSP_;
+	Vector2 UISlowSPpos_;
+	Vector2 UISlowSPsize_;
+	// ポイント
+	std::unique_ptr <Sprite> UIPointSP_;
+	Vector2 UIPointSPpos_;
+	Vector2 UIPointSPsize_;
 
 public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;
