@@ -125,6 +125,11 @@ private: // UI用
 	Vector2 UIPointSPpos_;
 	Vector2 UIPointSPsize_;
 
+	// PlayerHP 仮
+	std::unique_ptr <Sprite> UIHPSP_;
+	Vector2 UIHPSPpos_;
+	Vector2 UIHPSPsize_;
+
 public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;
 	std::unique_ptr <Audio> audio;

@@ -73,6 +73,7 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(34, "black.png");
 		spriteCommon_->LoadTexture(35, "white1x1.png");
 		spriteCommon_->LoadTexture(36, "lightgray.png");
+		spriteCommon_->LoadTexture(37, "cian.png");
 	}
 	// スプライトロード  40~ // UI画像用
 	{
@@ -193,6 +194,14 @@ void SceneObjects::Initialize() {
 		UIPointSPsize_ = Vector2{ 80.0f ,80.0f };
 		UIPointSP_->SetPozition(UIPointSPpos_);
 		UIPointSP_->SetSize(UIPointSPsize_);
+	}
+	{
+		UIHPSP_ = std::make_unique<Sprite>();
+		UIHPSP_->Initialize(spriteCommon_.get(), 37);
+		UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x ,WinApp::window_height - WinApp::window_height / 4.0f };
+		UIHPSPsize_ = Vector2{ 7.0f * player->GetHP() ,30.0f };
+		UIHPSP_->SetPozition(UIHPSPpos_);
+		UIHPSP_->SetSize(UIHPSPsize_);
 	}
 	{
 		backWall = { 0,2,10,21,0,0, };
@@ -390,11 +399,13 @@ void SceneObjects::UIUpdate()
 		UISlowSP_->SetTextureIndex(44);
 	}
 
-
+	UIHPSPsize_.x = 7.0f * player->GetHP();
+	UIHPSP_->SetSize(UIHPSPsize_);
 	UIBuckSP_->Update();
 	UIWeaponSP_->Update();
 	UISlowSP_->Update();
 	UIPointSP_->Update();
+	UIHPSP_->Update();
 }
 
 void SceneObjects::UIDraw()
@@ -403,4 +414,5 @@ void SceneObjects::UIDraw()
 	UIWeaponSP_->Draw();
 	UISlowSP_->Draw();
 	UIPointSP_->Draw();
+	UIHPSP_->Draw();
 }
