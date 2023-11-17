@@ -67,7 +67,7 @@ void Framework::Update() {
 	if (winApp->ProcessMessage()) {
 		endRequest_ = true;
 	}
-
+	winApp->Update();// カーソルの制限用
 	fps->FpsControlBegin();
 
 #pragma endregion

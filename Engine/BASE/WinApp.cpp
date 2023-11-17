@@ -76,6 +76,27 @@ void WinApp::Initialize()
 
 void WinApp::Update()
 {
+
+
+	// Record the area in which the cursor can move. 
+
+	GetClipCursor(&rcOldClip);
+
+	// Get the dimensions of the application's window. 
+
+	GetWindowRect(hwnd, &rcClip);
+
+	// Confine the cursor to the application's window. 
+
+	ClipCursor(&rcClip);
+
+	// 
+	// Process input from the confined cursor. 
+	// 
+
+ // Restore the cursor to its previous area. 
+
+	ClipCursor(&rcOldClip);
 }
 
 void WinApp::Finalize()
