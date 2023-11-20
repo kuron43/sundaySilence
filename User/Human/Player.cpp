@@ -21,7 +21,7 @@ Player::~Player() {
 
 ///
 void Player::Initialize() {
-	model_ = Model::LoadFromOBJ("prayer");
+	model_ = Model::LoadFromOBJ("player");
 	reticleMD_ = Model::LoadFromOBJ("cursor");
 
 	object_ = Object3d::Create();
@@ -143,7 +143,11 @@ void Player::Reset() {
 	isDeath_ = false;
 	_isSlow = false;
 	object_->wtf.Initialize();
+	object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
 	pointDash_->Reset();
+	isHitEffect = false;
+	hitTime_ = NONE;
+
 }
 
 void Player::Move(Input* input) {
