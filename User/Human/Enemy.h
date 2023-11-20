@@ -43,7 +43,8 @@ private:
 	// 当たり判定用のアップデート
 	void ColiderUpdate();
 	void OnColision();
-	
+
+	void HitMyColor();
 public:
 	Object3d* object_;
 private:
@@ -80,6 +81,11 @@ private:
 	std::unique_ptr <ParticleManager>  particle_;
 	uint32_t onPatTime_;
 	bool onPat_;
+
+	// 体の色変化
+	bool isHitEffect;
+	const uint32_t MAX_HITTIME = 5;
+	uint32_t hitTime_;
 
 	//コライダー
 public:

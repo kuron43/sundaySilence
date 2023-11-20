@@ -85,6 +85,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 	nowTitle = false;
 	nowTitle = !isTitle;
 
+	HitMyColor();
 	object_->Update();
 	reticle->Update();
 
@@ -210,9 +211,24 @@ void Enemy::OnColision()
 {
 	//object_->SetColor({ 1,0,0 });
 	hp--;
+	isHitEffect = true;
 	if (hp < 1) {
 		isDead = true;
 		onPat_ = true;
 		onPatTime_ = 5;
+	}
+}
+void Enemy::HitMyColor()
+{
+	if (isHitEffect == true) {
+		object_->SetColor({ 1,0,0,1.0f });
+		hitTime_++;
+		if (hitTime_ >= MAX_HITTIME) {
+			isHitEffect = false;
+			hitTime_ = 0;
+		}
+	}
+	else {
+		object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
 	}
 }

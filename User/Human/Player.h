@@ -40,6 +40,8 @@ public:
 	uint32_t HowTribe() { return Tribe_; };
 private:
 	void Move(Input* input);
+	void FaceAngleUpdate();
+	void HitMyColor();
 	void ColisionUpdate();
 	void OnColision();
 private:
@@ -79,6 +81,10 @@ private:
 	uint32_t hp_ = MAX_HP;
 	uint32_t hit_;
 	bool isDeath_;
+	// 体の色変化
+	bool isHitEffect;
+	const uint32_t MAX_HITTIME = 5;
+	uint32_t hitTime_;
 	//コライダー
 public:
 	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }

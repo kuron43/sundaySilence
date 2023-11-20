@@ -156,6 +156,7 @@ public: // メンバ関数
 	//setter
 	void SetModel(Model* model) { model_ = model; }
 	void SetColor(Vector4 color) { color_ = color; }
+	Vector4 GetColor() { return color_; }
 	Model& GetModel() { return *model_; }
 
 private: // メンバ変数

@@ -69,6 +69,7 @@ void Player::Initialize() {
 ///
 void Player::Update(Input* input, bool isTitle) {
 	nowTitle = isTitle;
+	FaceAngleUpdate();
 	if (pointDash_->isActive == false) {
 		Move(input);
 	}
@@ -86,31 +87,35 @@ void Player::Update(Input* input, bool isTitle) {
 	weapon_[0]->Update(input, _isSlow);
 
 	if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
-		if (input->MouseButtonTrigger(LEFT_MOUSE) && !isTitle && _isSlow == true) {
+		if (input->MouseButtonTrigger(LEFT_MOUSE) && !nowTitle && _isSlow == true) {
 			pointDash_->SetPoint(reticle->wtf.position, input);
 			nowSetPoint = true;
 		}
 	}
 
-	if (!isTitle && pointDash_->isActive == true) {
+	if (!nowTitle && pointDash_->isActive == true) {
 		pointDash_->GoToPoint();
 		object_->wtf.position = pointDash_->resultVec;
 	}
 
+
+
 	ColisionUpdate();
-
+	HitMyColor();
 	object_->Update();
-
+	Vector4 skaliCol = object_->GetColor();
 	ImGui::Begin("player");
 	ImGui::Text("window W :%d", WinApp::window_width);
 	ImGui::Text("window H :%d", WinApp::window_height);
-
 	ImGui::Text("Palams");
 	ImGui::InputFloat3("Position", &object_->wtf.position.x);
 	ImGui::Text("PointDash");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
+	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
+	ImGui::InputFloat4("Col", &skaliCol.x);
 	ImGui::InputFloat("spe :%f", &pointDash_->easeSpeed);
 	ImGui::End();
+
 }
 
 ///
@@ -122,7 +127,6 @@ void Player::Draw(DirectXCommon* dxCommon) {
 		reticle->Draw();
 	}
 	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
-
 		//coliderPosTest_[i]->Draw();
 	}
 	Object3d::PostDraw();
@@ -147,8 +151,7 @@ void Player::Move(Input* input) {
 	//-----行動処理-----//
 	//速度を0にする
 	velocity_.InIt();
-	Vector3 faceAngle,speed;
-	faceAngle.InIt();
+	Vector3 speed;
 	speed.InIt();
 
 	//キー入力があったら
@@ -169,9 +172,7 @@ void Player::Move(Input* input) {
 		if (input->KeyboardPush(DIK_D)) {
 			speed.x += kMoveSpeed_;
 		}
-
 	}
-
 	//////////////////////////////////
 	if (input->MouseButtonTrigger(RIGHT_MOUSE)) {
 		_isSlow = true;
@@ -194,15 +195,34 @@ void Player::Move(Input* input) {
 		velocity_ = -oldVelocity_;
 	}
 
-	{
-		faceAngle_.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x,reticle->wtf.position.z- object_->wtf.position.z);
-		faceAngle = faceAngle_;
-	}
-
-	object_->wtf.rotation = faceAngle;
 	object_->wtf.position += velocity_;
 	oldVelocity_ = velocity_;
 
+}
+
+void Player::FaceAngleUpdate()
+{
+	Vector3 faceAngle;
+	faceAngle.InIt();
+	faceAngle_.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
+	faceAngle = faceAngle_;
+
+	object_->wtf.rotation = faceAngle;
+}
+
+void Player::HitMyColor()
+{
+	if (isHitEffect == true) {
+		object_->SetColor({ 1,0,0,1.0f });
+		hitTime_++;
+		if (hitTime_ >= MAX_HITTIME) {
+			isHitEffect = false;
+			hitTime_ = 0;
+		}
+	}
+	else {
+		object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
+	}
 }
 
 void Player::ColisionUpdate() {
@@ -226,8 +246,8 @@ void Player::ColisionUpdate() {
 		coliderPosTest_[i]->wtf.rotation.InIt();
 		coliderPosTest_[i]->Update();
 	}
+	// クエリーコールバッククラス
 	{
-		// クエリーコールバッククラス
 		class PlayerQueryCallback :public QueryCallback
 		{
 		public:
@@ -280,6 +300,7 @@ void Player::OnColision()
 {
 	hp_--;
 	hit_++;
+	isHitEffect = true;
 	if (hp_ <= NONE) {
 		isDeath_ = true;
 	}

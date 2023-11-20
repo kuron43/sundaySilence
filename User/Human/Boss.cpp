@@ -85,11 +85,11 @@ void Boss::Initialize() {
 
 ///
 void Boss::Update(Input* input, bool isTitle) {
-	object_->SetColor({ 1,1,1,1.0f });
 	object_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
 	nowTitle = false;
 	nowTitle = !isTitle;
 
+	HitMyColor();
 	object_->Update();
 	reticle->Update();
 
@@ -228,9 +228,24 @@ void Boss::OnColision()
 {
 	//object_->SetColor({ 1,0,0 });
 	hp -= 1;
+	isHitEffect = true;
 	if (hp < 1) {
 		isDead = true;
 		onPat_ = true;
 		onPatTime_ = 50;
+	}
+}
+void Boss::HitMyColor()
+{
+	if (isHitEffect == true) {
+		object_->SetColor({ 1,0,0,1.0f });
+		hitTime_++;
+		if (hitTime_ >= MAX_HITTIME) {
+			isHitEffect = false;
+			hitTime_ = 0;
+		}
+	}
+	else {
+		object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
 	}
 }

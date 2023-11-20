@@ -10,7 +10,6 @@ SceneObjects::SceneObjects(DirectXCommon* DXCommon, Camera* camera) {
 	_camera = camera;
 }
 SceneObjects::~SceneObjects() {
-
 }
 void SceneObjects::Initialize() {
 
