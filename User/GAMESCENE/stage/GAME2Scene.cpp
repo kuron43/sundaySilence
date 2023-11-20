@@ -113,7 +113,7 @@ void GAME2Scene::Initialize() {
 	{
 		_controller->_camera->SetEye(camposEye);
 		_controller->_camera->SetTarget(camposTar);
-		_controller->_camera->SetFocalLengs(30.0f);
+		_controller->_camera->SetFocalLengs(29.0f);
 		_controller->_camera->Update();
 		_objects->floorGround->Update();
 
