@@ -47,6 +47,12 @@ void Wall::CollideInitialize() {
 void Wall::Update() {
 	isHit = false;
 	obb_->Update();
+	object_->SetColor({ 0.5f,0.5f,0.5f,1.0f});
+	object_->wtf.position = obb_->GetPos_();
+	object_->wtf.scale.x = obb_->GetLength(0);
+	object_->wtf.scale.y = obb_->GetLength(1);
+	object_->wtf.scale.z = obb_->GetLength(2);
+	object_->wtf.rotation = obb_->Getrotate_();
 	object_->Update();
 	coliderPosTest_->wtf.position = obb_->GetPos_();
 	coliderPosTest_->wtf.scale.x = obb_->GetLength(0);
@@ -60,8 +66,8 @@ void Wall::Update() {
 /// 描画を行う
 void Wall::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
-	//object_->Draw();
-	coliderPosTest_->Draw();
+	object_->Draw();
+	//coliderPosTest_->Draw();
 	Object3d::PostDraw();
 }
 

@@ -42,5 +42,6 @@ private:
 
 	RECT rcClip;           // new area for ClipCursor
 	RECT rcOldClip;        // previous area for ClipCursor
+	bool isDebug_;
 
 };

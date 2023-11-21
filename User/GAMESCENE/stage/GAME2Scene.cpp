@@ -197,7 +197,7 @@ void GAME2Scene::Update(Input* input) {
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
 		stageFailed = _objects->Banner(1);
 		if (stageFailed == false) {
-			_controller->SetSceneNum(SCE_GAME1);
+			_controller->SetSceneNum(SCE_GAME2);
 		}
 	}
 	else if (startTime_ == false && stageClear == true && stageFailed == false) {
@@ -206,6 +206,7 @@ void GAME2Scene::Update(Input* input) {
 			_controller->SetSceneNum(SCE_CLEAR);
 		}
 	}
+	_objects->UIUpdate();
 }
 
 void GAME2Scene::Draw() {
@@ -230,6 +231,7 @@ void GAME2Scene::Draw() {
 	}
 	_objects->SlowEffectDraw();
 	_objects->plDamageRed_->Draw();
+	_objects->UIDraw();
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();
 	}

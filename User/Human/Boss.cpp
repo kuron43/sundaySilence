@@ -232,7 +232,7 @@ void Boss::OnColision()
 	if (hp < 1) {
 		isDead = true;
 		onPat_ = true;
-		onPatTime_ = 50;
+		onPatTime_ = 5;
 	}
 }
 void Boss::HitMyColor()

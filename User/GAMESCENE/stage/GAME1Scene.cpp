@@ -41,7 +41,7 @@ void GAME1Scene::Initialize() {
 	stageFailed = false;
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("stage1");
+		leveData = JsonLoader::LoadJsonFile("stage2");
 
 		for (auto& objectData : leveData->JsonObjects) {
 

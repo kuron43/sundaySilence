@@ -12,8 +12,10 @@ SceneObjects::SceneObjects(DirectXCommon* DXCommon, Camera* camera) {
 SceneObjects::~SceneObjects() {
 }
 void SceneObjects::Initialize() {
-
 	ShowCursor(false);
+#ifdef _DEBUG
+	ShowCursor(true);
+#endif
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
 	{
