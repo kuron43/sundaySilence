@@ -49,6 +49,7 @@ public:
 	Object3d* object_;
 private:
 	const uint32_t Tribe_ = 1;
+	bool StartFrontRot = false;
 	bool isFound = false;
 	bool isFire = false;
 	bool isBlocked = false;
@@ -67,8 +68,16 @@ private:
 	bool isRun_ = false;
 	//移動ベクトル
 	Vector3 velocity_;
-	// 初期回転向き保存
+	// 回転向き保存
 	Vector3 restRotate_;
+	Vector3 stateRotate_;
+	// イージング用
+	uint32_t easeTimer;
+	uint32_t easeMaxTime = 50;
+	float easetime;
+	bool isStartEaseTime = false;
+	bool isEaseEnd = false;
+	bool isLost = false;
 
 
 	Weapon* weapon_;
@@ -77,7 +86,7 @@ private:
 	// タイトル用の処理と切り分けるためのやつ
 	bool nowTitle = false;
 
-
+	// パーティクル
 	std::unique_ptr <ParticleManager>  particle_;
 	uint32_t onPatTime_;
 	bool onPat_;

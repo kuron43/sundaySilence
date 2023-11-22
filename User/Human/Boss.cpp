@@ -176,7 +176,7 @@ void Boss::ColiderUpdate() {
 			OnColision();
 			// パーティクルなぜかXそのままYZ入れ替えると治る
 			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-			particle_->RandParticle(patPos);
+			particle_->RandParticle(10,patPos);
 		}
 	}
 
@@ -188,23 +188,16 @@ void Boss::ColiderUpdate() {
 	}
 	ray->Update();
 
-	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-		isFound = false;
-		isBlocked = true;
-
-		//ImGui::Begin("eneRayHitBarrier");
-		//ImGui::Text("HIT : dis %f", rayHit->distance);
-		//ImGui::End();
-
-	}
+	isFound = false;
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
 		isFound = true;
-		if (isBlocked == false) {
-			isFire = true;
-			//ImGui::Begin("eneRayHitPlayer");
-			//ImGui::Text("HIT : dis %f", rayHit->distance);
-			//ImGui::End();
+		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+			isFound = false;
+			isBlocked = true;
 		}
+	}
+	if (isBlocked == false && isFound == true) {
+		isFire = true;
 	}
 	if (isDead) {
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
@@ -216,7 +209,7 @@ void Boss::ColiderUpdate() {
 			onPatTime_--;
 			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
 			particle_->LoadTexture("purple.png");
-			particle_->RandParticle(patPos, 8);
+			particle_->RandParticle(8,patPos);
 		}
 	}
 	if (onPatTime_ < 1) {

@@ -5,12 +5,14 @@
  */
 #include <vector>
 
+#include "DirectXCommon.h"
 #include "Affin.h"
 #include "Input.h"
 #include "Easing.h"
-#include"RayCollider.h"
-#include"CollisionManager.h"
-#include"CollisionAttribute.h"
+#include "RayCollider.h"
+#include "CollisionManager.h"
+#include "CollisionAttribute.h"
+#include "ParticleManager.h"
 
 // ポイントダッシュスキル
 class PointDash
@@ -51,11 +53,16 @@ private:
 	float easetime;
 	bool timeEnd = false;
 
+	// パーティクル
+	std::unique_ptr <ParticleManager>  particle_;
+	uint32_t onPatTime_;
+	bool onPat_;
+
 public:
 
 	~PointDash();
 	void Initialize();
-	void Draw();
+	void Draw(DirectXCommon* dxCommon);
 	// 更新
 	bool PointRayUpdate(Vector3 pos,Vector3 ret);
 	// 地点登録

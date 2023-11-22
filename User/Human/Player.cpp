@@ -120,8 +120,8 @@ void Player::Update(Input* input, bool isTitle) {
 
 ///
 void Player::Draw(DirectXCommon* dxCommon) {
+	pointDash_->Draw(dxCommon);
 	Object3d::PreDraw(dxCommon->GetCommandList());
-	pointDash_->Draw();
 	object_->Draw();
 	if (!nowTitle) {
 		reticle->Draw();

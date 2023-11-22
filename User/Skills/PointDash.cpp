@@ -26,22 +26,35 @@ void PointDash::Initialize()
 		object_[i]->wtf.scale = Vector3(1.5f, 1.5f, 1.5f);
 		pointActive_[i] = false;
 	}
+
+	particle_ = std::make_unique<ParticleManager>();
+	particle_->Initialize();
+	particle_->LoadTexture("lightgray.png");
+	particle_->Update();
+	onPatTime_ = 0;
+	onPat_ = false;
+
 	ray = new RayCollider;
 	CollisionManager::GetInstance()->AddCollider(ray);
 	rayHit = new RaycastHit;
 }
 
-void PointDash::Draw()
+void PointDash::Draw(DirectXCommon* dxCommon)
 {
+	Object3d::PreDraw(dxCommon->GetCommandList());
+
 	for (uint32_t i = 0; i < 5; i++) {
 		if (pointActive_[i] == true) {
 			object_[i]->Draw();
 		}
 	}
+	Object3d::PostDraw();
+	particle_->Draw();
 }
 
 bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 {
+	particle_->Update();
 	ray->Update();
 
 	for (uint32_t i = 0; i < 5; i++) {
@@ -101,7 +114,6 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 		pointActive_[POINT_1] = true;
 		object_[POINT_1]->wtf.position = point;
 		registNum = POINT_2;
-		return;
 	}
 	else if (registNum == POINT_2) {
 		points[POINT_2] = point;
@@ -131,7 +143,7 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	else {
 
 	}
-
+	onPat_ = true;
 }
 void PointDash::MakeMoveVec(Vector3 pos) {
 	startPos = pos;
@@ -160,22 +172,27 @@ void PointDash::MakeMoveVec(Vector3 pos) {
 }
 void PointDash::GoToPoint() {
 	timeEnd = false;
+	Vector3 inversVec3;
 	if (isActive) {
 		time++;
 
 		easetime = (float)time / easeMaxTime;
 		if (nowPointNum == 0 && time <= easeMaxTime && registNum >= 1) {
 			resultVec = Easing::InOutQuintVec3(startPos, points[0], (float)easetime);
+			inversVec3 = startPos - points[0];
 			if (time == easeMaxTime - 1) {
 				nowPointNum = 1;
 				time = 1;
 				easetime = 0;
 				pointActive_[0] = false;
 				timeEnd = true;
+				onPat_ = true;
+				inversVec3 = -inversVec3;
 			}
 		}
 		if (nowPointNum == 1 && time <= easeMaxTime && registNum >= 2) {
 			resultVec = Easing::InOutQuintVec3(points[0], points[1], (float)easetime);
+			inversVec3 = points[0] - points[1];
 			if (time == easeMaxTime - 1) {
 				resultVec = points[1];
 				nowPointNum = 2;
@@ -183,10 +200,13 @@ void PointDash::GoToPoint() {
 				easetime = 0;
 				pointActive_[1] = false;
 				timeEnd = true;
+				onPat_ = true;
+				inversVec3 = -inversVec3;
 			}
 		}
 		if (nowPointNum == 2 && time <= easeMaxTime && registNum >= 3) {
 			resultVec = Easing::InOutQuintVec3(points[1], points[2], (float)easetime);
+			inversVec3 = points[1] - points[2];
 			if (time == easeMaxTime - 1) {
 				resultVec = points[2];
 				nowPointNum = 3;
@@ -194,10 +214,13 @@ void PointDash::GoToPoint() {
 				easetime = 0;
 				pointActive_[2] = false;
 				timeEnd = true;
+				onPat_ = true;
+				inversVec3 = -inversVec3;
 			}
 		}
 		if (nowPointNum == 3 && time <= easeMaxTime && registNum >= 4) {
 			resultVec = Easing::InOutQuintVec3(points[2], points[3], (float)easetime);
+			inversVec3 = points[2] - points[3];
 			if (time == easeMaxTime - 1) {
 				resultVec = points[3];
 				nowPointNum = 4;
@@ -205,10 +228,13 @@ void PointDash::GoToPoint() {
 				easetime = 0;
 				pointActive_[3] = false;
 				timeEnd = true;
+				onPat_ = true;
+				inversVec3 = -inversVec3;
 			}
 		}
 		if (nowPointNum == 4 && time <= 60 && registNum == 5) {
 			resultVec = Easing::InOutQuintVec3(points[3], points[4], (float)easetime);
+			inversVec3 = points[3] - points[4];
 			if (time >= easeMaxTime - 1) {
 				resultVec = points[4];
 				nowPointNum = 5;
@@ -216,8 +242,15 @@ void PointDash::GoToPoint() {
 				easetime = 0;
 				pointActive_[4] = false;
 				timeEnd = true;
+				inversVec3 = -inversVec3;
 			}
 		}
+		// パーティクルなぜかXそのままYZ入れ替えると治る
+		Vector3 patPos = { resultVec.x,resultVec.z,resultVec.y };
+		if (onPat_) {
+			particle_->RandParticle(25, patPos, inversVec3);
+		}
+		onPat_ = false;
 	}
 	if (nowPointNum == registNum) {
 		isActive = false;

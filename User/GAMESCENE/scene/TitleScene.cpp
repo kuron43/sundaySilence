@@ -162,7 +162,7 @@ void TitleScene::Update(Input* input) {
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
 	if (titleTime_ % 50 == 0) {
-		particle_->RandParticle(Vector3(0, 100, 0), 100);
+		particle_->RandParticle(100,Vector3(0, 100, 0));
 	}
 	particle_->Update();
 

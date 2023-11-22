@@ -139,16 +139,18 @@ void Enemy::Reset() {
 /// 撃つ方向に向かせる
 /// </summary>
 void Enemy::FrontFace() {
-	Vector3 faceAngle;
+	Vector3 faceAngle,resultRot;
 	faceAngle.InIt();
 	faceAngle.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
-	if (isFire == true) {
+	if (isFound == true) {
+		stateRotate_ = object_->wtf.rotation;
 		frontVec_ = faceAngle;
-	}if (isFire == false) {
+	}if (isFound == false) {
+		stateRotate_ = faceAngle;
 		frontVec_ = restRotate_;
 	}
-
-	object_->wtf.rotation = frontVec_;
+	resultRot = frontVec_;
+	object_->wtf.rotation = resultRot;
 }
 
 void Enemy::ColiderUpdate() {
@@ -167,7 +169,7 @@ void Enemy::ColiderUpdate() {
 				OnColision();
 				// パーティクルなぜかXそのままYZ入れ替えると治る
 				Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-				particle_->RandParticle(patPos);
+				particle_->RandParticle(10,patPos);
 			}
 		}
 	}
@@ -180,12 +182,13 @@ void Enemy::ColiderUpdate() {
 	}
 	ray->Update();
 
-	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-		isFound = false;
-		isBlocked = true;
-	}
+	isFound = false;
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
 		isFound = true;
+		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+			isFound = false;
+			isBlocked = true;
+		}
 	}
 	if (isBlocked == false && isFound == true) {
 		isFire = true;
@@ -199,7 +202,7 @@ void Enemy::ColiderUpdate() {
 		if (onPat_) {
 			onPatTime_--;
 			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-			particle_->RandParticle(patPos, 15);
+			particle_->RandParticle(15,patPos);
 		}
 	}
 	if (onPatTime_ < 1) {

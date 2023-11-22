@@ -662,17 +662,20 @@ void ParticleManager::RandParticle()
 		Add(60, pos, vel, acc, 1.0f, 0.0f);
 	}
 }
-void ParticleManager::RandParticle(Vector3 posO, uint32_t life)
+void ParticleManager::RandParticle(uint32_t life, Vector3 pos, Vector3 velo)
 {
-	for (uint32_t i = 0; i < 20; i++)
+	Vector3 velocity = velo;
+	velocity.nomalize();
+	velocity += { static_cast<float>((rand() % 20 - 10) / 10.0f),
+		static_cast<float>((rand() % 20 - 10) / 10.0f),
+		static_cast<float>((rand() % 20 - 10) / 10.0f) };
+	for (uint32_t i = 0; i < 25; i++)
 	{
 		// 追加
-		wtf_.position = posO;
+		wtf_.position = pos;
 		wtf_.UpdateMat();
 		Add(life, wtf_.position,
-			{ static_cast<float>((rand() % 20 - 10) / 10.0f),
-			static_cast<float>((rand() % 20 - 10) / 10.0f) ,
-			static_cast<float>((rand() % 20 - 10) / 10.0f) },
+			velocity,
 			{ static_cast<float>((rand() % 20 - 10) / 100.0f),
 			static_cast<float>((rand() % 20 - 10) / 100.0f),
 			static_cast<float>((rand() % 20 - 10) / 100.0f) }, 0.4f, 0.0f);
