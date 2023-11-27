@@ -86,6 +86,14 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(45, "Slow2ICON.png");
 		spriteCommon_->LoadTexture(46, "Point1ICON.png");
 		spriteCommon_->LoadTexture(47, "Point2ICON.png");
+		spriteCommon_->LoadTexture(48, "pauseInfo.png");
+	}
+	// スプライトロード  50~ // ポーズシーン用
+	{
+		spriteCommon_->LoadTexture(50, "goTitle.png");
+		spriteCommon_->LoadTexture(51, "goTitle2.png");
+		spriteCommon_->LoadTexture(52, "pauseGoBack.png");
+
 	}
 
 	mouseCursor_ = std::make_unique<Cursor>();
@@ -206,6 +214,14 @@ void SceneObjects::Initialize() {
 	}
 	{
 		backWall = { 0,2,10,21,0,0, };
+	}
+	{
+		UIPauseSP_ = std::make_unique<Sprite>();
+		UIPauseSP_->Initialize(spriteCommon_.get(), 48);
+		UIPauseSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 6.5f ,WinApp::window_height / 2.0f };
+		UIPauseSPsize_ = Vector2{ 125.0f,64.0f };
+		UIPauseSP_->SetPozition(UIPauseSPpos_);
+		UIPauseSP_->SetSize(UIPauseSPsize_);
 	}
 
 
@@ -400,13 +416,14 @@ void SceneObjects::UIUpdate()
 		UISlowSP_->SetTextureIndex(44);
 	}
 
-	UIHPSPsize_.x = 7.0f * player->GetHP();
+	UIHPSPsize_.x = 8.0f * player->GetHP();
 	UIHPSP_->SetSize(UIHPSPsize_);
 	UIBuckSP_->Update();
 	UIWeaponSP_->Update();
 	UISlowSP_->Update();
 	UIPointSP_->Update();
 	UIHPSP_->Update();
+	UIPauseSP_->Update();
 }
 
 void SceneObjects::UIDraw()
@@ -416,4 +433,5 @@ void SceneObjects::UIDraw()
 	UISlowSP_->Draw();
 	UIPointSP_->Draw();
 	UIHPSP_->Draw();
+	UIPauseSP_->Draw();
 }

@@ -145,18 +145,34 @@ void Enemy::FrontFace() {
 	if (isFound == true) {
 		stateRotate_ = object_->wtf.rotation;
 		frontVec_ = faceAngle;
-	}if (isFound == false) {
+	}
+	else {
 		stateRotate_ = faceAngle;
 		frontVec_ = restRotate_;
+	}
+	if (isLost == true) {
+		stateRotate_ = object_->wtf.rotation;
+		easeTimer++;
+
+		easetime = (float)easeTimer / easeMaxTime;
+		if (easeTimer <= easeMaxTime) {
+			frontVec_ = Easing::InQuintVec3(faceAngle, restRotate_, (float)easetime);
+			if (easeTimer == easeMaxTime) {
+				easeTimer = 1;
+				easetime = 0;
+				isEaseEnd = true;
+				isLost = false;
+			}
+		}
 	}
 	resultRot = frontVec_;
 	object_->wtf.rotation = resultRot;
 }
 
 void Enemy::ColiderUpdate() {
-
-	isBlocked = false;
+	oldFound = isFound;
 	isFound = false;
+	isBlocked = false;
 	isFire = false;
 
 	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
@@ -182,7 +198,7 @@ void Enemy::ColiderUpdate() {
 	}
 	ray->Update();
 
-	isFound = false;
+	
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
 		isFound = true;
 		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
@@ -192,6 +208,9 @@ void Enemy::ColiderUpdate() {
 	}
 	if (isBlocked == false && isFound == true) {
 		isFire = true;
+	}
+	if (isBlocked == true && oldFound == true) {
+		isLost = true;
 	}
 	if (isDead) {
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {

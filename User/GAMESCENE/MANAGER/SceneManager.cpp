@@ -44,6 +44,7 @@ void SceneManager::ChangeScene() {
 		_scene.pop();
 		_scene.emplace(new TitleScene(&*this, _objects));
 		SceneInitialize();
+		_objects->OFFIsUIDraw();
 		TransScene();
 		goToTitle = false;
 	}

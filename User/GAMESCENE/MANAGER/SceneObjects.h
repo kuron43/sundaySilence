@@ -125,6 +125,11 @@ private: // UI用
 	Vector2 UIPointSPpos_;
 	Vector2 UIPointSPsize_;
 
+	// ポーズ案内
+	std::unique_ptr <Sprite> UIPauseSP_;
+	Vector2 UIPauseSPpos_;
+	Vector2 UIPauseSPsize_;
+
 	// PlayerHP 仮
 	std::unique_ptr <Sprite> UIHPSP_;
 	Vector2 UIHPSPpos_;

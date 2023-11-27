@@ -34,7 +34,9 @@ public:
 
 
 private:
-	std::unique_ptr <Sprite> pauseGray;
+	std::unique_ptr <Sprite> pauseGray_;
+	std::unique_ptr <Sprite> pauseGoBuck_;
+	std::unique_ptr <Sprite> titleButton_;
 public:
 
 

@@ -51,6 +51,7 @@ private:
 	const uint32_t Tribe_ = 1;
 	bool StartFrontRot = false;
 	bool isFound = false;
+	bool oldFound = false;
 	bool isFire = false;
 	bool isBlocked = false;
 
@@ -75,7 +76,6 @@ private:
 	uint32_t easeTimer;
 	uint32_t easeMaxTime = 50;
 	float easetime;
-	bool isStartEaseTime = false;
 	bool isEaseEnd = false;
 	bool isLost = false;
 
