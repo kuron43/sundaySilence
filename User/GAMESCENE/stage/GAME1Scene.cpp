@@ -144,6 +144,7 @@ void GAME1Scene::Update(Input* input) {
 	_objects->eneCount = 0;
 	_objects->bossCount = 0;
 	_objects->floorGround->Update();
+	//_objects->bossFbxO_->Update();
 
 
 	if (startTime_ == true && stageClear == false && stageFailed == false) {
@@ -221,6 +222,7 @@ void GAME1Scene::Draw() {
 	for (Wall* walls : _objects->walls) {
 		walls->Draw(_controller->_dxCommon);
 	}
+	//_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
 
 	Object3d::PreDraw(_controller->_dxCommon->GetCommandList());
 

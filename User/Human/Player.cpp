@@ -178,11 +178,13 @@ void Player::Move(Input* input) {
 		}
 	}
 	//////////////////////////////////
-	if (input->MouseButtonTrigger(RIGHT_MOUSE)) {
+	if (input->MouseButtonPush(RIGHT_MOUSE)) {
 		_isSlow = true;
 	}
-	if (input->MouseButtonRelease(RIGHT_MOUSE)) {
+	else {
 		_isSlow = false;
+	}
+	if (input->MouseButtonRelease(RIGHT_MOUSE)) {
 		nowSetPoint = false;
 		pointDash_->MakeMoveVec(Affin::GetWorldTrans(object_->wtf.matWorld));
 	}
