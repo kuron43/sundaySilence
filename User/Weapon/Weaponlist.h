@@ -12,6 +12,6 @@
 enum WEAPONS
 {
 	//NONEWEAPON = 0,
-	ASSAULT = 0,
-	SHOTGUN = 1,
+	WP_ASSAULT = 0,
+	WP_SHOTGUN = 1,
 };

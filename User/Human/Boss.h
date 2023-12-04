@@ -48,7 +48,7 @@ public:
 	Object3d* object_;
 private:
 	const uint32_t Tribe_ = 1;
-	uint32_t useWeapon_ = ASSAULT;
+	uint32_t useWeapon_ = WP_ASSAULT;
 	bool isFound = false;
 	bool isFire = false;
 	bool isBlocked = false;

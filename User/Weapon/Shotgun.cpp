@@ -33,6 +33,8 @@ Shotgun* Shotgun::Create()
 bool Shotgun::Initialize() {
 	model_ = Model::LoadFromOBJ("sphere");
 	goShot = true;
+	nowRoading = false;
+	mag = 0;
 	return true;
 }
 
@@ -51,23 +53,27 @@ void Shotgun::Update(Input* input, bool isSlow) {
 		speed_ = nomalSpeed;
 	}
 	// 
-	if (roadingTime <= 0) {
-		if (mag < 5) {
-			goShot = true;
+	if (5 <= mag) {
+		if (_isSlow == true) {
+			roadingTime = 50 * 3;
+			goShot = false;
+			nowRoading = true;
 		}
-		if (mag >= 5) {
-			if (_isSlow == true) {
-				roadingTime = 150;
-				goShot = false;
-			}
-			else {
-				roadingTime = 50;
-				goShot = false;
-			}
-			mag = 0;
+		else {
+			roadingTime = 50;
+			goShot = false;
+			nowRoading = true;
 		}
 	}
-	roadingTime--;
+	if (nowRoading == false) {
+		mag = 0;
+		goShot = true;
+	}else {
+		roadingTime--;
+	}
+	if (roadingTime <= 0) {
+		nowRoading = false;
+	}
 
 	BulletManager::GetInstance()->SetSpeed(speed_);
 }
@@ -98,10 +104,10 @@ void Shotgun::Shot(Transform& player, Transform& reticle, uint32_t team) {
 				velo = reticleVec - startPos;
 			}
 			else if (i == 1) {
-				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(9)));
+				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(6)));
 			}
 			else if (i == 2) {
-				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(-9)));
+				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(-6)));
 			}
 			velo.nomalize();
 			moveVec = velo * speed_;

@@ -20,7 +20,7 @@ bool Assault::Initialize() {
 
 /// 更新を行う
 void Assault::Update(Input* input, bool isSlow) {
-	
+
 	_isSlow = isSlow;
 	if (input) {
 
@@ -41,15 +41,18 @@ void Assault::Update(Input* input, bool isSlow) {
 			if (_isSlow == true) {
 				roadingTime = 150;
 				goShot = false;
+				mag = 0;
 			}
 			else {
 				roadingTime = 50;
 				goShot = false;
+				mag = 0;
 			}
-			mag = 0;
 		}
 	}
 	roadingTime--;
+
+
 
 	BulletManager::GetInstance()->SetSpeed(speed_);
 }
@@ -67,7 +70,7 @@ void Assault::Reset() {
 
 // 発射を行う
 void Assault::Shot(Transform& shooter, Transform& reticle, uint32_t team) {
-	
+
 	if (coolTime <= 0 && goShot == true) {
 		//弾を生成し、初期化
 		std::unique_ptr<Bullet> newBullet = std::make_unique<Bullet>();
@@ -78,7 +81,7 @@ void Assault::Shot(Transform& shooter, Transform& reticle, uint32_t team) {
 		velo.nomalize();
 		moveVec = velo * speed_;
 		moveVec.nomalize();
-		newBullet->Initialize(model_, startPos+velo, moveVec, team);
+		newBullet->Initialize(model_, startPos + velo, moveVec, team);
 
 		//弾を登録
 		BulletManager::GetInstance()->AddBullet(std::move(newBullet));

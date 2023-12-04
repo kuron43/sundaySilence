@@ -32,11 +32,11 @@ void Player::Initialize() {
 	reticle->SetModel(reticleMD_);
 	reticle->Initialize();
 
-	weapon_[ASSAULT] = new Assault();
-	weapon_[SHOTGUN] = new Shotgun();
-	weapon_[ASSAULT]->Initialize();
-	weapon_[SHOTGUN]->Initialize();
-	useWeapon_ = ASSAULT;
+	weapon_[WP_ASSAULT] = new Assault();
+	weapon_[WP_SHOTGUN] = new Shotgun();
+	weapon_[WP_ASSAULT]->Initialize();
+	weapon_[WP_SHOTGUN]->Initialize();
+	useWeapon_ = WP_ASSAULT;
 
 	pointDash_ = new PointDash();
 	pointDash_->Initialize();
@@ -82,10 +82,10 @@ void Player::Update(Input* input, bool isTitle) {
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
-		useWeapon_ = SHOTGUN;
+		useWeapon_ = WP_SHOTGUN;
 	}
 	if (input->KeyboardTrigger(DIK_NUMPAD0)) {
-		useWeapon_ = ASSAULT;
+		useWeapon_ = WP_ASSAULT;
 	}
 	if (input->MouseButtonPush(0) && !isTitle && _isSlow == false) {
 		weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
@@ -94,7 +94,9 @@ void Player::Update(Input* input, bool isTitle) {
 	else {
 		isOnFire = false;
 	}
-	weapon_[useWeapon_]->Update(input, _isSlow);
+	for (uint32_t i = 0; i < 2; i++) {
+		weapon_[i]->Update(input, _isSlow);
+	}
 
 	if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
 		if (input->MouseButtonTrigger(LEFT_MOUSE) && !nowTitle && _isSlow == true) {
@@ -140,9 +142,9 @@ void Player::Draw(DirectXCommon* dxCommon) {
 		//coliderPosTest_[i]->Draw();
 	}
 	Object3d::PostDraw();
-	if (!nowTitle) {
+	/*if (!nowTitle) {
 		weapon_[useWeapon_]->Draw(dxCommon);
-	}
+	}*/
 }
 
 /// リセットを行う

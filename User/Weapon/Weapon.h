@@ -6,6 +6,7 @@
 #include "Model.h"
 #include "DirectXCommon.h"
 #include "Input.h"
+#include "ImGui.h"
 #include "Transform.h"
 #include "Bullet.h"
 #include "BulletManager.h"
