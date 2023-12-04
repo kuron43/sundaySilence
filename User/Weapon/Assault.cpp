@@ -66,13 +66,13 @@ void Assault::Reset() {
 }
 
 // 発射を行う
-void Assault::Shot(Transform& player, Transform& reticle, uint32_t team) {
+void Assault::Shot(Transform& shooter, Transform& reticle, uint32_t team) {
 	
 	if (coolTime <= 0 && goShot == true) {
 		//弾を生成し、初期化
 		std::unique_ptr<Bullet> newBullet = std::make_unique<Bullet>();
 		Vector3 startPos, reticleVec, moveVec, velo;
-		startPos = Affin::GetWorldTrans(player.matWorld); // 発射座標
+		startPos = Affin::GetWorldTrans(shooter.matWorld); // 発射座標
 		reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
 		velo = reticleVec - startPos;
 		velo.nomalize();

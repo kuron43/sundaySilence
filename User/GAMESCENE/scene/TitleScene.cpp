@@ -207,7 +207,7 @@ void TitleScene::Draw() {
 	_objects->player->Draw(_controller->_dxCommon);
 
 	particle_->Draw();
-	title_->Draw();
+	//title_->Draw();
 	titleButton_->Draw();
 
 	_objects->mouseCursor_->Draw();

@@ -154,13 +154,15 @@ void GAME1Scene::Update(Input* input) {
 		_controller->_camera->SetEye(camposEye);
 		_controller->_camera->SetTarget(camposTar);
 
+#ifdef _DEBUG
 		if (Input::get_instance().KeyboardPush(DIK_P)) {
 			Vector3 eyeDebug = _objects->player->GetTransform().position;
-			eyeDebug.y = (float)1;
+			eyeDebug.y = (float)3.5f;
 			_controller->_camera->SetEye(eyeDebug);
 			_controller->_camera->SetTarget(_objects->player->GetReticleTransform().position);
 			_controller->_camera->Update();
 		}
+#endif // DEBUG
 		_objects->player->Update(input);
 		stageFailed = _objects->player->GetIsDeath();
 

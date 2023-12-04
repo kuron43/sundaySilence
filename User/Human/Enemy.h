@@ -49,6 +49,7 @@ public:
 	Object3d* object_;
 private:
 	const uint32_t Tribe_ = 1;
+	uint32_t useWeapon_ = ASSAULT;
 	bool StartFrontRot = false;
 	bool isFound = false;
 	bool oldFound = false;

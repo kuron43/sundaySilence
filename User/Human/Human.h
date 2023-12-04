@@ -15,7 +15,7 @@
 
 #include "DirectXCommon.h"
 
-#include "Weapon.h"
+#include "Weaponlist.h"
 #include "ParticleManager.h"
 
 #include"SphereCollider.h"

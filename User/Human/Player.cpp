@@ -31,8 +31,12 @@ void Player::Initialize() {
 	reticle = Object3d::Create();
 	reticle->SetModel(reticleMD_);
 	reticle->Initialize();
-	weapon_[0] = new Assault();
-	weapon_[0]->Initialize();
+
+	weapon_[ASSAULT] = new Assault();
+	weapon_[SHOTGUN] = new Shotgun();
+	weapon_[ASSAULT]->Initialize();
+	weapon_[SHOTGUN]->Initialize();
+	useWeapon_ = ASSAULT;
 
 	pointDash_ = new PointDash();
 	pointDash_->Initialize();
@@ -77,14 +81,20 @@ void Player::Update(Input* input, bool isTitle) {
 	object_->wtf.position.y = NONE;
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
+	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
+		useWeapon_ = SHOTGUN;
+	}
+	if (input->KeyboardTrigger(DIK_NUMPAD0)) {
+		useWeapon_ = ASSAULT;
+	}
 	if (input->MouseButtonPush(0) && !isTitle && _isSlow == false) {
-		weapon_[0]->Shot(object_->wtf, reticle->wtf, PLAYER);
+		weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
 		isOnFire = true;
 	}
 	else {
 		isOnFire = false;
 	}
-	weapon_[0]->Update(input, _isSlow);
+	weapon_[useWeapon_]->Update(input, _isSlow);
 
 	if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
 		if (input->MouseButtonTrigger(LEFT_MOUSE) && !nowTitle && _isSlow == true) {
@@ -131,7 +141,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	}
 	Object3d::PostDraw();
 	if (!nowTitle) {
-		weapon_[0]->Draw(dxCommon);
+		weapon_[useWeapon_]->Draw(dxCommon);
 	}
 }
 

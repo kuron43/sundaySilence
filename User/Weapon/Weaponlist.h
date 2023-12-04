@@ -8,3 +8,10 @@
 // 後々消すかも
 #include "Assault.h"
 #include "Shotgun.h"
+
+enum WEAPONS
+{
+	//NONEWEAPON = 0,
+	ASSAULT = 0,
+	SHOTGUN = 1,
+};

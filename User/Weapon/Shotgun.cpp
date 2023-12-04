@@ -31,7 +31,7 @@ Shotgun* Shotgun::Create()
 
 /// 更新を行う
 bool Shotgun::Initialize() {
-	model_ = Model::LoadFromOBJ("cube");
+	model_ = Model::LoadFromOBJ("sphere");
 	goShot = true;
 	return true;
 }
@@ -52,10 +52,10 @@ void Shotgun::Update(Input* input, bool isSlow) {
 	}
 	// 
 	if (roadingTime <= 0) {
-		if (mag < 3) {
+		if (mag < 5) {
 			goShot = true;
 		}
-		if (mag >= 3) {
+		if (mag >= 5) {
 			if (_isSlow == true) {
 				roadingTime = 150;
 				goShot = false;
@@ -85,6 +85,7 @@ void Shotgun::Reset() {
 
 // 発射を行う
 void Shotgun::Shot(Transform& player, Transform& reticle, uint32_t team) {
+
 	if (coolTime <= 0 && goShot == true) {
 		for (uint32_t i = 0; i < 3; i++) {
 			//弾を生成し、初期化
@@ -93,10 +94,19 @@ void Shotgun::Shot(Transform& player, Transform& reticle, uint32_t team) {
 			startPos = Affin::GetWorldTrans(player.matWorld); // 発射座標
 			reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
 			velo = reticleVec - startPos;
+			if (i == 0) {
+				velo = reticleVec - startPos;
+			}
+			else if (i == 1) {
+				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(9)));
+			}
+			else if (i == 2) {
+				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(-9)));
+			}
 			velo.nomalize();
 			moveVec = velo * speed_;
 			moveVec.nomalize();
-			newBullet->Initialize(model_, startPos + velo*(float)i, moveVec, team);
+			newBullet->Initialize(model_, startPos + velo, moveVec, team);
 
 			//弾を登録
 			BulletManager::GetInstance()->AddBullet(std::move(newBullet));
@@ -106,10 +116,10 @@ void Shotgun::Shot(Transform& player, Transform& reticle, uint32_t team) {
 		//クールタイムをリセット
 		if (team == PLAYER) {
 			if (_isSlow == true) {
-				coolTime = 100;
+				coolTime = 45;
 			}
 			else {
-				coolTime = 45;
+				coolTime = 15;
 			}
 		}if (team == ENEMY) {
 			if (_isSlow == true) {

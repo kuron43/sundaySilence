@@ -3,6 +3,7 @@
  * @brief
  */
 #include "Enemy.h"
+#include <random>
 
 Enemy::Enemy() {
 
@@ -19,6 +20,10 @@ Enemy::~Enemy() {
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
 }
+	//乱数生成装置
+	std::random_device seed_gen;
+	std::mt19937_64 engine(seed_gen());
+	std::uniform_real_distribution<float>dist(0.0f, 50.0f);
 
 ///
 void Enemy::Initialize() {
@@ -35,7 +40,16 @@ void Enemy::Initialize() {
 	reticle->SetModel(model_);
 	reticle->Initialize();
 
-	weapon_ = new Assault();
+
+	//乱数
+	uint32_t value = (uint32_t)dist(engine);
+
+	if (value%2 == 0) {
+		weapon_ = new Shotgun();
+	}
+	else {
+		weapon_ = new Assault();
+	}
 	weapon_->Initialize();
 
 	particle_ = std::make_unique<ParticleManager>();
@@ -139,7 +153,7 @@ void Enemy::Reset() {
 /// 撃つ方向に向かせる
 /// </summary>
 void Enemy::FrontFace() {
-	Vector3 faceAngle,resultRot;
+	Vector3 faceAngle, resultRot;
 	faceAngle.InIt();
 	faceAngle.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
 	if (isFound == true) {
@@ -156,7 +170,7 @@ void Enemy::FrontFace() {
 
 		easetime = (float)easeTimer / easeMaxTime;
 		if (easeTimer <= easeMaxTime) {
-			frontVec_ = Easing::InQuintVec3(faceAngle, restRotate_, (float)easetime);
+			frontVec_ = Easing::InQuintVec3({ 0,(faceAngle.y + 3.141592f / 2) * 1,0}, restRotate_, (float)easetime);
 			if (easeTimer == easeMaxTime) {
 				easeTimer = 1;
 				easetime = 0;
@@ -185,7 +199,7 @@ void Enemy::ColiderUpdate() {
 				OnColision();
 				// パーティクルなぜかXそのままYZ入れ替えると治る
 				Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-				particle_->RandParticle(10,patPos);
+				particle_->RandParticle(10, patPos);
 			}
 		}
 	}
@@ -198,7 +212,7 @@ void Enemy::ColiderUpdate() {
 	}
 	ray->Update();
 
-	
+
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
 		isFound = true;
 		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
@@ -221,7 +235,7 @@ void Enemy::ColiderUpdate() {
 		if (onPat_) {
 			onPatTime_--;
 			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-			particle_->RandParticle(15,patPos);
+			particle_->RandParticle(15, patPos);
 		}
 	}
 	if (onPatTime_ < 1) {

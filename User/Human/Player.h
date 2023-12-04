@@ -46,6 +46,7 @@ private:
 	void OnColision();
 private:
 	const uint32_t Tribe_ = 0;
+	uint32_t useWeapon_ = ASSAULT;
 	bool nowTitle = false;
 
 

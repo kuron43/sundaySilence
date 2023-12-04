@@ -207,7 +207,7 @@ void SceneObjects::Initialize() {
 	{
 		UIHPSP_ = std::make_unique<Sprite>();
 		UIHPSP_->Initialize(spriteCommon_.get(), 37);
-		UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x ,WinApp::window_height - WinApp::window_height / 4.0f };
+		UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x+6.0f ,WinApp::window_height - WinApp::window_height / 4.0f };
 		UIHPSPsize_ = Vector2{ 7.0f * player->GetHP() ,30.0f };
 		UIHPSP_->SetPozition(UIHPSPpos_);
 		UIHPSP_->SetSize(UIHPSPsize_);
