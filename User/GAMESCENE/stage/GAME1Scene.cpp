@@ -41,12 +41,17 @@ void GAME1Scene::Initialize() {
 	stageFailed = false;
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("stage2");
+		leveData = JsonLoader::LoadJsonFile("stageDEMO");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
 			if (objectData.fileName == "enemy") {
 				Enemy* newEnemy = new Enemy();
+				if (objectData.weapon == "ASSAULT") {
+					newEnemy->SetWeaponNum(WP_ASSAULT);
+				}if (objectData.weapon == "SHOTGUN") {
+					newEnemy->SetWeaponNum(WP_SHOTGUN);
+				}
 				newEnemy->Initialize();
 				//座標
 				Vector3 pos;
@@ -87,6 +92,11 @@ void GAME1Scene::Initialize() {
 			if (objectData.fileName == "boss") {
 				Boss* newBoss = new Boss();
 				newBoss->Initialize();
+				if (objectData.weapon == "ASSAULT") {
+					newBoss->SetWeaponNum(WP_ASSAULT);
+				}if (objectData.weapon == "SHOTGUN") {
+					newBoss->SetWeaponNum(WP_SHOTGUN);
+				}
 				//座標
 				Vector3 pos;
 				pos = objectData.translation;

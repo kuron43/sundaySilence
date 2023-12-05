@@ -50,6 +50,10 @@ void Assault::Update(Input* input, bool isSlow) {
 			}
 		}
 	}
+	if (coolTime > 0) {
+		coolTime--;
+	}
+
 	roadingTime--;
 
 
@@ -82,6 +86,7 @@ void Assault::Shot(Transform& shooter, Transform& reticle, uint32_t team) {
 		moveVec = velo * speed_;
 		moveVec.nomalize();
 		newBullet->Initialize(model_, startPos + velo, moveVec, team);
+		newBullet->SetDeathTime(200);
 
 		//弾を登録
 		BulletManager::GetInstance()->AddBullet(std::move(newBullet));
@@ -89,22 +94,14 @@ void Assault::Shot(Transform& shooter, Transform& reticle, uint32_t team) {
 
 		//クールタイムをリセット
 		if (team == PLAYER) {
-			if (_isSlow == true) {
-				coolTime = 45;
-			}
-			else {
-				coolTime = 15;
-			}
+			coolTime = 10;
 		}if (team == ENEMY) {
 			if (_isSlow == true) {
-				coolTime = 45 * 5;
+				coolTime = 40 * 5;
 			}
 			else {
-				coolTime = 15 * 5;
+				coolTime = 10 * 5;
 			}
 		}
-	}
-	else {
-		coolTime--;
 	}
 }

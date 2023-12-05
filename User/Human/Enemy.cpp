@@ -42,9 +42,9 @@ void Enemy::Initialize() {
 
 
 	//乱数
-	uint32_t value = (uint32_t)dist(engine);
+	//uint32_t value = (uint32_t)dist(engine);
 
-	if (value%2 == 0) {
+	if (useWeapon_ == WP_SHOTGUN) {
 		weapon_ = new Shotgun();
 	}
 	else {
@@ -73,12 +73,12 @@ void Enemy::Initialize() {
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
 		sphere[i]->SetObject3d(object_);
 		sphere[i]->SetBasisPos(&spherePos[i]);
-		sphere[i]->SetRadius(1.0f);
+		sphere[i]->SetRadius(2.0f);
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		//test
 		coliderPosTest_[i] = Object3d::Create();
-		coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("Cube"));
+		coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
 		coliderPosTest_[i]->wtf.position = Affin::GetWorldTrans(object_->wtf.matWorld);
 		coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
 		coliderPosTest_[i]->wtf.rotation.InIt();
@@ -147,6 +147,12 @@ void Enemy::Reset() {
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
+}
+
+/// 武器の番号セット
+void Enemy::SetWeaponNum(uint32_t WeaponNum)
+{
+	useWeapon_ = WeaponNum;
 }
 
 /// <summary>

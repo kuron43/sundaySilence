@@ -26,6 +26,9 @@ public:
 	/// リセットを行う
 	void Reset() override;
 
+	/// 武器の番号セット
+	void SetWeaponNum(uint32_t WeaponNum) override;
+
 	// セッター
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
 	void SetReticle(Vector3 ret) { reticle->wtf.position = ret; }

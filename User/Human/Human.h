@@ -47,5 +47,8 @@ public:
 
 	/// リセットを行う
 	virtual void Reset() = 0;
+
+	/// 武器の番号セット
+	virtual void SetWeaponNum(uint32_t WeaponNum) = 0;
 };
 

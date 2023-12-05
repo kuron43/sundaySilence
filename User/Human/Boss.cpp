@@ -9,6 +9,7 @@ Boss::Boss() {
 }
 Boss::~Boss() {
 	delete model_;
+	delete modelCol_;
 	delete weapon_;
 	delete rayHit;
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
@@ -26,6 +27,7 @@ void Boss::Initialize() {
 	isDead = false;
 	nowTitle = false;
 	model_ = Model::LoadFromOBJ("REX");
+	modelCol_ = Model::LoadFromOBJ("sphere");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -36,7 +38,12 @@ void Boss::Initialize() {
 	reticle->SetModel(model_);
 	reticle->Initialize();
 
-	weapon_ = new Assault();
+	if (useWeapon_ == WP_SHOTGUN) {
+		weapon_ = new Shotgun();
+	}
+	else {
+		weapon_ = new Assault();
+	}
 	weapon_->Initialize();
 
 	particle_ = std::make_unique<ParticleManager>();
@@ -62,12 +69,12 @@ void Boss::Initialize() {
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
 		sphere[i]->SetObject3d(object_);
 		sphere[i]->SetBasisPos(&spherePos[i]);
-		sphere[i]->SetRadius(1.0f);
+		sphere[i]->SetRadius(3.0f);
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		//test
 		coliderPosTest_[i] = Object3d::Create();
-		coliderPosTest_[i]->SetModel(model_);
+		coliderPosTest_[i]->SetModel(modelCol_);
 		coliderPosTest_[i]->wtf.position = rayvec;
 		coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
 		coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
@@ -138,6 +145,12 @@ void Boss::Reset() {
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
+}
+
+/// 武器の番号セット
+void Boss::SetWeaponNum(uint32_t WeaponNum)
+{
+	useWeapon_ = WeaponNum;
 }
 
 /// <summary>

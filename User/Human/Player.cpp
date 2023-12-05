@@ -162,6 +162,12 @@ void Player::Reset() {
 
 }
 
+/// 武器の番号セット
+void Player::SetWeaponNum(uint32_t WeaponNum)
+{
+	useWeapon_ = WeaponNum;
+}
+
 void Player::Move(Input* input) {
 
 	//-----行動処理-----//

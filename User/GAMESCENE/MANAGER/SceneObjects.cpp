@@ -75,6 +75,7 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(35, "white1x1.png");
 		spriteCommon_->LoadTexture(36, "lightgray.png");
 		spriteCommon_->LoadTexture(37, "cian.png");
+		spriteCommon_->LoadTexture(38, "green.png");
 	}
 	// スプライトロード  40~ // UI画像用
 	{
@@ -125,7 +126,7 @@ void SceneObjects::Initialize() {
 	}
 	{
 		wallMD = Model::LoadFromOBJ("wall");
-		floorGroundMD = Model::LoadFromOBJ("floor");
+		floorGroundMD = Model::LoadFromOBJ("stage");
 		floorGround = std::make_unique<Floor>();
 		floorGround->Initialize(floorGroundMD);
 	}
@@ -206,11 +207,19 @@ void SceneObjects::Initialize() {
 	}
 	{
 		UIHPSP_ = std::make_unique<Sprite>();
-		UIHPSP_->Initialize(spriteCommon_.get(), 37);
-		UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x+6.0f ,WinApp::window_height - WinApp::window_height / 4.0f };
-		UIHPSPsize_ = Vector2{ 7.0f * player->GetHP() ,30.0f };
+		UIHPSP_->Initialize(spriteCommon_.get(), 38);
+		UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x + 6.0f ,WinApp::window_height - WinApp::window_height / 4.0f };
+		UIHPSPsize_ = Vector2{ 8.0f * player->GetHP() ,30.0f };
 		UIHPSP_->SetPozition(UIHPSPpos_);
 		UIHPSP_->SetSize(UIHPSPsize_);
+	}
+	{
+		UIHPBaseSP_ = std::make_unique<Sprite>();
+		UIHPBaseSP_->Initialize(spriteCommon_.get(), 30);
+		UIHPBaseSPpos_ = Vector2{ UIWeaponSPpos_.x + 6.0f,WinApp::window_height - WinApp::window_height / 4.0f };
+		UIHPBaseSPsize_ = Vector2{ 8.0f * player->GetHP() ,30.0f };
+		UIHPBaseSP_->SetPozition(UIHPBaseSPpos_);
+		UIHPBaseSP_->SetSize(UIHPBaseSPsize_);
 	}
 	{
 		backWall = { 0,2,10,21,0,0, };
@@ -423,6 +432,7 @@ void SceneObjects::UIUpdate()
 	UISlowSP_->Update();
 	UIPointSP_->Update();
 	UIHPSP_->Update();
+	UIHPBaseSP_->Update();
 	UIPauseSP_->Update();
 }
 
@@ -432,6 +442,7 @@ void SceneObjects::UIDraw()
 	UIWeaponSP_->Draw();
 	UISlowSP_->Draw();
 	UIPointSP_->Draw();
+	UIHPBaseSP_->Draw();
 	UIHPSP_->Draw();
 	UIPauseSP_->Draw();
 }

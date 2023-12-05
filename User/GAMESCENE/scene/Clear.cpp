@@ -17,8 +17,8 @@ Clear::~Clear() {
 void Clear::Initialize() {
 	clearSP_ = std::make_unique<Sprite>();
 	clearSP_->Initialize(_objects->spriteCommon_.get(), 4);
-	clearSP_->SetSize({ 256.0f,128.0f });
-	clearSP_->SetPozition({ (WinApp::window_width / 2.0f) - 128.0f,100.0f });
+	clearSP_->SetSize({ 512.0f,256.0f });
+	clearSP_->SetPozition({ (WinApp::window_width / 2.0f) - 256.0f,100.0f });
 	{
 		titleButton_ = std::make_unique<Sprite>();
 		titleButton_->Initialize(_objects->spriteCommon_.get(), 10);

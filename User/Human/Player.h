@@ -23,6 +23,8 @@ public:
 	void Draw(DirectXCommon* dxCommon)override;
 	/// リセットを行う
 	void Reset() override;
+	/// 武器の番号セット
+	void SetWeaponNum(uint32_t WeaponNum) override;
 
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; };
 	void MatUpdate() { object_->UpdateMatrix(); };

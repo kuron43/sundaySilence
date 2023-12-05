@@ -52,28 +52,29 @@ void Shotgun::Update(Input* input, bool isSlow) {
 	{
 		speed_ = nomalSpeed;
 	}
-	// 
-	if (5 <= mag) {
-		if (_isSlow == true) {
-			roadingTime = 50 * 3;
-			goShot = false;
-			nowRoading = true;
-		}
-		else {
-			roadingTime = 50;
-			goShot = false;
-			nowRoading = true;
-		}
-	}
-	if (nowRoading == false) {
-		mag = 0;
-		goShot = true;
-	}else {
-		roadingTime--;
-	}
+// 
 	if (roadingTime <= 0) {
-		nowRoading = false;
+		if (mag < 5) {
+			goShot = true;
+		}
+		if (mag >= 5) {
+			if (_isSlow == true) {
+				roadingTime = 150;
+				goShot = false;
+				mag = 0;
+			}
+			else {
+				roadingTime = 50;
+				goShot = false;
+				mag = 0;
+			}
+		}
 	}
+	if (coolTime > 0) {
+		coolTime--;
+	}
+
+	roadingTime--;
 
 	BulletManager::GetInstance()->SetSpeed(speed_);
 }
@@ -104,15 +105,16 @@ void Shotgun::Shot(Transform& player, Transform& reticle, uint32_t team) {
 				velo = reticleVec - startPos;
 			}
 			else if (i == 1) {
-				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(6)));
+				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(3)));
 			}
 			else if (i == 2) {
-				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(-6)));
+				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(-3)));
 			}
 			velo.nomalize();
 			moveVec = velo * speed_;
 			moveVec.nomalize();
 			newBullet->Initialize(model_, startPos + velo, moveVec, team);
+			newBullet->SetDeathTime(20);
 
 			//弾を登録
 			BulletManager::GetInstance()->AddBullet(std::move(newBullet));
@@ -121,22 +123,14 @@ void Shotgun::Shot(Transform& player, Transform& reticle, uint32_t team) {
 
 		//クールタイムをリセット
 		if (team == PLAYER) {
-			if (_isSlow == true) {
-				coolTime = 45;
-			}
-			else {
-				coolTime = 15;
-			}
+			coolTime = 15 * 3;
 		}if (team == ENEMY) {
 			if (_isSlow == true) {
-				coolTime = 45 * 5;
+				coolTime = (15 * 3) * 5;
 			}
 			else {
 				coolTime = 15 * 5;
 			}
 		}
-	}
-	else {
-		coolTime--;
 	}
 }
