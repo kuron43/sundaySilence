@@ -58,8 +58,11 @@ void SceneObjects::Initialize() {
 	// スプライトロード  20~ //セレクトステージ
 	{
 		spriteCommon_->LoadTexture(20, "1.png");
-		spriteCommon_->LoadTexture(21, "2.png");
-		spriteCommon_->LoadTexture(22, "3.png");
+		spriteCommon_->LoadTexture(21, "1_1.png");
+		spriteCommon_->LoadTexture(22, "2.png");
+		spriteCommon_->LoadTexture(23, "2_1.png");
+		spriteCommon_->LoadTexture(24, "3.png");
+		spriteCommon_->LoadTexture(25, "3_1.png");
 		spriteCommon_->LoadTexture(26, "Left.png");
 		spriteCommon_->LoadTexture(27, "Left2.png");
 		spriteCommon_->LoadTexture(28, "Right.png");
@@ -89,11 +92,15 @@ void SceneObjects::Initialize() {
 		spriteCommon_->LoadTexture(47, "Point2ICON.png");
 		spriteCommon_->LoadTexture(48, "pauseInfo.png");
 	}
-	// スプライトロード  50~ // ポーズシーン用
+	// スプライトロード  50~ // シーン用
 	{
 		spriteCommon_->LoadTexture(50, "goTitle.png");
 		spriteCommon_->LoadTexture(51, "goTitle2.png");
 		spriteCommon_->LoadTexture(52, "pauseGoBack.png");
+		spriteCommon_->LoadTexture(53, "GoSelect.png");
+		spriteCommon_->LoadTexture(54, "GoSelect2.png");
+		spriteCommon_->LoadTexture(55, "NEXT.png");
+		spriteCommon_->LoadTexture(56, "NEXT2.png");
 
 	}
 

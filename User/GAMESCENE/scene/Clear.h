@@ -41,6 +41,7 @@ private:
 	Vector3 camposTar = { 0,0,0 };
 	std::unique_ptr <Sprite> clearSP_;
 	std::unique_ptr <Sprite> titleButton_;
+	std::unique_ptr <Sprite> selectButton_;
 public:
 	//代入演算子削除
 	Clear& operator=(const Clear&) = delete;

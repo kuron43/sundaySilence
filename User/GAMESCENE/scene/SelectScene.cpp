@@ -28,18 +28,18 @@ void SelectScene::Initialize() {
 
 	stage1_ = std::make_unique<Sprite>();
 	stage1_->Initialize(_objects->spriteCommon_.get(), 20);
-	stage1_->SetSize({ 300,300 });
-	stage1_->SetPozition({ (WinApp::window_width / 2)-150,WinApp::window_height - 300 });
+	stage1_->SetSize({256,128});
+	stage1_->SetPozition({ (WinApp::window_width / 2)-128,WinApp::window_height - 200 });
 
 	left_ = std::make_unique<Sprite>();
 	left_->Initialize(_objects->spriteCommon_.get(), 26);
-	left_->SetSize({ 100,300 });
-	left_->SetPozition({ (WinApp::window_width / 2) - 350,WinApp::window_height - 300 });
+	left_->SetSize({ 85,165 });
+	left_->SetPozition({ (WinApp::window_width / 2) - 350,WinApp::window_height - 220 });
 
 	right_ = std::make_unique<Sprite>();
 	right_->Initialize(_objects->spriteCommon_.get(), 28);
-	right_->SetSize({ 100,300 });
-	right_->SetPozition({ (WinApp::window_width / 2) + 250,WinApp::window_height - 300 });
+	right_->SetSize({ 85,165 });
+	right_->SetPozition({ (WinApp::window_width / 2) + 250,WinApp::window_height - 220 });
 }
 
 void SelectScene::Update(Input* input) {
@@ -48,32 +48,10 @@ void SelectScene::Update(Input* input) {
 	left_->Update();
 	right_->Update();
 	_objects->mouseCursor_->Update(input);
-	
 
 	SelectSceneNum(input);
 	MoveScene();
-
-	if (selectNum == 0) {
-		stage1_->SetTextureIndex(10);
-	}
-	else if (selectNum == 1) {
-		stage1_->SetTextureIndex(20);
-	}
-	else if (selectNum == 2) {
-		stage1_->SetTextureIndex(21);
-	}
-	if (_objects->mouseCursor_->Cursor2Sprite(left_.get())) {
-		left_->SetTextureIndex(27);
-	}
-	else {
-		left_->SetTextureIndex(26);
-	}
-	if (_objects->mouseCursor_->Cursor2Sprite(right_.get())) {
-		right_->SetTextureIndex(29);
-	}
-	else {
-		right_->SetTextureIndex(28);
-	}
+	SpriteColision();
 
 	ImGui::Begin("SELECT NUM");
 	ImGui::Text("SelectNum : %d", selectNum);
@@ -90,6 +68,7 @@ void SelectScene::Draw() {
 
 	_objects->mouseCursor_->Draw();
 }
+
 void SelectScene::SelectSceneNum(Input* input) {
 	if (selectNum == 0) {
 		if (_objects->mouseCursor_->Cursor2Sprite(left_.get()) && input->MouseButtonTrigger(0)) {
@@ -137,5 +116,49 @@ void SelectScene::MoveScene() {
 	}
 	else {
 
+	}
+}
+
+void SelectScene::SpriteColision()
+{
+	switch (selectNum)
+	{
+	case 0:
+		if (_objects->mouseCursor_->Cursor2Sprite(stage1_.get())) {
+			stage1_->SetTextureIndex(51);
+		}
+		else {
+			stage1_->SetTextureIndex(50);
+		}
+		break;
+	case 1:
+		if (_objects->mouseCursor_->Cursor2Sprite(stage1_.get())) {
+			stage1_->SetTextureIndex(21);
+		}
+		else {
+			stage1_->SetTextureIndex(20);
+		}
+		break;
+	case 2:
+		if (_objects->mouseCursor_->Cursor2Sprite(stage1_.get())) {
+			stage1_->SetTextureIndex(23);
+		}
+		else {
+			stage1_->SetTextureIndex(22);
+		}
+		break;
+	}
+
+	if (_objects->mouseCursor_->Cursor2Sprite(left_.get())) {
+		left_->SetTextureIndex(27);
+	}
+	else {
+		left_->SetTextureIndex(26);
+	}
+	if (_objects->mouseCursor_->Cursor2Sprite(right_.get())) {
+		right_->SetTextureIndex(29);
+	}
+	else {
+		right_->SetTextureIndex(28);
 	}
 }
