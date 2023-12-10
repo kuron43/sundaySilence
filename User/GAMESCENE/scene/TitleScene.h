@@ -41,6 +41,8 @@ private:
 	Vector3 camposEye = { 0.0f,40.0f,-90.01f };
 	Vector3 camposTar = { 0,0,0 };
 
+	float forcalLengs = 30.0f;
+
 	LevelData* leveData = nullptr;
 	std::unique_ptr <ParticleManager>  particle_;
 public:

@@ -33,6 +33,7 @@ public:
 	std::vector<Vector3> points;
 	Vector3 resultVec;
 	float easeSpeed;
+	float F_lengs;
 	bool isActive;
 	bool pointsMax;
 private:

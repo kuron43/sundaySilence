@@ -41,15 +41,29 @@ void Cursor::CusUpdate(Input* input) {
 
 	}
 	cursorPic_->SetTextureIndex(7);
-	mousepos_ = input->GetMousePosition();
-	mousepos_.y *= -1;
-	cursorPic_->SetPozition({ mousepos_.x + WinApp::window_width / 2,mousepos_.y + WinApp::window_height / 2 });
+	mousepos_ += input->GetMousePosition();
+	cursorPicPos = { mousepos_.x + WinApp::window_width / 2,-mousepos_.y + WinApp::window_height / 2 };
+	//mousepos_.y *= -1;
+	if (cursorPicPos.x >= WinApp::window_width) {
+		cursorPicPos.x = WinApp::window_width - 1;
+	}
+	else if (cursorPicPos.x <= 0) {
+		cursorPicPos.x = 1;
+	}
+	if (cursorPicPos.y >= WinApp::window_height) {
+		cursorPicPos.y = WinApp::window_height - 1;
+	}
+	else if (cursorPicPos.y <= 0) {
+		cursorPicPos.y = 1;
+	}
+	cursorPic_->SetPozition(cursorPicPos);
 	spritePos_ = cursorPic_->GetPosition();
 	
 
 	ImGui::Begin("cursorPos");
 	ImGui::InputFloat2("mousePos", &mousepos_.x);
 	ImGui::InputFloat2("spritePos", &spritePos_.x);
+	ImGui::InputFloat2("spritePos", &cursorPicPos.x);
 	ImGui::End();
 }
 

@@ -179,6 +179,7 @@ void PointDash::GoToPoint() {
 		easetime = (float)time / easeMaxTime;
 		if (nowPointNum == 0 && time <= easeMaxTime && registNum >= 1) {
 			resultVec = Easing::InOutQuintVec3(startPos, points[0], (float)easetime);
+			F_lengs = Easing::OutQuintFloat(30.0f, 10.0f, (float)easetime);
 			inversVec3 = startPos - points[0];
 			if (time == easeMaxTime - 1) {
 				nowPointNum = 1;

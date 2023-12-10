@@ -18,90 +18,93 @@ void SceneObjects::Initialize() {
 #endif
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
+	// スプライトロード集
 	{
-		enum spriteNum
 		{
-			title = 1,
-			inu = 2,
-			end = 3,
-			clear = 4,
-			select = 5,
-			gray = 6,
-			Cursor = 7,
-			START = 8,
-			START2 = 9,
-		};
-		//スプライト初期化
-		spriteCommon_ = std::make_unique<SpriteCommon>();
-		spriteCommon_->Initialize(_dxCommon);
-		// TITLE
-		spriteCommon_->LoadTexture(1, "title.png");
-		spriteCommon_->LoadTexture(2, "inu.png");
-		spriteCommon_->LoadTexture(3, "end.png");
-		spriteCommon_->LoadTexture(4, "clear.png");
-		spriteCommon_->LoadTexture(5, "select.png");
-		spriteCommon_->LoadTexture(6, "gray.png");
-		spriteCommon_->LoadTexture(7, "Cursor.png");
-		spriteCommon_->LoadTexture(8, "START.png");
-		spriteCommon_->LoadTexture(9, "START2.png");
-		spriteCommon_->LoadTexture(10, "BACK.png");
-		spriteCommon_->LoadTexture(11, "title2.png");
-		spriteCommon_->LoadTexture(12, "readyBuck.png");
-		spriteCommon_->LoadTexture(13, "readySTART.png");
-		spriteCommon_->LoadTexture(14, "faildBuck.png");
-		spriteCommon_->LoadTexture(15, "faildFAILED.png");
-		spriteCommon_->LoadTexture(16, "clearBuck.png");
-		spriteCommon_->LoadTexture(17, "clearCLEAR.png");
-		spriteCommon_->LoadTexture(18, "Cursor2.png");
+			enum spriteNum
+			{
+				title = 1,
+				inu = 2,
+				end = 3,
+				clear = 4,
+				select = 5,
+				gray = 6,
+				Cursor = 7,
+				START = 8,
+				START2 = 9,
+			};
+			//スプライト初期化
+			spriteCommon_ = std::make_unique<SpriteCommon>();
+			spriteCommon_->Initialize(_dxCommon);
+			// TITLE
+			spriteCommon_->LoadTexture(1, "title.png");
+			spriteCommon_->LoadTexture(2, "inu.png");
+			spriteCommon_->LoadTexture(3, "end.png");
+			spriteCommon_->LoadTexture(4, "clear.png");
+			spriteCommon_->LoadTexture(5, "select.png");
+			spriteCommon_->LoadTexture(6, "gray.png");
+			spriteCommon_->LoadTexture(7, "Cursor.png");
+			spriteCommon_->LoadTexture(8, "START.png");
+			spriteCommon_->LoadTexture(9, "START2.png");
+			spriteCommon_->LoadTexture(10, "BACK.png");
+			spriteCommon_->LoadTexture(11, "title2.png");
+			spriteCommon_->LoadTexture(12, "readyBuck.png");
+			spriteCommon_->LoadTexture(13, "readySTART.png");
+			spriteCommon_->LoadTexture(14, "faildBuck.png");
+			spriteCommon_->LoadTexture(15, "faildFAILED.png");
+			spriteCommon_->LoadTexture(16, "clearBuck.png");
+			spriteCommon_->LoadTexture(17, "clearCLEAR.png");
+			spriteCommon_->LoadTexture(18, "Cursor2.png");
 
-	}
-	// スプライトロード  20~ //セレクトステージ
-	{
-		spriteCommon_->LoadTexture(20, "1.png");
-		spriteCommon_->LoadTexture(21, "1_1.png");
-		spriteCommon_->LoadTexture(22, "2.png");
-		spriteCommon_->LoadTexture(23, "2_1.png");
-		spriteCommon_->LoadTexture(24, "3.png");
-		spriteCommon_->LoadTexture(25, "3_1.png");
-		spriteCommon_->LoadTexture(26, "Left.png");
-		spriteCommon_->LoadTexture(27, "Left2.png");
-		spriteCommon_->LoadTexture(28, "Right.png");
-		spriteCommon_->LoadTexture(29, "Right2.png");
-	}
-	// スプライトロード  30~ // 色画像用
-	{
-		spriteCommon_->LoadTexture(30, "red.png");
-		spriteCommon_->LoadTexture(31, "orange.png");
-		spriteCommon_->LoadTexture(32, "purple.png");
-		spriteCommon_->LoadTexture(33, "yellow.png");
-		spriteCommon_->LoadTexture(34, "black.png");
-		spriteCommon_->LoadTexture(35, "white1x1.png");
-		spriteCommon_->LoadTexture(36, "lightgray.png");
-		spriteCommon_->LoadTexture(37, "cian.png");
-		spriteCommon_->LoadTexture(38, "green.png");
-	}
-	// スプライトロード  40~ // UI画像用
-	{
-		spriteCommon_->LoadTexture(40, "UIbase.png");
-		spriteCommon_->LoadTexture(41, "Weapon1ICON.png");
-		spriteCommon_->LoadTexture(42, "Weapon2ICON.png");
-		spriteCommon_->LoadTexture(43, "Weapon3ICON.png");
-		spriteCommon_->LoadTexture(44, "Slow1ICON.png");
-		spriteCommon_->LoadTexture(45, "Slow2ICON.png");
-		spriteCommon_->LoadTexture(46, "Point1ICON.png");
-		spriteCommon_->LoadTexture(47, "Point2ICON.png");
-		spriteCommon_->LoadTexture(48, "pauseInfo.png");
-	}
-	// スプライトロード  50~ // シーン用
-	{
-		spriteCommon_->LoadTexture(50, "goTitle.png");
-		spriteCommon_->LoadTexture(51, "goTitle2.png");
-		spriteCommon_->LoadTexture(52, "pauseGoBack.png");
-		spriteCommon_->LoadTexture(53, "GoSelect.png");
-		spriteCommon_->LoadTexture(54, "GoSelect2.png");
-		spriteCommon_->LoadTexture(55, "NEXT.png");
-		spriteCommon_->LoadTexture(56, "NEXT2.png");
+		}
+		// スプライトロード  20~ //セレクトステージ
+		{
+			spriteCommon_->LoadTexture(20, "1.png");
+			spriteCommon_->LoadTexture(21, "1_1.png");
+			spriteCommon_->LoadTexture(22, "2.png");
+			spriteCommon_->LoadTexture(23, "2_1.png");
+			spriteCommon_->LoadTexture(24, "3.png");
+			spriteCommon_->LoadTexture(25, "3_1.png");
+			spriteCommon_->LoadTexture(26, "Left.png");
+			spriteCommon_->LoadTexture(27, "Left2.png");
+			spriteCommon_->LoadTexture(28, "Right.png");
+			spriteCommon_->LoadTexture(29, "Right2.png");
+		}
+		// スプライトロード  30~ // 色画像用
+		{
+			spriteCommon_->LoadTexture(30, "red.png");
+			spriteCommon_->LoadTexture(31, "orange.png");
+			spriteCommon_->LoadTexture(32, "purple.png");
+			spriteCommon_->LoadTexture(33, "yellow.png");
+			spriteCommon_->LoadTexture(34, "black.png");
+			spriteCommon_->LoadTexture(35, "white1x1.png");
+			spriteCommon_->LoadTexture(36, "lightgray.png");
+			spriteCommon_->LoadTexture(37, "cian.png");
+			spriteCommon_->LoadTexture(38, "green.png");
+		}
+		// スプライトロード  40~ // UI画像用
+		{
+			spriteCommon_->LoadTexture(40, "UIbase.png");
+			spriteCommon_->LoadTexture(41, "Weapon1ICON.png");
+			spriteCommon_->LoadTexture(42, "Weapon2ICON.png");
+			spriteCommon_->LoadTexture(43, "Weapon3ICON.png");
+			spriteCommon_->LoadTexture(44, "Slow1ICON.png");
+			spriteCommon_->LoadTexture(45, "Slow2ICON.png");
+			spriteCommon_->LoadTexture(46, "Point1ICON.png");
+			spriteCommon_->LoadTexture(47, "Point2ICON.png");
+			spriteCommon_->LoadTexture(48, "pauseInfo.png");
+		}
+		// スプライトロード  50~ // シーン用
+		{
+			spriteCommon_->LoadTexture(50, "goTitle.png");
+			spriteCommon_->LoadTexture(51, "goTitle2.png");
+			spriteCommon_->LoadTexture(52, "pauseGoBack.png");
+			spriteCommon_->LoadTexture(53, "GoSelect.png");
+			spriteCommon_->LoadTexture(54, "GoSelect2.png");
+			spriteCommon_->LoadTexture(55, "NEXT.png");
+			spriteCommon_->LoadTexture(56, "NEXT2.png");
 
+		}
 	}
 
 	mouseCursor_ = std::make_unique<Cursor>();
@@ -146,6 +149,8 @@ void SceneObjects::Initialize() {
 	// 演出用の初期化
 	// バナー
 	{
+
+	{
 		bannerBuckSP_ = std::make_unique<Sprite>();
 		bannerBuckSP_->Initialize(spriteCommon_.get(), 12);
 		bannerBuckSP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
@@ -172,6 +177,8 @@ void SceneObjects::Initialize() {
 		bannerWordSP_->SetPozition(bannerWordSPpos_);
 		bannerWordSP_->SetScale(bannerWordSPscale_);
 	}
+}
+	// スロー
 	{
 		slowSP_ = std::make_unique<Sprite>();
 		slowSP_->Initialize(spriteCommon_.get(), 32);
@@ -181,63 +188,65 @@ void SceneObjects::Initialize() {
 	}
 	// UI
 	{
-		UIBuckSP_ = std::make_unique<Sprite>();
-		UIBuckSP_->Initialize(spriteCommon_.get(), 40);
-		UIBuckSPpos_ = Vector2();
-		UIBuckSPsize_ = Vector2{ WinApp::window_width ,WinApp::window_height };
-		UIBuckSP_->SetPozition(UIBuckSPpos_);
-		UIBuckSP_->SetSize(UIBuckSPsize_);
-	}
-	{
-		UIWeaponSP_ = std::make_unique<Sprite>();
-		UIWeaponSP_->Initialize(spriteCommon_.get(), 41);
-		UIWeaponSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 4.8f ,WinApp::window_height / 4.0f };
-		UIWeaponSPsize_ = Vector2{ 80.0f ,80.0f };
-		UIWeaponSP_->SetPozition(UIWeaponSPpos_);
-		UIWeaponSP_->SetSize(UIWeaponSPsize_);
-	}
-	{
-		UISlowSP_ = std::make_unique<Sprite>();
-		UISlowSP_->Initialize(spriteCommon_.get(), 44);
-		UISlowSPpos_ = Vector2{ UIWeaponSPpos_.x + UIWeaponSPsize_.x + WinApp::window_width / 98 ,WinApp::window_height / 4.0f };
-		UISlowSPsize_ = Vector2{ 80.0f ,80.0f };
-		UISlowSP_->SetPozition(UISlowSPpos_);
-		UISlowSP_->SetSize(UISlowSPsize_);
-	}
-	{
-		UIPointSP_ = std::make_unique<Sprite>();
-		UIPointSP_->Initialize(spriteCommon_.get(), 46);
-		UIPointSPpos_ = Vector2{ UISlowSPpos_.x + UISlowSPsize_.x + WinApp::window_width / 98 ,WinApp::window_height / 4.0f };
-		UIPointSPsize_ = Vector2{ 80.0f ,80.0f };
-		UIPointSP_->SetPozition(UIPointSPpos_);
-		UIPointSP_->SetSize(UIPointSPsize_);
-	}
-	{
-		UIHPSP_ = std::make_unique<Sprite>();
-		UIHPSP_->Initialize(spriteCommon_.get(), 38);
-		UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x + 6.0f ,WinApp::window_height - WinApp::window_height / 4.0f };
-		UIHPSPsize_ = Vector2{ 8.0f * player->GetHP() ,30.0f };
-		UIHPSP_->SetPozition(UIHPSPpos_);
-		UIHPSP_->SetSize(UIHPSPsize_);
-	}
-	{
-		UIHPBaseSP_ = std::make_unique<Sprite>();
-		UIHPBaseSP_->Initialize(spriteCommon_.get(), 30);
-		UIHPBaseSPpos_ = Vector2{ UIWeaponSPpos_.x + 6.0f,WinApp::window_height - WinApp::window_height / 4.0f };
-		UIHPBaseSPsize_ = Vector2{ 8.0f * player->GetHP() ,30.0f };
-		UIHPBaseSP_->SetPozition(UIHPBaseSPpos_);
-		UIHPBaseSP_->SetSize(UIHPBaseSPsize_);
-	}
-	{
-		backWall = { 0,2,10,21,0,0, };
-	}
-	{
-		UIPauseSP_ = std::make_unique<Sprite>();
-		UIPauseSP_->Initialize(spriteCommon_.get(), 48);
-		UIPauseSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 6.5f ,WinApp::window_height / 2.0f };
-		UIPauseSPsize_ = Vector2{ 125.0f,64.0f };
-		UIPauseSP_->SetPozition(UIPauseSPpos_);
-		UIPauseSP_->SetSize(UIPauseSPsize_);
+		{
+			UIBuckSP_ = std::make_unique<Sprite>();
+			UIBuckSP_->Initialize(spriteCommon_.get(), 40);
+			UIBuckSPpos_ = Vector2();
+			UIBuckSPsize_ = Vector2{ WinApp::window_width ,WinApp::window_height };
+			UIBuckSP_->SetPozition(UIBuckSPpos_);
+			UIBuckSP_->SetSize(UIBuckSPsize_);
+		}
+		{
+			UIWeaponSP_ = std::make_unique<Sprite>();
+			UIWeaponSP_->Initialize(spriteCommon_.get(), 41);
+			UIWeaponSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 4.8f ,WinApp::window_height / 4.0f };
+			UIWeaponSPsize_ = Vector2{ 80.0f ,80.0f };
+			UIWeaponSP_->SetPozition(UIWeaponSPpos_);
+			UIWeaponSP_->SetSize(UIWeaponSPsize_);
+		}
+		{
+			UISlowSP_ = std::make_unique<Sprite>();
+			UISlowSP_->Initialize(spriteCommon_.get(), 44);
+			UISlowSPpos_ = Vector2{ UIWeaponSPpos_.x + UIWeaponSPsize_.x + WinApp::window_width / 98 ,WinApp::window_height / 4.0f };
+			UISlowSPsize_ = Vector2{ 80.0f ,80.0f };
+			UISlowSP_->SetPozition(UISlowSPpos_);
+			UISlowSP_->SetSize(UISlowSPsize_);
+		}
+		{
+			UIPointSP_ = std::make_unique<Sprite>();
+			UIPointSP_->Initialize(spriteCommon_.get(), 46);
+			UIPointSPpos_ = Vector2{ UISlowSPpos_.x + UISlowSPsize_.x + WinApp::window_width / 98 ,WinApp::window_height / 4.0f };
+			UIPointSPsize_ = Vector2{ 80.0f ,80.0f };
+			UIPointSP_->SetPozition(UIPointSPpos_);
+			UIPointSP_->SetSize(UIPointSPsize_);
+		}
+		{
+			UIHPSP_ = std::make_unique<Sprite>();
+			UIHPSP_->Initialize(spriteCommon_.get(), 38);
+			UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x + 6.0f ,WinApp::window_height - WinApp::window_height / 4.0f };
+			UIHPSPsize_ = Vector2{ 8.0f * player->GetHP() ,30.0f };
+			UIHPSP_->SetPozition(UIHPSPpos_);
+			UIHPSP_->SetSize(UIHPSPsize_);
+		}
+		{
+			UIHPBaseSP_ = std::make_unique<Sprite>();
+			UIHPBaseSP_->Initialize(spriteCommon_.get(), 30);
+			UIHPBaseSPpos_ = Vector2{ UIWeaponSPpos_.x + 6.0f,WinApp::window_height - WinApp::window_height / 4.0f };
+			UIHPBaseSPsize_ = Vector2{ 8.0f * player->GetHP() ,30.0f };
+			UIHPBaseSP_->SetPozition(UIHPBaseSPpos_);
+			UIHPBaseSP_->SetSize(UIHPBaseSPsize_);
+		}
+		{
+			backWall = { 0,2,10,21,0,0, };
+		}
+		{
+			UIPauseSP_ = std::make_unique<Sprite>();
+			UIPauseSP_->Initialize(spriteCommon_.get(), 48);
+			UIPauseSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 6.5f ,WinApp::window_height / 2.0f };
+			UIPauseSPsize_ = Vector2{ 125.0f,64.0f };
+			UIPauseSP_->SetPozition(UIPauseSPpos_);
+			UIPauseSP_->SetSize(UIPauseSPsize_);
+		}
 	}
 
 

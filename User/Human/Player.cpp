@@ -79,7 +79,7 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 	Vector2 mousepos = input->GetMousePosition();
 	object_->wtf.position.y = NONE;
-	reticle->wtf.position = { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
+	reticle->wtf.position += { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
 	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
 		useWeapon_ = WP_SHOTGUN;
@@ -104,6 +104,7 @@ void Player::Update(Input* input, bool isTitle) {
 			nowSetPoint = true;
 		}
 	}
+	//object_->camera_->SetFocalLengs(pointDash_->F_lengs);
 
 	if (!nowTitle && pointDash_->isActive == true) {
 		pointDash_->GoToPoint();
@@ -155,6 +156,7 @@ void Player::Reset() {
 	isDeath_ = false;
 	_isSlow = false;
 	object_->wtf.Initialize();
+	reticle->wtf.Initialize();
 	object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
 	pointDash_->Reset();
 	isHitEffect = false;

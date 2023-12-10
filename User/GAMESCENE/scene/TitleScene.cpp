@@ -33,7 +33,7 @@ TitleScene::~TitleScene() {
 void TitleScene::Initialize() {
 	_controller->_camera->SetEye(camposEye);
 	_controller->_camera->SetTarget(camposTar);
-	_controller->_camera->SetFocalLengs(32.0f);
+	_controller->_camera->SetFocalLengs(forcalLengs);
 	_controller->_camera->Update();
 
 	particle_ = std::make_unique<ParticleManager>();

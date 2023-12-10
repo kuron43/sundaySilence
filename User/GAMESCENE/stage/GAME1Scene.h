@@ -45,6 +45,7 @@ private:
 	// カメラ座標
 	Vector3 camposEye = { 16.0f,90.0f,-10.0001f };
 	Vector3 camposTar = { 16,0,0 };
+	float forcalLengs = 30.0f;
 
 
 	uint32_t testTime = 0;

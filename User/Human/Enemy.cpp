@@ -41,9 +41,6 @@ void Enemy::Initialize() {
 	reticle->Initialize();
 
 
-	//乱数
-	//uint32_t value = (uint32_t)dist(engine);
-
 	if (useWeapon_ == WP_SHOTGUN) {
 		weapon_ = new Shotgun();
 	}

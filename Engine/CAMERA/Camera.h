@@ -11,7 +11,6 @@
 /// </summary>
 class Camera
 {
-
 public: // メンバ関数
 	/// <summary>
 	/// コンストラクタ

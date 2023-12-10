@@ -27,6 +27,7 @@ private:
 	Vector2 spritePos_;
 private://リソース
 	std::unique_ptr <Sprite> cursorPic_;
+	Vector2 cursorPicPos;
 
 public:
 	// カーソルと画像の当たり判定
