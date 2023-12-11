@@ -81,10 +81,10 @@ void Player::Update(Input* input, bool isTitle) {
 	object_->wtf.position.y = NONE;
 	reticle->wtf.position += { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
-	if (input->KeyboardTrigger(DIK_NUMPAD1)) {
+	if (input->KeyboardTrigger(DIK_E)) {
 		useWeapon_ = WP_SHOTGUN;
 	}
-	if (input->KeyboardTrigger(DIK_NUMPAD0)) {
+	if (input->KeyboardTrigger(DIK_Q)) {
 		useWeapon_ = WP_ASSAULT;
 	}
 	if (input->MouseButtonPush(0) && !isTitle && _isSlow == false) {

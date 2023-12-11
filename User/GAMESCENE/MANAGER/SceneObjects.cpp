@@ -199,7 +199,7 @@ void SceneObjects::Initialize() {
 		{
 			UIWeaponSP_ = std::make_unique<Sprite>();
 			UIWeaponSP_->Initialize(spriteCommon_.get(), 41);
-			UIWeaponSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 4.8f ,WinApp::window_height / 4.0f };
+			UIWeaponSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f ,WinApp::window_height / 9.0f };
 			UIWeaponSPsize_ = Vector2{ 80.0f ,80.0f };
 			UIWeaponSP_->SetPozition(UIWeaponSPpos_);
 			UIWeaponSP_->SetSize(UIWeaponSPsize_);
@@ -207,7 +207,7 @@ void SceneObjects::Initialize() {
 		{
 			UISlowSP_ = std::make_unique<Sprite>();
 			UISlowSP_->Initialize(spriteCommon_.get(), 44);
-			UISlowSPpos_ = Vector2{ UIWeaponSPpos_.x + UIWeaponSPsize_.x + WinApp::window_width / 98 ,WinApp::window_height / 4.0f };
+			UISlowSPpos_ = Vector2{ UIWeaponSPpos_.x  ,UIWeaponSPpos_.y + 100.0f };
 			UISlowSPsize_ = Vector2{ 80.0f ,80.0f };
 			UISlowSP_->SetPozition(UISlowSPpos_);
 			UISlowSP_->SetSize(UISlowSPsize_);
@@ -215,7 +215,7 @@ void SceneObjects::Initialize() {
 		{
 			UIPointSP_ = std::make_unique<Sprite>();
 			UIPointSP_->Initialize(spriteCommon_.get(), 46);
-			UIPointSPpos_ = Vector2{ UISlowSPpos_.x + UISlowSPsize_.x + WinApp::window_width / 98 ,WinApp::window_height / 4.0f };
+			UIPointSPpos_ = Vector2{ UISlowSPpos_.x ,UISlowSPpos_.y + 100.0f};
 			UIPointSPsize_ = Vector2{ 80.0f ,80.0f };
 			UIPointSP_->SetPozition(UIPointSPpos_);
 			UIPointSP_->SetSize(UIPointSPsize_);
@@ -223,18 +223,20 @@ void SceneObjects::Initialize() {
 		{
 			UIHPSP_ = std::make_unique<Sprite>();
 			UIHPSP_->Initialize(spriteCommon_.get(), 38);
-			UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x + 6.0f ,WinApp::window_height - WinApp::window_height / 4.0f };
-			UIHPSPsize_ = Vector2{ 8.0f * player->GetHP() ,30.0f };
+			UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x + 26.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
+			UIHPSPsize_ = Vector2{30.0f,8.0f * player->GetHP()  };
 			UIHPSP_->SetPozition(UIHPSPpos_);
 			UIHPSP_->SetSize(UIHPSPsize_);
+			UIHPSP_->SetIsFlipY(true);
 		}
 		{
 			UIHPBaseSP_ = std::make_unique<Sprite>();
 			UIHPBaseSP_->Initialize(spriteCommon_.get(), 30);
-			UIHPBaseSPpos_ = Vector2{ UIWeaponSPpos_.x + 6.0f,WinApp::window_height - WinApp::window_height / 4.0f };
-			UIHPBaseSPsize_ = Vector2{ 8.0f * player->GetHP() ,30.0f };
+			UIHPBaseSPpos_ = Vector2{ UIWeaponSPpos_.x + 26.0f,WinApp::window_height - WinApp::window_height / 7.0f };
+			UIHPBaseSPsize_ = Vector2{ 30.0f,8.0f * player->GetHP() };
 			UIHPBaseSP_->SetPozition(UIHPBaseSPpos_);
 			UIHPBaseSP_->SetSize(UIHPBaseSPsize_);
+			UIHPBaseSP_->SetIsFlipY(true);
 		}
 		{
 			backWall = { 0,2,10,21,0,0, };
@@ -242,7 +244,7 @@ void SceneObjects::Initialize() {
 		{
 			UIPauseSP_ = std::make_unique<Sprite>();
 			UIPauseSP_->Initialize(spriteCommon_.get(), 48);
-			UIPauseSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 6.5f ,WinApp::window_height / 2.0f };
+			UIPauseSPpos_ = Vector2{ 20 ,20 };
 			UIPauseSPsize_ = Vector2{ 125.0f,64.0f };
 			UIPauseSP_->SetPozition(UIPauseSPpos_);
 			UIPauseSP_->SetSize(UIPauseSPsize_);
@@ -440,8 +442,11 @@ void SceneObjects::UIUpdate()
 	else {
 		UISlowSP_->SetTextureIndex(44);
 	}
+	ImGui::Begin("SpritePos");
+	ImGui::InputFloat2("PAUSE TAB POS", &UIPauseSPpos_.x);
+	ImGui::End();
 
-	UIHPSPsize_.x = 8.0f * player->GetHP();
+	UIHPSPsize_.y = 8.0f * player->GetHP();
 	UIHPSP_->SetSize(UIHPSPsize_);
 	UIBuckSP_->Update();
 	UIWeaponSP_->Update();
@@ -454,7 +459,7 @@ void SceneObjects::UIUpdate()
 
 void SceneObjects::UIDraw()
 {
-	UIBuckSP_->Draw();
+	//UIBuckSP_->Draw();
 	UIWeaponSP_->Draw();
 	UISlowSP_->Draw();
 	UIPointSP_->Draw();

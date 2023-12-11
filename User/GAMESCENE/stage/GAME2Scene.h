@@ -41,8 +41,11 @@ private:
 	bool stageFailed = false;
 
 	// カメラ座標
-	Vector3 camposEye = { 16.0f,90.0f,-10.0001f };
-	Vector3 camposTar = { 16,0,0 };
+	//Vector3 camposEye = { 16.0f,90.0f,-10.0001f };
+	//Vector3 camposTar = { 16,0,0 };
+	//float forcalLengs = 29.0f;
+	Vector3 camposEye = { 0.0f,90.0f,-10.0001f };
+	Vector3 camposTar = { 0,0,0 };
 	float forcalLengs = 29.0f;
 
 public:
