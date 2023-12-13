@@ -1,3 +1,7 @@
+/**
+ * @file Weapon.cpp
+ * @brief
+ */
 #include "Weapon.h"
 #include <cassert>
 

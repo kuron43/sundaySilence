@@ -1,3 +1,7 @@
+/**
+ * @file Boss.cpp
+ * @brief
+ */
 #include "Boss.h"
 
 Boss::Boss() {
@@ -5,6 +9,7 @@ Boss::Boss() {
 }
 Boss::~Boss() {
 	delete model_;
+	delete modelCol_;
 	delete weapon_;
 	delete rayHit;
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
@@ -21,17 +26,24 @@ void Boss::Initialize() {
 	isFound = false;
 	isDead = false;
 	nowTitle = false;
-	model_ = Model::LoadFromOBJ("Cube2");
+	model_ = Model::LoadFromOBJ("REX");
+	modelCol_ = Model::LoadFromOBJ("sphere");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
 	object_->Initialize();
+	object_->wtf.scale = Vector3(0.3f, 0.3f, 0.3f);
 
 	reticle = Object3d::Create();
 	reticle->SetModel(model_);
 	reticle->Initialize();
 
-	weapon_ = new Assault();
+	if (useWeapon_ == WP_SHOTGUN) {
+		weapon_ = new Shotgun();
+	}
+	else {
+		weapon_ = new Assault();
+	}
 	weapon_->Initialize();
 
 	particle_ = std::make_unique<ParticleManager>();
@@ -57,12 +69,12 @@ void Boss::Initialize() {
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
 		sphere[i]->SetObject3d(object_);
 		sphere[i]->SetBasisPos(&spherePos[i]);
-		sphere[i]->SetRadius(1.0f);
+		sphere[i]->SetRadius(3.0f);
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		//test
 		coliderPosTest_[i] = Object3d::Create();
-		coliderPosTest_[i]->SetModel(model_);
+		coliderPosTest_[i]->SetModel(modelCol_);
 		coliderPosTest_[i]->wtf.position = rayvec;
 		coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
 		coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
@@ -80,10 +92,11 @@ void Boss::Initialize() {
 
 ///
 void Boss::Update(Input* input, bool isTitle) {
-	object_->SetColor({ 0,0,0 });
+	object_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
 	nowTitle = false;
 	nowTitle = !isTitle;
 
+	HitMyColor();
 	object_->Update();
 	reticle->Update();
 
@@ -93,7 +106,7 @@ void Boss::Update(Input* input, bool isTitle) {
 	if (isFire == true && isDead == false) {
 		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
 	}
-	weapon_->Update(input, isSlow);
+	weapon_->Update(input, _isSlow);
 
 	FrontFace();
 	ColiderUpdate();
@@ -134,12 +147,18 @@ void Boss::Reset() {
 	delete ray;
 }
 
+/// 武器の番号セット
+void Boss::SetWeaponNum(uint32_t WeaponNum)
+{
+	useWeapon_ = WeaponNum;
+}
+
 /// <summary>
 /// 撃つ方向に向かせる
 /// </summary>
 void Boss::FrontFace() {
 	Vector3 faceAngle = { 0,0,0 };
-	faceAngle.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
+	faceAngle.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
 	if (isFire == true) {
 		frontVec_ = faceAngle;
 	}if (isFire == false) {
@@ -170,7 +189,7 @@ void Boss::ColiderUpdate() {
 			OnColision();
 			// パーティクルなぜかXそのままYZ入れ替えると治る
 			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-			particle_->RandParticle(patPos);
+			particle_->RandParticle(10,patPos);
 		}
 	}
 
@@ -182,23 +201,16 @@ void Boss::ColiderUpdate() {
 	}
 	ray->Update();
 
-	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-		isFound = false;
-		isBlocked = true;
-
-		//ImGui::Begin("eneRayHitBarrier");
-		//ImGui::Text("HIT : dis %f", rayHit->distance);
-		//ImGui::End();
-
-	}
+	isFound = false;
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
 		isFound = true;
-		if (isBlocked == false) {
-			isFire = true;
-			//ImGui::Begin("eneRayHitPlayer");
-			//ImGui::Text("HIT : dis %f", rayHit->distance);
-			//ImGui::End();
+		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+			isFound = false;
+			isBlocked = true;
 		}
+	}
+	if (isBlocked == false && isFound == true) {
+		isFire = true;
 	}
 	if (isDead) {
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
@@ -210,7 +222,7 @@ void Boss::ColiderUpdate() {
 			onPatTime_--;
 			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
 			particle_->LoadTexture("purple.png");
-			particle_->RandParticle(patPos, 8);
+			particle_->RandParticle(8,patPos);
 		}
 	}
 	if (onPatTime_ < 1) {
@@ -222,9 +234,24 @@ void Boss::OnColision()
 {
 	//object_->SetColor({ 1,0,0 });
 	hp -= 1;
+	isHitEffect = true;
 	if (hp < 1) {
 		isDead = true;
 		onPat_ = true;
-		onPatTime_ = 50;
+		onPatTime_ = 5;
+	}
+}
+void Boss::HitMyColor()
+{
+	if (isHitEffect == true) {
+		object_->SetColor({ 1,0,0,1.0f });
+		hitTime_++;
+		if (hitTime_ >= MAX_HITTIME) {
+			isHitEffect = false;
+			hitTime_ = 0;
+		}
+	}
+	else {
+		object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
 	}
 }

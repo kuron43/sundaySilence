@@ -41,7 +41,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	input_ = input;
 
 	collisionManager_ = CollisionManager::GetInstance();
-	bulletManager_ = BulletManager::GetInstance();
+	//bulletManager_ = BulletManager::GetInstance();
 	//particleManager_ = ParticleManager::GetInstance()->Create();
 
 	//FBX
@@ -78,7 +78,6 @@ void GameScene::Update() {
 
 	sceneManager->SceneUpdate(input_);
 
-	bulletManager_->DeadUpdate();
 
 	collisionManager_->CheckAllCollisions();
 	camera->Update();

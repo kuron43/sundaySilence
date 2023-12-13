@@ -1,4 +1,8 @@
 #include "Human.h"
+/**
+ * @file Human.cpp
+ * @brief ヒトガタ基底クラス
+ */
 
 
 Human::Human() {

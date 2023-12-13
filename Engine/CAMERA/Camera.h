@@ -11,7 +11,6 @@
 /// </summary>
 class Camera
 {
-
 public: // メンバ関数
 	/// <summary>
 	/// コンストラクタ
@@ -131,7 +130,7 @@ public: // メンバ関数
 	inline const float& GetForcalLengs() {
 		return focalLengs_;
 	}
-	inline void SetFocalLengs(float focalLengs) {
+	inline void SetFocalLengs(float focalLengs = 50.0f) {
 		focalLengs_ = focalLengs; viewDirty = true;
 	}
 

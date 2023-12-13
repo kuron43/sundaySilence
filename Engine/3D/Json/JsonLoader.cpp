@@ -59,6 +59,10 @@ LevelData* JsonLoader::LoadJsonFile(const std::string& fileName) {
 				// ファイル名
 				objectData.fileName = object["file_name"];
 			}
+			if (object.contains("Weapon")) {
+				// ファイル名
+				objectData.weapon = object["Weapon"];
+			}
 
 			// トランスフォームのパラメータ読み込み
 			nlohmann::json& transform = object["transform"];

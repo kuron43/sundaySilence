@@ -21,8 +21,8 @@ void RayCollider::Update() {
 	}
 	else
 	{
-		Ray::start_ = {0,0,0};
-		Ray::dir_ = { 1,0,0 };
+		Ray::start_ = start_;
+		Ray::dir_ = dir_;
 	}
 
 	isHit = false;

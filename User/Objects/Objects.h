@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Objects.h
+ * @brief
+ */
+
 #include "Object3d.h"
 #include "Transform.h"
 #include "Affin.h"
@@ -9,6 +14,7 @@
 
 class DirectXCommon;
 
+// オブジェクト基底クラス
 class Objects
 {
 public:

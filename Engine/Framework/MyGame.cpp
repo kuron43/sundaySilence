@@ -67,10 +67,10 @@ void MyGame::Draw() {
 	dxCommon->PreDraw();
 
 	// ゲームシーンの描画
-	//gameScene->Draw();
+	gameScene->Draw();
 
 	//ポストエフェクトの描画
-	postEffect->Draw(dxCommon->GetCommandList());
+	//postEffect->Draw(dxCommon->GetCommandList());
 
 	// Imgui受付終了
 	imgui->End();

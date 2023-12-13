@@ -1,10 +1,9 @@
 cbuffer cbuff0 : register(b0)
 {
-	//matrix mat; // ３Ｄ変換行列
 	matrix viewproj;//ビュープロジェクション行列
 	matrix world; //ワールド行列
 	float3 cameraPos; //カメラ座標 (ワールド座標)
-    float3 color_; // 色情報
+    float4 color_; // 色情報
 };
 
 cbuffer cbuff1 : register(b1)

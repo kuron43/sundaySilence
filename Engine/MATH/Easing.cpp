@@ -1,6 +1,10 @@
 #include "Easing.h"
 #include <math.h>
 
+float Easing::lerpFloat(const float start, const float end, const float t) {
+	return start * (1.0f - t) + end * t;
+}
+
 // Quad
 float Easing::InQuadFloat(const float start, const float end, const float time)
 {

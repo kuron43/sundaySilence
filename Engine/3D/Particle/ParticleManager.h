@@ -24,7 +24,7 @@ class ParticleManager
 private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	
+
 
 public: // サブクラス
 	// 定数バッファ用データ構造体（マテリアル）
@@ -48,7 +48,7 @@ public: // サブクラス
 
 	//パーティクル一粒
 	struct Particle {
-		
+
 		//座標
 		Vector3 position = {};
 		//速度
@@ -95,7 +95,7 @@ public: // 静的メンバ関数
 	static void InitializeGraphicsPipeline();
 
 private: // 静的メンバ変数
-	
+
 	// デバイス
 	static Microsoft::WRL::ComPtr<ID3D12Device> device;
 	// コマンドリスト
@@ -117,20 +117,20 @@ private: // 静的メンバ変数
 	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
 	// シェーダリソースビューのハンドル(CPU)
 	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
-	
+
 	// 頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView;
 	// 頂点データ配列
 	VertexPos vertices[2024];
 	// 定数バッファ
-	ComPtr<ID3D12Resource> constBuff; 
+	ComPtr<ID3D12Resource> constBuff;
 
 	//パーティクル配列
 	std::forward_list<Particle>particles;
 
 private:// メンバ関数
 
-	
+
 
 	/// <summary>
 	/// デスクリプタヒープの初期化
@@ -174,7 +174,13 @@ public: // メンバ関数
 	/// マネージャーの座標をもとにランダムに放出する
 	/// </summary>
 	void RandParticle();
-	void RandParticle(Vector3 pos, uint32_t life = 10);
+	/// <summary>
+	/// パーティクルの追加
+	/// </summary>
+	///	<param name="life">生存時間</param>
+	///	<param name="pos">初期座標</param>
+	///	<param name="velo">速度</param>
+	void RandParticle(uint32_t life = 10,Vector3 pos = {0,0,0}, Vector3 velo = {0,0,0});
 
 	/// <summary>
 	/// パーティクルの追加

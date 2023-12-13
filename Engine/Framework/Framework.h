@@ -5,7 +5,6 @@
 #include "DirectXCommon.h"
 #include "FPS.h"
 #include "ImGuiManager.h"
-#include "PadInput.h"
 #pragma warning(push)
 #pragma warning(disable: 4514)
 #include <imgui.h>
@@ -37,7 +36,6 @@ protected:
 	DirectXCommon* dxCommon = nullptr;
 	FPS* fps = nullptr;
 	Input* input = nullptr;
-	Pad_X_Input* PadInput = nullptr;
 	ImGuiManager* imgui = nullptr;
 
 };

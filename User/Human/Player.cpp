@@ -1,6 +1,9 @@
+/**
+ * @file Player.cpp
+ * @brief
+ */
 #include "Player.h"
-#include "Assault.h"
-
+#include "Weaponlist.h"
 
 Player::Player() {
 
@@ -8,12 +11,18 @@ Player::Player() {
 Player::~Player() {
 	delete model_;
 	delete reticleMD_;
+	delete pointDash_;
+	delete weapon_[0];
+	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
+		delete sphere[i];
+	}
 }
 
 ///
 void Player::Initialize() {
-	model_ = Model::LoadFromOBJ("prayer");
-	reticleMD_ = Model::LoadFromOBJ("Cube2");
+	model_ = Model::LoadFromOBJ("player");
+	reticleMD_ = Model::LoadFromOBJ("cursor");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -22,14 +31,20 @@ void Player::Initialize() {
 	reticle = Object3d::Create();
 	reticle->SetModel(reticleMD_);
 	reticle->Initialize();
-	weapon_[0] = new Assault();
-	weapon_[0]->Initialize();
+
+	weapon_[WP_ASSAULT] = new Assault();
+	weapon_[WP_SHOTGUN] = new Shotgun();
+	weapon_[WP_ASSAULT]->Initialize();
+	weapon_[WP_SHOTGUN]->Initialize();
+	useWeapon_ = WP_ASSAULT;
 
 	pointDash_ = new PointDash();
+	pointDash_->Initialize();
 	pointDash_->points.resize(pointDash_->MAX_POINTNUM);
 
+	hp_ = MAX_HP;
+
 	//当たり判定用
-	SPHERE_COLISSION_NUM = 1;
 	sphere.resize(SPHERE_COLISSION_NUM);
 	spherePos.resize(SPHERE_COLISSION_NUM);
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
@@ -58,383 +73,110 @@ void Player::Initialize() {
 ///
 void Player::Update(Input* input, bool isTitle) {
 	nowTitle = isTitle;
+	FaceAngleUpdate();
 	if (pointDash_->isActive == false) {
 		Move(input);
 	}
 	Vector2 mousepos = input->GetMousePosition();
-	reticle->wtf.position = { mousepos.x * mouseSensitivity_,0,mousepos.y * mouseSensitivity_ };
+	object_->wtf.position.y = NONE;
+	reticle->wtf.position += { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
-	if (input->MouseButtonPush(0) && !isTitle && isSlow == false) {
-		weapon_[0]->Shot(object_->wtf, reticle->wtf, PLAYER);
+	if (input->KeyboardTrigger(DIK_E)) {
+		useWeapon_ = WP_SHOTGUN;
 	}
-	weapon_[0]->Update(input, isSlow);
-
-	if (input->MouseButtonTrigger(0) && !isTitle && isSlow == true) {
-		pointDash_->SetPoint(reticle->wtf.position, input);
-		nowSetPoint = true;
+	if (input->KeyboardTrigger(DIK_Q)) {
+		useWeapon_ = WP_ASSAULT;
+	}
+	if (input->MouseButtonPush(0) && !isTitle && _isSlow == false) {
+		weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
+		isOnFire = true;
+	}
+	else {
+		isOnFire = false;
+	}
+	for (uint32_t i = 0; i < 2; i++) {
+		weapon_[i]->Update(input, _isSlow);
 	}
 
-	if (!isTitle && pointDash_->isActive == true ) {
+	if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
+		if (input->MouseButtonTrigger(LEFT_MOUSE) && !nowTitle && _isSlow == true) {
+			pointDash_->SetPoint(reticle->wtf.position, input);
+			nowSetPoint = true;
+		}
+	}
+	//object_->camera_->SetFocalLengs(pointDash_->F_lengs);
+
+	if (!nowTitle && pointDash_->isActive == true) {
 		pointDash_->GoToPoint();
 		object_->wtf.position = pointDash_->resultVec;
 	}
 
+
+
 	ColisionUpdate();
-
+	HitMyColor();
 	object_->Update();
-
-	//if (input->KeyboardTrigger(DIK_R)) {
-	//	//Reset();
-	//	pointDash_->Reset();
-	//}
-
-	//ImGui::Begin("pointD");
-	//ImGui::Text("ply:%f,%f,%f", object_->wtf.position.x, object_->wtf.position.y, object_->wtf.position.z);
-	//ImGui::Text("pointNUM :%d", pointDash_->registNum);
-	//ImGui::InputFloat3("pos0", &pointDash_->points[0].x);
-	//ImGui::InputFloat3("pos1", &pointDash_->points[1].x);
-	//ImGui::InputFloat3("pos2", &pointDash_->points[2].x);
-	//ImGui::InputFloat3("pos3", &pointDash_->points[3].x);
-	//ImGui::InputFloat3("pos4", &pointDash_->points[4].x);
-	//ImGui::InputFloat3("Vec0", &pointDash_->moveVec[0].x);
-	//ImGui::InputFloat3("Vec1", &pointDash_->moveVec[1].x);
-	//ImGui::InputFloat3("Vec2", &pointDash_->moveVec[2].x);
-	//ImGui::InputFloat3("Vec3", &pointDash_->moveVec[3].x);
-	//ImGui::InputFloat3("Vec4", &pointDash_->moveVec[4].x);
-	//ImGui::End();
-
-	ImGui::Begin("pointRes");
+	Vector4 skaliCol = object_->GetColor();
+	ImGui::Begin("player");
+	ImGui::Text("window W :%d", WinApp::window_width);
+	ImGui::Text("window H :%d", WinApp::window_height);
+	ImGui::Text("Palams");
+	ImGui::InputFloat3("Position", &object_->wtf.position.x);
+	ImGui::Text("PointDash");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
-	ImGui::Text("spe :%f", pointDash_->easeSpeed);
+	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
+	ImGui::InputFloat4("Col", &skaliCol.x);
+	ImGui::InputFloat("spe :%f", &pointDash_->easeSpeed);
 	ImGui::End();
+
 }
 
 ///
 void Player::Draw(DirectXCommon* dxCommon) {
+	pointDash_->Draw(dxCommon);
 	Object3d::PreDraw(dxCommon->GetCommandList());
 	object_->Draw();
 	if (!nowTitle) {
 		reticle->Draw();
 	}
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-
+	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 		//coliderPosTest_[i]->Draw();
 	}
 	Object3d::PostDraw();
-	if (!nowTitle) {
-		weapon_[0]->Draw(dxCommon);
-	}
+	/*if (!nowTitle) {
+		weapon_[useWeapon_]->Draw(dxCommon);
+	}*/
 }
 
 /// リセットを行う
 void Player::Reset() {
 
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-	}
+	hp_ = MAX_HP;
+	hit_ = NONE;
+	isDeath_ = false;
+	_isSlow = false;
+	object_->wtf.Initialize();
+	reticle->wtf.Initialize();
+	object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
+	pointDash_->Reset();
+	isHitEffect = false;
+	hitTime_ = NONE;
 
+}
+
+/// 武器の番号セット
+void Player::SetWeaponNum(uint32_t WeaponNum)
+{
+	useWeapon_ = WeaponNum;
 }
 
 void Player::Move(Input* input) {
 
 	//-----行動処理-----//
 	//速度を0にする
-	velocity_ = { 0 , 0 , 0 };
-	Vector2 vec2Velocity = { 0,0 };
-	Vector3 faceAngle = { 0,0,0 };
-	Vector3 speed = { 0 , 0 , 0 };
-	{
-		////キー入力があったら
-		//if (input->KeyboardPush(DIK_W) ||
-		//	input->KeyboardPush(DIK_A) ||
-		//	input->KeyboardPush(DIK_S) ||
-		//	input->KeyboardPush(DIK_D))
-		//{
-		//	if (isRun_ == false) {
-		//		isRun_ = true;
-		//	}
-
-		//	//Z軸方向にの速度を入れる
-		//	velocity_ = { 0 , 0 , kMoveSpeed_ };
-
-		//	//W,Dを押していたら
-		//	if (input->KeyboardPush(DIK_W) && input->KeyboardPush(DIK_D))
-		//	{
-
-		//		//45度方向に向くように回転させる
-		//		if (faceAngle_.y != Affin::radConvert(45))
-		//		{
-		//			if (faceAngle_.y >= Affin::radConvert(45) &&
-		//				faceAngle_.y <= Affin::radConvert(225))
-		//			{
-
-		//				faceAngle_.y -= kTurnSpeed_;
-
-		//				if (faceAngle_.y <= Affin::radConvert(45) ||
-		//					faceAngle_.y >= Affin::radConvert(225))
-		//				{
-		//					faceAngle_.y = Affin::radConvert(45);
-		//				}
-		//			}
-		//			else
-		//			{
-
-		//				faceAngle_.y += kTurnSpeed_;
-
-		//				if (faceAngle_.y >= Affin::radConvert(45) &&
-		//					faceAngle_.y <= Affin::radConvert(225))
-		//				{
-		//					faceAngle_.y = Affin::radConvert(45);
-		//				}
-		//			}
-		//		}
-
-		//	}
-
-		//	//W,Aを押していたら
-		//	else if (input->KeyboardPush(DIK_W) && input->KeyboardPush(DIK_A))
-		//	{
-
-		//		//135度方向に向くように回転させる
-		//		if (faceAngle_.y != Affin::radConvert(315))
-		//		{
-		//			if (faceAngle_.y >= Affin::radConvert(125) &&
-		//				faceAngle_.y <= Affin::radConvert(315))
-		//			{
-
-		//				faceAngle_.y += kTurnSpeed_;
-
-		//				if (faceAngle_.y <= Affin::radConvert(125) ||
-		//					faceAngle_.y >= Affin::radConvert(315))
-		//				{
-		//					faceAngle_.y = Affin::radConvert(315);
-		//				}
-		//			}
-		//			else
-		//			{
-
-		//				faceAngle_.y -= kTurnSpeed_;
-
-		//				if (faceAngle_.y >= Affin::radConvert(125) &&
-		//					faceAngle_.y <= Affin::radConvert(315))
-		//				{
-		//					faceAngle_.y = Affin::radConvert(315);
-		//				}
-		//			}
-		//		}
-
-		//	}
-
-		//	//S,Dを押していたら
-		//	else if (input->KeyboardPush(DIK_S) && input->KeyboardPush(DIK_D))
-		//	{
-
-		//		//315度方向に向くように回転させる
-		//		if (faceAngle_.y != Affin::radConvert(135))
-		//		{
-		//			if (faceAngle_.y <= Affin::radConvert(315) &&
-		//				faceAngle_.y >= Affin::radConvert(135))
-		//			{
-
-		//				faceAngle_.y -= kTurnSpeed_;
-
-		//				if (Affin::radConvert(135) >= faceAngle_.y)
-		//				{
-		//					faceAngle_.y = Affin::radConvert(135);
-		//				}
-		//			}
-		//			else
-		//			{
-
-		//				faceAngle_.y += kTurnSpeed_;
-
-		//				if (Affin::radConvert(135) <= faceAngle_.y)
-		//				{
-		//					faceAngle_.y = Affin::radConvert(135);
-		//				}
-		//			}
-		//		}
-
-		//	}
-
-		//	//S,Aを押していたら
-		//	else if (input->KeyboardPush(DIK_S) && input->KeyboardPush(DIK_A))
-		//	{
-
-		//		//225度方向に向くように回転させる
-		//		if (faceAngle_.y != Affin::radConvert(225))
-		//		{
-		//			if (faceAngle_.y >= Affin::radConvert(45) &&
-		//				faceAngle_.y <= Affin::radConvert(225))
-		//			{
-
-		//				faceAngle_.y += kTurnSpeed_;
-
-		//				if (Affin::radConvert(225) <= faceAngle_.y)
-		//				{
-		//					faceAngle_.y = Affin::radConvert(225);
-		//				}
-		//			}
-		//			else
-		//			{
-
-		//				faceAngle_.y -= kTurnSpeed_;
-
-		//				if (Affin::radConvert(225) >= faceAngle_.y &&
-		//					faceAngle_.y >= Affin::radConvert(45))
-		//				{
-		//					faceAngle_.y = Affin::radConvert(225);
-		//				}
-
-		//			}
-		//		}
-
-		//	}
-
-		//	//Wを押していたら
-		//	else if (input->KeyboardPush(DIK_W))
-		//	{
-
-		//		//0度方向に向くように回転させる
-		//		if (faceAngle_.y != Affin::radConvert(0))
-		//		{
-		//			if (faceAngle_.y <= Affin::radConvert(180))
-		//			{
-
-		//				faceAngle_.y -= kTurnSpeed_;
-
-		//				if (Affin::radConvert(0) >= faceAngle_.y)
-		//				{
-		//					faceAngle_.y = Affin::radConvert(0);
-		//				}
-		//			}
-		//			else
-		//			{
-
-		//				faceAngle_.y += kTurnSpeed_;
-
-		//				if (Affin::radConvert(360) <= faceAngle_.y)
-		//				{
-		//					faceAngle_.y = Affin::radConvert(0);
-		//				}
-		//			}
-		//		}
-		//	}
-
-		//	//Sを押していたら
-		//	else if (input->KeyboardPush(DIK_S))
-		//	{
-
-		//		//180度方向に向くように回転させる
-		//		if (faceAngle_.y != Affin::radConvert(180))
-		//		{
-		//			if (faceAngle_.y <= Affin::radConvert(180))
-		//			{
-
-		//				faceAngle_.y += kTurnSpeed_;
-
-		//				if (Affin::radConvert(180) <= faceAngle_.y)
-		//				{
-		//					faceAngle_.y = Affin::radConvert(180);
-		//				}
-		//			}
-		//			else
-		//			{
-
-		//				faceAngle_.y -= kTurnSpeed_;
-
-		//				if (Affin::radConvert(180) >= faceAngle_.y)
-		//				{
-		//					faceAngle_.y = Affin::radConvert(180);
-		//				}
-		//			}
-		//		}
-		//	}
-
-		//	//Dを押していたら
-		//	else if (input->KeyboardPush(DIK_D))
-		//	{
-
-		//		//90度方向に向くように回転させる
-		//		if (faceAngle_.y != Affin::radConvert(90))
-		//		{
-		//			if (faceAngle_.y != Affin::radConvert(90))
-		//			{
-		//				if (faceAngle_.y >= Affin::radConvert(90) &&
-		//					faceAngle_.y <= Affin::radConvert(270))
-		//				{
-		//					faceAngle_.y -= kTurnSpeed_;
-
-		//					if (faceAngle_.y <= Affin::radConvert(90) ||
-		//						Affin::radConvert(270) <= faceAngle_.y)
-		//					{
-		//						faceAngle_.y = Affin::radConvert(90);
-		//					}
-
-		//				}
-		//				else
-		//				{
-		//					faceAngle_.y += kTurnSpeed_;
-
-		//					if (faceAngle_.y >= Affin::radConvert(90) &&
-		//						faceAngle_.y <= Affin::radConvert(270))
-		//					{
-		//						faceAngle_.y = Affin::radConvert(90);
-		//					}
-		//				}
-		//			}
-		//		}
-		//	}
-
-		//	//Aを押していたら
-		//	else if (input->KeyboardPush(DIK_A))
-		//	{
-		//		//270度方向に向くように回転させる
-		//		if (faceAngle_.y != Affin::radConvert(270))
-		//		{
-		//			if (faceAngle_.y >= Affin::radConvert(90) &&
-		//				faceAngle_.y <= Affin::radConvert(270))
-		//			{
-		//				faceAngle_.y += kTurnSpeed_;
-
-		//				if (faceAngle_.y <= Affin::radConvert(90) ||
-		//					Affin::radConvert(270) <= faceAngle_.y)
-		//				{
-		//					faceAngle_.y = Affin::radConvert(270);
-		//				}
-
-		//			}
-		//			else
-		//			{
-		//				faceAngle_.y -= kTurnSpeed_;
-
-		//				if (faceAngle_.y >= Affin::radConvert(90) &&
-		//					Affin::radConvert(270) >= faceAngle_.y)
-		//				{
-		//					faceAngle_.y = Affin::radConvert(270);
-		//				}
-		//			}
-		//		}
-		//	}
-
-		//	if (Affin::radConvert(360) < faceAngle_.y)
-		//	{
-		//		faceAngle_.y += -Affin::radConvert(360);
-		//	}
-		//	if (faceAngle_.y < 0)
-		//	{
-		//		faceAngle_.y += Affin::radConvert(360);
-		//	}
-		//	object_->wtf.rotation = faceAngle_;
-
-		//}
-		//else
-		//{
-		//	if (isRun_ == true) {
-		//		isRun_ = false;
-		//	}
-		//}
-	}
+	velocity_.InIt();
+	Vector3 speed;
+	speed.InIt();
 
 	//キー入力があったら
 	if (input->KeyboardPush(DIK_W) ||
@@ -443,36 +185,32 @@ void Player::Move(Input* input) {
 		input->KeyboardPush(DIK_D)) {
 
 		if (input->KeyboardPush(DIK_W)) {
-			speed += Vector3(0, 0, kMoveSpeed_);
+			speed.z += kMoveSpeed_;
 		}
 		if (input->KeyboardPush(DIK_S)) {
-			speed += Vector3(0, 0, -kMoveSpeed_);
+			speed.z += -kMoveSpeed_;
 		}
 		if (input->KeyboardPush(DIK_A)) {
-			speed += Vector3(-kMoveSpeed_, 0, 0);
+			speed.x += -kMoveSpeed_;
 		}
 		if (input->KeyboardPush(DIK_D)) {
-			speed += Vector3(kMoveSpeed_, 0, 0);
+			speed.x += kMoveSpeed_;
 		}
-
 	}
-
-	vec2Velocity = input->Pad_X_GetLeftStickVec(Vector2(1.0f, 1.0f));
-	speed += { vec2Velocity.x, 0, -vec2Velocity.y };
-
-
 	//////////////////////////////////
-	if (input->MouseButtonTrigger(1)) {
-		isSlow = true;
+	if (input->MouseButtonPush(RIGHT_MOUSE)) {
+		_isSlow = true;
 	}
-	if (input->MouseButtonRelease(1)) {
-		isSlow = false;
+	else {
+		_isSlow = false;
+	}
+	if (input->MouseButtonRelease(RIGHT_MOUSE)) {
 		nowSetPoint = false;
 		pointDash_->MakeMoveVec(Affin::GetWorldTrans(object_->wtf.matWorld));
 	}
 
-	if (isSlow == true) {
-		velocity_ = speed * 0.25f;
+	if (_isSlow == true) {
+		velocity_ = speed * _SlowSpeed;
 	}
 	else {
 		velocity_ = speed;
@@ -483,81 +221,113 @@ void Player::Move(Input* input) {
 		velocity_ = -oldVelocity_;
 	}
 
-	{
-		faceAngle_.y = (float)atan2(object_->wtf.position.x - reticle->wtf.position.x, object_->wtf.position.z - reticle->wtf.position.z);
-		faceAngle = faceAngle_;
-	}
-
-	object_->wtf.rotation = faceAngle;
 	object_->wtf.position += velocity_;
 	oldVelocity_ = velocity_;
 
+}
+
+void Player::FaceAngleUpdate()
+{
+	Vector3 faceAngle;
+	faceAngle.InIt();
+	faceAngle_.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
+	faceAngle = faceAngle_;
+
+	object_->wtf.rotation = faceAngle;
+}
+
+void Player::HitMyColor()
+{
+	if (isHitEffect == true) {
+		object_->SetColor({ 1,0,0,1.0f });
+		hitTime_++;
+		if (hitTime_ >= MAX_HITTIME) {
+			isHitEffect = false;
+			hitTime_ = 0;
+		}
+	}
+	else {
+		object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
+	}
 }
 
 void Player::ColisionUpdate() {
 	// コライダーのアップデート
 	object_->UpdateMatrix();
 
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true) {
-			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT) {
-				wallHit = true;
+			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
+				OnColision();
 			}
 		}
 	}
 
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
 
 		coliderPosTest_[i]->wtf.position = (sphere[i]->center);
 		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
-		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
+		coliderPosTest_[i]->wtf.rotation.InIt();
 		coliderPosTest_[i]->Update();
-	}	
-
+	}
 	// クエリーコールバッククラス
-	class PlayerQueryCallback :public QueryCallback
 	{
-	public:
-		PlayerQueryCallback(Sphere* sphere) :sphereQ(sphere) {};
-		// 衝突時コールバック
-		bool OnQueryHit(const QueryHit& info) {
-			// ワールドの上方向
-			const Vector3 up = { 0,1,0 };
-			// 排斥方向			
-			Vector3 rejectDir = info.reject;
-			rejectDir.nomalize();
-			// 上方向と排斥方向の角度差のコサイン値
-			float cos = rejectDir.dot(up);
+		class PlayerQueryCallback :public QueryCallback
+		{
+		public:
+			PlayerQueryCallback(Sphere* sphere) :sphereQ(sphere) {};
+			// 衝突時コールバック
+			bool OnQueryHit(const QueryHit& info) {
+				// ワールドの上方向
+				const Vector3 up = { 0,1,0 };
+				// 排斥方向			
+				Vector3 rejectDir = info.reject;
+				rejectDir.nomalize();
+				// 上方向と排斥方向の角度差のコサイン値
+				float cos = rejectDir.dot(up);
 
-			// 地面判定しきい値
-			const float threshold = cosf(Affin::radConvert(30.0f));
-			// 角度差によって天井または地面と判定される場合を除いて
-			if (-threshold < cos && cos < threshold) {
-				// 球を排斥 （押し出す）
-				sphereQ->center += info.reject;
-				move += info.reject;
+				// 地面判定しきい値
+				const float threshold = cosf(Affin::radConvert(30.0f));
+				// 角度差によって天井または地面と判定される場合を除いて
+				if (-threshold < cos && cos < threshold) {
+					// 球を排斥 （押し出す）
+					sphereQ->center += info.reject;
+					move += info.reject;
+					colider_ = info.coloder;
+				}
+				return true;
 			}
-			return true;
+
+			// クエリーに使用する球
+			Sphere* sphereQ = nullptr;
+			// 排斥による移動量
+			Vector3 move = {};
+			// 衝突相手のコライダー
+			BaseCollider* colider_ = nullptr;
+		};
+
+		//クエリーコールバックの関数オブジェクト
+		for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
+			PlayerQueryCallback callback(sphere[i]);
+			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback);
+			object_->wtf.position.x += callback.move.x;
+			object_->wtf.position.y += callback.move.y;
+			object_->wtf.position.z += callback.move.z;
+
+			object_->UpdateMatrix();
+			sphere[i]->Update();
 		}
+	}
+}
 
-		// クエリーに使用する球
-		Sphere* sphereQ = nullptr;
-		// 排斥による移動量
-		Vector3 move = {};
-	};
-
-	//クエリーコールバックの関数オブジェクト
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		PlayerQueryCallback callback(sphere[i]);
-		//
-		CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback);
-		object_->wtf.position.x += callback.move.x;
-		object_->wtf.position.y += callback.move.y;
-		object_->wtf.position.z += callback.move.z;
-
-		object_->UpdateMatrix();
-		sphere[i]->Update();
+void Player::OnColision()
+{
+	hp_--;
+	hit_++;
+	isHitEffect = true;
+	if (hp_ <= NONE) {
+		isDeath_ = true;
 	}
 }

@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file Boss.h
+ * @brief
+ */
 #include "Human.h"
 #include "Weaponlist.h"
 
@@ -9,7 +13,7 @@ public:
 	Boss();
 	~Boss()override;
 
-	/// シーンの更新を行う
+	/// シーンの初期化を行う
 	void Initialize()override;
 
 	/// シーンの更新を行う
@@ -21,7 +25,10 @@ public:
 	/// リセットを行う
 	void Reset() override;
 
-	//
+	/// 武器の番号セット
+	void SetWeaponNum(uint32_t WeaponNum) override;
+
+	// セッター
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
 	void SetReticle(Vector3 ret) { reticle->wtf.position = ret; }
 	void SetRestRotate(Vector3 rot) { restRotate_ = rot; }
@@ -33,20 +40,25 @@ public:
 	Transform GetTransform() { return object_->wtf; }
 
 private:
+	//正面をレティクル方向に向かせる
 	void FrontFace();
+	// 当たり判定用のアップデート
 	void ColiderUpdate();
 	void OnColision();
 
+	void HitMyColor();
 public:
 	Object3d* object_;
 private:
 	const uint32_t Tribe_ = 1;
+	uint32_t useWeapon_ = WP_ASSAULT;
 	bool isFound = false;
 	bool isFire = false;
 	bool isBlocked = false;
 
 
 	Model* model_;
+	Model* modelCol_;
 	Object3d* reticle;
 
 	Vector3 frontVec_;
@@ -74,12 +86,17 @@ private:
 	uint32_t onPatTime_;
 	bool onPat_;
 
+	// 体の色変化
+	bool isHitEffect;
+	const uint32_t MAX_HITTIME = 5;
+	uint32_t hitTime_;
+
 	//コライダー
 public:
 	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
 	std::vector<SphereCollider*> GetSphere() { return sphere; }
 private:
-	uint32_t SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	uint32_t SPHERE_COLISSION_NUM = 1;	//コライダー（スフィア）の数
 	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	std::vector<SphereCollider*> sphere;
 	std::vector<Vector3> spherePos;

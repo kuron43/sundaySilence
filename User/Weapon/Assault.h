@@ -1,12 +1,16 @@
 #pragma once
+/**
+ * @file Assault.h
+ * @brief
+ */
 #include "Weapon.h"
 #include "Bullet.h"
 
+// アサルトライフル
 class Assault :
     public Weapon
 {
 private:
-	std::list<Bullet*> bullets_;
 	Model* model_;
 	const uint32_t WeaponNum = 1;
 	uint32_t team_;

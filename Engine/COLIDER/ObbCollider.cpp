@@ -18,7 +18,7 @@ ObbCollider::ObbCollider(Vector3 offset, Vector3 length, Matrix4 rotMat)
 	//球形状をセット
 	shapeType = COLLISIONSHAPE_OBB;
 }
-void ObbCollider::CreateOBB(std::vector<VertexPosNormalUv> vertices,Transform* wtfP) {
+void ObbCollider::CreateOBB(std::vector<VertexPosNormalUv> vertices, Transform* wtfP) {
 
 	Matrix4 matRot;
 	wtf_ = wtfP;
@@ -76,52 +76,77 @@ void ObbCollider::CreateOBB(std::vector<VertexPosNormalUv> vertices,Transform* w
 	plane[0].distance = m_fLength[0] / 2;
 	plane[1].distance = m_fLength[1] / 2;
 	plane[2].distance = m_fLength[2] / 2;
-	plane[3].distance = m_fLength[0] / 2;
-	plane[4].distance = m_fLength[1] / 2;
-	plane[5].distance = m_fLength[2] / 2;
+	plane[3].distance = -m_fLength[0] / 2;
+	plane[4].distance = -m_fLength[1] / 2;
+	plane[5].distance = -m_fLength[2] / 2;
 
-	{// (仮)
-		// ABC (頂点参考)
-		// https://www.studyup.jp/contents/sansuu/tenkai.html#index_id2
+	{// (仮)法線基準
 
-		plane[0].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上 B
-		plane[0].vertex[2] = { +1.0f, +1.0f, +1.0f }; // 右下 D
-		plane[0].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上 A
-		plane[0].vertex[0] = { -1.0f, +1.0f, +1.0f }; // 左下 C
+		plane[0].vertex[0] = { +1.0f, -1.0f, +1.0f }; // 左下  I
+		plane[0].vertex[1] = { +1.0f, +1.0f, +1.0f }; // 左上  D
+		plane[0].vertex[2] = { +1.0f, -1.0f, -1.0f }; // 右下  J
+		plane[0].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上  E
 
-		plane[1].vertex[3] = { +1.0f, +1.0f, +1.0f }; // 右上  D
-		plane[1].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  I
-		plane[1].vertex[1] = { -1.0f, +1.0f, +1.0f }; // 左上  C
-		plane[1].vertex[0] = { -1.0f, -1.0f, +1.0f }; // 左下  H
+		plane[1].vertex[0] = { -1.0f, +1.0f, +1.0f }; // 左下 C
+		plane[1].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上 A
+		plane[1].vertex[2] = { +1.0f, +1.0f, +1.0f }; // 右下 D
+		plane[1].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上 B
 
-		plane[2].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上  E
-		plane[2].vertex[2] = { +1.0f, -1.0f, -1.0f }; // 右下  J
-		plane[2].vertex[1] = { +1.0f, +1.0f, +1.0f }; // 左上  D
-		plane[2].vertex[0] = { +1.0f, -1.0f, +1.0f }; // 左下  I
+		plane[2].vertex[0] = { -1.0f, -1.0f, +1.0f }; // 左下  H
+		plane[2].vertex[1] = { -1.0f, +1.0f, +1.0f }; // 左上  C
+		plane[2].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  I
+		plane[2].vertex[3] = { +1.0f, +1.0f, +1.0f }; // 右上  D
 
-		plane[3].vertex[3] = { -1.0f, +1.0f, -1.0f }; // 右上  F
-		plane[3].vertex[2] = { -1.0f, -1.0f, -1.0f }; // 右下  K
-		plane[3].vertex[1] = { +1.0f, +1.0f, -1.0f }; // 左上  E
-		plane[3].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  J
+		plane[3].vertex[0] = { -1.0f, -1.0f, -1.0f }; // 左下  K
+		plane[3].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上  F
+		plane[3].vertex[2] = { -1.0f, -1.0f, +1.0f }; // 右下  L
+		plane[3].vertex[3] = { -1.0f, +1.0f, +1.0f }; // 右上  G
 
-		plane[4].vertex[3] = { -1.0f, +1.0f, +1.0f }; // 右上  G
-		plane[4].vertex[2] = { -1.0f, -1.0f, +1.0f }; // 右下  L
-		plane[4].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上  F
-		plane[4].vertex[0] = { -1.0f, -1.0f, -1.0f }; // 左下  K
-
-		plane[4].vertex[3] = { -1.0f, -1.0f, +1.0f }; // 右上  L
-		plane[4].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  N
-		plane[4].vertex[1] = { -1.0f, -1.0f, -1.0f }; // 左上  K
 		plane[4].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  M
-	}
+		plane[4].vertex[1] = { -1.0f, -1.0f, -1.0f }; // 左上  K
+		plane[4].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  N
+		plane[4].vertex[3] = { -1.0f, -1.0f, +1.0f }; // 右上  L
 
-	for (uint32_t i = 0; i < 6; i++) {
-		for (uint32_t j = 0; j < 4; j++)
-		{
-			//plane[i].vertex[j] = Affin::VecMat()
-		}
+		plane[5].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  J
+		plane[5].vertex[1] = { +1.0f, +1.0f, -1.0f }; // 左上  E
+		plane[5].vertex[2] = { -1.0f, -1.0f, -1.0f }; // 右下  K
+		plane[5].vertex[3] = { -1.0f, +1.0f, -1.0f }; // 右上  F
 	}
+	{// (仮)
 
+	 // ABC (頂点参考)
+	 // https://www.studyup.jp/contents/sansuu/tenkai.html#index_id2
+
+		//plane[0].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上 B
+		//plane[0].vertex[2] = { +1.0f, +1.0f, +1.0f }; // 右下 D
+		//plane[0].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上 A
+		//plane[0].vertex[0] = { -1.0f, +1.0f, +1.0f }; // 左下 C
+
+		//plane[1].vertex[3] = { +1.0f, +1.0f, +1.0f }; // 右上  D
+		//plane[1].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  I
+		//plane[1].vertex[1] = { -1.0f, +1.0f, +1.0f }; // 左上  C
+		//plane[1].vertex[0] = { -1.0f, -1.0f, +1.0f }; // 左下  H
+
+		//plane[2].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上  E
+		//plane[2].vertex[2] = { +1.0f, -1.0f, -1.0f }; // 右下  J
+		//plane[2].vertex[1] = { +1.0f, +1.0f, +1.0f }; // 左上  D
+		//plane[2].vertex[0] = { +1.0f, -1.0f, +1.0f }; // 左下  I
+
+		//plane[3].vertex[3] = { -1.0f, +1.0f, -1.0f }; // 右上  F
+		//plane[3].vertex[2] = { -1.0f, -1.0f, -1.0f }; // 右下  K
+		//plane[3].vertex[1] = { +1.0f, +1.0f, -1.0f }; // 左上  E
+		//plane[3].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  J
+
+		//plane[4].vertex[3] = { -1.0f, +1.0f, +1.0f }; // 右上  G
+		//plane[4].vertex[2] = { -1.0f, -1.0f, +1.0f }; // 右下  L
+		//plane[4].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上  F
+		//plane[4].vertex[0] = { -1.0f, -1.0f, -1.0f }; // 左下  K
+
+		//plane[5].vertex[3] = { -1.0f, -1.0f, +1.0f }; // 右上  L
+		//plane[5].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  N
+		//plane[5].vertex[1] = { -1.0f, -1.0f, -1.0f }; // 左上  K
+		//plane[5].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  M
+	}
 }
 
 void ObbCollider::Update()
@@ -156,10 +181,57 @@ void ObbCollider::Update()
 		OBB::m_fLength[1] = m_fLength[1];
 		OBB::m_fLength[2] = m_fLength[2];
 
-		for (uint32_t i = 0; i < 6; i++) {
-			for (uint32_t j = 0; j < 4; j++)
-			{
+		// 平面用
+		{
+			for (uint32_t i = 0; i < 6; i++) {
+				OBB::plane[i].pos = m_Pos;
+			}
 
+			OBB::plane[0].normal = m_NormaDirect[0];
+			OBB::plane[1].normal = m_NormaDirect[1];
+			OBB::plane[2].normal = m_NormaDirect[2];
+			OBB::plane[3].normal = -m_NormaDirect[0];
+			OBB::plane[4].normal = -m_NormaDirect[1];
+			OBB::plane[5].normal = -m_NormaDirect[2];
+
+			OBB::plane[0].distance = m_fLength[0] / 2;
+			OBB::plane[1].distance = m_fLength[1] / 2;
+			OBB::plane[2].distance = m_fLength[2] / 2;
+			OBB::plane[4].distance = -m_fLength[1] / 2;
+			OBB::plane[5].distance = -m_fLength[2] / 2;
+			OBB::plane[3].distance = -m_fLength[0] / 2;
+
+			{// (仮)法線基準
+
+				OBB::plane[0].vertex[0] = { +1.0f, -1.0f, +1.0f }; // 左下  I
+				OBB::plane[0].vertex[1] = { +1.0f, +1.0f, +1.0f }; // 左上  D
+				OBB::plane[0].vertex[2] = { +1.0f, -1.0f, -1.0f }; // 右下  J
+				OBB::plane[0].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上  E
+
+				OBB::plane[1].vertex[0] = { -1.0f, +1.0f, +1.0f }; // 左下 C
+				OBB::plane[1].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上 A
+				OBB::plane[1].vertex[2] = { +1.0f, +1.0f, +1.0f }; // 右下 D
+				OBB::plane[1].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上 B
+
+				OBB::plane[2].vertex[0] = { -1.0f, -1.0f, +1.0f }; // 左下  H
+				OBB::plane[2].vertex[1] = { -1.0f, +1.0f, +1.0f }; // 左上  C
+				OBB::plane[2].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  I
+				OBB::plane[2].vertex[3] = { +1.0f, +1.0f, +1.0f }; // 右上  D
+
+				OBB::plane[3].vertex[0] = { -1.0f, -1.0f, -1.0f }; // 左下  K
+				OBB::plane[3].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上  F
+				OBB::plane[3].vertex[2] = { -1.0f, -1.0f, +1.0f }; // 右下  L
+				OBB::plane[3].vertex[3] = { -1.0f, +1.0f, +1.0f }; // 右上  G
+
+				OBB::plane[4].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  M
+				OBB::plane[4].vertex[1] = { -1.0f, -1.0f, -1.0f }; // 左上  K
+				OBB::plane[4].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  N
+				OBB::plane[4].vertex[3] = { -1.0f, -1.0f, +1.0f }; // 右上  L
+
+				OBB::plane[5].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  J
+				OBB::plane[5].vertex[1] = { +1.0f, +1.0f, -1.0f }; // 左上  E
+				OBB::plane[5].vertex[2] = { -1.0f, -1.0f, -1.0f }; // 右下  K
+				OBB::plane[5].vertex[3] = { -1.0f, +1.0f, -1.0f }; // 右上  F
 			}
 		}
 	}

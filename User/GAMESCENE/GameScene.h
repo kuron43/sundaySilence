@@ -1,7 +1,8 @@
 #pragma once
 
-#include "DirectXCommon.h"
 #include <string>
+
+#include "DirectXCommon.h"
 #include "Input.h"
 #include "SpriteCommon.h"
 #include "SceneManager.h"
@@ -10,7 +11,6 @@
 #include "Camera.h"
 #include "CollisionManager.h"
 #include "BulletManager.h"
-
 #include "JsonLoader.h"
 
 

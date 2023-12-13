@@ -1,16 +1,22 @@
 #pragma once
-// シーンを選択しやすいようにシーンの一括インクルード
+/**
+ * @file SceneIntegrate
+ * @brief シーンを選択しやすいようにシーンの一括インクルード
+ */
+
 // 要らないなら消しておk
 
 #include "TitleScene.h"
 #include "EndScene.h"
 #include "PauseScene.h"
 #include "SelectScene.h"
+#include "Clear.h"
 
 #include "TransitionsScene.h"
 #include "GAME1Scene.h"
 #include "GAME2Scene.h"
 
+// チェンジシーン用のenum
 enum _SCENE_ {
 	SCE_TITLE = 1,
 	SCE_OVER = 2,

@@ -1,3 +1,7 @@
+/**
+ * @file Floor.cpp
+ * @brief
+ */
 #include "Floor.h"
 
 #include "DirectXCommon.h"
@@ -18,9 +22,9 @@ void Floor::Initialize(Model* model) {
 	object_ = Object3d::Create();
 	object_->SetModel(model);
 	object_->Initialize();
-	object_->wtf.position.y = -10.0f;
-	object_->wtf.scale.x = 1.5f;
-	object_->wtf.scale.z = 1.5f;
+	object_->wtf.position.y = -0.8f;
+	object_->wtf.scale.x = 15.5f;
+	object_->wtf.scale.z = 15.5f;
 	object_->UpdateMatrix();
 }
 

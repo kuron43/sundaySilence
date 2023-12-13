@@ -56,14 +56,14 @@ private:
 	std::forward_list<BaseCollider*> colliders;
 
 public:
-	uint32_t OBBHitFace(OBB& obb, Sphere& sphere);
-	bool OBBToSphereCollision(OBB& obb, Sphere& sphere);
-	float LenOBBToPoint(OBB& obb,Vector3 & p);
-	bool PlaneToSphere(FinitePlane plane, Sphere& sphere);
-	float PlaneToPointLeng(FinitePlane plane, Vector3 pos, float radius, float& angle);
-	bool PlaneToPointInside(FinitePlane plane, Vector3 pos);
-	bool PolygonToPointInside(std::vector<Vector3> polygonPos, Vector3 pos);
-	float LineToPointLeng(Vector3 lineVertex1, Vector3 lineVertex2, Vector3 pointPos);
+	static uint32_t OBBHitFace(OBB& obb, Sphere& sphere);
+	static bool OBBToSphereCollision(OBB& obb, Sphere& sphere);
+	static float LenOBBToPoint(OBB& obb,Vector3 & p);
+	static bool PlaneToSphere(FinitePlane plane, Sphere& sphere);
+	static float PlaneToPointLeng(FinitePlane plane, Vector3 pos, float radius, float& angle);
+	static bool PlaneToPointInside(FinitePlane plane, Vector3 pos);
+	static bool PolygonToPointInside(std::vector<Vector3> polygonPos, Vector3 pos);
+	static float LineToPointLeng(Vector3 lineVertex1, Vector3 lineVertex2, Vector3 pointPos);
 private:
 
 

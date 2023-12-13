@@ -17,6 +17,7 @@ struct QueryHit {
 	Vector3 inter;
 	// 排斥ベクトル
 	Vector3 reject;
+
 };
 
 /// <summary>

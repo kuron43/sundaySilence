@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file Bullet.h
+ * @brief
+ */
 #include "Object3d.h"
 
 #include"SphereCollider.h"
@@ -13,6 +17,7 @@ enum Team
 	
 };
 
+// 弾クラス
 class Bullet
 {
 public:
@@ -21,7 +26,7 @@ public:
 	bool isTeam;
 	bool isDead;
 
-	const uint32_t deathTime = 120;
+	uint32_t DEATH_TIME = 800;
 	uint32_t timeCount;
 	
 	Object3d* bulletObj_;
@@ -45,6 +50,7 @@ public:
 
 	bool IsDead() const { return isDead; }
 	void Dead() { isDead = true; }
+	void SetDeathTime(uint32_t DeathTime) { DEATH_TIME = DeathTime; }
 
 	void SetBullModel(Model* model) { Bullet::bulletModel_ = model; }
 

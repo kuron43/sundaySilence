@@ -44,14 +44,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22000.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22000.0\um\x64;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;$(SolutionDir)External\lib\libignore\fbx_sdk\lib;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;C:\k021g1261\my\1\sundaySilence\External\lib\libignore\fbx_sdk\lib;C:\k021g1261\my\1\sundaySilence\External\imgui;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22000.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22000.0\um\x64;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;$(SolutionDir)External\fbx_sdk\lib;$(SolutionDir)External\lib\libignore\fbx_sdk\lib;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;C:\k021g1261\my\1\sundaySilence\External\lib\libignore\fbx_sdk\lib;C:\k021g1261\my\1\sundaySilence\External\imgui;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\fbx_sdk\include;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22000.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22000.0\um\x64;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;$(SolutionDir)External\lib\libignore\fbx_sdk\lib;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22000.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22000.0\um\x64;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;$(SolutionDir)External\fbx_sdk\lib;$(SolutionDir)External\lib\libignore\fbx_sdk\lib;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\fbx_sdk\include;$(SolutionDir)External\lib\libignore\fbx_sdk\include;$(SolutionDir)External\json;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -66,6 +66,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -92,6 +93,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -159,13 +161,14 @@
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneManager.cpp" />
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneObjects.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp" />
-    <ClCompile Include="User\GAMESCENE\scene\GAME1Scene.cpp" />
-    <ClCompile Include="User\GAMESCENE\scene\GAME2Scene.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\Clear.cpp" />
+    <ClCompile Include="User\GAMESCENE\scene\TransitionsScene.cpp" />
+    <ClCompile Include="User\GAMESCENE\stage\GAME1Scene.cpp" />
+    <ClCompile Include="User\GAMESCENE\stage\GAME2Scene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\IScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\PauseScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\SelectScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
-    <ClCompile Include="User\GAMESCENE\scene\TransitionsScene.cpp" />
     <ClCompile Include="User\Human\Boss.cpp" />
     <ClCompile Include="User\Human\Enemy.cpp" />
     <ClCompile Include="User\Objects\Cursor.cpp" />
@@ -239,13 +242,14 @@
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneManager.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneObjects.h" />
     <ClInclude Include="User\GAMESCENE\scene\EndScene.h" />
-    <ClInclude Include="User\GAMESCENE\scene\GAME1Scene.h" />
-    <ClInclude Include="User\GAMESCENE\scene\GAME2Scene.h" />
+    <ClInclude Include="User\GAMESCENE\scene\Clear.h" />
+    <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h" />
+    <ClInclude Include="User\GAMESCENE\stage\GAME1Scene.h" />
+    <ClInclude Include="User\GAMESCENE\stage\GAME2Scene.h" />
     <ClInclude Include="User\GAMESCENE\scene\IScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\PauseScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\SelectScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />
-    <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h" />
     <ClInclude Include="User\Human\Boss.h" />
     <ClInclude Include="User\Human\Enemy.h" />
     <ClInclude Include="User\Objects\Cursor.h" />

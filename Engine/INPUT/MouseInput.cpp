@@ -69,9 +69,8 @@ void MouseInput::UpdatePointPos() {
 	xPos_absolute = xPos + windowInfo.rcWindow.left + 8;//なんかずれてるから直す
 	yPos_absolute = yPos + windowInfo.rcWindow.top + 31; //ウィンドウのタイトルバーの分（31px）をプラス
 
-	//SetCursorPos(xPos_absolute, yPos_absolute);//移動させる
-
-	//mousePos_ = { xPos_absolute,yPos_absolute };
+	SetCursorPos((int)xPos_absolute, (int)yPos_absolute);//移動させる
+	mousePos_ = { xPos_absolute,yPos_absolute };
 
 	Vector2 mousePos;
 	mousePos.x = static_cast<float>(mousePosition.x);

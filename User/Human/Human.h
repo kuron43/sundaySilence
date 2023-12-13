@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file Human.h
+ * @brief ヒトガタ基底クラス
+ */
 #pragma warning(push)
 #pragma warning(disable: 4514)
 #include <imgui.h>
@@ -11,7 +15,7 @@
 
 #include "DirectXCommon.h"
 
-#include "Weapon.h"
+#include "Weaponlist.h"
 #include "ParticleManager.h"
 
 #include"SphereCollider.h"
@@ -19,14 +23,13 @@
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
 
-// 基底クラス
+// ヒトガタ基底クラス
 class Human
 {
 
 protected:
-
-	bool isSlow = false;
-	float slowSpeed = 0.25f;
+	bool _isSlow = false;
+	float _SlowSpeed = 0.25f;
 	bool _isTitle;
 public:
 
@@ -45,5 +48,7 @@ public:
 	/// リセットを行う
 	virtual void Reset() = 0;
 
+	/// 武器の番号セット
+	virtual void SetWeaponNum(uint32_t WeaponNum) = 0;
 };
 

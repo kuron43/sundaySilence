@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file SceneManager.h
+ * @brief シーン管理クラス
+ */
 #pragma warning(push)
 #pragma warning(disable: 4819)
 #pragma warning(disable: 4828)
@@ -36,19 +40,21 @@ public:
 	void SceneDraw();
 
 	// シーンを変更する
+	void ChangeScene();
 	void SetSceneNum(uint32_t num) { sceneNum = num; isChange = true; };
 	uint32_t GetSceneNum() { return sceneNum; };
-	void ChangeScene();
+	void PushScene(IScene*);
+	void PopScene();
+
+	// 
 	void TransScene();
 	void Pause();
 
-	void PushScene(IScene*);
-	void PopScene();
 public:
 	uint32_t sceneNum = 0;
 	bool isChange = false;
 	bool goToTitle = false;
 };
 
-//	参照元
-//	https://qiita.com/tsuchinokoman/items/390a22a20abe2a6daa6d <-やり方わからん
+//	基本構成の参照元
+//	https://qiita.com/tsuchinokoman/items/390a22a20abe2a6daa6d 

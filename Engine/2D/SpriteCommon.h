@@ -34,6 +34,11 @@ public:
 		Matrix4 mat;	//3D変換行列
 	};
 public:
+	static SpriteCommon* GetInstance()
+	{
+		static SpriteCommon instance;
+		return &instance;
+	}
 	//初期化
 	void Initialize(DirectXCommon* dxcommon);
 

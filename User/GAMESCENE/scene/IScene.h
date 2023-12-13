@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file IScene.h
+ * @brief
+ */
 #include "SceneManager.h"
 #include "SceneObjects.h"
 #include "ParticleManager.h"
@@ -10,6 +14,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4514)
 #include <imgui.h>
+#include <random>
 #pragma warning(pop)
 
 class SceneManager;
@@ -30,7 +35,7 @@ public:
 	virtual ~IScene();
 
 	//virtual Scene Create(SceneManager& controller) = 0;
-	/// シーンの更新を行う
+	/// シーンの初期化を行う
 	virtual void Initialize() = 0;
 
 	/// シーンの更新を行う

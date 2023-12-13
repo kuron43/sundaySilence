@@ -61,6 +61,7 @@ public:
 	float GetRotation() { return rotation; }
 
 	void SetColor(const Vector4& color_) { color = color_; }
+	void SetColorAlpha(const float& colorAlpha) { color.w = colorAlpha; }
 
 	Vector4 GetColor() { return color; }
 

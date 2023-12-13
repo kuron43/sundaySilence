@@ -1,0 +1,511 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "enemy.001",
+            "transform": {
+                "translation": [
+                    -5.228527545928955,
+                    2.1207276859058766e-06,
+                    -9.942059516906738
+                ],
+                "rotation": [
+                    -0.0,
+                    -128.29998779296875,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy",
+            "transform": {
+                "translation": [
+                    23.851694107055664,
+                    1.6313290416292148e-06,
+                    12.641584396362305
+                ],
+                "rotation": [
+                    -0.0,
+                    -123.5,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.002",
+            "transform": {
+                "translation": [
+                    8.0,
+                    0.0,
+                    25.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -97.89999389648438,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.003",
+            "transform": {
+                "translation": [
+                    45.0,
+                    0.0,
+                    25.0
+                ],
+                "rotation": [
+                    -0.0,
+                    120.3000259399414,
+                    -0.0
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    1.0,
+                    0.9999999403953552
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.004",
+            "transform": {
+                "translation": [
+                    -26.831525802612305,
+                    2.457658183629974e-06,
+                    12.848129272460938
+                ],
+                "rotation": [
+                    0.0,
+                    71.69999694824219,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.005",
+            "transform": {
+                "translation": [
+                    39.70160675048828,
+                    5.872784640814643e-07,
+                    -0.6290292739868164
+                ],
+                "rotation": [
+                    -0.0,
+                    152.29998779296875,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.006",
+            "transform": {
+                "translation": [
+                    -4.634443283081055,
+                    7.993512554094195e-07,
+                    9.67100715637207
+                ],
+                "rotation": [
+                    0.0,
+                    -60.999996185302734,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.007",
+            "transform": {
+                "translation": [
+                    4.360883712768555,
+                    -1.1419302836657153e-06,
+                    -9.83327865600586
+                ],
+                "rotation": [
+                    -0.0,
+                    136.60000610351562,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "wall",
+            "transform": {
+                "translation": [
+                    2.0640692710876465,
+                    0.0,
+                    50.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    65.95999908447266,
+                    1.7925821542739868,
+                    1.0
+                ]
+            },
+            "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.001",
+            "transform": {
+                "translation": [
+                    1.9426532983779907,
+                    0.0,
+                    -45.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    65.63999938964844,
+                    1.7925821542739868,
+                    1.0
+                ]
+            },
+            "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.002",
+            "transform": {
+                "translation": [
+                    -63.0,
+                    0.0,
+                    2.428316831588745
+                ],
+                "rotation": [
+                    -0.0,
+                    89.99999237060547,
+                    0.0
+                ],
+                "scaling": [
+                    47.79999923706055,
+                    1.7925821542739868,
+                    1.0
+                ]
+            },
+            "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.003",
+            "transform": {
+                "translation": [
+                    67.0,
+                    0.0,
+                    2.428316831588745
+                ],
+                "rotation": [
+                    -0.0,
+                    89.99999237060547,
+                    0.0
+                ],
+                "scaling": [
+                    47.790000915527344,
+                    1.7925821542739868,
+                    1.0
+                ]
+            },
+            "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "boss",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "file_name": "boss"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.004",
+            "transform": {
+                "translation": [
+                    10.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    89.99999237060547,
+                    0.0
+                ],
+                "scaling": [
+                    15.0,
+                    1.7925821542739868,
+                    1.0
+                ]
+            },
+            "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.005",
+            "transform": {
+                "translation": [
+                    -10.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    89.99999237060547,
+                    0.0
+                ],
+                "scaling": [
+                    15.0,
+                    1.7925821542739868,
+                    1.0
+                ]
+            },
+            "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.006",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    39.159854888916016
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    11.0,
+                    1.7925821542739868,
+                    1.0
+                ]
+            },
+            "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.007",
+            "transform": {
+                "translation": [
+                    40.0,
+                    -4.2414555423420097e-07,
+                    -15.0
+                ],
+                "rotation": [
+                    0.0,
+                    -45.0,
+                    0.0
+                ],
+                "scaling": [
+                    15.0,
+                    1.7925821542739868,
+                    0.9999999403953552
+                ]
+            },
+            "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.008",
+            "transform": {
+                "translation": [
+                    -40.0,
+                    -9.999999974752427e-07,
+                    -15.0
+                ],
+                "rotation": [
+                    0.0,
+                    45.0,
+                    0.0
+                ],
+                "scaling": [
+                    15.0,
+                    1.7925821542739868,
+                    0.9999999403953552
+                ]
+            },
+            "file_name": "wall"
+        },
+        {
+            "type": "MESH",
+            "name": "playerPopPos",
+            "transform": {
+                "translation": [
+                    46.68170928955078,
+                    -5.960464477539063e-08,
+                    -24.980247497558594
+                ],
+                "rotation": [
+                    -0.0,
+                    -123.5,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "player"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.008",
+            "transform": {
+                "translation": [
+                    -8.0,
+                    0.0,
+                    25.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -97.89999389648438,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.009",
+            "transform": {
+                "translation": [
+                    -45.0,
+                    0.0,
+                    25.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -97.89999389648438,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.010",
+            "transform": {
+                "translation": [
+                    -40.0,
+                    0.0,
+                    -0.43057727813720703
+                ],
+                "rotation": [
+                    -0.0,
+                    -97.89999389648438,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.011",
+            "transform": {
+                "translation": [
+                    4.802443504333496,
+                    1.3866296058040462e-06,
+                    9.889768600463867
+                ],
+                "rotation": [
+                    -0.0,
+                    -97.89999389648438,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy"
+        }
+    ]
+}

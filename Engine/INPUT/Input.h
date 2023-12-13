@@ -23,13 +23,26 @@ private: // メンバ変数
 	Pad_X_Input* Xpad_;
 	MouseInput* mouse_;
 	
+private:
+
+	Input() = default;
+	~Input() = default;
+public:
+	Input(const Input&) = delete;
+	Input& operator=(const Input&) = delete;
+	Input(Input&&) = delete;
+	Input& operator=(Input&&) = delete;
+
+	static Input& get_instance() {
+		static Input instance;
+		return instance;
+	}
 
 public: // メンバ関数
-	Input();
-	~Input();
-
 	// 初期化
 	void Initialize(WinApp* winApp);
+
+	void Finalize();
 
 	// 更新
 	void Update();

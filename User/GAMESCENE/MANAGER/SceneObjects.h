@@ -1,9 +1,13 @@
 #pragma once
+/**
+ * @file SceneObject.h
+ * @brief シーンオブジェクト所持クラス
+ */
 
 #include "LightGroup.h"
 #include "FBXObject3d.h"
-//#include "fbx/FBXLoader.h"
-//#include "FBXModel.h"
+ //#include "fbx/FBXLoader.h"
+ //#include "FBXModel.h"
 #include "Audio.h"
 #include "SpriteCommon.h"
 #include "Model.h"
@@ -20,6 +24,15 @@
 
 #include "Cursor.h"
 
+typedef struct Shake {
+	uint32_t isShake;
+	uint32_t count;
+	uint32_t maxSwing;
+	uint32_t quantity;
+	uint32_t randX;
+	uint32_t randZ;
+}Shake;
+
 // ゲーム使用のオブジェクト一括宣言クラス
 class SceneObjects
 {
@@ -33,7 +46,99 @@ public:
 	void Initialize();
 	void Reset();
 
-public:
+public: // 演出用
+
+	void BannerDraw();
+	bool Banner(uint32_t isStart = 0);
+	void ShakeRand(Shake& w);
+
+	void SlowEffect(bool isSlow);
+	void SlowReset();
+	void SlowEffectDraw();
+
+private: // 演出用
+	// バナー用
+	std::unique_ptr <Sprite> bannerBuckSP_;
+	Vector2 bannerBuckSPpos_;
+	Vector3 bannerBuckSPscale_;
+	std::unique_ptr <Sprite> bannerBuck2SP_;
+	Vector2 bannerBuck2SPpos_;
+	Vector3 bannerBuck2SPscale_;
+	std::unique_ptr <Sprite> bannerWordSP_;
+	Vector2 bannerWordSPpos_;
+	Vector3 bannerWordSPscale_;
+	uint32_t bannerTimer = 0;
+	// バナーイージング用
+	float bannerEasetime = 0.0f;
+	uint32_t bannerTime = 0;
+	uint32_t bannerEaseMaxTime = 50;
+	bool isBannerEaseOut = true;
+
+	// スロー用
+	std::unique_ptr <Sprite> slowSP_;
+	Vector3 slowSPsize_;
+	const float slowSP_ALPHA_MIN = 0.0f;
+	const float slowSP_ALPHA_MAX = 0.4f;
+	float slowSPAlpha_ = 0.0f;
+	bool slowSPTime_MAX = false;
+	bool slowPlayEase_ = false;
+	bool nowSlowEffect = false;
+	bool changeIsSlow = false;
+	// スローイージング用
+	float slowEasetime = 0.0f;
+	uint32_t slowTime = 0;
+	uint32_t slowEaseMaxTime = 30;
+	bool isSlowEaseOut = false;
+
+
+
+	Shake backWall;
+
+	
+public: // UI用
+	void UIUpdate();
+	void UIDraw();
+
+	void ONIsUIDraw() { isUIDraw_ = true; };
+	void OFFIsUIDraw() { isUIDraw_ = false; };
+	bool GetIsUIDraw() { return isUIDraw_; };
+
+private: // UI用
+	bool isUIDraw_ = false;
+
+	// ベース
+	std::unique_ptr <Sprite> UIBuckSP_;
+	Vector2 UIBuckSPpos_;
+	Vector2 UIBuckSPsize_;
+
+	// 武器
+	std::unique_ptr <Sprite> UIWeaponSP_;
+	Vector2 UIWeaponSPpos_;
+	Vector2 UIWeaponSPsize_;
+	bool isFire_;
+	// スロー
+	std::unique_ptr <Sprite> UISlowSP_;
+	Vector2 UISlowSPpos_;
+	Vector2 UISlowSPsize_;
+	// ポイント
+	std::unique_ptr <Sprite> UIPointSP_;
+	Vector2 UIPointSPpos_;
+	Vector2 UIPointSPsize_;
+
+	// ポーズ案内
+	std::unique_ptr <Sprite> UIPauseSP_;
+	Vector2 UIPauseSPpos_;
+	Vector2 UIPauseSPsize_;
+
+	// PlayerHP 仮
+	std::unique_ptr <Sprite> UIHPSP_;
+	Vector2 UIHPSPpos_;
+	Vector2 UIHPSPsize_;
+	std::unique_ptr <Sprite> UIHPBaseSP_;
+	Vector2 UIHPBaseSPpos_;
+	Vector2 UIHPBaseSPsize_;
+
+public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;
 	std::unique_ptr <Audio> audio;
 	std::unique_ptr <SpriteCommon> spriteCommon_;
@@ -51,6 +156,9 @@ public:
 
 	// ポリモーフィズムとは...
 	std::unique_ptr<Player> player;
+	std::unique_ptr <Sprite> plDamageRed_;
+	float damageRedAlpha_ = 0.0f;
+	Vector2 plDamageRedPos = { 0.0f,0.0f };
 
 	std::vector<Enemy*> enemys;
 	uint32_t eneCount;
@@ -63,7 +171,7 @@ public:
 	std::unique_ptr<Floor> floorGround;
 	Model* floorGroundMD;
 
-private:
+private: // ライト用 
 	float ambientColor0[3] = { 1,1,1 };
 
 	//光線方向初期値

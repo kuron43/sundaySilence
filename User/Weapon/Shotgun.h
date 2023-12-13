@@ -1,14 +1,19 @@
+/**
+ * @file Shotgun.h
+ * @brief
+ */
 #pragma once
 #include "Weapon.h"
 #include "Bullet.h"
 
+// ショットガン
 class Shotgun :
     public Weapon
 {
 private:
-	std::list<std::unique_ptr<Bullet>> bullets_;
 	Model* model_;
 	bool active_ = false;
+	bool goShot;
 	const uint32_t WeaponNum = 2;
 
 private:
@@ -17,6 +22,7 @@ private:
 	uint32_t coolTime = 3;
 	uint32_t mag = 5;
 	uint32_t roadingTime = 500;
+	bool nowRoading;
 
 
 public:

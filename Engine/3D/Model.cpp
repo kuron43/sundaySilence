@@ -37,15 +37,16 @@ Model* Model::LoadFromOBJ(const std::string& modelname)
 
 void Model::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial)
 {
+
+	// デスクリプタヒープの配列
+	ComPtr<ID3D12DescriptorHeap> ppHeaps[] = { descHeap.Get() };
+	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
+
 	// 頂点バッファの設定
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
 	// インデックスバッファの設定
 	cmdList->IASetIndexBuffer(&ibView);
 
-	// デスクリプタヒープの配列
-	ComPtr<ID3D12DescriptorHeap> ppHeaps[] = { descHeap.Get() };
-	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
-	
 	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(rootParamIndexMaterial, constBuffB1->GetGPUVirtualAddress());
 

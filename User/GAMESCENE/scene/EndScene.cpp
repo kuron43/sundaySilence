@@ -1,3 +1,7 @@
+/**
+ * @file EndScene.cpp
+ * @brief
+ */
 #include "EndScene.h"
 #include "SceneManager.h"
 
@@ -16,7 +20,8 @@ void EndScene::Initialize() {
 	end_ = std::make_unique<Sprite>();
 	end_->Initialize(_objects->spriteCommon_.get(), 3);
 	end_->SetSize({ 256,128 });
-	end_->SetPozition({ 200,100 });
+	end_->SetPozition({ (WinApp::window_width / 2) - 150,WinApp::window_height - 300 });
+	_objects->player->Reset();
 }
 
 void EndScene::Update(Input* input) {

@@ -24,6 +24,8 @@ struct LevelData {
 	struct ObjectData {
 		// ファイル名
 		std::string fileName;
+		// buki名
+		std::string weapon;
 		// 平行移動
 		Vector3 translation;
 		// 回転角

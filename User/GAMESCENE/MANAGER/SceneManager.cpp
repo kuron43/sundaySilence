@@ -1,11 +1,17 @@
+/**
+ * @file SceneManager.cpp
+ * @brief シーン管理クラス
+ */
+
+#include <cassert>
+
 #include "SceneManager.h"
 #include "Input.h"
-#include <cassert>
 #include "DirectXCommon.h"
 #include "Camera.h"
 #include "SceneObjects.h"
 
-// シーンのインクルード
+ // シーンのインクルード
 #include "SceneIntegrate.h"
 
 
@@ -17,7 +23,7 @@ SceneManager::SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects
 
 }
 SceneManager::~SceneManager() {
-	
+
 }
 
 void SceneManager::SceneInitialize() {
@@ -38,6 +44,7 @@ void SceneManager::ChangeScene() {
 		_scene.pop();
 		_scene.emplace(new TitleScene(&*this, _objects));
 		SceneInitialize();
+		_objects->OFFIsUIDraw();
 		TransScene();
 		goToTitle = false;
 	}
@@ -50,12 +57,14 @@ void SceneManager::ChangeScene() {
 			_scene.pop();
 			_scene.emplace(new TitleScene(&*this, _objects));
 			SceneInitialize();
+			_objects->OFFIsUIDraw();
 			TransScene();
 			break;
 		case SCE_GAME1:
 			_scene.pop();
 			_scene.emplace(new GAME1Scene(&*this, _objects));
 			SceneInitialize();
+			_objects->ONIsUIDraw();
 			TransScene();
 			break;
 
@@ -63,6 +72,7 @@ void SceneManager::ChangeScene() {
 			_scene.pop();
 			_scene.emplace(new GAME2Scene(&*this, _objects));
 			SceneInitialize();
+			_objects->ONIsUIDraw();
 			TransScene();
 			break;
 
@@ -70,12 +80,21 @@ void SceneManager::ChangeScene() {
 			_scene.pop();
 			_scene.emplace(new EndScene(&*this, _objects));
 			SceneInitialize();
+			_objects->OFFIsUIDraw();
 			TransScene();
 			break;
 		case SCE_SELECT:
 			_scene.pop();
 			_scene.emplace(new SelectScene(&*this, _objects));
 			SceneInitialize();
+			_objects->OFFIsUIDraw();
+			TransScene();
+			break;
+		case SCE_CLEAR:
+			_scene.pop();
+			_scene.emplace(new Clear(&*this, _objects));
+			SceneInitialize();
+			_objects->OFFIsUIDraw();
 			TransScene();
 			break;
 		case SCE_PAUSE:

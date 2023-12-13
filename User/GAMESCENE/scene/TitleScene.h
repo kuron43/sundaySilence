@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file TitleScene.h
+ * @brief
+ */
 #include "IScene.h"
 #include "JsonLoader.h"
 #include "SceneIntegrate.h"
@@ -13,8 +17,20 @@ public:
 	TitleScene(SceneManager* controller, SceneObjects* objects);
 	~TitleScene() override;
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize() override;
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name="input">入力管理クラス</param>
 	void Update(Input* input) override;
+
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw() override;
 private:
 	//代入演算子削除
@@ -24,6 +40,8 @@ private:
 
 	Vector3 camposEye = { 0.0f,40.0f,-90.01f };
 	Vector3 camposTar = { 0,0,0 };
+
+	float forcalLengs = 30.0f;
 
 	LevelData* leveData = nullptr;
 	std::unique_ptr <ParticleManager>  particle_;

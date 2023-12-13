@@ -1,6 +1,8 @@
+/**
+ * @file TitleScene.cpp
+ * @brief
+ */
 #include "SceneIntegrate.h"
-
-
 
 TitleScene::TitleScene(SceneManager* controller, SceneObjects* objects) {
 	_controller = controller;
@@ -31,6 +33,7 @@ TitleScene::~TitleScene() {
 void TitleScene::Initialize() {
 	_controller->_camera->SetEye(camposEye);
 	_controller->_camera->SetTarget(camposTar);
+	_controller->_camera->SetFocalLengs(forcalLengs);
 	_controller->_camera->Update();
 
 	particle_ = std::make_unique<ParticleManager>();
@@ -55,10 +58,11 @@ void TitleScene::Initialize() {
 	titleTime_ = 0;
 	sinMoveTitle = 0.0f;
 	titlePos = { 20,10 };
+	_objects->player->Reset();
 
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("gamedemo");
+		leveData = JsonLoader::LoadJsonFile("title");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -96,7 +100,7 @@ void TitleScene::Initialize() {
 				Vector3 sca;
 				sca = objectData.scaling;
 				newWall->object_->wtf.scale = sca;
-				newWall->object_->SetColor(Vector3(0.5f, 0.3f, 0.3f));
+				newWall->object_->SetColor (Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 				newWall->object_->Update();
 				newWall->CollideInitialize();
 				_objects->walls.emplace_back(newWall);
@@ -120,16 +124,36 @@ void TitleScene::Initialize() {
 				//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 				_objects->boss.emplace_back(newBoss);
 			}
+			if (objectData.fileName == "player") {
+				Vector3 position = objectData.translation;
+				_objects->player->SetPos(position);
+			}
 		}
 	}
-	for (Wall* walls : _objects->walls) {
-		walls->Update();
-	}
-	for (Enemy* enemy : _objects->enemys) {
-		enemy->Update();
-	}
-	for (Boss* boss : _objects->boss) {
-		boss->Update();
+	{
+		_controller->_camera->SetEye(camposEye);
+		_controller->_camera->SetTarget(camposTar);
+		_controller->_camera->Update();
+		_objects->floorGround->Update();
+
+		BulletManager::GetInstance()->Update();
+		for (Enemy* enemy : _objects->enemys) {
+			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
+			enemy->Update();
+			if (!enemy->HowDead()) {
+				_objects->eneCount++;
+			}
+		}
+		for (Boss* boss : _objects->boss) {
+			boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
+			boss->Update();
+			if (!boss->HowDead()) {
+				_objects->bossCount++;
+			}
+		}
+		for (Wall* walls : _objects->walls) {
+			walls->Update();
+		}
 	}
 }
 
@@ -138,7 +162,7 @@ void TitleScene::Update(Input* input) {
 	_controller->_camera->SetTarget(camposTar);
 	_controller->_camera->Update();
 	if (titleTime_ % 50 == 0) {
-		particle_->RandParticle(Vector3(0, 100, 0), 100);
+		particle_->RandParticle(100,Vector3(0, 100, 0));
 	}
 	particle_->Update();
 
@@ -180,12 +204,12 @@ void TitleScene::Draw() {
 	for (Wall* walls : _objects->walls) {
 		walls->Draw(_controller->_dxCommon);
 	}
+	_objects->player->Draw(_controller->_dxCommon);
 
 	particle_->Draw();
 	title_->Draw();
 	titleButton_->Draw();
 
-	_objects->player->Draw(_controller->_dxCommon);
 	_objects->mouseCursor_->Draw();
 }
 

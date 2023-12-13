@@ -19,6 +19,8 @@ private:
 	float frameTime = 1 / 60.0f;
 	// FPS値
 	float fps;
+	//経過時間
+	float elapsedFrame;
 
 public:
 	/// <summary>
@@ -42,5 +44,11 @@ public:
 	/// </summary>
 	/// <returns>フレームレート</returns>
 	float GetFrameRate();
+
+	/// <summary>
+	/// 経過時間を取得
+	/// </summary>
+	/// <returns>フレームレート</returns>
+	float GetElapsedFrame();
 };
 

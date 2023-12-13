@@ -32,9 +32,8 @@ void Framework::Initialize() {
 	dxCommon->Initialize(winApp);
 
 	//入力の初期化　
-	input = new Input();
+	input = &Input::get_instance();
 	input->Initialize(winApp);
-	PadInput = new Pad_X_Input();
 
 	//FPS変えたいとき
 	fps->SetFrameRate(60);
@@ -53,8 +52,7 @@ void Framework::Finalize() {
 	delete imgui;
 
 	//入力開放
-	delete input;
-	delete PadInput;
+	input->Finalize();
 	//WindowsAPI開放
 	delete winApp;
 	delete dxCommon;
@@ -69,14 +67,13 @@ void Framework::Update() {
 	if (winApp->ProcessMessage()) {
 		endRequest_ = true;
 	}
-
+	winApp->Update();// カーソルの制限用
 	fps->FpsControlBegin();
 
 #pragma endregion
 
 	//入力の更新
 	input->Update();
-	PadInput->Update();
 	// Imgui受付開始
 	imgui->Begin();
 

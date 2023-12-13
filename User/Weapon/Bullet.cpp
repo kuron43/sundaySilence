@@ -1,4 +1,10 @@
+/**
+ * @file Bullet.cpp
+ * @brief
+ */
 #include "Bullet.h"
+
+#include "ImGui.h"
 
 Model* Bullet::bulletModel_ = nullptr;
 
@@ -7,7 +13,8 @@ Bullet::Bullet() {
 
 }
 Bullet::~Bullet() {
-
+	CollisionManager::GetInstance()->RemoveCollider(sphere);
+	delete sphere;
 }
 void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uint32_t team)
 {
@@ -24,11 +31,9 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	timeCount = 0;
 	isDead = false;
 	if (team_ == PLAYER) {
-		Vector3 color(0.0f, 0.0f, 1.0f);  // カラーなぜかARGB の順番
-		bulletObj_->SetColor(color);
+		bulletObj_->SetColor({ 0,1,1,1 }); // カラー?RGB の順番
 	}if (team_ == ENEMY) {
-		Vector3 color(1.0f, 0.0f, 0.0f);
-		bulletObj_->SetColor(color);
+		bulletObj_->SetColor({ 1,1,0,1 });
 	}
 
 	//当たり判定用
@@ -50,7 +55,7 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	}
 
 
-	//test
+	////test
 	//coliderPosTest_ = Object3d::Create();
 	//coliderPosTest_->SetModel(model);
 	//coliderPosTest_->wtf.position = (sphere->center);
@@ -58,12 +63,14 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	//coliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
 	//coliderPosTest_->Update();
 
+	
+
 }
 
 void Bullet::Update(float speed)
 {
 	timeCount++;
-	if (timeCount >= deathTime) {
+	if (timeCount >= DEATH_TIME) {
 		Dead();
 	}
 	bulletObj_->wtf.position += (moveVec * speed);
@@ -82,11 +89,13 @@ void Bullet::Update(float speed)
 			isDead = true;
 		}
 	}
-	if (isDead == true) {
-		assert(sphere);
-	}
-
 	sphere->Update();
+
+	//ImGui::Begin("bullet");
+	//ImGui::SetWindowPos({ 600,50 });
+	//ImGui::SetWindowSize({500.0f,200.0f});
+	//ImGui::InputFloat4("color", &bulletObj_->color_.x);
+	//ImGui::End();
 }
 
 void Bullet::DeadUpdate() {
@@ -98,11 +107,9 @@ void Bullet::DeadUpdate() {
 
 void Bullet::Draw()
 {
-	if (!isDead) {
-		//モデルの描画
-		bulletObj_->Draw();
-		//coliderPosTest_->Draw();
-	}
+	//coliderPosTest_->Draw();
+	//モデルの描画
+	bulletObj_->Draw();
 }
 
 void Bullet::OnColision() {

@@ -1,13 +1,6 @@
 #include "Input.h"
 
-Input::Input() {
 
-}
-Input::~Input() {
-	delete keybord_;
-	delete Xpad_;
-	delete mouse_;
-}
 void Input::Initialize(WinApp* winApp)
 {
 	keybord_ = new Keyboard_Input();
@@ -17,6 +10,12 @@ void Input::Initialize(WinApp* winApp)
 
 	mouse_ = new MouseInput();
 	mouse_->Initialize(winApp);
+}
+
+void Input::Finalize() {
+	delete keybord_;
+	delete Xpad_;
+	delete mouse_;
 }
 
 void Input::Update()

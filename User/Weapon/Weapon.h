@@ -1,15 +1,22 @@
+/**
+ * @file Weapon.h
+ * @brief
+ */
 #pragma once
 #include "Model.h"
 #include "DirectXCommon.h"
 #include "Input.h"
+#include "ImGui.h"
 #include "Transform.h"
 #include "Bullet.h"
 #include "BulletManager.h"
 
+// 武器基底クラス
 class Weapon
 {
 protected:
-	bool isSlow_;
+	float _slowSpeed = 0.25f;
+	bool _isSlow;
 public:
 	Weapon();
 	virtual ~Weapon();

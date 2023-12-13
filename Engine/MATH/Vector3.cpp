@@ -15,6 +15,13 @@ Vector3::Vector3(float x, float y, float z) {
 	this->z = z;
 }
 
+void Vector3::InIt()
+{
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;	
+}
+
 float Vector3::length()const {
 	return sqrt((x * x) + (y * y) + (z * z));
 }
