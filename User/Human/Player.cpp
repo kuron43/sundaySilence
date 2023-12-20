@@ -36,7 +36,7 @@ void Player::Initialize() {
 	weapon_[WP_SHOTGUN] = new Shotgun();
 	weapon_[WP_ASSAULT]->Initialize();
 	weapon_[WP_SHOTGUN]->Initialize();
-	useWeapon_ = WP_ASSAULT;
+	useWeapon_ = WP_SHOTGUN;
 
 	pointDash_ = new PointDash();
 	pointDash_->Initialize();
@@ -81,12 +81,19 @@ void Player::Update(Input* input, bool isTitle) {
 	object_->wtf.position.y = NONE;
 	reticle->wtf.position += { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
 	reticle->Update();
-	if (input->KeyboardTrigger(DIK_E)) {
-		useWeapon_ = WP_SHOTGUN;
+	// 武器の切り替え処理
+	if (input->KeyboardTrigger(DIK_E)) {		
+		if (useWeapon_ == WP_SHOTGUN) {
+			useWeapon_ = WP_ASSAULT;
+		}
+		else if (useWeapon_ == WP_ASSAULT) {
+			useWeapon_ = WP_SHOTGUN;
+		}
+		else {
+
+		}
 	}
-	if (input->KeyboardTrigger(DIK_Q)) {
-		useWeapon_ = WP_ASSAULT;
-	}
+	// 弾発射
 	if (input->MouseButtonPush(0) && !isTitle && _isSlow == false) {
 		weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
 		isOnFire = true;

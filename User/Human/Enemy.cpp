@@ -248,7 +248,6 @@ void Enemy::ColiderUpdate() {
 
 void Enemy::OnColision()
 {
-	//object_->SetColor({ 1,0,0 });
 	hp--;
 	isHitEffect = true;
 	if (hp < 1) {
@@ -268,6 +267,11 @@ void Enemy::HitMyColor()
 		}
 	}
 	else {
-		object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
+		if (useWeapon_ == WP_ASSAULT) {
+			object_->SetColor({ 0.8f,0.8f,0.8f,1 });
+		}
+		else if (useWeapon_ == WP_SHOTGUN) {
+			object_->SetColor({ 0,0.5f,0,1 });
+		}
 	}
 }
