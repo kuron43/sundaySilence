@@ -22,7 +22,7 @@
                 ]
             },
             "file_name": "enemy",
-            "Weapon": "ASSAULT"
+            "Weapon": "BOMFIRE"
         },
         {
             "type": "MESH",

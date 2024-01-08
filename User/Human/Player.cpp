@@ -130,6 +130,7 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::Text("window W :%d", WinApp::window_width);
 	ImGui::Text("window H :%d", WinApp::window_height);
 	ImGui::Text("Palams");
+	ImGui::Text("HPCOOL:%d", coolTimeFB_);
 	ImGui::InputFloat3("Position", &object_->wtf.position.x);
 	ImGui::Text("PointDash");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
@@ -276,7 +277,7 @@ void Player::ColisionUpdate() {
 			}
 		}
 	}
-	if (onFireBottle == true) {
+	if (coolTimeFB_ > 0) {
 		coolTimeFB_--;
 	}
 
@@ -343,14 +344,15 @@ void Player::OnColision(bool bullet)
 {
 	if (bullet) {
 		hp_--;
+		hit_++;
+		isHitEffect = true;
 	}
-	else {
+	if (bullet == false) {
 		hp_ -= 2;
-		onFireBottle = true;
 		coolTimeFB_ = 30;
+		hit_++;
+		isHitEffect = true;
 	}
-	hit_++;
-	isHitEffect = true;
 	if (hp_ <= NONE) {
 		isDeath_ = true;
 	}
