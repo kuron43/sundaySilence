@@ -83,7 +83,7 @@ public:
 
 public:
 	FireBottle();
-	~FireBottle();
+	~FireBottle() override;
 	void Initialize(Model* model, const Vector3& position, Vector3 move, uint32_t team) override;
 
 	void Update(float speed) override;

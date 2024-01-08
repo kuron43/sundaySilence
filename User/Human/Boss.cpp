@@ -23,7 +23,9 @@ Boss::~Boss() {
 
 ///
 void Boss::Initialize() {
+	isBlocked = false;
 	isFound = false;
+	isFire = false;
 	isDead = false;
 	nowTitle = false;
 	model_ = Model::LoadFromOBJ("REX");

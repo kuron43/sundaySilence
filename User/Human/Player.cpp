@@ -46,6 +46,7 @@ void Player::Initialize() {
 	hp_ = MAX_HP;
 
 	//当たり判定用
+	coolTimeFB_ = 0;
 	sphere.resize(SPHERE_COLISSION_NUM);
 	spherePos.resize(SPHERE_COLISSION_NUM);
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
@@ -269,9 +270,14 @@ void Player::ColisionUpdate() {
 				OnColision(true);
 			}
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIESFIRE) {
-				OnColision(false);
+				if (coolTimeFB_ <= 0) {
+					OnColision(false);
+				}
 			}
 		}
+	}
+	if (onFireBottle == true) {
+		coolTimeFB_--;
 	}
 
 	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
@@ -340,6 +346,8 @@ void Player::OnColision(bool bullet)
 	}
 	else {
 		hp_ -= 2;
+		onFireBottle = true;
+		coolTimeFB_ = 30;
 	}
 	hit_++;
 	isHitEffect = true;

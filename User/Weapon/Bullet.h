@@ -38,7 +38,7 @@ public:
 
 public:
 	Bullet();
-	~Bullet();
+	virtual ~Bullet();
 	virtual void Initialize(Model* model,const Vector3& position, Vector3 move, uint32_t team);
 
 	virtual void Update(float speed);

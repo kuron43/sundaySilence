@@ -13,7 +13,7 @@ BomFire::~BomFire() {
 
 /// 更新を行う
 bool BomFire::Initialize() {
-	model_ = Model::LoadFromOBJ("sphere");
+	model_ = Model::LoadFromOBJ("stage");
 	goShot = true;
 	return true;
 }
@@ -221,13 +221,14 @@ void FireBottle::Update(float speed)
 		}
 	}
 	if (isExplosion) {
-		bottleObj_->wtf.scale = Vector3(5.0f, 5.0f, 5.0f);
+		bottleObj_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
+		sphere->SetRadius(5.0f);
 	}
 	else {
-		bottleObj_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
+		bottleObj_->wtf.scale = Vector3(0.05f, 0.05f, 0.05f);
+		sphere->SetRadius(0.5f);
 	}
 	bottleObj_->SetColor(Vector4(1.0f, 0.0f, 0.0f,0.8f));
-	sphere->SetRadius(bottleObj_->wtf.scale.x);
 	sphere->Update();
 
 	//ImGui::Begin("bullet");

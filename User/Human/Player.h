@@ -71,6 +71,9 @@ private:
 
 	Weapon* weapon_[2];
 	bool isOnFire = true;
+
+	uint32_t coolTimeFB_;
+	bool onFireBottle = false;
 	// スキル用
 private:
 	PointDash* pointDash_;
