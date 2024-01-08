@@ -45,9 +45,9 @@ private:
 	void FaceAngleUpdate();
 	void HitMyColor();
 	void ColisionUpdate();
-	void OnColision();
+	void OnColision(bool bullet);
 private:
-	const uint32_t Tribe_ = 0;
+	const uint32_t Tribe_ = HU_PLAYER;
 	uint32_t useWeapon_ = WP_ASSAULT;
 	bool nowTitle = false;
 

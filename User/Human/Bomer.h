@@ -1,17 +1,17 @@
 #pragma once
 /**
- * @file Enemy.h
+ * @file Bomer.h
  * @brief
  */
 #include "Human.h"
 #include "Weaponlist.h"
 
-class Enemy :
-    public Human
+class Bomer :
+	public Human
 {
 public:
-	Enemy();
-	~Enemy()override;
+	Bomer();
+	~Bomer()override;
 
 
 	/// シーンの更新を行う
@@ -51,7 +51,7 @@ private:
 public:
 	Object3d* object_;
 private:
-	const uint32_t Tribe_ = HU_ENEMY;
+	const uint32_t Tribe_ = HU_BOMER;
 	uint32_t useWeapon_ = WP_ASSAULT;
 	bool StartFrontRot = false;
 	bool isFound = false;
@@ -65,9 +65,9 @@ private:
 
 	Vector3 frontVec_;
 	bool isDead = false;
-	uint32_t hp = 3;
+	uint32_t hp = 2;
 
-	
+
 	//移動速度
 	const float kMoveSpeed_ = 0.5f;
 	bool isRun_ = false;
@@ -116,8 +116,9 @@ private:
 
 private:
 	//代入演算子削除
-	Enemy& operator=(const Enemy&) = delete;
+	Bomer& operator=(const Bomer&) = delete;
 	//コピーコンストラクタ削除
-	Enemy(const Enemy&) = delete;
+	Bomer(const Bomer&) = delete;
 };
+
 

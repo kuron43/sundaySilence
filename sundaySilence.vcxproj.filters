@@ -252,6 +252,8 @@
     <ClCompile Include="User\GAMESCENE\scene\Clear.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
+    <ClCompile Include="User\Human\Bomer.cpp" />
+    <ClCompile Include="User\Weapon\BomFire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -497,6 +499,9 @@
     <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h">
       <Filter>user\scene</Filter>
     </ClInclude>
+    <ClInclude Include="User\Human\Bomer.h" />
+    <ClInclude Include="User\Human\HumanList.h" />
+    <ClInclude Include="User\Weapon\BomFire.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

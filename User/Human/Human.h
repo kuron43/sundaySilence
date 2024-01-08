@@ -8,6 +8,8 @@
 #include <imgui.h>
 #pragma warning(pop)
 
+#include "HumanList.h"
+
 #include "Object3d.h"
 #include "Transform.h"
 #include "Affin.h"

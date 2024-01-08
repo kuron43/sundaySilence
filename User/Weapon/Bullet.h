@@ -34,21 +34,23 @@ public:
 
 	Vector3 moveVec;
 
+	bool upThrow = false;
+
 public:
 	Bullet();
 	~Bullet();
-	void Initialize(Model* model,const Vector3& position, Vector3 move, uint32_t team);
+	virtual void Initialize(Model* model,const Vector3& position, Vector3 move, uint32_t team);
 
-	void Update(float speed);
-	void DeadUpdate();
+	virtual void Update(float speed);
+	virtual void DeadUpdate();
 
-	void Draw();
+	virtual void Draw();
 
 	void OnColision();
 
 	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bulletObj_->wtf.matWorld); };
 
-	bool IsDead() const { return isDead; }
+	virtual bool IsDead();
 	void Dead() { isDead = true; }
 	void SetDeathTime(uint32_t DeathTime) { DEATH_TIME = DeathTime; }
 

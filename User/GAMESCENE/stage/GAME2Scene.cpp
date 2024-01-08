@@ -39,7 +39,7 @@ void GAME2Scene::Initialize() {
 	stageFailed = false;
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("stageDEMO");
+		leveData = JsonLoader::LoadJsonFile("stageTEMP2");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -49,6 +49,8 @@ void GAME2Scene::Initialize() {
 					newEnemy->SetWeaponNum(WP_ASSAULT);
 				}if (objectData.weapon == "SHOTGUN") {
 					newEnemy->SetWeaponNum(WP_SHOTGUN);
+				}if (objectData.weapon == "BOMFIRE") {
+					newEnemy->SetWeaponNum(WP_BOMFIRE);
 				}
 				newEnemy->Initialize();
 				//座標
@@ -89,12 +91,14 @@ void GAME2Scene::Initialize() {
 			}
 			if (objectData.fileName == "boss") {
 				Boss* newBoss = new Boss();
-				newBoss->Initialize();
 				if (objectData.weapon == "ASSAULT") {
 					newBoss->SetWeaponNum(WP_ASSAULT);
 				}if (objectData.weapon == "SHOTGUN") {
 					newBoss->SetWeaponNum(WP_SHOTGUN);
+				}if (objectData.weapon == "BOMFIRE") {
+					newBoss->SetWeaponNum(WP_BOMFIRE);
 				}
+				newBoss->Initialize();
 				//座標
 				Vector3 pos;
 				pos = objectData.translation;

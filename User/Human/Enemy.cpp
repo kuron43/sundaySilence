@@ -44,8 +44,12 @@ void Enemy::Initialize() {
 	if (useWeapon_ == WP_SHOTGUN) {
 		weapon_ = new Shotgun();
 	}
-	else {
+	else if(useWeapon_ == WP_ASSAULT){
 		weapon_ = new Assault();
+	}
+	else if (useWeapon_ == WP_BOMFIRE)
+	{
+		weapon_ = new BomFire();
 	}
 	weapon_->Initialize();
 

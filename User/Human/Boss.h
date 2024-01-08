@@ -50,7 +50,7 @@ private:
 public:
 	Object3d* object_;
 private:
-	const uint32_t Tribe_ = 1;
+	const uint32_t Tribe_ = HU_BOSS;
 	uint32_t useWeapon_ = WP_ASSAULT;
 	bool isFound = false;
 	bool isFire = false;

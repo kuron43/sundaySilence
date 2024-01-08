@@ -169,6 +169,7 @@
     <ClCompile Include="User\GAMESCENE\scene\PauseScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\SelectScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
+    <ClCompile Include="User\Human\Bomer.cpp" />
     <ClCompile Include="User\Human\Boss.cpp" />
     <ClCompile Include="User\Human\Enemy.cpp" />
     <ClCompile Include="User\Objects\Cursor.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="User\Objects\Wall.cpp" />
     <ClCompile Include="User\Skills\PointDash.cpp" />
     <ClCompile Include="User\Weapon\Assault.cpp" />
+    <ClCompile Include="User\Weapon\BomFire.cpp" />
     <ClCompile Include="User\Weapon\Bullet.cpp" />
     <ClCompile Include="User\Human\Human.cpp" />
     <ClCompile Include="User\Human\Player.cpp" />
@@ -250,8 +252,10 @@
     <ClInclude Include="User\GAMESCENE\scene\PauseScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\SelectScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />
+    <ClInclude Include="User\Human\Bomer.h" />
     <ClInclude Include="User\Human\Boss.h" />
     <ClInclude Include="User\Human\Enemy.h" />
+    <ClInclude Include="User\Human\HumanList.h" />
     <ClInclude Include="User\Objects\Cursor.h" />
     <ClInclude Include="User\Objects\Floor.h" />
     <ClInclude Include="User\Objects\Objects.h" />
@@ -259,6 +263,7 @@
     <ClInclude Include="User\Skills\PointDash.h" />
     <ClInclude Include="User\Skills\SkillIntegrate.h" />
     <ClInclude Include="User\Weapon\Assault.h" />
+    <ClInclude Include="User\Weapon\BomFire.h" />
     <ClInclude Include="User\Weapon\Bullet.h" />
     <ClInclude Include="User\Human\Human.h" />
     <ClInclude Include="User\Human\Player.h" />

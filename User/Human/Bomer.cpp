@@ -1,15 +1,15 @@
 /**
- * @file Boss.cpp
+ * @file Bomer.cpp
  * @brief
  */
-#include "Boss.h"
+#include "Bomer.h"
+#include <random>
 
-Boss::Boss() {
+Bomer::Bomer() {
 
 }
-Boss::~Boss() {
+Bomer::~Bomer() {
 	delete model_;
-	delete modelCol_;
 	delete weapon_;
 	delete rayHit;
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
@@ -22,31 +22,26 @@ Boss::~Boss() {
 }
 
 ///
-void Boss::Initialize() {
+void Bomer::Initialize() {
 	isFound = false;
 	isDead = false;
 	nowTitle = false;
-	model_ = Model::LoadFromOBJ("REX");
-	modelCol_ = Model::LoadFromOBJ("sphere");
+	model_ = Model::LoadFromOBJ("ene");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
 	object_->Initialize();
-	object_->wtf.scale = Vector3(0.3f, 0.3f, 0.3f);
 
 	reticle = Object3d::Create();
 	reticle->SetModel(model_);
 	reticle->Initialize();
 
+
 	if (useWeapon_ == WP_SHOTGUN) {
 		weapon_ = new Shotgun();
 	}
-	else if (useWeapon_ == WP_ASSAULT) {
+	else {
 		weapon_ = new Assault();
-	}
-	else if (useWeapon_ == WP_BOMFIRE)
-	{
-		weapon_ = new BomFire();
 	}
 	weapon_->Initialize();
 
@@ -58,13 +53,11 @@ void Boss::Initialize() {
 	onPat_ = false;
 
 	//当たり判定用
-	SPHERE_COLISSION_NUM = 1;
 	sphere.resize(SPHERE_COLISSION_NUM);
 	spherePos.resize(SPHERE_COLISSION_NUM);
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
 	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
 
-	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
 	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
@@ -73,15 +66,15 @@ void Boss::Initialize() {
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
 		sphere[i]->SetObject3d(object_);
 		sphere[i]->SetBasisPos(&spherePos[i]);
-		sphere[i]->SetRadius(3.0f);
+		sphere[i]->SetRadius(2.0f);
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		//test
 		coliderPosTest_[i] = Object3d::Create();
-		coliderPosTest_[i]->SetModel(modelCol_);
-		coliderPosTest_[i]->wtf.position = rayvec;
+		coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
+		coliderPosTest_[i]->wtf.position = Affin::GetWorldTrans(object_->wtf.matWorld);
 		coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
-		coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
+		coliderPosTest_[i]->wtf.rotation.InIt();
 		coliderPosTest_[i]->Update();
 	}
 	ray = new RayCollider;
@@ -91,12 +84,11 @@ void Boss::Initialize() {
 	ray->SetObject3d(object_);
 	CollisionManager::GetInstance()->AddCollider(ray);
 	rayHit = new RaycastHit;
-	hp = 10;
+	hp = 2;
 }
 
 ///
-void Boss::Update(Input* input, bool isTitle) {
-	object_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
+void Bomer::Update(Input* input, bool isTitle) {
 	nowTitle = false;
 	nowTitle = !isTitle;
 
@@ -118,7 +110,7 @@ void Boss::Update(Input* input, bool isTitle) {
 }
 
 ///
-void Boss::Draw(DirectXCommon* dxCommon) {
+void Bomer::Draw(DirectXCommon* dxCommon) {
 
 	if (isDead == false) {
 		Object3d::PreDraw(dxCommon->GetCommandList());
@@ -127,7 +119,7 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 			//reticle->Draw();
 		}
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-			//coliderPosTest_[i]->Draw();
+			coliderPosTest_[i]->Draw();
 		}
 		Object3d::PostDraw();
 		if (nowTitle) {
@@ -138,21 +130,20 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 }
 
 /// リセットを行う
-void Boss::Reset() {
+void Bomer::Reset() {
 	delete model_;
 	delete weapon_;
 	delete rayHit;
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
-
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
 }
 
 /// 武器の番号セット
-void Boss::SetWeaponNum(uint32_t WeaponNum)
+void Bomer::SetWeaponNum(uint32_t WeaponNum)
 {
 	useWeapon_ = WeaponNum;
 }
@@ -160,28 +151,41 @@ void Boss::SetWeaponNum(uint32_t WeaponNum)
 /// <summary>
 /// 撃つ方向に向かせる
 /// </summary>
-void Boss::FrontFace() {
-	Vector3 faceAngle = { 0,0,0 };
+void Bomer::FrontFace() {
+	Vector3 faceAngle, resultRot;
+	faceAngle.InIt();
 	faceAngle.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
-	if (isFire == true) {
+	if (isFound == true) {
+		stateRotate_ = object_->wtf.rotation;
 		frontVec_ = faceAngle;
-	}if (isFire == false) {
+	}
+	else {
+		stateRotate_ = faceAngle;
 		frontVec_ = restRotate_;
 	}
-	if (!isDead) {
-		//ImGui::Begin("faceAngle_Y");
-		//ImGui::Text("Angle : Y %f", faceAngle.y);
-		//ImGui::End();
+	if (isLost == true) {
+		stateRotate_ = object_->wtf.rotation;
+		easeTimer++;
 
+		easetime = (float)easeTimer / easeMaxTime;
+		if (easeTimer <= easeMaxTime) {
+			frontVec_ = Easing::InQuintVec3({ 0,(faceAngle.y + 3.141592f / 2) * 1,0 }, restRotate_, (float)easetime);
+			if (easeTimer == easeMaxTime) {
+				easeTimer = 1;
+				easetime = 0;
+				isEaseEnd = true;
+				isLost = false;
+			}
+		}
 	}
-
-	object_->wtf.rotation = frontVec_;
+	resultRot = frontVec_;
+	object_->wtf.rotation = resultRot;
 }
 
-void Boss::ColiderUpdate() {
-
-	isBlocked = false;
+void Bomer::ColiderUpdate() {
+	oldFound = isFound;
 	isFound = false;
+	isBlocked = false;
 	isFire = false;
 
 	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
@@ -189,23 +193,25 @@ void Boss::ColiderUpdate() {
 	ray->SetDir(Affin::GetWorldTrans(reticle->wtf.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
-			OnColision();
-			// パーティクルなぜかXそのままYZ入れ替えると治る
-			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-			particle_->RandParticle(10,patPos);
+		if (sphere[i]->GetIsHit() == true) {
+			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
+				OnColision();
+				// パーティクルなぜかXそのままYZ入れ替えると治る
+				Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
+				particle_->RandParticle(10, patPos);
+			}
 		}
 	}
 
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
-		coliderPosTest_[i]->wtf.position = ray->GetDir();
+		coliderPosTest_[i]->wtf.position = Affin::GetWorldTrans(object_->wtf.matWorld);
 		sphere[i]->Update();
 		coliderPosTest_[i]->Update();
 	}
 	ray->Update();
 
-	isFound = false;
+
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
 		isFound = true;
 		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
@@ -216,6 +222,9 @@ void Boss::ColiderUpdate() {
 	if (isBlocked == false && isFound == true) {
 		isFire = true;
 	}
+	if (isBlocked == true && oldFound == true) {
+		isLost = true;
+	}
 	if (isDead) {
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
@@ -225,8 +234,7 @@ void Boss::ColiderUpdate() {
 		if (onPat_) {
 			onPatTime_--;
 			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-			particle_->LoadTexture("purple.png");
-			particle_->RandParticle(8,patPos);
+			particle_->RandParticle(15, patPos);
 		}
 	}
 	if (onPatTime_ < 1) {
@@ -234,10 +242,9 @@ void Boss::ColiderUpdate() {
 	}
 }
 
-void Boss::OnColision()
+void Bomer::OnColision()
 {
-	//object_->SetColor({ 1,0,0 });
-	hp -= 1;
+	hp--;
 	isHitEffect = true;
 	if (hp < 1) {
 		isDead = true;
@@ -245,7 +252,7 @@ void Boss::OnColision()
 		onPatTime_ = 5;
 	}
 }
-void Boss::HitMyColor()
+void Bomer::HitMyColor()
 {
 	if (isHitEffect == true) {
 		object_->SetColor({ 1,0,0,1.0f });
@@ -256,6 +263,6 @@ void Boss::HitMyColor()
 		}
 	}
 	else {
-		object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
+		object_->SetColor({ 0.5f,0.5f,0,1 });
 	}
 }

@@ -34,6 +34,7 @@ void Player::Initialize() {
 
 	weapon_[WP_ASSAULT] = new Assault();
 	weapon_[WP_SHOTGUN] = new Shotgun();
+	//weapon_[WP_SHOTGUN] = new BomFire();
 	weapon_[WP_ASSAULT]->Initialize();
 	weapon_[WP_SHOTGUN]->Initialize();
 	useWeapon_ = WP_SHOTGUN;
@@ -79,10 +80,10 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 	Vector2 mousepos = input->GetMousePosition();
 	object_->wtf.position.y = NONE;
-	reticle->wtf.position += { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
+	reticle->wtf.position += { mousepos.x* mouseSensitivity_, NONE, mousepos.y* mouseSensitivity_ };
 	reticle->Update();
 	// 武器の切り替え処理
-	if (input->KeyboardTrigger(DIK_E)) {		
+	if (input->KeyboardTrigger(DIK_E)) {
 		if (useWeapon_ == WP_SHOTGUN) {
 			useWeapon_ = WP_ASSAULT;
 		}
@@ -265,7 +266,10 @@ void Player::ColisionUpdate() {
 	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true) {
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
-				OnColision();
+				OnColision(true);
+			}
+			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIESFIRE) {
+				OnColision(false);
 			}
 		}
 	}
@@ -318,7 +322,7 @@ void Player::ColisionUpdate() {
 		//クエリーコールバックの関数オブジェクト
 		for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 			PlayerQueryCallback callback(sphere[i]);
-			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback);
+			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback, COLLISION_ATTR_BARRIEROBJECT);
 			object_->wtf.position.x += callback.move.x;
 			object_->wtf.position.y += callback.move.y;
 			object_->wtf.position.z += callback.move.z;
@@ -329,9 +333,14 @@ void Player::ColisionUpdate() {
 	}
 }
 
-void Player::OnColision()
+void Player::OnColision(bool bullet)
 {
-	hp_--;
+	if (bullet) {
+		hp_--;
+	}
+	else {
+		hp_ -= 2;
+	}
 	hit_++;
 	isHitEffect = true;
 	if (hp_ <= NONE) {
