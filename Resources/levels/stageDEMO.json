@@ -3,29 +3,6 @@
     "objects": [
         {
             "type": "MESH",
-            "name": "enemy",
-            "transform": {
-                "translation": [
-                    -5.035358905792236,
-                    -0.0011925697326660156,
-                    10.490331649780273
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "ASSAULT"
-        },
-        {
-            "type": "MESH",
             "name": "boss",
             "transform": {
                 "translation": [
@@ -49,121 +26,6 @@
         },
         {
             "type": "MESH",
-            "name": "enemy.001",
-            "transform": {
-                "translation": [
-                    5.664778709411621,
-                    -0.0011925697326660156,
-                    10.700138092041016
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "ASSAULT"
-        },
-        {
-            "type": "MESH",
-            "name": "enemy.002",
-            "transform": {
-                "translation": [
-                    5.664778709411621,
-                    -0.0011925697326660156,
-                    -7.972651958465576
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "ASSAULT"
-        },
-        {
-            "type": "MESH",
-            "name": "enemy.003",
-            "transform": {
-                "translation": [
-                    -40.49267578125,
-                    -0.0011925697326660156,
-                    -0.6294198036193848
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "ASSAULT"
-        },
-        {
-            "type": "MESH",
-            "name": "enemy.004",
-            "transform": {
-                "translation": [
-                    -5.2451653480529785,
-                    -0.0011925697326660156,
-                    -7.972651958465576
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "ASSAULT"
-        },
-        {
-            "type": "MESH",
-            "name": "enemy.005",
-            "transform": {
-                "translation": [
-                    -20.77085304260254,
-                    -0.0011925697326660156,
-                    7.972651958465576
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "ASSAULT"
-        },
-        {
-            "type": "MESH",
             "name": "enemy.006",
             "transform": {
                 "translation": [
@@ -183,7 +45,7 @@
                 ]
             },
             "file_name": "enemy",
-            "Weapon": "SHOTGUN"
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -193,29 +55,6 @@
                     -23.498340606689453,
                     -0.0011925697326660156,
                     -8.392265319824219
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "SHOTGUN"
-        },
-        {
-            "type": "MESH",
-            "name": "enemy.008",
-            "transform": {
-                "translation": [
-                    19.93163299560547,
-                    -0.0011925697326660156,
-                    9.231492042541504
                 ],
                 "rotation": [
                     0.0,
@@ -252,7 +91,7 @@
                 ]
             },
             "file_name": "enemy",
-            "Weapon": "SHOTGUN"
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -262,75 +101,6 @@
                     42.59074020385742,
                     -0.0011925697326660156,
                     24.337568283081055
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "SHOTGUN"
-        },
-        {
-            "type": "MESH",
-            "name": "enemy.011",
-            "transform": {
-                "translation": [
-                    10.700141906738281,
-                    -0.0011925697326660156,
-                    27.694477081298828
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "ASSAULT"
-        },
-        {
-            "type": "MESH",
-            "name": "enemy.012",
-            "transform": {
-                "translation": [
-                    -10.49032974243164,
-                    -0.0011925697326660156,
-                    27.274864196777344
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "enemy",
-            "Weapon": "ASSAULT"
-        },
-        {
-            "type": "MESH",
-            "name": "enemy.013",
-            "transform": {
-                "translation": [
-                    40.008583068847656,
-                    -0.0011925697326660156,
-                    -0.6294198036193848
                 ],
                 "rotation": [
                     0.0,

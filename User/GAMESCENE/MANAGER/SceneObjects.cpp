@@ -105,6 +105,17 @@ void SceneObjects::Initialize() {
 			spriteCommon_->LoadTexture(56, "NEXT2.png");
 
 		}
+		// スプライトロード  60~ // シーン用
+		{
+			spriteCommon_->LoadTexture(60, "TYU_WASD.png");
+			spriteCommon_->LoadTexture(61, "TYU_SHOT.png");
+			spriteCommon_->LoadTexture(62, "TYU_SLOW.png");
+			spriteCommon_->LoadTexture(63, "TYU_DASH.png");
+			spriteCommon_->LoadTexture(64, "TYU_WPCH.png");
+			//spriteCommon_->LoadTexture(65, "NEXT.png");
+			//spriteCommon_->LoadTexture(66, "NEXT2.png");
+
+		}
 	}
 
 	mouseCursor_ = std::make_unique<Cursor>();

@@ -39,6 +39,10 @@ void GAME1Scene::Initialize() {
 	startTime_ = true;
 	stageClear = false;
 	stageFailed = false;
+	infoSP_ = std::make_unique<Sprite>();
+	infoSP_->Initialize(_objects->spriteCommon_.get(), 60);
+	infoSP_->SetSize({ 300,150 });
+	infoSP_->SetPozition({ (WinApp::window_width / 1.5f) - 150,WinApp::window_height - 200 });
 	// Json
 	{
 		leveData = JsonLoader::LoadJsonFile("stageDEMO");
@@ -211,6 +215,26 @@ void GAME1Scene::Update(Input* input) {
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
 			stageClear = true;
 		}
+		infoCountTime_++;
+		if (0 <= infoCountTime_ && infoCountTime_ <= 300) {
+			infoNum_ = 60;
+		}
+		if (300 <= infoCountTime_ && infoCountTime_ <= 600) {
+			infoNum_ = 61;
+		}
+		if (600 <= infoCountTime_ && infoCountTime_ <= 900) {
+			infoNum_ = 62;
+		}
+		if (1200 <= infoCountTime_ && infoCountTime_ <= 1500) {
+			infoNum_ = 63;
+		}
+		if (1800 <= infoCountTime_ && infoCountTime_ <= 2100) {
+			infoNum_ = 64;
+		}
+		if (infoCountTime_ <= 3002) {
+			//infoCountTime_ = 0;
+		}
+		infoSP_->SetTextureIndex(infoNum_);
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
 		stageFailed = _objects->Banner(1);
@@ -251,6 +275,9 @@ void GAME1Scene::Draw() {
 	_objects->SlowEffectDraw();
 	_objects->plDamageRed_->Draw();
 	_objects->UIDraw();
+	if (startTime_ == false && stageClear == false && stageFailed == false) {
+		infoSP_->Draw();
+	}
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();
 	}

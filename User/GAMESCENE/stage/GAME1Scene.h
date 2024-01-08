@@ -50,6 +50,10 @@ private:
 
 	uint32_t testTime = 0;
 
+	std::unique_ptr <Sprite> infoSP_;
+	Vector2 infoPos = { 20.0f,10.0f };
+	uint32_t infoNum_ = 60;
+	uint32_t infoCountTime_ = 0;
 public:
 	LevelData* leveData = nullptr;
 };

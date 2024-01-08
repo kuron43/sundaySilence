@@ -180,6 +180,9 @@ void GAME2Scene::Update(Input* input) {
 
 		BulletManager::GetInstance()->Update();
 
+		for (Wall* walls : _objects->walls) {
+			walls->Update();
+		}
 		for (Enemy* enemy : _objects->enemys) {
 			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			enemy->Update(input);
@@ -193,9 +196,6 @@ void GAME2Scene::Update(Input* input) {
 			if (!boss->HowDead()) {
 				_objects->bossCount++;
 			}
-		}
-		for (Wall* walls : _objects->walls) {
-			walls->Update();
 		}
 
 		_objects->SlowEffect(_objects->player->GetIsSlow());

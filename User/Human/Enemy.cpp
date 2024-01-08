@@ -278,7 +278,7 @@ void Enemy::HitMyColor()
 			object_->SetColor({ 0,0.5f,0,1 });
 		}
 		else if (useWeapon_ == WP_BOMFIRE) {
-			object_->SetColor({ 0.8f,0.1f,0.8f,1 });
+			object_->SetColor({ 0.8f,0.1f,0.1f,1 });
 		}
 	}
 }
