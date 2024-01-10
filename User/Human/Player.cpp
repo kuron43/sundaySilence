@@ -43,6 +43,22 @@ void Player::Initialize() {
 	pointDash_->Initialize();
 	pointDash_->points.resize(pointDash_->MAX_POINTNUM);
 
+	for (uint32_t i = 0; i < 4; i++)
+	{
+		phantom_[i] = Object3d::Create();
+	}
+	//phantomAlpha_[0] = 1.0f;
+	for (uint32_t i = 0; i < 4; i++)
+	{
+		phantomAlpha_[i] = 0.2f;
+	}
+	for (uint32_t i = 0; i < 4; i++)
+	{
+		phantom_[i]->SetModel(model_);
+		phantom_[i]->Initialize();
+		phantom_[i]->SetColor(Vector4(0.8f, 0.8f, 0.8f, phantomAlpha_[i]));
+	}
+
 	hp_ = MAX_HP;
 
 	//当たり判定用
@@ -121,7 +137,7 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 
 
-
+	PhantomUpdate();
 	ColisionUpdate();
 	HitMyColor();
 	object_->Update();
@@ -130,7 +146,7 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::Text("window W :%d", WinApp::window_width);
 	ImGui::Text("window H :%d", WinApp::window_height);
 	ImGui::Text("Palams");
-	ImGui::Text("HPCOOL:%d", coolTimeFB_);
+	ImGui::Text("ph:%d", countPH_);
 	ImGui::InputFloat3("Position", &object_->wtf.position.x);
 	ImGui::Text("PointDash");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
@@ -145,6 +161,12 @@ void Player::Update(Input* input, bool isTitle) {
 void Player::Draw(DirectXCommon* dxCommon) {
 	pointDash_->Draw(dxCommon);
 	Object3d::PreDraw(dxCommon->GetCommandList());
+	for (uint32_t i = 0; i < 4; i++)
+	{
+		if (isPhantom_) {
+			phantom_[i]->Draw();
+		}
+	}
 	object_->Draw();
 	if (!nowTitle) {
 		reticle->Draw();
@@ -355,5 +377,39 @@ void Player::OnColision(bool bullet)
 	}
 	if (hp_ <= NONE) {
 		isDeath_ = true;
+	}
+}
+
+void Player::PhantomUpdate()
+{
+	isPhantom_ = false;
+	isPhantom_ = pointDash_->isActive;
+	if (isPhantom_)
+	{
+		countPH_++;
+		if (countPH_ == 1) {
+			phantom_[0]->wtf = object_->wtf;
+		}
+		if (countPH_ == 3) {
+			phantom_[1]->wtf = object_->wtf;
+		}
+		if (countPH_ == 6) {
+			phantom_[2]->wtf = object_->wtf;
+		}
+		if (countPH_ == 9) {
+			phantom_[3]->wtf = object_->wtf;
+		}
+		if (countPH_ > 10) {
+			countPH_ = 0;
+		}
+	}
+	else {
+		for (uint32_t i = 0; i < 4; i++) {
+			phantom_[i]->wtf = object_->wtf;
+		}
+	}
+
+	for (uint32_t i = 0; i < 4; i++) {
+		phantom_[i]->Update();
 	}
 }

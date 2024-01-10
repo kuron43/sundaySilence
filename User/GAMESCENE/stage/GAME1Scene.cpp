@@ -43,6 +43,16 @@ void GAME1Scene::Initialize() {
 	infoSP_->Initialize(_objects->spriteCommon_.get(), 60);
 	infoSP_->SetSize({ 300,150 });
 	infoSP_->SetPozition({ (WinApp::window_width / 1.5f) - 150,WinApp::window_height - 200 });
+	isDrawSP_ = true;
+	infoNum_ = 60;
+
+	isInfoWASD = false;
+	isInfoSHOT = false;
+	isInfoSLOW = false;
+	isInfoDUSH = false;
+	isInfoWEPC = false;
+	isAllFalse = true;
+	isTimeCount = false;
 	// Json
 	{
 		leveData = JsonLoader::LoadJsonFile("stageDEMO");
@@ -215,24 +225,71 @@ void GAME1Scene::Update(Input* input) {
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
 			stageClear = true;
 		}
-		infoCountTime_++;
-		if (0 <= infoCountTime_ && infoCountTime_ <= 300) {
+
+		if (input->KeyboardPush(DIK_W) || input->KeyboardPush(DIK_A) || input->KeyboardPush(DIK_S) || input->KeyboardPush(DIK_D)) {
+			isInfoWASD = true;
+			isTimeCount = true;
+		}
+		if (input->MouseButtonPush(0) && !input->MouseButtonPush(1)) {
+			isInfoSHOT = true;
+			isTimeCount = true;
+		}
+		if (!input->MouseButtonPush(0) && input->MouseButtonPush(1)) {
+			isInfoSLOW = true;
+			isTimeCount = true;
+		}
+		if (input->MouseButtonPush(0) && input->MouseButtonPush(1)) {
+			isInfoDUSH = true;
+			isTimeCount = true;
+		}
+		if (input->KeyboardPush(DIK_E)) {
+			isInfoWEPC = true;
+			isTimeCount = true;
+		}
+		if (isTimeCount) {
+			infoCountTime_++;
+		}
+		if ((0 <= infoCountTime_ && isAllFalse == true)) {
 			infoNum_ = 60;
+			if (isInfoWASD == true && infoCountTime_ <= 150) {
+				infoNum_ = 61;
+				isAllFalse = false;
+				infoCountTime_ = 0;
+				isTimeCount = false;
+			}
 		}
-		if (300 <= infoCountTime_ && infoCountTime_ <= 600) {
+		if ((0 <= infoCountTime_ && isInfoWASD == true)) {
 			infoNum_ = 61;
+			if (isInfoSHOT == true && infoCountTime_ <= 150) {
+				infoNum_ = 62;
+				infoCountTime_ = 0;
+				isTimeCount = false;
+			}
 		}
-		if (600 <= infoCountTime_ && infoCountTime_ <= 900) {
+		if ((0 <= infoCountTime_ && isInfoSHOT == true)) {
 			infoNum_ = 62;
+			if (isInfoSLOW == true && infoCountTime_ <= 150) {
+				infoNum_ = 63;
+				infoCountTime_ = 0;
+				isTimeCount = false;
+			}
 		}
-		if (1200 <= infoCountTime_ && infoCountTime_ <= 1500) {
+		if ((0 <= infoCountTime_ && isInfoSLOW == true)) {
 			infoNum_ = 63;
+			if (isInfoDUSH == true && infoCountTime_ <= 150) {
+				infoNum_ = 64;
+				infoCountTime_ = 0;
+				isTimeCount = false;
+			}
 		}
-		if (1800 <= infoCountTime_ && infoCountTime_ <= 2100) {
+		if ((0 <= infoCountTime_ && isInfoDUSH == true)) {
 			infoNum_ = 64;
-		}
-		if (infoCountTime_ <= 3002) {
-			//infoCountTime_ = 0;
+			if (isInfoWEPC == true && infoCountTime_ <= 150) {
+				infoNum_ = 60;
+				isDrawSP_ = false;
+				infoCountTime_ = 0;
+				isTimeCount = false;
+			}
 		}
 		infoSP_->SetTextureIndex(infoNum_);
 	}
@@ -275,7 +332,7 @@ void GAME1Scene::Draw() {
 	_objects->SlowEffectDraw();
 	_objects->plDamageRed_->Draw();
 	_objects->UIDraw();
-	if (startTime_ == false && stageClear == false && stageFailed == false) {
+	if (startTime_ == false && stageClear == false && stageFailed == false && isDrawSP_ == true) {
 		infoSP_->Draw();
 	}
 	if (startTime_ == true || stageFailed == true || stageClear == true) {

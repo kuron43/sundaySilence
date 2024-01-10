@@ -46,6 +46,7 @@ private:
 	void HitMyColor();
 	void ColisionUpdate();
 	void OnColision(bool bullet);
+	void PhantomUpdate();
 private:
 	const uint32_t Tribe_ = HU_PLAYER;
 	uint32_t useWeapon_ = WP_ASSAULT;
@@ -74,6 +75,13 @@ private:
 
 	uint32_t coolTimeFB_;
 	bool onFireBottle = false;
+
+	// 残像用
+	Object3d* phantom_[4];
+	float phantomAlpha_[4];
+	bool isPhantom_;
+	bool pad[3];
+	uint32_t countPH_;
 	// スキル用
 private:
 	PointDash* pointDash_;
