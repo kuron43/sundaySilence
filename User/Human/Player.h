@@ -55,6 +55,7 @@ private:
 
 	Model* model_;
 	Model* reticleMD_;
+	Model* reticleXMD_;
 	Object3d* object_;
 	Object3d* reticle;
 	Transform shotPos;

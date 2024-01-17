@@ -126,9 +126,11 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 		if (nowTitle) {
 			//reticle->Draw();
 		}
+#ifdef _DEBUG
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 			coliderPosTest_[i]->Draw();
 		}
+#endif // DEBUG
 		Object3d::PostDraw();
 		if (nowTitle) {
 			weapon_->Draw(dxCommon);

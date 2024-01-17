@@ -11,6 +11,7 @@ Player::Player() {
 Player::~Player() {
 	delete model_;
 	delete reticleMD_;
+	delete reticleXMD_;
 	delete pointDash_;
 	delete weapon_[0];
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
@@ -23,6 +24,7 @@ Player::~Player() {
 void Player::Initialize() {
 	model_ = Model::LoadFromOBJ("player");
 	reticleMD_ = Model::LoadFromOBJ("cursor");
+	reticleXMD_ = Model::LoadFromOBJ("cursolX");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -123,11 +125,23 @@ void Player::Update(Input* input, bool isTitle) {
 		weapon_[i]->Update(input, _isSlow);
 	}
 
-	if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
-		if (input->MouseButtonTrigger(LEFT_MOUSE) && !nowTitle && _isSlow == true) {
-			pointDash_->SetPoint(reticle->wtf.position, input);
-			nowSetPoint = true;
+	if (_isSlow == true) {
+		if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
+			if (input->MouseButtonTrigger(LEFT_MOUSE) && !nowTitle) {
+				pointDash_->SetPoint(reticle->wtf.position, input);
+				nowSetPoint = true;
+			}
+			reticle->SetModel(reticleMD_);
+			reticle->wtf.rotation.y += 0.01f;
 		}
+		else {
+			reticle->SetModel(reticleXMD_);
+			reticle->wtf.rotation.y += 0.01f;
+		}
+	}
+	else {
+		reticle->SetModel(reticleMD_);
+		reticle->wtf.rotation.y = 0;
 	}
 	//object_->camera_->SetFocalLengs(pointDash_->F_lengs);
 
