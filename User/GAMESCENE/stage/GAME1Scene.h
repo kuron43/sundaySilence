@@ -55,6 +55,7 @@ private:
 	Vector2 infoPos = { 20.0f,10.0f };
 	uint32_t infoNum_ = 60;
 	uint32_t infoCountTime_ = 0;
+	uint32_t nowInfoNum_,oldInfoNum_;
 	bool isInfoWASD, isInfoSHOT, isInfoSLOW, isInfoDUSH, isInfoWEPC,isAllFalse;
 	bool isTimeCount;
 public:

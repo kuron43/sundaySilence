@@ -132,11 +132,11 @@ void Player::Update(Input* input, bool isTitle) {
 				nowSetPoint = true;
 			}
 			reticle->SetModel(reticleMD_);
-			reticle->wtf.rotation.y += 0.01f;
+			reticle->wtf.rotation.y += 0.05f;
 		}
 		else {
 			reticle->SetModel(reticleXMD_);
-			reticle->wtf.rotation.y += 0.01f;
+			reticle->wtf.rotation.y = 0;
 		}
 	}
 	else {

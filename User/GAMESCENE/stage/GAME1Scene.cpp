@@ -45,6 +45,7 @@ void GAME1Scene::Initialize() {
 	infoSP_->SetPozition({ (WinApp::window_width / 1.5f) - 150,WinApp::window_height - 200 });
 	isDrawSP_ = true;
 	infoNum_ = 60;
+	nowInfoNum_ = 0;
 
 	isInfoWASD = false;
 	isInfoSHOT = false;
@@ -226,71 +227,67 @@ void GAME1Scene::Update(Input* input) {
 			stageClear = true;
 		}
 
-		if (input->KeyboardPush(DIK_W) || input->KeyboardPush(DIK_A) || input->KeyboardPush(DIK_S) || input->KeyboardPush(DIK_D)) {
+		if ((input->KeyboardPush(DIK_W) || input->KeyboardPush(DIK_A) || input->KeyboardPush(DIK_S) || input->KeyboardPush(DIK_D))&&nowInfoNum_ == 0) {
 			isInfoWASD = true;
 			isTimeCount = true;
 		}
-		if (input->MouseButtonPush(0) && !input->MouseButtonPush(1)) {
+		if ((input->MouseButtonPush(0) && !input->MouseButtonPush(1))&& nowInfoNum_ == 1) {
 			isInfoSHOT = true;
 			isTimeCount = true;
 		}
-		if (!input->MouseButtonPush(0) && input->MouseButtonPush(1)) {
+		if ((!input->MouseButtonPush(0) && input->MouseButtonPush(1))&& nowInfoNum_ == 2) {
 			isInfoSLOW = true;
 			isTimeCount = true;
 		}
-		if (input->MouseButtonPush(0) && input->MouseButtonPush(1)) {
+		if ((input->MouseButtonPush(0) && input->MouseButtonPush(1))&& nowInfoNum_ == 3) {
 			isInfoDUSH = true;
 			isTimeCount = true;
 		}
-		if (input->KeyboardPush(DIK_E)) {
+		if ((input->KeyboardPush(DIK_E))&& nowInfoNum_ == 4) {
 			isInfoWEPC = true;
 			isTimeCount = true;
+
 		}
 		if (isTimeCount) {
 			infoCountTime_++;
 		}
-		if ((0 <= infoCountTime_ && isAllFalse == true)) {
-			infoNum_ = 60;
-			if (isInfoWASD == true && infoCountTime_ <= 150) {
-				infoNum_ = 61;
-				isAllFalse = false;
-				infoCountTime_ = 0;
-				isTimeCount = false;
-			}
-		}
-		if ((0 <= infoCountTime_ && isInfoWASD == true)) {
+		if (isInfoWASD == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 1;
 			infoNum_ = 61;
-			if (isInfoSHOT == true && infoCountTime_ <= 150) {
-				infoNum_ = 62;
-				infoCountTime_ = 0;
-				isTimeCount = false;
-			}
+			isInfoWASD = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
 		}
-		if ((0 <= infoCountTime_ && isInfoSHOT == true)) {
+		if (isInfoSHOT == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 2;
 			infoNum_ = 62;
-			if (isInfoSLOW == true && infoCountTime_ <= 150) {
-				infoNum_ = 63;
-				infoCountTime_ = 0;
-				isTimeCount = false;
-			}
+			isInfoSHOT = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
 		}
-		if ((0 <= infoCountTime_ && isInfoSLOW == true)) {
+		if (isInfoSLOW == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 3;
 			infoNum_ = 63;
-			if (isInfoDUSH == true && infoCountTime_ <= 150) {
-				infoNum_ = 64;
-				infoCountTime_ = 0;
-				isTimeCount = false;
-			}
+			isInfoSLOW = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
 		}
-		if ((0 <= infoCountTime_ && isInfoDUSH == true)) {
+		if (isInfoDUSH == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 4;
 			infoNum_ = 64;
-			if (isInfoWEPC == true && infoCountTime_ <= 150) {
-				infoNum_ = 60;
-				isDrawSP_ = false;
-				infoCountTime_ = 0;
-				isTimeCount = false;
-			}
+			isInfoDUSH = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
 		}
+		if (isInfoWEPC == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 0;
+			infoNum_ = 60;
+			isInfoWEPC = false;
+			isDrawSP_ = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
+		}
+
 		infoSP_->SetTextureIndex(infoNum_);
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
