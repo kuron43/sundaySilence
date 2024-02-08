@@ -254,7 +254,8 @@ void FBXObject3d::Update()
 		//最後まで進めたら先頭に戻る
 		if (currentTime > endTime) {
 			currentTime = startTime;
-			if (animRot == true) {
+			isAnimEnd = false;
+			if (animRot == false) {
 				currentTime = endTime;
 			}
 		}
@@ -345,6 +346,16 @@ void FBXObject3d::AnimPlay()
 void FBXObject3d::AnimStop()
 {
 	isAnim = false;
+}
+
+void FBXObject3d::AnimRotPlay()
+{
+	animRot = true;
+}
+
+void FBXObject3d::AnimRotStop()
+{
+	animRot = false;
 }
 
 void FBXObject3d::AnimIsRotateChange()

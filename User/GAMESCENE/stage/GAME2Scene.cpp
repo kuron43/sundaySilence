@@ -39,7 +39,7 @@ void GAME2Scene::Initialize() {
 	stageFailed = false;
 	// Json
 	{
-		leveData = JsonLoader::LoadJsonFile("stageTEMP2");
+		leveData = JsonLoader::LoadJsonFile("stageDemo2");
 
 		for (auto& objectData : leveData->JsonObjects) {
 
@@ -98,6 +98,7 @@ void GAME2Scene::Initialize() {
 				}if (objectData.weapon == "BOMFIRE") {
 					newBoss->SetWeaponNum(WP_BOMFIRE);
 				}
+				newBoss->SetFBXModel(_objects->bossFbxM_.get());
 				newBoss->Initialize();
 				//座標
 				Vector3 pos;

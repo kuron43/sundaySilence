@@ -254,6 +254,8 @@
     </ClCompile>
     <ClCompile Include="User\Human\Bomer.cpp" />
     <ClCompile Include="User\Weapon\BomFire.cpp" />
+    <ClCompile Include="User\Human\BossManager\BossManager.cpp" />
+    <ClCompile Include="User\Human\BossManager\IBossState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -502,6 +504,8 @@
     <ClInclude Include="User\Human\Bomer.h" />
     <ClInclude Include="User\Human\HumanList.h" />
     <ClInclude Include="User\Weapon\BomFire.h" />
+    <ClInclude Include="User\Human\BossManager\BossManager.h" />
+    <ClInclude Include="User\Human\BossManager\IBossState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

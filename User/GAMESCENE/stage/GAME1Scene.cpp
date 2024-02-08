@@ -29,7 +29,7 @@ GAME1Scene::~GAME1Scene() {
 	_objects->SlowReset();
 	_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
 	_objects->plDamageRed_->Update();
-	delete leveData;
+	///delete leveData;
 }
 
 void GAME1Scene::Initialize() {
@@ -39,6 +39,8 @@ void GAME1Scene::Initialize() {
 	startTime_ = true;
 	stageClear = false;
 	stageFailed = false;
+
+	//
 	infoSP_ = std::make_unique<Sprite>();
 	infoSP_->Initialize(_objects->spriteCommon_.get(), 60);
 	infoSP_->SetSize({ 300,150 });
@@ -115,6 +117,7 @@ void GAME1Scene::Initialize() {
 				}if (objectData.weapon == "BOMFIRE") {
 					newBoss->SetWeaponNum(WP_BOMFIRE);
 				}
+				newBoss->SetFBXModel(_objects->bossFbxM_.get());
 				newBoss->Initialize();
 				//座標
 				Vector3 pos;

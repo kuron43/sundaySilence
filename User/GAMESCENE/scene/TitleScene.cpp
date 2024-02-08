@@ -107,6 +107,7 @@ void TitleScene::Initialize() {
 			}
 			if (objectData.fileName == "boss") {
 				Boss* newBoss = new Boss();
+				newBoss->SetFBXModel(_objects->bossFbxM_.get());
 				newBoss->Initialize();
 				//座標
 				Vector3 pos;

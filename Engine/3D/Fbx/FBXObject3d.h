@@ -130,6 +130,8 @@ public: // メンバ関数
 	/// </summary>
 	void AnimPlay();
 	void AnimStop();
+	void AnimRotPlay();
+	void AnimRotStop();
 	void AnimIsRotateChange();
 
 	/// <summary>
@@ -208,5 +210,7 @@ protected: // メンバ変数
 	bool isAnim = true;
 	//アニメーション繰り返すか
 	bool animRot = true;
+	//アニメーション終わったかフラグ
+	bool isAnimEnd = false;
 
 };

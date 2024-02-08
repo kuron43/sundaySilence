@@ -45,16 +45,16 @@ void Player::Initialize() {
 	pointDash_->Initialize();
 	pointDash_->points.resize(pointDash_->MAX_POINTNUM);
 
-	for (uint32_t i = 0; i < 4; i++)
+	for (uint32_t i = NUMBER::NUM_ZERO; i < NUMBER::NUM_FOUR; i++)
 	{
 		phantom_[i] = Object3d::Create();
 	}
 	//phantomAlpha_[0] = 1.0f;
-	for (uint32_t i = 0; i < 4; i++)
+	for (uint32_t i = NUMBER::NUM_ZERO; i < NUMBER::NUM_FOUR; i++)
 	{
 		phantomAlpha_[i] = 0.2f;
 	}
-	for (uint32_t i = 0; i < 4; i++)
+	for (uint32_t i = NUMBER::NUM_ZERO; i < NUMBER::NUM_FOUR; i++)
 	{
 		phantom_[i]->SetModel(model_);
 		phantom_[i]->Initialize();
@@ -114,7 +114,7 @@ void Player::Update(Input* input, bool isTitle) {
 		}
 	}
 	// 弾発射
-	if (input->MouseButtonPush(0) && !isTitle && _isSlow == false) {
+	if (input->MouseButtonPush(LEFT_MOUSE) && !isTitle && _isSlow == false) {
 		weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
 		isOnFire = true;
 	}
@@ -136,12 +136,12 @@ void Player::Update(Input* input, bool isTitle) {
 		}
 		else {
 			reticle->SetModel(reticleXMD_);
-			reticle->wtf.rotation.y = 0;
+			reticle->wtf.rotation.y = NONE;
 		}
 	}
 	else {
 		reticle->SetModel(reticleMD_);
-		reticle->wtf.rotation.y = 0;
+		reticle->wtf.rotation.y = NONE;
 	}
 	//object_->camera_->SetFocalLengs(pointDash_->F_lengs);
 
@@ -285,11 +285,11 @@ void Player::FaceAngleUpdate()
 void Player::HitMyColor()
 {
 	if (isHitEffect == true) {
-		object_->SetColor({ 1,0,0,1.0f });
+		object_->SetColor({ NUM_ONE,NUM_ZERO,NUM_ZERO,NUM_ONE });
 		hitTime_++;
 		if (hitTime_ >= MAX_HITTIME) {
 			isHitEffect = false;
-			hitTime_ = 0;
+			hitTime_ = NUMBER::NUM_ZERO;
 		}
 	}
 	else {
@@ -307,13 +307,13 @@ void Player::ColisionUpdate() {
 				OnColision(true);
 			}
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIESFIRE) {
-				if (coolTimeFB_ <= 0) {
+				if (coolTimeFB_ <= NUM_ZERO) {
 					OnColision(false);
 				}
 			}
 		}
 	}
-	if (coolTimeFB_ > 0) {
+	if (coolTimeFB_ > NUM_ZERO) {
 		coolTimeFB_--;
 	}
 
@@ -343,7 +343,7 @@ void Player::ColisionUpdate() {
 				float cos = rejectDir.dot(up);
 
 				// 地面判定しきい値
-				const float threshold = cosf(Affin::radConvert(30.0f));
+				const float threshold = cosf(Affin::radConvert(NUM_THIRTY));
 				// 角度差によって天井または地面と判定される場合を除いて
 				if (-threshold < cos && cos < threshold) {
 					// 球を排斥 （押し出す）
@@ -384,8 +384,8 @@ void Player::OnColision(bool bullet)
 		isHitEffect = true;
 	}
 	if (bullet == false) {
-		hp_ -= 2;
-		coolTimeFB_ = 30;
+		hp_ -= NUM_TWO;
+		coolTimeFB_ = NUM_THIRTY;
 		hit_++;
 		isHitEffect = true;
 	}
@@ -401,29 +401,29 @@ void Player::PhantomUpdate()
 	if (isPhantom_)
 	{
 		countPH_++;
-		if (countPH_ == 1) {
-			phantom_[0]->wtf = object_->wtf;
+		if (countPH_ == NUM_ONE) {
+			phantom_[NUM_ZERO]->wtf = object_->wtf;
 		}
-		if (countPH_ == 3) {
-			phantom_[1]->wtf = object_->wtf;
+		if (countPH_ == NUM_THREE) {
+			phantom_[NUM_ONE]->wtf = object_->wtf;
 		}
-		if (countPH_ == 6) {
-			phantom_[2]->wtf = object_->wtf;
+		if (countPH_ == NUM_SIX) {
+			phantom_[NUM_TWO]->wtf = object_->wtf;
 		}
-		if (countPH_ == 9) {
-			phantom_[3]->wtf = object_->wtf;
+		if (countPH_ == NUM_NINE) {
+			phantom_[NUM_THREE]->wtf = object_->wtf;
 		}
-		if (countPH_ > 10) {
-			countPH_ = 0;
+		if (countPH_ > NUM_TEN) {
+			countPH_ = NUM_ZERO;
 		}
 	}
 	else {
-		for (uint32_t i = 0; i < 4; i++) {
+		for (uint32_t i = NUM_ZERO; i < NUM_FOUR; i++) {
 			phantom_[i]->wtf = object_->wtf;
 		}
 	}
 
-	for (uint32_t i = 0; i < 4; i++) {
+	for (uint32_t i = NUM_ZERO; i < NUM_FOUR; i++) {
 		phantom_[i]->Update();
 	}
 }
