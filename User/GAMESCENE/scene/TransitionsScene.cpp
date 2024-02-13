@@ -75,13 +75,13 @@ void TransitionsScene::Draw() {
 	if (isEaseOut == false) {
 		_objects->floorGround->Draw(_controller->_dxCommon);
 		//_objects->player->Draw(_controller->_dxCommon);
-		for (Enemy* enemy : _objects->enemys) {
+		for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 			enemy->Draw(_controller->_dxCommon);
 		}
-		for (Boss* boss : _objects->boss) {
+		for (std::unique_ptr <Boss>& boss : _objects->boss) {
 			boss->Draw(_controller->_dxCommon);
 		}
-		for (Wall* walls : _objects->walls) {
+		for (std::unique_ptr <Wall>& walls : _objects->walls) {
 			walls->Draw(_controller->_dxCommon);
 		}
 		if (_objects->GetIsUIDraw()) {

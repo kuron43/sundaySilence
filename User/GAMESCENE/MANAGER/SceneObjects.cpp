@@ -10,6 +10,8 @@ SceneObjects::SceneObjects(DirectXCommon* DXCommon, Camera* camera) {
 	_camera = camera;
 }
 SceneObjects::~SceneObjects() {
+	delete wallMD;
+	delete floorGroundMD;
 }
 void SceneObjects::Initialize() {
 	ShowCursor(false);
@@ -152,7 +154,8 @@ void SceneObjects::Initialize() {
 		floorGround->Initialize(floorGroundMD);
 	}
 	skydome_O = std::make_unique<Object3d>();
-	skydome_O->SetModel(Model::LoadFromOBJ("skydome"));
+	skydome_M = Model::LoadFromOBJ("skydome");
+	skydome_O->SetModel(skydome_M);
 	skydome_O->Initialize();
 	skydome_O->wtf.scale = Vector3(10000.0f, 10000.0f, 10000.0f);
 

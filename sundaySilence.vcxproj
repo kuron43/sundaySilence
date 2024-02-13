@@ -61,7 +61,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);DIRECTINPUT_VERSION=0x0800</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -87,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);DIRECTINPUT_VERSION=0x0800</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Skills;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -157,6 +157,9 @@
     <ClCompile Include="Engine\MATH\Vector3.cpp" />
     <ClCompile Include="Engine\MATH\Vector4.cpp" />
     <ClCompile Include="Engine\3D\Json\JsonLoader.cpp" />
+    <ClCompile Include="User\Human\BossManager\BossAttack.cpp" />
+    <ClCompile Include="User\Human\BossManager\BossMove.cpp" />
+    <ClCompile Include="User\Human\BossManager\BossWait.cpp" />
     <ClCompile Include="User\Human\BossManager\IBossState.cpp" />
     <ClCompile Include="User\GAMESCENE\GameScene.cpp" />
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneManager.cpp" />
@@ -170,7 +173,6 @@
     <ClCompile Include="User\GAMESCENE\scene\PauseScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\SelectScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TitleScene.cpp" />
-    <ClCompile Include="User\Human\Bomer.cpp" />
     <ClCompile Include="User\Human\Boss.cpp" />
     <ClCompile Include="User\Human\Enemy.cpp" />
     <ClCompile Include="User\Human\BossManager\BossManager.cpp" />
@@ -241,6 +243,9 @@
     <ClInclude Include="Engine\MATH\Vector2.h" />
     <ClInclude Include="Engine\MATH\Vector3.h" />
     <ClInclude Include="Engine\MATH\Vector4.h" />
+    <ClInclude Include="User\Human\BossManager\BossAttack.h" />
+    <ClInclude Include="User\Human\BossManager\BossMove.h" />
+    <ClInclude Include="User\Human\BossManager\BossWait.h" />
     <ClInclude Include="User\Human\BossManager\IBossState.h" />
     <ClInclude Include="User\GAMESCENE\GameScene.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneIntegrate.h" />
@@ -255,7 +260,6 @@
     <ClInclude Include="User\GAMESCENE\scene\PauseScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\SelectScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\TitleScene.h" />
-    <ClInclude Include="User\Human\Bomer.h" />
     <ClInclude Include="User\Human\Boss.h" />
     <ClInclude Include="User\Human\Enemy.h" />
     <ClInclude Include="User\Human\HumanList.h" />

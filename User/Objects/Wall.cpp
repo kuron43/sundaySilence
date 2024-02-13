@@ -13,7 +13,9 @@ Wall::Wall() {
 
 }
 Wall::~Wall() {
-	//delete model_;
+	//delete object_;
+	//delete coliderPosTest_;
+	delete model_;
 	CollisionManager::GetInstance()->RemoveCollider(obb_);
 	delete obb_;
 }
@@ -22,7 +24,6 @@ Wall::~Wall() {
 void Wall::Initialize(Model* model) {
 	object_ = Object3d::Create();
 	object_->SetModel(model);
-	object_->Initialize();
 }
 
 void Wall::CollideInitialize() {
@@ -33,8 +34,9 @@ void Wall::CollideInitialize() {
 	obb_->Update();
 	obb_->SetAttribute(COLLISION_ATTR_BARRIEROBJECT);
 	//test
+	model_ = Model::LoadFromOBJ("wall");
 	coliderPosTest_ = Object3d::Create();
-	coliderPosTest_->SetModel(Model::LoadFromOBJ("wall"));
+	coliderPosTest_->SetModel(model_);
 	coliderPosTest_->wtf.position = obb_->GetPos_();
 	coliderPosTest_->wtf.scale.x = obb_->GetLength(0);
 	coliderPosTest_->wtf.scale.y = obb_->GetLength(1);
@@ -73,7 +75,5 @@ void Wall::Draw(DirectXCommon* dxCommon) {
 
 /// リセットを行う
 void Wall::Reset() {
-	delete model_;
-	CollisionManager::GetInstance()->RemoveCollider(obb_);
-	delete obb_;
+
 }

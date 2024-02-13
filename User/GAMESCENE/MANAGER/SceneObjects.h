@@ -148,7 +148,7 @@ public: // オブジェクトの管理
 	std::unique_ptr<ParticleManager> particleManager2_;
 
 	std::unique_ptr <Object3d> skydome_O;
-	std::unique_ptr <Model> skydome_M;
+	Model* skydome_M;
 
 	//FBXモデル
 	std::unique_ptr<FBXModel> bossFbxM_;
@@ -160,13 +160,13 @@ public: // オブジェクトの管理
 	float damageRedAlpha_ = 0.0f;
 	Vector2 plDamageRedPos = { 0.0f,0.0f };
 
-	std::vector<Enemy*> enemys;
+	std::vector< std::unique_ptr<Enemy>> enemys;
 	uint32_t eneCount;
-	std::vector<Boss*> boss;
+	std::vector<std::unique_ptr<Boss>> boss;
 	uint32_t bossCount;
 
 	Model* wallMD;
-	std::vector<Wall*> walls;
+	std::vector< std::unique_ptr <Wall>> walls;
 
 	std::unique_ptr<Floor> floorGround;
 	Model* floorGroundMD;

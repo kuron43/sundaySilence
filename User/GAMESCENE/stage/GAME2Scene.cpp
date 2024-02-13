@@ -10,15 +10,6 @@ GAME2Scene::GAME2Scene(SceneManager* controller, SceneObjects* objects) {
 }
 
 GAME2Scene::~GAME2Scene() {
-	for (Wall* walls : _objects->walls) {
-		walls->Reset();
-	}
-	for (Enemy* enemy : _objects->enemys) {
-		enemy->Reset();
-	}
-	for (Boss* boss : _objects->boss) {
-		boss->Reset();
-	}
 	BulletManager::GetInstance()->AllClearBullet();
 	_objects->walls.clear();
 	_objects->enemys.clear();
@@ -67,7 +58,7 @@ void GAME2Scene::Initialize() {
 				sca = objectData.scaling;
 				newEnemy->object_->wtf.scale = sca;
 				//newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
-				_objects->enemys.emplace_back(newEnemy);
+				_objects->enemys.emplace_back(std::move(newEnemy));
 			}
 			if (objectData.fileName == "wall") {
 				Wall* newWall = new Wall();
@@ -87,7 +78,7 @@ void GAME2Scene::Initialize() {
 				newWall->object_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 				newWall->object_->Update();
 				newWall->CollideInitialize();
-				_objects->walls.emplace_back(newWall);
+				_objects->walls.emplace_back(std::move(newWall));
 			}
 			if (objectData.fileName == "boss") {
 				Boss* newBoss = new Boss();
@@ -114,7 +105,7 @@ void GAME2Scene::Initialize() {
 				sca = objectData.scaling;
 				newBoss->object_->wtf.scale = sca;
 				//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
-				_objects->boss.emplace_back(newBoss);
+				_objects->boss.emplace_back(std::move(newBoss));
 			}
 			if (objectData.fileName == "player") {
 				Vector3 position = objectData.translation;
@@ -133,21 +124,21 @@ void GAME2Scene::Initialize() {
 		_objects->floorGround->Update();
 
 		BulletManager::GetInstance()->Update();
-		for (Enemy* enemy : _objects->enemys) {
+		for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			enemy->Update();
 			if (!enemy->HowDead()) {
 				_objects->eneCount++;
 			}
 		}
-		for (Boss* boss : _objects->boss) {
+		for (std::unique_ptr <Boss>& boss : _objects->boss) {
 			boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			boss->Update();
 			if (!boss->HowDead()) {
 				_objects->bossCount++;
 			}
 		}
-		for (Wall* walls : _objects->walls) {
+		for (std::unique_ptr < Wall>& walls : _objects->walls) {
 			walls->Update();
 		}
 	}
@@ -181,22 +172,22 @@ void GAME2Scene::Update(Input* input) {
 
 		BulletManager::GetInstance()->Update();
 
-		for (Wall* walls : _objects->walls) {
-			walls->Update();
-		}
-		for (Enemy* enemy : _objects->enemys) {
+		for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
-			enemy->Update(input);
+			enemy->Update();
 			if (!enemy->HowDead()) {
 				_objects->eneCount++;
 			}
 		}
-		for (Boss* boss : _objects->boss) {
+		for (std::unique_ptr <Boss>& boss : _objects->boss) {
 			boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
-			boss->Update(input);
+			boss->Update();
 			if (!boss->HowDead()) {
 				_objects->bossCount++;
 			}
+		}
+		for (std::unique_ptr < Wall>& walls : _objects->walls) {
+			walls->Update();
 		}
 
 		_objects->SlowEffect(_objects->player->GetIsSlow());
@@ -226,13 +217,13 @@ void GAME2Scene::Update(Input* input) {
 
 void GAME2Scene::Draw() {
 	_objects->floorGround->Draw(_controller->_dxCommon);
-	for (Enemy* enemy : _objects->enemys) {
+	for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 		enemy->Draw(_controller->_dxCommon);
 	}
-	for (Boss* boss : _objects->boss) {
+	for (std::unique_ptr <Boss>& boss : _objects->boss) {
 		boss->Draw(_controller->_dxCommon);
 	}
-	for (Wall* walls : _objects->walls) {
+	for (std::unique_ptr <Wall>& walls : _objects->walls) {
 		walls->Draw(_controller->_dxCommon);
 	}
 

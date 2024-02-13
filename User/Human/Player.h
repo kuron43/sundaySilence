@@ -111,6 +111,7 @@ private:
 	Ray* ray;
 	std::vector<Vector3> spherePos;
 	std::vector<Object3d*> coliderPosTest_;
+	Model* colPosTesM_;
 
 };
 

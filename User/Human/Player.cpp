@@ -9,11 +9,14 @@ Player::Player() {
 
 }
 Player::~Player() {
+	delete ray;
 	delete model_;
 	delete reticleMD_;
 	delete reticleXMD_;
+	delete colPosTesM_;
 	delete pointDash_;
 	delete weapon_[0];
+	delete weapon_[1];
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
@@ -25,6 +28,7 @@ void Player::Initialize() {
 	model_ = Model::LoadFromOBJ("player");
 	reticleMD_ = Model::LoadFromOBJ("cursor");
 	reticleXMD_ = Model::LoadFromOBJ("cursolX");
+	colPosTesM_ = Model::LoadFromOBJ("sphere");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -81,7 +85,7 @@ void Player::Initialize() {
 		sphere[i]->SetAttribute(COLLISION_ATTR_PLAYER);
 		//test
 		coliderPosTest_[i] = Object3d::Create();
-		coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
+		coliderPosTest_[i]->SetModel(colPosTesM_);
 		coliderPosTest_[i]->wtf.position = (sphere[i]->center);
 		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
@@ -99,7 +103,7 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 	Vector2 mousepos = input->GetMousePosition();
 	object_->wtf.position.y = NONE;
-	reticle->wtf.position += { mousepos.x* mouseSensitivity_, NONE, mousepos.y* mouseSensitivity_ };
+	reticle->wtf.position = { mousepos.x* mouseSensitivity_, NONE, mousepos.y* mouseSensitivity_ };
 	reticle->Update();
 	// 武器の切り替え処理
 	if (input->KeyboardTrigger(DIK_E)) {

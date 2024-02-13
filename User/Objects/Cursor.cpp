@@ -42,7 +42,7 @@ void Cursor::CusUpdate(Input* input) {
 
 	}
 	cursorPic_->SetTextureIndex(7);
-	mousepos_ += input->GetMousePosition();
+	mousepos_ = input->GetMousePosition();
 	//mousepos_.y *= -1;
 	if ((mousepos_.x + WinApp::window_width / 2) >= WinApp::window_width) {
 		mousepos_.x = (WinApp::window_width/2) - 1;

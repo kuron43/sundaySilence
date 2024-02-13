@@ -15,7 +15,6 @@ Enemy::~Enemy() {
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
-
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
@@ -141,15 +140,7 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 
 /// リセットを行う
 void Enemy::Reset() {
-	delete model_;
-	delete weapon_;
-	delete rayHit;
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-		delete sphere[i];
-	}
-	CollisionManager::GetInstance()->RemoveCollider(ray);
-	delete ray;
+
 }
 
 /// 武器の番号セット

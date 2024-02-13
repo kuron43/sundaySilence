@@ -10,16 +10,6 @@ TitleScene::TitleScene(SceneManager* controller, SceneObjects* objects) {
 }
 TitleScene::~TitleScene() {
 
-	for (Wall* walls : _objects->walls) {
-		walls->Reset();
-	}
-	for (Enemy* enemy : _objects->enemys) {
-		enemy->Reset();
-	}
-	for (Boss* boss : _objects->boss) {
-		boss->Reset();
-	}
-
 	_objects->walls.clear();
 	_objects->enemys.clear();
 	_objects->boss.clear();
@@ -67,7 +57,7 @@ void TitleScene::Initialize() {
 		for (auto& objectData : leveData->JsonObjects) {
 
 			if (objectData.fileName == "enemy") {
-				Enemy* newEnemy = new Enemy();
+				std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
 				newEnemy->Initialize();
 				//座標
 				Vector3 pos;
@@ -83,10 +73,10 @@ void TitleScene::Initialize() {
 				sca = objectData.scaling;
 				newEnemy->object_->wtf.scale = sca;
 				//newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
-				_objects->enemys.emplace_back(newEnemy);
+				_objects->enemys.emplace_back(std::move(newEnemy));
 			}
 			if (objectData.fileName == "wall") {
-				Wall* newWall = new Wall();
+				std::unique_ptr<Wall> newWall = std::make_unique<Wall>();
 				newWall->Initialize(_objects->wallMD);
 				//座標
 				Vector3 pos;
@@ -103,10 +93,10 @@ void TitleScene::Initialize() {
 				newWall->object_->SetColor (Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 				newWall->object_->Update();
 				newWall->CollideInitialize();
-				_objects->walls.emplace_back(newWall);
+				_objects->walls.emplace_back(std::move(newWall));
 			}
 			if (objectData.fileName == "boss") {
-				Boss* newBoss = new Boss();
+				std::unique_ptr<Boss> newBoss = std::make_unique<Boss>();
 				newBoss->SetFBXModel(_objects->bossFbxM_.get());
 				newBoss->Initialize();
 				//座標
@@ -123,7 +113,7 @@ void TitleScene::Initialize() {
 				sca = objectData.scaling;
 				newBoss->object_->wtf.scale = sca;
 				//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
-				_objects->boss.emplace_back(newBoss);
+				_objects->boss.emplace_back(std::move(newBoss));
 			}
 			if (objectData.fileName == "player") {
 				Vector3 position = objectData.translation;
@@ -138,21 +128,21 @@ void TitleScene::Initialize() {
 		_objects->floorGround->Update();
 
 		BulletManager::GetInstance()->Update();
-		for (Enemy* enemy : _objects->enemys) {
+		for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			enemy->Update();
 			if (!enemy->HowDead()) {
 				_objects->eneCount++;
 			}
 		}
-		for (Boss* boss : _objects->boss) {
+		for (std::unique_ptr <Boss>& boss : _objects->boss) {
 			boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			boss->Update();
 			if (!boss->HowDead()) {
 				_objects->bossCount++;
 			}
 		}
-		for (Wall* walls : _objects->walls) {
+		for (std::unique_ptr < Wall>& walls : _objects->walls) {
 			walls->Update();
 		}
 	}
@@ -196,13 +186,13 @@ void TitleScene::Update(Input* input) {
 
 void TitleScene::Draw() {
 	_objects->floorGround->Draw(_controller->_dxCommon);
-	for (Enemy* enemy : _objects->enemys) {
+	for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 		enemy->Draw(_controller->_dxCommon);
 	}
-	for (Boss* boss : _objects->boss) {
+	for (std::unique_ptr <Boss>& boss : _objects->boss) {
 		boss->Draw(_controller->_dxCommon);
 	}
-	for (Wall* walls : _objects->walls) {
+	for (std::unique_ptr <Wall>& walls : _objects->walls) {
 		walls->Draw(_controller->_dxCommon);
 	}
 	_objects->player->Draw(_controller->_dxCommon);
