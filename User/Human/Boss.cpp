@@ -16,10 +16,12 @@ Boss::~Boss() {
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
-
+		delete coliderPosTest_[i];
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
+	delete object_;
+	delete reticle;
 }
 
 ///

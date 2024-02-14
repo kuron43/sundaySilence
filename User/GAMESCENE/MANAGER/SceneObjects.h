@@ -13,6 +13,7 @@
 #include "Model.h"
 #include "Object3d.h"
 #include "ParticleManager.h"
+#include "JsonLoader.h"
 
 #include "Human.h"
 #include "Player.h"
@@ -102,6 +103,9 @@ public: // UI用
 	void ONIsUIDraw() { isUIDraw_ = true; };
 	void OFFIsUIDraw() { isUIDraw_ = false; };
 	bool GetIsUIDraw() { return isUIDraw_; };
+
+public:
+	void SetingLevel(LevelData* data);
 
 private: // UI用
 	bool isUIDraw_ = false;

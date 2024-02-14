@@ -22,6 +22,10 @@ public:
 
 	//メンバ関数
 public:
+	inline void Finalize() {
+
+		colliders.clear();
+	}
 	//コライダーの追加
 	inline void AddCollider(BaseCollider* collider)
 	{
@@ -31,6 +35,7 @@ public:
 	//コライダーの削除
 	inline void RemoveCollider(BaseCollider* collider)
 	{
+		collider->RemoveObject3d();
 		colliders.remove(collider);
 	}
 

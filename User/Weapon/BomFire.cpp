@@ -118,6 +118,7 @@ FireBottle::FireBottle()
 FireBottle::~FireBottle() {
 	CollisionManager::GetInstance()->RemoveCollider(sphere);
 	delete sphere;
+	delete bottleObj_;
 }
 void FireBottle::Initialize(Model* model, const Vector3& position, Vector3 move, uint32_t team)
 {

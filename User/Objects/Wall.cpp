@@ -13,11 +13,12 @@ Wall::Wall() {
 
 }
 Wall::~Wall() {
-	//delete object_;
-	//delete coliderPosTest_;
+
 	delete model_;
 	CollisionManager::GetInstance()->RemoveCollider(obb_);
 	delete obb_;
+	delete object_;
+	delete coliderPosTest_;
 }
 
 /// 更新を行う
@@ -75,5 +76,7 @@ void Wall::Draw(DirectXCommon* dxCommon) {
 
 /// リセットを行う
 void Wall::Reset() {
-
+	delete model_;
+	CollisionManager::GetInstance()->RemoveCollider(obb_);
+	delete obb_;
 }

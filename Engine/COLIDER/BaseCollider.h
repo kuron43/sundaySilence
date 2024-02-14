@@ -20,6 +20,10 @@ public:
 	{
 		object3d_ = object;
 	}
+	inline void RemoveObject3d()
+	{
+		object3d_ = nullptr;
+	}
 
 	inline Object3d* GetObject3d()
 	{

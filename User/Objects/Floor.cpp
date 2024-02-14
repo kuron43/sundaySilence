@@ -14,7 +14,7 @@ Floor::Floor() {
 
 }
 Floor::~Floor() {
-
+	delete object_;
 }
 
 /// 更新を行う

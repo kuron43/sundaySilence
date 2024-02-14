@@ -23,7 +23,7 @@ SceneManager::SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects
 
 }
 SceneManager::~SceneManager() {
-
+	
 }
 
 void SceneManager::SceneInitialize() {

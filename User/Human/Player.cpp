@@ -20,7 +20,15 @@ Player::~Player() {
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
+		delete coliderPosTest_[i];
 	}
+	delete object_;
+	delete reticle;
+	for (uint32_t i = NUMBER::NUM_ZERO; i < NUMBER::NUM_FOUR; i++)
+	{
+		delete phantom_[i];
+	}
+
 }
 
 ///

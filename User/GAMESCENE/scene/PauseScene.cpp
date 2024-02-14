@@ -40,18 +40,10 @@ void PauseScene::Update(Input* input) {
 
 	pauseGoBuck_->Update();
 	titleButton_->Update();
-	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
-		if (input->MouseButtonTrigger(0)) {
 
-			for (std::unique_ptr <Wall>& walls : _objects->walls) {
-				walls->Reset();
-			}
-			for (std::unique_ptr < Enemy>& enemy : _objects->enemys) {
-				enemy->Reset();
-			}
-			for (std::unique_ptr < Boss>& boss : _objects->boss) {
-				boss->Reset();
-			}
+	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
+
+		if (input->MouseButtonTrigger(0)) {
 			BulletManager::GetInstance()->AllClearBullet();
 			_objects->walls.clear();
 			_objects->enemys.clear();

@@ -13,6 +13,10 @@ PointDash::~PointDash()
 	delete ray;
 	delete rayHit;
 	delete model_;
+	for (uint32_t i = 0; i < 5; i++) {
+		delete object_[i];
+	}
+	points.clear();
 }
 
 void PointDash::Initialize()

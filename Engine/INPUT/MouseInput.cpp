@@ -55,19 +55,19 @@ void MouseInput::UpdatePointPos() {
 	HWND hwnd = winApp_->GetHwnd();
 	ScreenToClient(hwnd, &mousePosition);
 
-	float xPos_absolute, yPos_absolute;
+	//float xPos_absolute, yPos_absolute;
 
-	float xPos = windowWH.x;  //移動させたいｘ座標（ウィンドウ内の相対座標）
-	float yPos = windowWH.y; //移動させたいｙ座標（ウィンドウ内の相対座標）
+	//float xPos = windowWH.x;  //移動させたいｘ座標（ウィンドウ内の相対座標）
+	//float yPos = windowWH.y; //移動させたいｙ座標（ウィンドウ内の相対座標）
 
-	WINDOWINFO windowInfo;
-	//ウィンドウの位置を取得
-	windowInfo.cbSize = sizeof(WINDOWINFO);
-	GetWindowInfo(hwnd, &windowInfo);
+	//WINDOWINFO windowInfo;
+	////ウィンドウの位置を取得
+	//windowInfo.cbSize = sizeof(WINDOWINFO);
+	//GetWindowInfo(hwnd, &windowInfo);
 
-	//マウスの移動先の絶対座標（モニター左上からの座標）
-	xPos_absolute = xPos + windowInfo.rcWindow.left + 8;//なんかずれてるから直す
-	yPos_absolute = yPos + windowInfo.rcWindow.top + 31; //ウィンドウのタイトルバーの分（31px）をプラス
+	////マウスの移動先の絶対座標（モニター左上からの座標）
+	//xPos_absolute = xPos + windowInfo.rcWindow.left + 8;//なんかずれてるから直す
+	//yPos_absolute = yPos + windowInfo.rcWindow.top + 31; //ウィンドウのタイトルバーの分（31px）をプラス
 
 	//SetCursorPos((int)xPos_absolute, (int)yPos_absolute);//移動させる
 	//mousePos_ = { xPos_absolute,yPos_absolute };
@@ -78,8 +78,7 @@ void MouseInput::UpdatePointPos() {
 
 	//マウスの移動量を取得
 	mousePos_ = Vector2(0, 0);
-	mousePos_ = (Vector2(mousePos.x, -mousePos.y) - Vector2(windowWH.x, -windowWH.y));//座標軸で回転している関係でこうなる(XとYが入れ替え)
-	
+	mousePos_ = (Vector2(mousePos.x, -mousePos.y) - Vector2(windowWH.x, -windowWH.y));
 
 }
 
