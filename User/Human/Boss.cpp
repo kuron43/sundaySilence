@@ -141,6 +141,7 @@ void Boss::Update(Input* input, bool isTitle) {
 		bossFbxO_->AnimRotStop();
 		bossFbxO_->PlayAnimation(3);
 		isFireOld = true;
+		weapon_->Shot(object_->wtf, reticle->wtf, Team::ENEMY);
 	}
 	if(isFireOld == true && isFire == true && isDead == false) {
 		bossFbxO_->AnimRotStop();

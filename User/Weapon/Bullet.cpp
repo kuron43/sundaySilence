@@ -13,9 +13,13 @@ Bullet::Bullet() {
 
 }
 Bullet::~Bullet() {
-	CollisionManager::GetInstance()->RemoveCollider(sphere);
-	delete sphere;
-	delete bulletObj_;
+	if (sphere) {
+		CollisionManager::GetInstance()->RemoveCollider(sphere);
+		delete sphere;
+	}
+	if (bulletObj_) {
+		delete bulletObj_;
+	}
 }
 void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uint32_t team)
 {
