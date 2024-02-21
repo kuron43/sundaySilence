@@ -51,7 +51,7 @@ private:
 public:
 	Object3d* object_;
 private:
-	const uint32_t Tribe_ = 1;
+	const uint32_t Tribe_ = HU_ENEMY;
 	uint32_t useWeapon_ = WP_ASSAULT;
 	bool StartFrontRot = false;
 	bool isFound = false;

@@ -40,6 +40,7 @@ private:
 	bool startTime_ = false;
 	bool stageClear = false;
 	bool stageFailed = false;
+	bool isDrawSP_ = true;
 	uint32_t randTime_;
 
 	// カメラ座標
@@ -50,6 +51,13 @@ private:
 
 	uint32_t testTime = 0;
 
+	std::unique_ptr <Sprite> infoSP_;
+	Vector2 infoPos = { 20.0f,10.0f };
+	uint32_t infoNum_ = 60;
+	uint32_t infoCountTime_ = 0;
+	uint32_t nowInfoNum_,oldInfoNum_;
+	bool isInfoWASD, isInfoSHOT, isInfoSLOW, isInfoDUSH, isInfoWEPC,isAllFalse;
+	bool isTimeCount;
 public:
 	LevelData* leveData = nullptr;
 };

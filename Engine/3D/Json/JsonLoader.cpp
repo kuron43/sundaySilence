@@ -91,7 +91,7 @@ LevelData* JsonLoader::LoadJsonFile(const std::string& fileName) {
 
 		}
 	}
-
+	file.close();
 	return levelData;
 }
 

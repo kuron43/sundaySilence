@@ -13,8 +13,13 @@ Bullet::Bullet() {
 
 }
 Bullet::~Bullet() {
-	CollisionManager::GetInstance()->RemoveCollider(sphere);
-	delete sphere;
+	if (sphere) {
+		CollisionManager::GetInstance()->RemoveCollider(sphere);
+		delete sphere;
+	}
+	if (bulletObj_) {
+		delete bulletObj_;
+	}
 }
 void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uint32_t team)
 {
@@ -62,9 +67,6 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	//coliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
 	//coliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
 	//coliderPosTest_->Update();
-
-	
-
 }
 
 void Bullet::Update(float speed)
@@ -114,4 +116,9 @@ void Bullet::Draw()
 
 void Bullet::OnColision() {
 	isDead = true;
+}
+
+bool Bullet::IsDead()
+{
+	return isDead;
 }

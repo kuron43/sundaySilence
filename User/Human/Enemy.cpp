@@ -15,10 +15,12 @@ Enemy::~Enemy() {
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
-
+		delete coliderPosTest_[i];
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
+	delete object_;
+	delete reticle;
 }
 	//乱数生成装置
 	std::random_device seed_gen;
@@ -44,8 +46,12 @@ void Enemy::Initialize() {
 	if (useWeapon_ == WP_SHOTGUN) {
 		weapon_ = new Shotgun();
 	}
-	else {
+	else if(useWeapon_ == WP_ASSAULT){
 		weapon_ = new Assault();
+	}
+	else if (useWeapon_ == WP_BOMFIRE)
+	{
+		weapon_ = new BomFire();
 	}
 	weapon_->Initialize();
 
@@ -122,9 +128,11 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 		if (nowTitle) {
 			//reticle->Draw();
 		}
+#ifdef _DEBUG
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 			coliderPosTest_[i]->Draw();
 		}
+#endif // DEBUG
 		Object3d::PostDraw();
 		if (nowTitle) {
 			weapon_->Draw(dxCommon);
@@ -135,15 +143,7 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 
 /// リセットを行う
 void Enemy::Reset() {
-	delete model_;
-	delete weapon_;
-	delete rayHit;
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-		delete sphere[i];
-	}
-	CollisionManager::GetInstance()->RemoveCollider(ray);
-	delete ray;
+
 }
 
 /// 武器の番号セット
@@ -248,7 +248,6 @@ void Enemy::ColiderUpdate() {
 
 void Enemy::OnColision()
 {
-	//object_->SetColor({ 1,0,0 });
 	hp--;
 	isHitEffect = true;
 	if (hp < 1) {
@@ -268,6 +267,14 @@ void Enemy::HitMyColor()
 		}
 	}
 	else {
-		object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
+		if (useWeapon_ == WP_ASSAULT) {
+			object_->SetColor({ 0.8f,0.8f,0.8f,1 });
+		}
+		else if (useWeapon_ == WP_SHOTGUN) {
+			object_->SetColor({ 0,0.5f,0,1 });
+		}
+		else if (useWeapon_ == WP_BOMFIRE) {
+			object_->SetColor({ 0.8f,0.1f,0.1f,1 });
+		}
 	}
 }

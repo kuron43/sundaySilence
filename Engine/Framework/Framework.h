@@ -7,6 +7,7 @@
 #include "ImGuiManager.h"
 #pragma warning(push)
 #pragma warning(disable: 4514)
+#include <cassert>
 #include <imgui.h>
 #pragma warning(pop)
 

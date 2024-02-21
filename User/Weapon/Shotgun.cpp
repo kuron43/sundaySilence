@@ -8,7 +8,7 @@ Shotgun::Shotgun() {
 
 }
 Shotgun::~Shotgun() {
-
+	delete model_;
 }
 
 Shotgun* Shotgun::Create()

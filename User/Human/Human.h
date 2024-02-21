@@ -8,6 +8,9 @@
 #include <imgui.h>
 #pragma warning(pop)
 
+#include "HumanList.h"
+
+#include "FBXObject3d.h"
 #include "Object3d.h"
 #include "Transform.h"
 #include "Affin.h"
@@ -23,13 +26,13 @@
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
 
-// ヒトガタ基底クラス
+ // ヒトガタ基底クラス
 class Human
 {
 
 protected:
-	bool _isSlow = false;
 	float _SlowSpeed = 0.25f;
+	bool _isSlow = false;
 	bool _isTitle;
 public:
 
@@ -40,7 +43,7 @@ public:
 	virtual void Initialize() = 0;
 
 	/// 更新を行う
-	virtual void Update(Input* input = nullptr,bool isTitle = false) = 0;
+	virtual void Update(Input* input = nullptr, bool isTitle = false) = 0;
 
 	/// 描画を行う
 	virtual void Draw(DirectXCommon* dxCommon) = 0;
@@ -52,3 +55,39 @@ public:
 	virtual void SetWeaponNum(uint32_t WeaponNum) = 0;
 };
 
+enum NUMBER {
+	NUM_ZERO = 0,
+	NUM_ONE = 1,
+	NUM_TWO = 2,
+	NUM_THREE,
+	NUM_FOUR,
+	NUM_FIVE,
+	NUM_SIX,
+	NUM_SEVEN,
+	NUM_EIGHT,
+	NUM_NINE,
+
+	NUM_TEN = 10,
+
+	NUM_TWENTY  = 20,
+	NUM_TWENTYONE,
+	NUM_TWENTYTWO,
+	NUM_TWENTYTHREE,
+	NUM_TWENTYFOUR,
+	NUM_TWENTYFIVE,
+	NUM_TWENTYSIX,
+	NUM_TWENTYSEVEN,
+	NUM_TWENTYEIGHT,
+	NUM_TWENTYNINE,
+
+	NUM_THIRTY = 30,
+	NUM_THIRTYONE,
+	NUM_THIRTYTWO,
+	NUM_THIRTYTHREE,
+	NUM_THIRTYFOUR,
+	NUM_THIRTYFIVE,
+	NUM_THIRTYSIX,
+	NUM_THIRTYSEVEN,
+	NUM_THIRTYEIGHT,
+	NUM_THIRTYNINE,
+};

@@ -45,15 +45,17 @@ private:
 	void FaceAngleUpdate();
 	void HitMyColor();
 	void ColisionUpdate();
-	void OnColision();
+	void OnColision(bool bullet);
+	void PhantomUpdate();
 private:
-	const uint32_t Tribe_ = 0;
+	const uint32_t Tribe_ = HU_PLAYER;
 	uint32_t useWeapon_ = WP_ASSAULT;
 	bool nowTitle = false;
 
 
 	Model* model_;
 	Model* reticleMD_;
+	Model* reticleXMD_;
 	Object3d* object_;
 	Object3d* reticle;
 	Transform shotPos;
@@ -71,6 +73,16 @@ private:
 
 	Weapon* weapon_[2];
 	bool isOnFire = true;
+
+	uint32_t coolTimeFB_;
+	bool onFireBottle = false;
+
+	// 残像用
+	Object3d* phantom_[4];
+	float phantomAlpha_[4];
+	bool isPhantom_;
+	bool pad[3];
+	uint32_t countPH_;
 	// スキル用
 private:
 	PointDash* pointDash_;
@@ -99,6 +111,7 @@ private:
 	Ray* ray;
 	std::vector<Vector3> spherePos;
 	std::vector<Object3d*> coliderPosTest_;
+	Model* colPosTesM_;
 
 };
 

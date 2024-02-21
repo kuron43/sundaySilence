@@ -10,6 +10,10 @@ SceneObjects::SceneObjects(DirectXCommon* DXCommon, Camera* camera) {
 	_camera = camera;
 }
 SceneObjects::~SceneObjects() {
+	audio->Finalize();
+	delete wallMD;
+	delete skydome_M;
+	delete floorGroundMD;
 }
 void SceneObjects::Initialize() {
 	ShowCursor(false);
@@ -105,6 +109,17 @@ void SceneObjects::Initialize() {
 			spriteCommon_->LoadTexture(56, "NEXT2.png");
 
 		}
+		// スプライトロード  60~ // シーン用
+		{
+			spriteCommon_->LoadTexture(60, "TYU_WASD.png");
+			spriteCommon_->LoadTexture(61, "TYU_SHOT.png");
+			spriteCommon_->LoadTexture(62, "TYU_SLOW.png");
+			spriteCommon_->LoadTexture(63, "TYU_DASH.png");
+			spriteCommon_->LoadTexture(64, "TYU_WPCH.png");
+			//spriteCommon_->LoadTexture(65, "NEXT.png");
+			//spriteCommon_->LoadTexture(66, "NEXT2.png");
+
+		}
 	}
 
 	mouseCursor_ = std::make_unique<Cursor>();
@@ -112,9 +127,9 @@ void SceneObjects::Initialize() {
 
 	// fbx テスト
 	{
-		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("boss_prot4"));
+		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Fbx_Rex"));
 		bossFbxO_ = std::make_unique<FBXObject3d>();
-		bossFbxO_->SetCamera(_camera);
+		//bossFbxO_->SetCamera(_camera);
 		bossFbxO_->Initialize();
 		bossFbxO_->SetModel(bossFbxM_.get());
 		bossFbxO_->SetPosition({ 0,0,0 });
@@ -141,7 +156,8 @@ void SceneObjects::Initialize() {
 		floorGround->Initialize(floorGroundMD);
 	}
 	skydome_O = std::make_unique<Object3d>();
-	skydome_O->SetModel(Model::LoadFromOBJ("skydome"));
+	skydome_M = Model::LoadFromOBJ("skydome");
+	skydome_O->SetModel(skydome_M);
 	skydome_O->Initialize();
 	skydome_O->wtf.scale = Vector3(10000.0f, 10000.0f, 10000.0f);
 
@@ -466,4 +482,89 @@ void SceneObjects::UIDraw()
 	UIHPBaseSP_->Draw();
 	UIHPSP_->Draw();
 	UIPauseSP_->Draw();
+}
+
+void SceneObjects::SetingLevel(LevelData* data)
+{
+	for (auto& objectData : data->JsonObjects) {
+
+		if (objectData.fileName == "enemy") {
+			std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
+			if (objectData.weapon == "ASSAULT") {
+				newEnemy->SetWeaponNum(WP_ASSAULT);
+			}if (objectData.weapon == "SHOTGUN") {
+				newEnemy->SetWeaponNum(WP_SHOTGUN);
+			}if (objectData.weapon == "BOMFIRE") {
+				newEnemy->SetWeaponNum(WP_BOMFIRE);
+			}
+			newEnemy->Initialize();
+			//座標
+			Vector3 pos;
+			pos = objectData.translation;
+			newEnemy->object_->wtf.position = pos;
+			//回転
+			Vector3 rot;
+			rot = objectData.rotation;
+			newEnemy->object_->wtf.rotation = rot;
+			newEnemy->SetRestRotate(rot);
+			//拡縮
+			Vector3 sca;
+			sca = objectData.scaling;
+			newEnemy->object_->wtf.scale = sca;
+			//newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
+			enemys.emplace_back(std::move(newEnemy));
+		}
+		if (objectData.fileName == "wall") {
+			std::unique_ptr<Wall> newWall = std::make_unique<Wall>();
+			newWall->Initialize(wallMD);
+			//座標
+			Vector3 pos;
+			pos = objectData.translation;
+			newWall->object_->wtf.position = pos;
+			//回転
+			Vector3 rot;
+			rot = objectData.rotation;
+			newWall->object_->wtf.rotation = rot;
+			//拡縮
+			Vector3 sca;
+			sca = objectData.scaling;
+			newWall->object_->wtf.scale = sca;
+			newWall->object_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+			newWall->object_->Update();
+			newWall->CollideInitialize();
+			walls.emplace_back(std::move(newWall));
+		}
+		if (objectData.fileName == "boss") {
+			std::unique_ptr<Boss> newBoss = std::make_unique<Boss>();
+			if (objectData.weapon == "ASSAULT") {
+				newBoss->SetWeaponNum(WP_ASSAULT);
+			}if (objectData.weapon == "SHOTGUN") {
+				newBoss->SetWeaponNum(WP_SHOTGUN);
+			}if (objectData.weapon == "BOMFIRE") {
+				newBoss->SetWeaponNum(WP_BOMFIRE);
+			}
+			newBoss->SetFBXModel(bossFbxM_.get());
+			newBoss->Initialize();
+			//座標
+			Vector3 pos;
+			pos = objectData.translation;
+			newBoss->object_->wtf.position = pos;
+			//回転
+			Vector3 rot;
+			rot = objectData.rotation;
+			newBoss->object_->wtf.rotation = rot;
+			newBoss->SetRestRotate(rot);
+			//拡縮
+			Vector3 sca;
+			sca = objectData.scaling;
+			newBoss->object_->wtf.scale = sca;
+			//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
+			boss.emplace_back(std::move(newBoss));
+		}
+		if (objectData.fileName == "player") {
+			Vector3 position = objectData.translation;
+			player->SetPos(position);
+		}
+
+	}
 }

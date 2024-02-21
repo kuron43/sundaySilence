@@ -27,6 +27,7 @@ GameScene::~GameScene() {
 	delete spriteCommon;
 	delete camera;
 	delete sceneManager;
+	CollisionManager::GetInstance()->Finalize();
 }
 
 /// <summary>
@@ -41,8 +42,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	input_ = input;
 
 	collisionManager_ = CollisionManager::GetInstance();
-	//bulletManager_ = BulletManager::GetInstance();
-	//particleManager_ = ParticleManager::GetInstance()->Create();
 
 	//FBX
 	// デバイスをセット

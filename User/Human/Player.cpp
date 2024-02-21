@@ -9,20 +9,34 @@ Player::Player() {
 
 }
 Player::~Player() {
+	delete ray;
 	delete model_;
 	delete reticleMD_;
+	delete reticleXMD_;
+	delete colPosTesM_;
 	delete pointDash_;
 	delete weapon_[0];
+	delete weapon_[1];
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
+		delete coliderPosTest_[i];
 	}
+	delete object_;
+	delete reticle;
+	for (uint32_t i = NUMBER::NUM_ZERO; i < NUMBER::NUM_FOUR; i++)
+	{
+		delete phantom_[i];
+	}
+
 }
 
 ///
 void Player::Initialize() {
 	model_ = Model::LoadFromOBJ("player");
 	reticleMD_ = Model::LoadFromOBJ("cursor");
+	reticleXMD_ = Model::LoadFromOBJ("cursolX");
+	colPosTesM_ = Model::LoadFromOBJ("sphere");
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -34,17 +48,35 @@ void Player::Initialize() {
 
 	weapon_[WP_ASSAULT] = new Assault();
 	weapon_[WP_SHOTGUN] = new Shotgun();
+	//weapon_[WP_SHOTGUN] = new BomFire();
 	weapon_[WP_ASSAULT]->Initialize();
 	weapon_[WP_SHOTGUN]->Initialize();
-	useWeapon_ = WP_ASSAULT;
+	useWeapon_ = WP_SHOTGUN;
 
 	pointDash_ = new PointDash();
 	pointDash_->Initialize();
 	pointDash_->points.resize(pointDash_->MAX_POINTNUM);
 
+	for (uint32_t i = NUMBER::NUM_ZERO; i < NUMBER::NUM_FOUR; i++)
+	{
+		phantom_[i] = Object3d::Create();
+	}
+	//phantomAlpha_[0] = 1.0f;
+	for (uint32_t i = NUMBER::NUM_ZERO; i < NUMBER::NUM_FOUR; i++)
+	{
+		phantomAlpha_[i] = 0.2f;
+	}
+	for (uint32_t i = NUMBER::NUM_ZERO; i < NUMBER::NUM_FOUR; i++)
+	{
+		phantom_[i]->SetModel(model_);
+		phantom_[i]->Initialize();
+		phantom_[i]->SetColor(Vector4(0.8f, 0.8f, 0.8f, phantomAlpha_[i]));
+	}
+
 	hp_ = MAX_HP;
 
 	//当たり判定用
+	coolTimeFB_ = 0;
 	sphere.resize(SPHERE_COLISSION_NUM);
 	spherePos.resize(SPHERE_COLISSION_NUM);
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
@@ -61,7 +93,7 @@ void Player::Initialize() {
 		sphere[i]->SetAttribute(COLLISION_ATTR_PLAYER);
 		//test
 		coliderPosTest_[i] = Object3d::Create();
-		coliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
+		coliderPosTest_[i]->SetModel(colPosTesM_);
 		coliderPosTest_[i]->wtf.position = (sphere[i]->center);
 		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
@@ -79,15 +111,22 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 	Vector2 mousepos = input->GetMousePosition();
 	object_->wtf.position.y = NONE;
-	reticle->wtf.position += { mousepos.x * mouseSensitivity_,NONE,mousepos.y * mouseSensitivity_ };
+	reticle->wtf.position = { mousepos.x* mouseSensitivity_, NONE, mousepos.y* mouseSensitivity_ };
 	reticle->Update();
+	// 武器の切り替え処理
 	if (input->KeyboardTrigger(DIK_E)) {
-		useWeapon_ = WP_SHOTGUN;
+		if (useWeapon_ == WP_SHOTGUN) {
+			useWeapon_ = WP_ASSAULT;
+		}
+		else if (useWeapon_ == WP_ASSAULT) {
+			useWeapon_ = WP_SHOTGUN;
+		}
+		else {
+
+		}
 	}
-	if (input->KeyboardTrigger(DIK_Q)) {
-		useWeapon_ = WP_ASSAULT;
-	}
-	if (input->MouseButtonPush(0) && !isTitle && _isSlow == false) {
+	// 弾発射
+	if (input->MouseButtonPush(LEFT_MOUSE) && !isTitle && _isSlow == false) {
 		weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
 		isOnFire = true;
 	}
@@ -98,11 +137,23 @@ void Player::Update(Input* input, bool isTitle) {
 		weapon_[i]->Update(input, _isSlow);
 	}
 
-	if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
-		if (input->MouseButtonTrigger(LEFT_MOUSE) && !nowTitle && _isSlow == true) {
-			pointDash_->SetPoint(reticle->wtf.position, input);
-			nowSetPoint = true;
+	if (_isSlow == true) {
+		if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
+			if (input->MouseButtonTrigger(LEFT_MOUSE) && !nowTitle) {
+				pointDash_->SetPoint(reticle->wtf.position, input);
+				nowSetPoint = true;
+			}
+			reticle->SetModel(reticleMD_);
+			reticle->wtf.rotation.y += 0.05f;
 		}
+		else {
+			reticle->SetModel(reticleXMD_);
+			reticle->wtf.rotation.y = NONE;
+		}
+	}
+	else {
+		reticle->SetModel(reticleMD_);
+		reticle->wtf.rotation.y = NONE;
 	}
 	//object_->camera_->SetFocalLengs(pointDash_->F_lengs);
 
@@ -112,7 +163,7 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 
 
-
+	PhantomUpdate();
 	ColisionUpdate();
 	HitMyColor();
 	object_->Update();
@@ -121,6 +172,7 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::Text("window W :%d", WinApp::window_width);
 	ImGui::Text("window H :%d", WinApp::window_height);
 	ImGui::Text("Palams");
+	ImGui::Text("ph:%d", countPH_);
 	ImGui::InputFloat3("Position", &object_->wtf.position.x);
 	ImGui::Text("PointDash");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
@@ -135,6 +187,12 @@ void Player::Update(Input* input, bool isTitle) {
 void Player::Draw(DirectXCommon* dxCommon) {
 	pointDash_->Draw(dxCommon);
 	Object3d::PreDraw(dxCommon->GetCommandList());
+	for (uint32_t i = 0; i < 4; i++)
+	{
+		if (isPhantom_) {
+			phantom_[i]->Draw();
+		}
+	}
 	object_->Draw();
 	if (!nowTitle) {
 		reticle->Draw();
@@ -239,11 +297,11 @@ void Player::FaceAngleUpdate()
 void Player::HitMyColor()
 {
 	if (isHitEffect == true) {
-		object_->SetColor({ 1,0,0,1.0f });
+		object_->SetColor({ NUM_ONE,NUM_ZERO,NUM_ZERO,NUM_ONE });
 		hitTime_++;
 		if (hitTime_ >= MAX_HITTIME) {
 			isHitEffect = false;
-			hitTime_ = 0;
+			hitTime_ = NUMBER::NUM_ZERO;
 		}
 	}
 	else {
@@ -258,9 +316,17 @@ void Player::ColisionUpdate() {
 	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true) {
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
-				OnColision();
+				OnColision(true);
+			}
+			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIESFIRE) {
+				if (coolTimeFB_ <= NUM_ZERO) {
+					OnColision(false);
+				}
 			}
 		}
+	}
+	if (coolTimeFB_ > NUM_ZERO) {
+		coolTimeFB_--;
 	}
 
 	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
@@ -289,7 +355,7 @@ void Player::ColisionUpdate() {
 				float cos = rejectDir.dot(up);
 
 				// 地面判定しきい値
-				const float threshold = cosf(Affin::radConvert(30.0f));
+				const float threshold = cosf(Affin::radConvert(NUM_THIRTY));
 				// 角度差によって天井または地面と判定される場合を除いて
 				if (-threshold < cos && cos < threshold) {
 					// 球を排斥 （押し出す）
@@ -311,7 +377,7 @@ void Player::ColisionUpdate() {
 		//クエリーコールバックの関数オブジェクト
 		for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 			PlayerQueryCallback callback(sphere[i]);
-			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback);
+			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback, COLLISION_ATTR_BARRIEROBJECT);
 			object_->wtf.position.x += callback.move.x;
 			object_->wtf.position.y += callback.move.y;
 			object_->wtf.position.z += callback.move.z;
@@ -322,12 +388,54 @@ void Player::ColisionUpdate() {
 	}
 }
 
-void Player::OnColision()
+void Player::OnColision(bool bullet)
 {
-	hp_--;
-	hit_++;
-	isHitEffect = true;
+	if (bullet) {
+		hp_--;
+		hit_++;
+		isHitEffect = true;
+	}
+	if (bullet == false) {
+		hp_ -= NUM_TWO;
+		coolTimeFB_ = NUM_THIRTY;
+		hit_++;
+		isHitEffect = true;
+	}
 	if (hp_ <= NONE) {
 		isDeath_ = true;
+	}
+}
+
+void Player::PhantomUpdate()
+{
+	isPhantom_ = false;
+	isPhantom_ = pointDash_->isActive;
+	if (isPhantom_)
+	{
+		countPH_++;
+		if (countPH_ == NUM_ONE) {
+			phantom_[NUM_ZERO]->wtf = object_->wtf;
+		}
+		if (countPH_ == NUM_THREE) {
+			phantom_[NUM_ONE]->wtf = object_->wtf;
+		}
+		if (countPH_ == NUM_SIX) {
+			phantom_[NUM_TWO]->wtf = object_->wtf;
+		}
+		if (countPH_ == NUM_NINE) {
+			phantom_[NUM_THREE]->wtf = object_->wtf;
+		}
+		if (countPH_ > NUM_TEN) {
+			countPH_ = NUM_ZERO;
+		}
+	}
+	else {
+		for (uint32_t i = NUM_ZERO; i < NUM_FOUR; i++) {
+			phantom_[i]->wtf = object_->wtf;
+		}
+	}
+
+	for (uint32_t i = NUM_ZERO; i < NUM_FOUR; i++) {
+		phantom_[i]->Update();
 	}
 }

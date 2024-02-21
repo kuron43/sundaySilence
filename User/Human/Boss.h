@@ -5,6 +5,7 @@
  */
 #include "Human.h"
 #include "Weaponlist.h"
+#include "BossManager.h"
 
 class Boss :
 	public Human
@@ -33,6 +34,8 @@ public:
 	void SetReticle(Vector3 ret) { reticle->wtf.position = ret; }
 	void SetRestRotate(Vector3 rot) { restRotate_ = rot; }
 
+	void SetFBXModel(FBXModel* model) { bossFbxM_ = model; }
+
 	// 種族番号取得
 	uint32_t HowTribe() { return Tribe_; }
 	bool HowDead() { return isDead; }
@@ -49,22 +52,30 @@ private:
 	void HitMyColor();
 public:
 	Object3d* object_;
-private:
-	const uint32_t Tribe_ = 1;
+	FBXModel* bossFbxM_;
+	std::unique_ptr<FBXObject3d> bossFbxO_;
+	Weapon* weapon_;
+
+//private:
+	uint32_t debugNum_ = 0;
+	const uint32_t Tribe_ = HU_BOSS;
 	uint32_t useWeapon_ = WP_ASSAULT;
+	bool isWeaponOn = true;
 	bool isFound = false;
 	bool isFire = false;
+	bool isFireOld = false;
 	bool isBlocked = false;
 
+	bool isDead = false;
 
 	Model* model_;
 	Model* modelCol_;
 	Object3d* reticle;
 
 	Vector3 frontVec_;
-	bool isDead = false;
 	uint32_t hp = 10;
 
+	std::unique_ptr<BossManager> manager_;
 
 	//移動速度
 	const float kMoveSpeed_ = 0.5f;
@@ -75,8 +86,7 @@ private:
 	Vector3 restRotate_;
 
 
-	Weapon* weapon_;
-	bool isWeaponOn = true;
+
 
 	// タイトル用の処理と切り分けるためのやつ
 	bool nowTitle = false;

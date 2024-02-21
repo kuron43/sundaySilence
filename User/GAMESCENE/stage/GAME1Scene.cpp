@@ -11,15 +11,6 @@ GAME1Scene::GAME1Scene(SceneManager* controller, SceneObjects* objects) {
 }
 
 GAME1Scene::~GAME1Scene() {
-	for (Wall* walls : _objects->walls) {
-		walls->Reset();
-	}
-	for (Enemy* enemy : _objects->enemys) {
-		enemy->Reset();
-	}
-	for (Boss* boss : _objects->boss) {
-		boss->Reset();
-	}
 	BulletManager::GetInstance()->AllClearBullet();
 	_objects->walls.clear();
 	_objects->enemys.clear();
@@ -39,86 +30,27 @@ void GAME1Scene::Initialize() {
 	startTime_ = true;
 	stageClear = false;
 	stageFailed = false;
+
+	//
+	infoSP_ = std::make_unique<Sprite>();
+	infoSP_->Initialize(_objects->spriteCommon_.get(), 60);
+	infoSP_->SetSize({ 300,150 });
+	infoSP_->SetPozition({ (WinApp::window_width / 1.5f) - 150,WinApp::window_height - 200 });
+	isDrawSP_ = true;
+	infoNum_ = 60;
+	nowInfoNum_ = 0;
+
+	isInfoWASD = false;
+	isInfoSHOT = false;
+	isInfoSLOW = false;
+	isInfoDUSH = false;
+	isInfoWEPC = false;
+	isAllFalse = true;
+	isTimeCount = false;
 	// Json
 	{
 		leveData = JsonLoader::LoadJsonFile("stageDEMO");
-
-		for (auto& objectData : leveData->JsonObjects) {
-
-			if (objectData.fileName == "enemy") {
-				Enemy* newEnemy = new Enemy();
-				if (objectData.weapon == "ASSAULT") {
-					newEnemy->SetWeaponNum(WP_ASSAULT);
-				}if (objectData.weapon == "SHOTGUN") {
-					newEnemy->SetWeaponNum(WP_SHOTGUN);
-				}
-				newEnemy->Initialize();
-				//座標
-				Vector3 pos;
-				pos = objectData.translation;
-				newEnemy->object_->wtf.position = pos;
-				//回転
-				Vector3 rot;
-				rot = objectData.rotation;
-				newEnemy->object_->wtf.rotation = rot;
-				newEnemy->SetRestRotate(rot);
-				//拡縮
-				Vector3 sca;
-				sca = objectData.scaling;
-				newEnemy->object_->wtf.scale = sca;
-				//newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
-				_objects->enemys.emplace_back(newEnemy);
-			}
-			if (objectData.fileName == "wall") {
-				Wall* newWall = new Wall();
-				newWall->Initialize(_objects->wallMD);
-				//座標
-				Vector3 pos;
-				pos = objectData.translation;
-				newWall->object_->wtf.position = pos;
-				//回転
-				Vector3 rot;
-				rot = objectData.rotation;
-				newWall->object_->wtf.rotation = rot;
-				//拡縮
-				Vector3 sca;
-				sca = objectData.scaling;
-				newWall->object_->wtf.scale = sca;
-				newWall->object_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-				newWall->object_->Update();
-				newWall->CollideInitialize();
-				_objects->walls.emplace_back(newWall);
-			}
-			if (objectData.fileName == "boss") {
-				Boss* newBoss = new Boss();
-				newBoss->Initialize();
-				if (objectData.weapon == "ASSAULT") {
-					newBoss->SetWeaponNum(WP_ASSAULT);
-				}if (objectData.weapon == "SHOTGUN") {
-					newBoss->SetWeaponNum(WP_SHOTGUN);
-				}
-				//座標
-				Vector3 pos;
-				pos = objectData.translation;
-				newBoss->object_->wtf.position = pos;
-				//回転
-				Vector3 rot;
-				rot = objectData.rotation;
-				newBoss->object_->wtf.rotation = rot;
-				newBoss->SetRestRotate(rot);
-				//拡縮
-				Vector3 sca;
-				sca = objectData.scaling;
-				newBoss->object_->wtf.scale = sca;
-				//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
-				_objects->boss.emplace_back(newBoss);
-			}
-			if (objectData.fileName == "player") {
-				Vector3 position = objectData.translation;
-				_objects->player->SetPos(position);
-			}
-
-		}
+		_objects->SetingLevel(leveData);	
 
 	}
 
@@ -130,21 +62,21 @@ void GAME1Scene::Initialize() {
 		_objects->floorGround->Update();
 
 		BulletManager::GetInstance()->Update();
-		for (Enemy* enemy : _objects->enemys) {
+		for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			enemy->Update();
 			if (!enemy->HowDead()) {
 				_objects->eneCount++;
 			}
 		}
-		for (Boss* boss : _objects->boss) {
+		for (std::unique_ptr <Boss>& boss : _objects->boss) {
 			boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			boss->Update();
 			if (!boss->HowDead()) {
 				_objects->bossCount++;
 			}
 		}
-		for (Wall* walls : _objects->walls) {
+		for (std::unique_ptr < Wall>& walls : _objects->walls) {
 			walls->Update();
 		}
 	}
@@ -181,21 +113,21 @@ void GAME1Scene::Update(Input* input) {
 
 		BulletManager::GetInstance()->Update();
 
-		for (Enemy* enemy : _objects->enemys) {
+		for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
-			enemy->Update(input);
+			enemy->Update();
 			if (!enemy->HowDead()) {
 				_objects->eneCount++;
 			}
 		}
-		for (Boss* boss : _objects->boss) {
+		for (std::unique_ptr <Boss>& boss : _objects->boss) {
 			boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
-			boss->Update(input);
+			boss->Update();
 			if (!boss->HowDead()) {
 				_objects->bossCount++;
 			}
 		}
-		for (Wall* walls : _objects->walls) {
+		for (std::unique_ptr < Wall>& walls : _objects->walls) {
 			walls->Update();
 		}
 
@@ -207,6 +139,69 @@ void GAME1Scene::Update(Input* input) {
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
 			stageClear = true;
 		}
+
+		if ((input->KeyboardPush(DIK_W) || input->KeyboardPush(DIK_A) || input->KeyboardPush(DIK_S) || input->KeyboardPush(DIK_D))&&nowInfoNum_ == 0) {
+			isInfoWASD = true;
+			isTimeCount = true;
+		}
+		if ((input->MouseButtonPush(0) && !input->MouseButtonPush(1))&& nowInfoNum_ == 1) {
+			isInfoSHOT = true;
+			isTimeCount = true;
+		}
+		if ((!input->MouseButtonPush(0) && input->MouseButtonPush(1))&& nowInfoNum_ == 2) {
+			isInfoSLOW = true;
+			isTimeCount = true;
+		}
+		if ((input->MouseButtonPush(0) && input->MouseButtonPush(1))&& nowInfoNum_ == 3) {
+			isInfoDUSH = true;
+			isTimeCount = true;
+		}
+		if ((input->KeyboardPush(DIK_E))&& nowInfoNum_ == 4) {
+			isInfoWEPC = true;
+			isTimeCount = true;
+
+		}
+		if (isTimeCount) {
+			infoCountTime_++;
+		}
+		if (isInfoWASD == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 1;
+			infoNum_ = 61;
+			isInfoWASD = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
+		}
+		if (isInfoSHOT == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 2;
+			infoNum_ = 62;
+			isInfoSHOT = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
+		}
+		if (isInfoSLOW == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 3;
+			infoNum_ = 63;
+			isInfoSLOW = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
+		}
+		if (isInfoDUSH == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 4;
+			infoNum_ = 64;
+			isInfoDUSH = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
+		}
+		if (isInfoWEPC == true && infoCountTime_ >= 150) {
+			nowInfoNum_ = 0;
+			infoNum_ = 60;
+			isInfoWEPC = false;
+			isDrawSP_ = false;
+			isTimeCount = false;
+			infoCountTime_ = 0;
+		}
+
+		infoSP_->SetTextureIndex(infoNum_);
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
 		stageFailed = _objects->Banner(1);
@@ -225,13 +220,13 @@ void GAME1Scene::Update(Input* input) {
 
 void GAME1Scene::Draw() {
 	_objects->floorGround->Draw(_controller->_dxCommon);
-	for (Enemy* enemy : _objects->enemys) {
+	for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 		enemy->Draw(_controller->_dxCommon);
 	}
-	for (Boss* boss : _objects->boss) {
+	for (std::unique_ptr <Boss>& boss : _objects->boss) {
 		boss->Draw(_controller->_dxCommon);
 	}
-	for (Wall* walls : _objects->walls) {
+	for (std::unique_ptr <Wall>& walls : _objects->walls) {
 		walls->Draw(_controller->_dxCommon);
 	}
 	//_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
@@ -247,6 +242,9 @@ void GAME1Scene::Draw() {
 	_objects->SlowEffectDraw();
 	_objects->plDamageRed_->Draw();
 	_objects->UIDraw();
+	if (startTime_ == false && stageClear == false && stageFailed == false && isDrawSP_ == true) {
+		infoSP_->Draw();
+	}
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();
 	}

@@ -12,22 +12,36 @@ Boss::~Boss() {
 	delete modelCol_;
 	delete weapon_;
 	delete rayHit;
+	//delete bossFbxM_;
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
-
+		delete coliderPosTest_[i];
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
+	delete object_;
+	delete reticle;
 }
 
 ///
 void Boss::Initialize() {
+	isBlocked = false;
 	isFound = false;
+	isFire = false;
 	isDead = false;
 	nowTitle = false;
 	model_ = Model::LoadFromOBJ("REX");
 	modelCol_ = Model::LoadFromOBJ("sphere");
+
+	bossFbxO_ = std::make_unique<FBXObject3d>();
+	//bossFbxO_->SetCamera(_camera);
+	bossFbxO_->Initialize();
+	bossFbxO_->SetModel(bossFbxM_);
+	bossFbxO_->SetPosition({ 0,0,0 });
+	bossFbxO_->SetScale({ 0.8f,0.8f,0.8f });
+	bossFbxO_->PlayAnimation(0);
+	bossFbxO_->AnimIsRotateChange();
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -41,8 +55,12 @@ void Boss::Initialize() {
 	if (useWeapon_ == WP_SHOTGUN) {
 		weapon_ = new Shotgun();
 	}
-	else {
+	else if (useWeapon_ == WP_ASSAULT) {
 		weapon_ = new Assault();
+	}
+	else if (useWeapon_ == WP_BOMFIRE)
+	{
+		weapon_ = new BomFire();
 	}
 	weapon_->Initialize();
 
@@ -52,6 +70,9 @@ void Boss::Initialize() {
 	particle_->Update();
 	onPatTime_ = 0;
 	onPat_ = false;
+
+	manager_ = std::make_unique<BossManager>();
+	manager_->SetBoss(this);
 
 	//当たり判定用
 	SPHERE_COLISSION_NUM = 1;
@@ -95,16 +116,36 @@ void Boss::Update(Input* input, bool isTitle) {
 	object_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
 	nowTitle = false;
 	nowTitle = !isTitle;
+	if (Input::get_instance().KeyboardPush(DIK_1)) {
+		debugNum_ = 0;
+	}
+	if (Input::get_instance().KeyboardPush(DIK_2)) {
+		debugNum_ = 1;
+	}
+	if (Input::get_instance().KeyboardPush(DIK_3)) {
+		debugNum_ = 2;
+	}
+
+	manager_->Update(debugNum_);
 
 	HitMyColor();
 	object_->Update();
 	reticle->Update();
+	bossFbxO_->SetPosition(object_->wtf.position);
+	bossFbxO_->Update();
 
 	//particle_->SetTransform(object_->wtf);
 	particle_->Update();
 
-	if (isFire == true && isDead == false) {
-		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
+	if (isFire == true && isDead == false) {		
+		bossFbxO_->AnimRotStop();
+		bossFbxO_->PlayAnimation(3);
+		isFireOld = true;
+		weapon_->Shot(object_->wtf, reticle->wtf, Team::ENEMY);
+	}
+	if(isFireOld == true && isFire == true && isDead == false) {
+		bossFbxO_->AnimRotStop();
+		bossFbxO_->PlayAnimation(4);
 	}
 	weapon_->Update(input, _isSlow);
 
@@ -117,8 +158,9 @@ void Boss::Update(Input* input, bool isTitle) {
 void Boss::Draw(DirectXCommon* dxCommon) {
 
 	if (isDead == false) {
+		bossFbxO_->Draw(dxCommon->GetCommandList());
 		Object3d::PreDraw(dxCommon->GetCommandList());
-		object_->Draw();
+		//object_->Draw();
 		if (nowTitle) {
 			//reticle->Draw();
 		}
@@ -135,16 +177,7 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 
 /// リセットを行う
 void Boss::Reset() {
-	delete model_;
-	delete weapon_;
-	delete rayHit;
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
-		delete sphere[i];
 
-	}
-	CollisionManager::GetInstance()->RemoveCollider(ray);
-	delete ray;
 }
 
 /// 武器の番号セット
@@ -172,6 +205,7 @@ void Boss::FrontFace() {
 	}
 
 	object_->wtf.rotation = frontVec_;
+	bossFbxO_->wtf.rotation = frontVec_;
 }
 
 void Boss::ColiderUpdate() {
@@ -179,6 +213,7 @@ void Boss::ColiderUpdate() {
 	isBlocked = false;
 	isFound = false;
 	isFire = false;
+	isFireOld = false;
 
 	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
 	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
@@ -199,18 +234,68 @@ void Boss::ColiderUpdate() {
 		sphere[i]->Update();
 		coliderPosTest_[i]->Update();
 	}
-	ray->Update();
+	// クエリーコールバッククラス
+	{
+		class BossQueryCallback :public QueryCallback
+		{
+		public:
+			BossQueryCallback(Sphere* sphere) :sphereQ(sphere) {};
+			// 衝突時コールバック
+			bool OnQueryHit(const QueryHit& info) {
+				// ワールドの上方向
+				const Vector3 up = { 0,1,0 };
+				// 排斥方向			
+				Vector3 rejectDir = info.reject;
+				rejectDir.nomalize();
+				// 上方向と排斥方向の角度差のコサイン値
+				float cos = rejectDir.dot(up);
 
-	isFound = false;
-	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
-		isFound = true;
-		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			isFound = false;
-			isBlocked = true;
+				// 地面判定しきい値
+				const float threshold = cosf(Affin::radConvert(NUM_THIRTY));
+				// 角度差によって天井または地面と判定される場合を除いて
+				if (-threshold < cos && cos < threshold) {
+					// 球を排斥 （押し出す）
+					sphereQ->center += info.reject;
+					move += info.reject;
+					colider_ = info.coloder;
+				}
+				return true;
+			}
+
+			// クエリーに使用する球
+			Sphere* sphereQ = nullptr;
+			// 排斥による移動量
+			Vector3 move = {};
+			// 衝突相手のコライダー
+			BaseCollider* colider_ = nullptr;
+		};
+
+		//クエリーコールバックの関数オブジェクト
+		for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
+			BossQueryCallback callback(sphere[i]);
+			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback, COLLISION_ATTR_BARRIEROBJECT);
+			object_->wtf.position.x += callback.move.x;
+			object_->wtf.position.y += callback.move.y;
+			object_->wtf.position.z += callback.move.z;
+
+			object_->UpdateMatrix();
+			sphere[i]->Update();
 		}
 	}
-	if (isBlocked == false && isFound == true) {
-		isFire = true;
+	// レイ関係
+	{
+		ray->Update();
+		isFound = false;
+		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_PLAYER, rayHit)) {
+			isFound = true;
+			if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+				isFound = false;
+				isBlocked = true;
+			}
+		}
+		if (isBlocked == false && isFound == true) {
+			isFire = true;
+		}
 	}
 	if (isDead) {
 		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {

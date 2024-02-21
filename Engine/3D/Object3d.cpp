@@ -40,7 +40,11 @@ Object3d::Object3d() {
 
 }
 Object3d::~Object3d() {
-	delete model_;
+
+	if (model_)
+	{
+		model_ = nullptr;
+	}
 }
 
 void Object3d::StaticInitialize(ID3D12Device* device)

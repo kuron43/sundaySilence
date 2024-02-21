@@ -40,18 +40,10 @@ void PauseScene::Update(Input* input) {
 
 	pauseGoBuck_->Update();
 	titleButton_->Update();
-	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
-		if (input->MouseButtonTrigger(0)) {
 
-			for (Wall* walls : _objects->walls) {
-				walls->Reset();
-			}
-			for (Enemy* enemy : _objects->enemys) {
-				enemy->Reset();
-			}
-			for (Boss* boss : _objects->boss) {
-				boss->Reset();
-			}
+	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
+
+		if (input->MouseButtonTrigger(0)) {
 			BulletManager::GetInstance()->AllClearBullet();
 			_objects->walls.clear();
 			_objects->enemys.clear();
@@ -77,13 +69,13 @@ void PauseScene::Update(Input* input) {
 void PauseScene::Draw() {
 	_objects->floorGround->Draw(_controller->_dxCommon);
 	_objects->player->Draw(_controller->_dxCommon);
-	for (Enemy* enemy : _objects->enemys) {
+	for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 		enemy->Draw(_controller->_dxCommon);
 	}
-	for (Boss* boss : _objects->boss) {
+	for (std::unique_ptr <Boss>& boss : _objects->boss) {
 		boss->Draw(_controller->_dxCommon);
 	}
-	for (Wall* walls : _objects->walls) {
+	for (std::unique_ptr <Wall>& walls : _objects->walls) {
 		walls->Draw(_controller->_dxCommon);
 	}
 

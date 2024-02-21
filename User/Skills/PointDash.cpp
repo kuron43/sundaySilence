@@ -13,6 +13,10 @@ PointDash::~PointDash()
 	delete ray;
 	delete rayHit;
 	delete model_;
+	for (uint32_t i = 0; i < 5; i++) {
+		delete object_[i];
+	}
+	points.clear();
 }
 
 void PointDash::Initialize()
@@ -249,7 +253,7 @@ void PointDash::GoToPoint() {
 		// パーティクルなぜかXそのままYZ入れ替えると治る
 		Vector3 patPos = { resultVec.x,resultVec.z,resultVec.y };
 		if (onPat_) {
-			particle_->RandParticle(25, patPos, inversVec3);
+			//particle_->RandParticle(25, patPos, inversVec3);
 		}
 		onPat_ = false;
 	}
