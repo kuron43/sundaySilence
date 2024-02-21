@@ -11,6 +11,9 @@ SceneObjects::SceneObjects(DirectXCommon* DXCommon, Camera* camera) {
 }
 SceneObjects::~SceneObjects() {
 	audio->Finalize();
+	enemys.clear();
+	walls.clear();
+	boss.clear();
 	delete wallMD;
 	delete skydome_M;
 	delete floorGroundMD;

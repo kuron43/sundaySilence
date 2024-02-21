@@ -50,7 +50,7 @@ private:
 	bool moveEnd;
 
 	uint32_t time;
-	uint32_t easeMaxTime = 30;
+	uint32_t easeMaxTime = 40;
 	float easetime;
 	bool timeEnd = false;
 
@@ -74,6 +74,8 @@ public:
 	void GoToPoint();
 	// リセット
 	void Reset();
+
+	void DebugImGui();
 
 	//コライダー
 private:

@@ -166,11 +166,12 @@ public: // オブジェクトの管理
 
 	std::vector< std::unique_ptr<Enemy>> enemys;
 	uint32_t eneCount;
-	std::vector<std::unique_ptr<Boss>> boss;
+	std::list<std::unique_ptr<Boss>> boss;
 	uint32_t bossCount;
 
 	Model* wallMD;
-	std::vector< std::unique_ptr <Wall>> walls;
+	std::list< std::unique_ptr <Wall>> walls;
+	//std::vector< std::unique_ptr <Wall>> walls;
 
 	std::unique_ptr<Floor> floorGround;
 	Model* floorGroundMD;

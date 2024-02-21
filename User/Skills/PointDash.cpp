@@ -182,7 +182,7 @@ void PointDash::GoToPoint() {
 
 		easetime = (float)time / easeMaxTime;
 		if (nowPointNum == 0 && time <= easeMaxTime && registNum >= 1) {
-			resultVec = Easing::InOutQuintVec3(startPos, points[0], (float)easetime);
+			resultVec = Easing::OutQuintVec3(startPos, points[0], (float)easetime);
 			F_lengs = Easing::OutQuintFloat(30.0f, 10.0f, (float)easetime);
 			inversVec3 = startPos - points[0];
 			if (time == easeMaxTime - 1) {
@@ -196,7 +196,7 @@ void PointDash::GoToPoint() {
 			}
 		}
 		if (nowPointNum == 1 && time <= easeMaxTime && registNum >= 2) {
-			resultVec = Easing::InOutQuintVec3(points[0], points[1], (float)easetime);
+			resultVec = Easing::OutQuintVec3(points[0], points[1], (float)easetime);
 			inversVec3 = points[0] - points[1];
 			if (time == easeMaxTime - 1) {
 				resultVec = points[1];
@@ -210,7 +210,7 @@ void PointDash::GoToPoint() {
 			}
 		}
 		if (nowPointNum == 2 && time <= easeMaxTime && registNum >= 3) {
-			resultVec = Easing::InOutQuintVec3(points[1], points[2], (float)easetime);
+			resultVec = Easing::OutQuintVec3(points[1], points[2], (float)easetime);
 			inversVec3 = points[1] - points[2];
 			if (time == easeMaxTime - 1) {
 				resultVec = points[2];
@@ -224,7 +224,7 @@ void PointDash::GoToPoint() {
 			}
 		}
 		if (nowPointNum == 3 && time <= easeMaxTime && registNum >= 4) {
-			resultVec = Easing::InOutQuintVec3(points[2], points[3], (float)easetime);
+			resultVec = Easing::OutQuintVec3(points[2], points[3], (float)easetime);
 			inversVec3 = points[2] - points[3];
 			if (time == easeMaxTime - 1) {
 				resultVec = points[3];
@@ -238,7 +238,7 @@ void PointDash::GoToPoint() {
 			}
 		}
 		if (nowPointNum == 4 && time <= 60 && registNum == 5) {
-			resultVec = Easing::InOutQuintVec3(points[3], points[4], (float)easetime);
+			resultVec = Easing::OutQuintVec3(points[3], points[4], (float)easetime);
 			inversVec3 = points[3] - points[4];
 			if (time >= easeMaxTime - 1) {
 				resultVec = points[4];
@@ -281,4 +281,16 @@ void PointDash::Reset() {
 	easeSpeed = 0;
 	easetime = 0;
 	pointsMax = false;
+}
+
+void PointDash::DebugImGui()
+{
+	int maxtime = (int)easeMaxTime;
+	ImGui::Begin("PointDash");
+	ImGui::Text("VectorSize:%d", points.size());
+	ImGui::InputFloat3("Vec", &resultVec.x);
+	ImGui::InputFloat("speeed :%f", &easeSpeed);
+	ImGui::InputInt("Maxtime :%d", &maxtime);
+	ImGui::End();
+	easeMaxTime = (uint32_t)maxtime;
 }

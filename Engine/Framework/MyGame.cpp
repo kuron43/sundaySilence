@@ -75,9 +75,9 @@ void MyGame::Draw() {
 	// Imgui受付終了
 	imgui->End();
 #ifdef _DEBUG
+#endif
 	// Imgui描画
 	imgui->Draw();
-#endif
 	// 描画終了
 	dxCommon->PostDraw();
 

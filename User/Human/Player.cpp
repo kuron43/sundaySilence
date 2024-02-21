@@ -126,7 +126,7 @@ void Player::Update(Input* input, bool isTitle) {
 		}
 	}
 	// 弾発射
-	if (input->MouseButtonPush(LEFT_MOUSE) && !isTitle && _isSlow == false) {
+	if (input->KeyboardPush(DIK_SPACE) && !isTitle && _isSlow == false) {
 		weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
 		isOnFire = true;
 	}
@@ -167,6 +167,9 @@ void Player::Update(Input* input, bool isTitle) {
 	ColisionUpdate();
 	HitMyColor();
 	object_->Update();
+
+#ifdef _DEBUG
+	// Imgui
 	Vector4 skaliCol = object_->GetColor();
 	ImGui::Begin("player");
 	ImGui::Text("window W :%d", WinApp::window_width);
@@ -181,6 +184,8 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::InputFloat("spe :%f", &pointDash_->easeSpeed);
 	ImGui::End();
 
+	pointDash_->DebugImGui();
+#endif
 }
 
 ///
@@ -241,7 +246,6 @@ void Player::Move(Input* input) {
 		input->KeyboardPush(DIK_A) ||
 		input->KeyboardPush(DIK_S) ||
 		input->KeyboardPush(DIK_D)) {
-
 		if (input->KeyboardPush(DIK_W)) {
 			speed.z += kMoveSpeed_;
 		}
@@ -255,6 +259,7 @@ void Player::Move(Input* input) {
 			speed.x += kMoveSpeed_;
 		}
 	}
+	
 	//////////////////////////////////
 	if (input->MouseButtonPush(RIGHT_MOUSE)) {
 		_isSlow = true;
