@@ -45,27 +45,29 @@ void Cursor::CusUpdate(Input* input) {
 	mousepos_ = input->GetMousePosition();
 	//mousepos_.y *= -1;
 	if ((mousepos_.x + WinApp::window_width / 2) >= WinApp::window_width) {
-		mousepos_.x = (WinApp::window_width/2) - 1;
+		mousepos_.x = (WinApp::window_width / 2) - 1;
 	}
 	else if ((mousepos_.x - WinApp::window_width / 2) <= -WinApp::window_width) {
 		mousepos_.x = (-WinApp::window_width / 2);
 	}
-	if (mousepos_.y+(WinApp::window_height / 2) >= WinApp::window_height) {
-		mousepos_.y = (WinApp::window_height/2) - 1;
+	if (mousepos_.y + (WinApp::window_height / 2) >= WinApp::window_height) {
+		mousepos_.y = (WinApp::window_height / 2) - 1;
 	}
 	else if (mousepos_.y - (WinApp::window_height / 2) <= -WinApp::window_height) {
-		mousepos_.y = (-WinApp::window_height / 2)+1;
+		mousepos_.y = (-WinApp::window_height / 2) + 1;
 	}
 	cursorPicPos = { mousepos_.x + WinApp::window_width / 2,-mousepos_.y + WinApp::window_height / 2 };
 	cursorPic_->SetPozition(cursorPicPos);
 	spritePos_ = cursorPic_->GetPosition();
 
-
+#ifdef _DEBUG
+	// Imgui
 	ImGui::Begin("cursorPos");
 	ImGui::InputFloat2("spritePos", &spritePos_.x);
 	ImGui::InputFloat2("spritePos", &cursorPicPos.x);
 	ImGui::InputFloat2("mousePos", &mousepos_.x);
 	ImGui::End();
+#endif
 }
 
 // スプライトとの当たりはんちぇい

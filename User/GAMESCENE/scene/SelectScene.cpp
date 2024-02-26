@@ -28,8 +28,8 @@ void SelectScene::Initialize() {
 
 	stage1_ = std::make_unique<Sprite>();
 	stage1_->Initialize(_objects->spriteCommon_.get(), 20);
-	stage1_->SetSize({256,128});
-	stage1_->SetPozition({ (WinApp::window_width / 2)-128,WinApp::window_height - 200 });
+	stage1_->SetSize({ 256,128 });
+	stage1_->SetPozition({ (WinApp::window_width / 2) - 128,WinApp::window_height - 200 });
 
 	left_ = std::make_unique<Sprite>();
 	left_->Initialize(_objects->spriteCommon_.get(), 26);
@@ -52,10 +52,12 @@ void SelectScene::Update(Input* input) {
 	SelectSceneNum(input);
 	MoveScene();
 	SpriteColision();
-
+#ifdef _DEBUG
+	// Imgui
 	ImGui::Begin("SELECT NUM");
 	ImGui::Text("SelectNum : %d", selectNum);
 	ImGui::End();
+#endif
 }
 
 void SelectScene::Draw() {

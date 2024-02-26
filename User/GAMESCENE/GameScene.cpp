@@ -80,6 +80,14 @@ void GameScene::Update() {
 
 	collisionManager_->CheckAllCollisions();
 	camera->Update();
+#ifdef _DEBUG
+	// Imgui
+	float forcalL = camera->GetForcalLengs();
+	ImGui::Begin("ForcalLengs");
+	ImGui::SliderFloat("forcalLengs", &forcalL,0.01f,120.0f);
+	ImGui::End();
+	camera->SetFocalLengs(forcalL);
+#endif
 }
 
 /// <summary>

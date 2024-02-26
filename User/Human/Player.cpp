@@ -22,6 +22,8 @@ Player::~Player() {
 		delete sphere[i];
 		delete coliderPosTest_[i];
 	}
+	CollisionManager::GetInstance()->RemoveCollider(PL_Barrier);
+	delete PL_Barrier;
 	delete object_;
 	delete reticle;
 	for (uint32_t i = NUMBER::NUM_ZERO; i < NUMBER::NUM_FOUR; i++)
@@ -99,7 +101,21 @@ void Player::Initialize() {
 		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
 		coliderPosTest_[i]->Update();
 	}
-
+	PL_Barrier = new SphereCollider;
+	CollisionManager::GetInstance()->AddCollider(PL_Barrier);
+	BarrierPos_ = Affin::GetWorldTrans(object_->wtf.matWorld);
+	PL_Barrier->SetObject3d(object_);
+	PL_Barrier->SetBasisPos(&BarrierPos_);
+	PL_Barrier->SetRadius(5.0f);
+	PL_Barrier->Update();
+	PL_Barrier->SetAttribute(COLLISION_ATTR_PLAYERBARRIER);
+	//test
+	coliderBarrierPosTest_ = Object3d::Create();
+	coliderBarrierPosTest_->SetModel(colPosTesM_);
+	coliderBarrierPosTest_->wtf.position = (PL_Barrier->center);
+	coliderBarrierPosTest_->wtf.scale = Vector3(PL_Barrier->GetRadius(), PL_Barrier->GetRadius(), PL_Barrier->GetRadius());
+	coliderBarrierPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+	coliderBarrierPosTest_->Update();
 }
 
 ///
@@ -111,7 +127,7 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 	Vector2 mousepos = input->GetMousePosition();
 	object_->wtf.position.y = NONE;
-	reticle->wtf.position = { mousepos.x* mouseSensitivity_, NONE, mousepos.y* mouseSensitivity_ };
+	reticle->wtf.position = { mousepos.x * mouseSensitivity_, NONE, mousepos.y * mouseSensitivity_ };
 	reticle->Update();
 	// 武器の切り替え処理
 	if (input->KeyboardTrigger(DIK_E)) {
@@ -127,7 +143,7 @@ void Player::Update(Input* input, bool isTitle) {
 	}
 	// 弾発射
 	if (input->KeyboardPush(DIK_SPACE) && !isTitle && _isSlow == false) {
-		weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
+		//weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
 		isOnFire = true;
 	}
 	else {
@@ -202,13 +218,13 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	if (!nowTitle) {
 		reticle->Draw();
 	}
+#ifdef _DEBUG
 	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
-		//coliderPosTest_[i]->Draw();
+		coliderPosTest_[i]->Draw();
 	}
+	coliderBarrierPosTest_->Draw();
+#endif
 	Object3d::PostDraw();
-	/*if (!nowTitle) {
-		weapon_[useWeapon_]->Draw(dxCommon);
-	}*/
 }
 
 /// リセットを行う
@@ -259,7 +275,7 @@ void Player::Move(Input* input) {
 			speed.x += kMoveSpeed_;
 		}
 	}
-	
+
 	//////////////////////////////////
 	if (input->MouseButtonPush(RIGHT_MOUSE)) {
 		_isSlow = true;
@@ -333,7 +349,19 @@ void Player::ColisionUpdate() {
 	if (coolTimeFB_ > NUM_ZERO) {
 		coolTimeFB_--;
 	}
+	if (PL_Barrier->GetIsHit() == true) {
 
+	}
+	if (isOnFire == true) {
+		PL_Barrier->Update();
+	}
+	else {
+		PL_Barrier->center.y = 100.0f;
+	}
+		coliderBarrierPosTest_->wtf.position = (PL_Barrier->center);
+		coliderBarrierPosTest_->wtf.scale = Vector3(PL_Barrier->GetRadius(), PL_Barrier->GetRadius(), PL_Barrier->GetRadius());
+		coliderBarrierPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+		coliderBarrierPosTest_->Update();
 	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();

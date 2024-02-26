@@ -23,8 +23,6 @@ class Bullet
 public:
 	uint32_t team_;
 	uint32_t weapon;
-	bool isTeam;
-	bool isDead;
 
 	uint32_t DEATH_TIME = 800;
 	uint32_t timeCount;
@@ -34,7 +32,10 @@ public:
 
 	Vector3 moveVec;
 
+	bool isTeam;
+	bool isDead;
 	bool upThrow = false;
+	bool isInversion = false;
 
 public:
 	Bullet();
@@ -61,10 +62,7 @@ public:
 	void SetSphere(SphereCollider* sphere_) { sphere = sphere_; }
 	SphereCollider* GetSphere() { return sphere; }
 private:
-	//int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
-	//std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	SphereCollider* sphere;
-	//Ray* ray;
 	Vector3 spherePos;
 	Object3d* coliderPosTest_;
 };

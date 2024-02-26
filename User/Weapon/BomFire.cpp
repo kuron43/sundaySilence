@@ -77,23 +77,30 @@ void BomFire::Shot(Transform& shooter, Transform& reticle, uint32_t team) {
 
 	if (coolTime <= 0 && goShot == true) {
 		//弾を生成し、初期化
-		std::unique_ptr<FireBottle> newBullet = std::make_unique<FireBottle>();
-		Vector3 startPos, reticleVec, moveVec, velo;
-		float veloLen;
-		startPos = Affin::GetWorldTrans(shooter.matWorld); // 発射座標
-		startPos.y += 1.0f;
-		reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
-		velo = reticleVec - startPos;
-		veloLen = velo.length();
-		velo.nomalize();
-		moveVec = velo * speed_;
-		moveVec.nomalize();
-		newBullet->Initialize(model_, startPos + velo, moveVec, team);
-		newBullet->SetDeathTime(600);
-		newBullet->SetLength(veloLen);
+		for (int i = 0; i < 3; i++) {
+			std::unique_ptr<FireBottle> newBullet = std::make_unique<FireBottle>();
+			Vector3 startPos, reticleVec, moveVec, velo;
+			float veloLen;
+			startPos = Affin::GetWorldTrans(shooter.matWorld); // 発射座標
+			startPos.y += 1.0f;
+			reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
+			velo = reticleVec - startPos;
+			veloLen = velo.length();
+			velo.nomalize();
+			if (i == 1) {
+				velo = Affin::VecMat(velo, Affin::matRotateY(Affin::radConvert(30.0f)));
+			}if (i == 2) {
+				velo = Affin::VecMat(velo, Affin::matRotateY(Affin::radConvert(-30.0f)));
+			}
+			moveVec = velo * speed_;
+			moveVec.nomalize();
+			newBullet->Initialize(model_, startPos + velo, moveVec, team);
+			newBullet->SetDeathTime(600);
+			newBullet->SetLength(veloLen);
 
-		//弾を登録
-		BulletManager::GetInstance()->AddBullet(std::move(newBullet));
+			//弾を登録
+			BulletManager::GetInstance()->AddBullet(std::move(newBullet));
+		}
 		mag++;
 
 		//クールタイムをリセット

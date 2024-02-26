@@ -90,7 +90,26 @@ void Bullet::Update(float speed)
 		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER && team_ == ENEMY) {
 			isDead = true;
 		}
+		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBARRIER && team_ == ENEMY) {
+			isInversion = true;
+		}
 	}
+	if (isInversion == true && team_ == ENEMY) {
+		isInversion = false;
+		sphere->SetAttribute(COLLISION_ATTR_PLAYERBULLETS);
+		team_ = PLAYER;
+		moveVec = -moveVec;
+	}
+	else {
+
+	}
+
+	if (team_ == PLAYER) {
+		bulletObj_->SetColor({ 0,1,1,1 }); // カラー?RGB の順番
+	}if (team_ == ENEMY) {
+		bulletObj_->SetColor({ 1,1,0,1 });
+	}
+
 	sphere->Update();
 
 	//ImGui::Begin("bullet");

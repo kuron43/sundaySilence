@@ -108,9 +108,12 @@ private:
 	uint32_t SPHERE_COLISSION_NUM = 1;	//コライダー（スフィア）の数
 	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	std::vector<SphereCollider*> sphere;
+	SphereCollider* PL_Barrier;
+	Vector3 BarrierPos_;
 	Ray* ray;
 	std::vector<Vector3> spherePos;
 	std::vector<Object3d*> coliderPosTest_;
+	Object3d* coliderBarrierPosTest_;
 	Model* colPosTesM_;
 
 };

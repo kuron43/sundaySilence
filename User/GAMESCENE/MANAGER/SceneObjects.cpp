@@ -461,10 +461,6 @@ void SceneObjects::UIUpdate()
 	else {
 		UISlowSP_->SetTextureIndex(44);
 	}
-	ImGui::Begin("SpritePos");
-	ImGui::InputFloat2("PAUSE TAB POS", &UIPauseSPpos_.x);
-	ImGui::End();
-
 	UIHPSPsize_.y = 8.0f * player->GetHP();
 	UIHPSP_->SetSize(UIHPSPsize_);
 	UIBuckSP_->Update();
