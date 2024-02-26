@@ -32,7 +32,7 @@ public:
 	Transform GetReticleTransform() { return reticle->wtf; };
 	bool GetIsDeath() { return isDeath_; };
 	bool GetIsSlow() { return _isSlow; }
-	bool GetOnFire() { return isOnFire; }
+	bool GetOnFire() { return isOnBarrier; }
 	bool GetPointMAX() { return pointDash_->pointsMax; }
 	uint32_t GetHP() { return hp_; };
 	uint32_t GetHIT() { return hit_; };
@@ -72,7 +72,12 @@ private:
 
 
 	Weapon* weapon_[2];
-	bool isOnFire = true;
+	const uint32_t BARRIER_RIMIT = 30;
+	uint32_t barrierTime;
+	const uint32_t BARRIER_COOLTIME = 20;
+	uint32_t barrierCoolTime_;
+	bool isOnBarrier = true;
+	bool isCoolTimeON = false;
 
 	uint32_t coolTimeFB_;
 	bool onFireBottle = false;

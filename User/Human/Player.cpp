@@ -142,13 +142,26 @@ void Player::Update(Input* input, bool isTitle) {
 		}
 	}
 	// 弾発射
-	if (input->KeyboardTrigger(DIK_SPACE) && !isTitle && _isSlow == false) {
+	if (input->KeyboardTrigger(DIK_SPACE) && !isTitle && !_isSlow) {
 		//weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
-		isOnFire = true;
+		isOnBarrier = true;
 	}
-	else {
-		isOnFire = false;
+	if (isOnBarrier == true && isCoolTimeON == false) {
+		barrierTime++;
+		if (barrierTime >= BARRIER_RIMIT) {
+			isCoolTimeON = true;
+			barrierTime = NUMBER::NUM_ZERO;
+		}
 	}
+	if (isCoolTimeON) {
+		barrierCoolTime_++;
+		if (barrierCoolTime_ >= BARRIER_COOLTIME) {
+			isCoolTimeON = false;
+			isOnBarrier = false;
+			barrierCoolTime_ = NUMBER::NUM_ZERO;
+		}
+	}
+
 	for (uint32_t i = 0; i < 2; i++) {
 		weapon_[i]->Update(input, _isSlow);
 	}
@@ -240,7 +253,8 @@ void Player::Reset() {
 	pointDash_->Reset();
 	isHitEffect = false;
 	hitTime_ = NONE;
-
+	barrierTime = NUMBER::NUM_ZERO;
+	barrierCoolTime_ = NUMBER::NUM_ZERO;
 }
 
 /// 武器の番号セット
@@ -352,17 +366,17 @@ void Player::ColisionUpdate() {
 	if (PL_Barrier->GetIsHit() == true) {
 
 	}
-	if (isOnFire == true) {
+	if (isOnBarrier == true && isCoolTimeON == false) {
 		PL_Barrier->Update();
 	}
 	else {
 		PL_Barrier->center.y = 100.0f;
 	}
-		coliderBarrierPosTest_->wtf.position = (PL_Barrier->center);
-		coliderBarrierPosTest_->wtf.scale = Vector3(PL_Barrier->GetRadius(), PL_Barrier->GetRadius(), PL_Barrier->GetRadius());
-		coliderBarrierPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
-		coliderBarrierPosTest_->SetColor(Vector4{ 0,0,1.0f,0.5f });
-		coliderBarrierPosTest_->Update();
+	coliderBarrierPosTest_->wtf.position = (PL_Barrier->center);
+	coliderBarrierPosTest_->wtf.scale = Vector3(PL_Barrier->GetRadius(), PL_Barrier->GetRadius(), PL_Barrier->GetRadius());
+	coliderBarrierPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+	coliderBarrierPosTest_->SetColor(Vector4{ 0,0,1.0f,0.5f });
+	coliderBarrierPosTest_->Update();
 	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
