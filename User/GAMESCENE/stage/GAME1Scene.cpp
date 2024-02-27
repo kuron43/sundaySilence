@@ -243,7 +243,7 @@ void GAME1Scene::Draw() {
 	_objects->plDamageRed_->Draw();
 	_objects->UIDraw();
 	if (startTime_ == false && stageClear == false && stageFailed == false && isDrawSP_ == true) {
-		infoSP_->Draw();
+		//infoSP_->Draw();
 	}
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();
