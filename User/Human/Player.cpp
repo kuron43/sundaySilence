@@ -200,19 +200,25 @@ void Player::Update(Input* input, bool isTitle) {
 #ifdef _DEBUG
 	// Imgui
 	Vector4 skaliCol = object_->GetColor();
+	int barrierRimit = BARRIER_RIMIT;
+	int barrierCooltime = BARRIER_COOLTIME;
 	ImGui::Begin("player");
 	ImGui::Text("window W :%d", WinApp::window_width);
 	ImGui::Text("window H :%d", WinApp::window_height);
 	ImGui::Text("Palams");
 	ImGui::Text("ph:%d", countPH_);
 	ImGui::InputFloat3("Position", &object_->wtf.position.x);
+	ImGui::Text("Barrier");
+	ImGui::InputInt("BarrierTime", &barrierRimit);
+	ImGui::InputInt("BarrierCooltime", &barrierCooltime);
 	ImGui::Text("PointDash");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
 	ImGui::InputFloat4("Col", &skaliCol.x);
 	ImGui::InputFloat("spe :%f", &pointDash_->easeSpeed);
 	ImGui::End();
-
+	BARRIER_RIMIT = barrierRimit;
+	BARRIER_COOLTIME = barrierCooltime;
 	pointDash_->DebugImGui();
 #endif
 }

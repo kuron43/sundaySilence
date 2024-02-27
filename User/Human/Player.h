@@ -72,9 +72,9 @@ private:
 
 
 	Weapon* weapon_[2];
-	const uint32_t BARRIER_RIMIT = 30;
+	uint32_t BARRIER_RIMIT = 30;
 	uint32_t barrierTime;
-	const uint32_t BARRIER_COOLTIME = 20;
+	uint32_t BARRIER_COOLTIME = 20;
 	uint32_t barrierCoolTime_;
 	bool isOnBarrier = true;
 	bool isCoolTimeON = false;
