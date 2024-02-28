@@ -74,6 +74,7 @@ void GameScene::Update() {
 
 	sceneObjects->lightGroup->Update();
 	sceneObjects->skydome_O->Update();
+	sceneObjects->UpdateImGui();
 
 	sceneManager->SceneUpdate(input_);
 

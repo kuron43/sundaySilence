@@ -46,6 +46,7 @@ public:
 
 	void Initialize();
 	void Reset();
+	void UpdateImGui();
 
 public: // 演出用
 
@@ -176,7 +177,9 @@ public: // オブジェクトの管理
 	std::unique_ptr<Floor> floorGround;
 	Model* floorGroundMD;
 
-private: // ライト用 
+private: // ライト用
+	Vector3 rotateLight{ 0,1,0 };
+	Vector3 lightDir = { 0,1,0 };
 	float ambientColor0[3] = { 1,1,1 };
 
 	//光線方向初期値
@@ -187,7 +190,7 @@ private: // ライト用
 	float lightDir2[3] = { 1,0,0 };
 	float lightColor2[3] = { 1,1,1 };
 
-	float pointLightPos[3] = { 0,4,0 };
+	Vector3 pointLightPos = { 0,4,0 };
 	float pointLightColor[3] = { 1,1,1 };
 	float pointLightAtten[3] = { 0.3f,0.1f,0.1f };
 

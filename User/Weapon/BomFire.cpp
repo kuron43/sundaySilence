@@ -145,7 +145,7 @@ void FireBottle::Initialize(Model* model, const Vector3& position, Vector3 move,
 	if (team_ == PLAYER) {
 		bottleObj_->SetColor({ 0,1,1,1 }); // カラー?RGB の順番
 	}if (team_ == ENEMY) {
-		bottleObj_->SetColor({ 1,1,0,1 });
+		bottleObj_->SetColor({ 1,0,0,1 });
 	}
 
 	//当たり判定用
@@ -236,14 +236,15 @@ void FireBottle::Update(float speed)
 		bottleObj_->wtf.scale = Vector3(0.05f, 0.05f, 0.05f);
 		sphere->SetRadius(0.5f);
 	}
-	bottleObj_->SetColor(Vector4(1.0f, 0.0f, 0.0f,0.8f));
+	bottleObj_->SetColor(Vector4(1.0f, 0.0f, 0.0f,1.0f));
 	sphere->Update();
 
+	//Vector4 col = bulletObj_->GetColor();
 	//ImGui::Begin("bullet");
-	//ImGui::SetWindowPos({ 600,50 });
-	//ImGui::SetWindowSize({500.0f,200.0f});
-	//ImGui::InputFloat4("color", &bulletObj_->color_.x);
+	//ImGui::InputFloat4("color", &col.x);
 	//ImGui::End();
+	//bulletObj_->SetColor(col);
+
 }
 
 void FireBottle::DeadUpdate() {

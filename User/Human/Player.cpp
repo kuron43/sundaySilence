@@ -199,7 +199,7 @@ void Player::Update(Input* input, bool isTitle) {
 
 #ifdef _DEBUG
 	// Imgui
-	Vector4 skaliCol = object_->GetColor();
+	Vector4 skaliCol = coliderPosTest_[0]->GetColor();
 	int barrierRimit = BARRIER_RIMIT;
 	int barrierCooltime = BARRIER_COOLTIME;
 	ImGui::Begin("player");
@@ -208,15 +208,16 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::Text("Palams");
 	ImGui::Text("ph:%d", countPH_);
 	ImGui::InputFloat3("Position", &object_->wtf.position.x);
+	ImGui::InputFloat4("Col", &skaliCol.x);
 	ImGui::Text("Barrier");
 	ImGui::InputInt("BarrierTime", &barrierRimit);
 	ImGui::InputInt("BarrierCooltime", &barrierCooltime);
 	ImGui::Text("PointDash");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
-	ImGui::InputFloat4("Col", &skaliCol.x);
 	ImGui::InputFloat("spe :%f", &pointDash_->easeSpeed);
 	ImGui::End();
+	coliderPosTest_[0]->SetColor(skaliCol);
 	BARRIER_RIMIT = barrierRimit;
 	BARRIER_COOLTIME = barrierCooltime;
 	pointDash_->DebugImGui();

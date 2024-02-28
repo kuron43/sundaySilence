@@ -276,15 +276,28 @@ void SceneObjects::Initialize() {
 	lightGroup->Initialize();
 
 	lightGroup->SetDirLightActive(0, true);
-	pointLightPos[0] = 0.0f;
-	pointLightPos[1] = 5.0f;
-	pointLightPos[2] = 0.0f;
+	rotateLight = { Affin::radConvert(180.0f), Affin::radConvert(30.0f), Affin::radConvert(0.0f) };
 
 	lightGroup->SetDirLightColor(0, Vector3(1, 1, 1));
-	lightGroup->SetDirLightDir(0, Vector4(0, 0, 0, 0));
+	lightDir = Affin::VecMat(pointLightPos, Affin::matRotation(rotateLight));
+	lightGroup->SetDirLightDir(0, Vector4(lightDir.x, lightDir.y, lightDir.z, 0));
 
 	//3Dオブジェクトにライトをセット
 	Object3d::SetLight(lightGroup.get());
+}
+
+void SceneObjects::UpdateImGui()
+{
+#ifdef _DEBUG
+	// Imgui
+	ImGui::Begin("Objects");
+	ImGui::Text("DirLight");
+	ImGui::InputFloat3("DirRot", &pointLightPos.x);
+	ImGui::SliderFloat3("DirPos", &rotateLight.x,0.0f,Affin::radConvert(360.0f));
+	ImGui::End();
+	lightDir = Affin::VecMat(pointLightPos, Affin::matRotation(rotateLight));
+	lightGroup->SetDirLightDir(0, Vector4(lightDir.x, lightDir.y, lightDir.z, 0));
+#endif
 }
 
 void SceneObjects::Reset()
@@ -293,6 +306,7 @@ void SceneObjects::Reset()
 	boss.clear();
 	walls.clear();
 }
+
 
 bool SceneObjects::Banner(uint32_t isStart)
 {
