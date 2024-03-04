@@ -186,7 +186,7 @@ void Player::Update(Input* input, bool isTitle) {
 		reticle->SetModel(reticleMD_);
 		reticle->wtf.rotation.y = NONE;
 	}
-	object_->camera_->SetFocalLengs(pointDash_->F_lengs);
+	//object_->camera_->SetFocalLengs(pointDash_->F_lengs);
 
 	if (!nowTitle && pointDash_->isActive == true) {
 		pointDash_->GoToPoint();
