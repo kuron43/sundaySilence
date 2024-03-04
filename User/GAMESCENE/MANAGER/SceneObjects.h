@@ -117,9 +117,10 @@ private: // UI用
 	Vector2 UIBuckSPsize_;
 
 	// 武器
-	std::unique_ptr <Sprite> UIWeaponSP_;
+	std::unique_ptr <Sprite> UIBarrierGaugeSP_;
 	Vector2 UIWeaponSPpos_;
 	Vector2 UIWeaponSPsize_;
+	uint32_t UISP_Wep_size;
 	bool isFire_;
 	// スロー
 	std::unique_ptr <Sprite> UISlowSP_;
@@ -178,7 +179,7 @@ public: // オブジェクトの管理
 	Model* floorGroundMD;
 
 private: // ライト用
-	Vector3 rotateLight{ 0,1,0 };
+	Vector3 rotateLight{ 10.0f,1,0 };
 	Vector3 lightDir = { 0,1,0 };
 	float ambientColor0[3] = { 1,1,1 };
 
@@ -190,7 +191,7 @@ private: // ライト用
 	float lightDir2[3] = { 1,0,0 };
 	float lightColor2[3] = { 1,1,1 };
 
-	Vector3 pointLightPos = { 0,4,0 };
+	Vector3 pointLightPos = { 10.0f,4.0f,0 };
 	float pointLightColor[3] = { 1,1,1 };
 	float pointLightAtten[3] = { 0.3f,0.1f,0.1f };
 

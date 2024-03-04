@@ -216,17 +216,9 @@ void SceneObjects::Initialize() {
 			UIBuckSP_->SetSize(UIBuckSPsize_);
 		}
 		{
-			UIWeaponSP_ = std::make_unique<Sprite>();
-			UIWeaponSP_->Initialize(spriteCommon_.get(), 41);
-			UIWeaponSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f ,WinApp::window_height / 9.0f };
-			UIWeaponSPsize_ = Vector2{ 80.0f ,80.0f };
-			UIWeaponSP_->SetPozition(UIWeaponSPpos_);
-			UIWeaponSP_->SetSize(UIWeaponSPsize_);
-		}
-		{
 			UISlowSP_ = std::make_unique<Sprite>();
 			UISlowSP_->Initialize(spriteCommon_.get(), 44);
-			UISlowSPpos_ = Vector2{ UIWeaponSPpos_.x  ,UIWeaponSPpos_.y + 100.0f };
+			UISlowSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f  ,WinApp::window_height / 9.0f + 100.0f };
 			UISlowSPsize_ = Vector2{ 80.0f ,80.0f };
 			UISlowSP_->SetPozition(UISlowSPpos_);
 			UISlowSP_->SetSize(UISlowSPsize_);
@@ -242,7 +234,7 @@ void SceneObjects::Initialize() {
 		{
 			UIHPSP_ = std::make_unique<Sprite>();
 			UIHPSP_->Initialize(spriteCommon_.get(), 38);
-			UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x + 26.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
+			UIHPSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f + 26.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
 			UIHPSPsize_ = Vector2{30.0f,8.0f * player->GetHP()  };
 			UIHPSP_->SetPozition(UIHPSPpos_);
 			UIHPSP_->SetSize(UIHPSPsize_);
@@ -251,11 +243,22 @@ void SceneObjects::Initialize() {
 		{
 			UIHPBaseSP_ = std::make_unique<Sprite>();
 			UIHPBaseSP_->Initialize(spriteCommon_.get(), 30);
-			UIHPBaseSPpos_ = Vector2{ UIWeaponSPpos_.x + 26.0f,WinApp::window_height - WinApp::window_height / 7.0f };
+			UIHPBaseSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f + 26.0f,WinApp::window_height - WinApp::window_height / 7.0f };
 			UIHPBaseSPsize_ = Vector2{ 30.0f,8.0f * player->GetHP() };
 			UIHPBaseSP_->SetPozition(UIHPBaseSPpos_);
 			UIHPBaseSP_->SetSize(UIHPBaseSPsize_);
 			UIHPBaseSP_->SetIsFlipY(true);
+		}
+		{
+			UIBarrierGaugeSP_ = std::make_unique<Sprite>();
+			UIBarrierGaugeSP_->Initialize(spriteCommon_.get(), 37);
+			//UIWeaponSP_->Initialize(spriteCommon_.get(), 41);
+			UIWeaponSPpos_ = Vector2{ UIHPBaseSPpos_.x +30.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
+			UIWeaponSPsize_ = Vector2{ 20.0f ,(float)player->GetBarrierCoolTime()};
+			UIBarrierGaugeSP_->SetColorAlpha(0.5f);
+			UIBarrierGaugeSP_->SetPozition(UIWeaponSPpos_);
+			UIBarrierGaugeSP_->SetSize(UIWeaponSPsize_);
+			UISP_Wep_size = NUMBER::NUM_THREE;
 		}
 		{
 			backWall = { 0,2,10,21,0,0, };
@@ -276,7 +279,7 @@ void SceneObjects::Initialize() {
 	lightGroup->Initialize();
 
 	lightGroup->SetDirLightActive(0, true);
-	rotateLight = { Affin::radConvert(180.0f), Affin::radConvert(30.0f), Affin::radConvert(0.0f) };
+	rotateLight = { Affin::radConvert(60.0f), Affin::radConvert(30.0f), Affin::radConvert(0.0f) };
 
 	lightGroup->SetDirLightColor(0, Vector3(1, 1, 1));
 	lightDir = Affin::VecMat(pointLightPos, Affin::matRotation(rotateLight));
@@ -290,13 +293,17 @@ void SceneObjects::UpdateImGui()
 {
 #ifdef _DEBUG
 	// Imgui
+	int UISP_Weapon_size = UISP_Wep_size;
 	ImGui::Begin("Objects");
 	ImGui::Text("DirLight");
 	ImGui::InputFloat3("DirRot", &pointLightPos.x);
 	ImGui::SliderFloat3("DirPos", &rotateLight.x,0.0f,Affin::radConvert(360.0f));
+	ImGui::Text("UI");
+	ImGui::SliderInt("BarrierUISize", &UISP_Weapon_size, 1, 4);
 	ImGui::End();
 	lightDir = Affin::VecMat(pointLightPos, Affin::matRotation(rotateLight));
 	lightGroup->SetDirLightDir(0, Vector4(lightDir.x, lightDir.y, lightDir.z, 0));
+	UISP_Wep_size = UISP_Weapon_size;
 #endif
 }
 
@@ -457,15 +464,17 @@ void SceneObjects::SlowEffectDraw()
 
 void SceneObjects::UIUpdate()
 {
-	if (player->GetOnFire()) {
-		UIWeaponSP_->SetTextureIndex(42);
+	if (player->GetOnFire() && !player->GetIsCoolTimeON()) {
+		UIBarrierGaugeSP_->SetTextureIndex(37);
+		UIWeaponSPsize_.y = UISP_Wep_size * -(float)player->GetBarrierOnTime();
 	}
 	else {
-		UIWeaponSP_->SetTextureIndex(41);
+		UIWeaponSPsize_.y = UISP_Wep_size * 2.0f * -(float)player->GetBarrierCoolTime();
+		UIBarrierGaugeSP_->SetTextureIndex(36);
 		UIPointSP_->SetTextureIndex(46);
 	}
 	if (player->GetIsSlow()) {
-		UIWeaponSP_->SetTextureIndex(43);
+		//UIWeaponSP_->SetTextureIndex(43);
 		UISlowSP_->SetTextureIndex(45);
 		UIPointSP_->SetTextureIndex(47);
 		if (player->GetPointMAX()) {
@@ -475,10 +484,12 @@ void SceneObjects::UIUpdate()
 	else {
 		UISlowSP_->SetTextureIndex(44);
 	}
+	
 	UIHPSPsize_.y = 8.0f * player->GetHP();
+	UIBarrierGaugeSP_->SetSize(UIWeaponSPsize_);
 	UIHPSP_->SetSize(UIHPSPsize_);
 	UIBuckSP_->Update();
-	UIWeaponSP_->Update();
+	UIBarrierGaugeSP_->Update();
 	UISlowSP_->Update();
 	UIPointSP_->Update();
 	UIHPSP_->Update();
@@ -489,7 +500,7 @@ void SceneObjects::UIUpdate()
 void SceneObjects::UIDraw()
 {
 	//UIBuckSP_->Draw();
-	UIWeaponSP_->Draw();
+	UIBarrierGaugeSP_->Draw();
 	UISlowSP_->Draw();
 	UIPointSP_->Draw();
 	UIHPBaseSP_->Draw();

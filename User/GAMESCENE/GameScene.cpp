@@ -99,7 +99,7 @@ void GameScene::Draw() {
 	sceneObjects->skydome_O->Draw();
 	Object3d::PostDraw();
 	sceneManager->SceneDraw();
-	//particleManager_->Draw();
+	//particleManager_->Draw();p
 
 	/*ImGui::Begin("Info");
 	ImGui::Text("E : particle");

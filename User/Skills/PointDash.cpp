@@ -26,7 +26,6 @@ void PointDash::Initialize()
 		object_[i] = Object3d::Create();
 		object_[i]->SetModel(model_);
 		object_[i]->Initialize();
-		object_[i]->Initialize();
 		object_[i]->wtf.scale = Vector3(1.5f, 1.5f, 1.5f);
 		pointActive_[i] = false;
 	}

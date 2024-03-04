@@ -38,6 +38,10 @@ public:
 	uint32_t GetHIT() { return hit_; };
 	const uint32_t GetMAXHP() { return MAX_HP; };
 
+	uint32_t GetBarrierOnTime() { return barrierOnTime; };
+	uint32_t GetBarrierCoolTime() { return barrierCoolTime_; };
+	bool GetIsCoolTimeON() { return isCoolTimeON; };
+
 	// 種族番号取得
 	uint32_t HowTribe() { return Tribe_; };
 private:
@@ -72,9 +76,9 @@ private:
 
 
 	Weapon* weapon_[2];
-	uint32_t BARRIER_RIMIT = 30;
-	uint32_t barrierTime;
-	uint32_t BARRIER_COOLTIME = 20;
+	uint32_t BARRIER_RIMIT = 60;
+	uint32_t BARRIER_COOLTIME = 30;
+	uint32_t barrierOnTime;
 	uint32_t barrierCoolTime_;
 	bool isOnBarrier = true;
 	bool isCoolTimeON = false;

@@ -109,6 +109,8 @@ void Player::Initialize() {
 	PL_Barrier->SetRadius(5.0f);
 	PL_Barrier->Update();
 	PL_Barrier->SetAttribute(COLLISION_ATTR_PLAYERBARRIER);
+	barrierOnTime = BARRIER_RIMIT;
+
 	//test
 	coliderBarrierPosTest_ = Object3d::Create();
 	coliderBarrierPosTest_->SetModel(colPosTesM_);
@@ -142,15 +144,15 @@ void Player::Update(Input* input, bool isTitle) {
 		}
 	}
 	// 弾発射
-	if (input->KeyboardTrigger(DIK_SPACE) && !isTitle && !_isSlow) {
+	if (input->KeyboardTrigger(DIK_SPACE) && !nowTitle && !_isSlow) {
 		//weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
 		isOnBarrier = true;
 	}
 	if (isOnBarrier == true && isCoolTimeON == false) {
-		barrierTime++;
-		if (barrierTime >= BARRIER_RIMIT) {
+		barrierOnTime--;
+		if (barrierOnTime <= NUMBER::NUM_ZERO) {
 			isCoolTimeON = true;
-			barrierTime = NUMBER::NUM_ZERO;
+			barrierOnTime = BARRIER_RIMIT;
 		}
 	}
 	if (isCoolTimeON) {
@@ -184,7 +186,7 @@ void Player::Update(Input* input, bool isTitle) {
 		reticle->SetModel(reticleMD_);
 		reticle->wtf.rotation.y = NONE;
 	}
-	//object_->camera_->SetFocalLengs(pointDash_->F_lengs);
+	object_->camera_->SetFocalLengs(pointDash_->F_lengs);
 
 	if (!nowTitle && pointDash_->isActive == true) {
 		pointDash_->GoToPoint();
@@ -210,8 +212,10 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::InputFloat3("Position", &object_->wtf.position.x);
 	ImGui::InputFloat4("Col", &skaliCol.x);
 	ImGui::Text("Barrier");
-	ImGui::InputInt("BarrierTime", &barrierRimit);
+	ImGui::InputInt("BarrierRimit", &barrierRimit);
 	ImGui::InputInt("BarrierCooltime", &barrierCooltime);
+	ImGui::Text("BarrierOnTime :%d", barrierOnTime);
+	ImGui::Text("BarrierCooltime :%d", barrierCoolTime_);
 	ImGui::Text("PointDash");
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
@@ -260,8 +264,10 @@ void Player::Reset() {
 	pointDash_->Reset();
 	isHitEffect = false;
 	hitTime_ = NONE;
-	barrierTime = NUMBER::NUM_ZERO;
+	barrierOnTime = BARRIER_RIMIT;
 	barrierCoolTime_ = NUMBER::NUM_ZERO;
+	isOnBarrier = true;
+	isCoolTimeON = false;
 }
 
 /// 武器の番号セット
@@ -441,6 +447,7 @@ void Player::ColisionUpdate() {
 			sphere[i]->Update();
 		}
 	}
+
 }
 
 void Player::OnColision(bool bullet)
