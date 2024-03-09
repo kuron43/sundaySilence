@@ -84,7 +84,9 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fileNam
 			const UINT depthPitch = rowPitch * WinApp::window_height;
 			//画像イメージ
 			UINT* img = new UINT[pixelCount];
-			img = (UINT*)0xffffffff;
+			for (uint32_t i = 0; i < pixelCount; i++) {
+				img[i] = 0xffffffff;
+			}
 
 			result = texBuff->WriteToSubresource(0, nullptr,
 				img, rowPitch, depthPitch);
@@ -432,33 +434,27 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 		&resouceBar);
 
 	//レンダーターゲットビュー用のディスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs[2];
-	for (uint32_t i = 0; i < 2; i++) {
-		rtvHs[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), (INT)i,
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs;
+		rtvHs = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), (INT)0,
 			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
-	}
 
 	//深度ステンシルビュー用デスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH = descHeapDSV->GetCPUDescriptorHandleForHeapStart();
 	//レンダーターゲットをセット
-	commandList->OMSetRenderTargets(2, rtvHs, false, &dsvH);
+	commandList->OMSetRenderTargets(1, &rtvHs, false, &dsvH);
 
-	CD3DX12_VIEWPORT viewPorts[2];
-	CD3DX12_RECT scissorRects[2];
+	CD3DX12_VIEWPORT viewPorts;
+	CD3DX12_RECT scissorRects;
 
-	for (uint32_t i = 0; i < 2; i++) {
-		viewPorts[i] = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
-		scissorRects[i] = CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
-	}
+		viewPorts = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
+		scissorRects = CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
 
 	//ビューポートの設定
-	commandList->RSSetViewports(2, viewPorts);
+	commandList->RSSetViewports(1, &viewPorts);
 	//シザリング矩形の設定
-	commandList->RSSetScissorRects(2, scissorRects);
-	for (uint32_t i = 0; i < 2; i++) {
-		//全画面のクリア
-		commandList->ClearRenderTargetView(rtvHs[i], clearColor, 0, nullptr);
-	}
+	commandList->RSSetScissorRects(1, &scissorRects);
+	//全画面のクリア
+	commandList->ClearRenderTargetView(rtvHs, clearColor, 0, nullptr);
 	//深度バッファのクリア
 	commandList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }

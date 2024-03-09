@@ -14,10 +14,11 @@ class PostEffectManager
 {
 public:
 	void Initialize();
+	void Update();
+	void Draw();
 	void EffectMix();
 	void AddEffect();
 	void UpdateEffect();
-	void Draw();
 
 public:
 
