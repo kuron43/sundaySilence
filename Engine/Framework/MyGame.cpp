@@ -9,7 +9,7 @@ void MyGame::Initialize() {
 	//fbxManager = FbxManager::Create();
 
 	postEffect = new PostEffect();
-	postEffect->Initialize(dxCommon);
+	postEffect->Initialize(dxCommon,L"PostEffect");
 	postEffect->SetKernelSize(3);
 	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1f, 10);
 	postEffect->SetShadeNumber(0);
@@ -67,10 +67,11 @@ void MyGame::Draw() {
 	dxCommon->PreDraw();
 
 	// ゲームシーンの描画
-	gameScene->Draw();
+	//gameScene->Draw();
 
 	//ポストエフェクトの描画
-	//postEffect->Draw(dxCommon->GetCommandList());
+
+	postEffect->Draw(dxCommon->GetCommandList());
 
 	// Imgui受付終了
 	imgui->End();

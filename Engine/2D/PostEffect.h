@@ -45,18 +45,20 @@ public:
     };
 
     //デフォルトテクスチャ格納ディレクトリ
-    std::string kDefaultTextureDirectoryPath = "Resources/";
+	static const std::wstring kDefaultShaderDirectoryPath;
+	static const std::wstring kShaderExtention;
     HRESULT result;
 public:
+public:
 
-    static void Initialize(DirectXCommon* dxCommon);
+    static void Initialize(DirectXCommon* dxCommon, const std::wstring& fileName);
 
     static void Finalize();
 
     /// <summary>
     /// パイプライン生成
     /// </summary>
-    static void CreatGraphicsPipeline();
+    static void CreatGraphicsPipeline(const std::wstring& fileName);
 
     /// <summary>
     /// シーン描画前処理
@@ -96,7 +98,7 @@ private://静的メンバ変数
 
     //頂点バッファビューの作成
     static D3D12_VERTEX_BUFFER_VIEW vbView;
-    static ComPtr<ID3D12Resource> texBuff[2];
+    static ComPtr<ID3D12Resource> texBuff;
 
     static ComPtr<ID3D12DescriptorHeap> descHeapSRV;
     //深度バッファ

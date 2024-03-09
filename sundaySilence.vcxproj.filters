@@ -260,6 +260,7 @@
     <ClCompile Include="User\Weapon\BomFire.cpp">
       <Filter>user\wepon</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\2D\PostEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -516,6 +517,7 @@
     <ClInclude Include="User\Human\HumanList.h">
       <Filter>user\human</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\2D\PostEffectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

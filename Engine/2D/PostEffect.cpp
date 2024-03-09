@@ -7,8 +7,10 @@
 #include<d3dx12.h>
 #include <cassert>
 #include <d3dcompiler.h>
-
 #pragma warning(pop)
+
+const std::wstring PostEffect::kDefaultShaderDirectoryPath = L"Resources/SHADER/";
+const std::wstring PostEffect::kShaderExtention = L".hlsl";
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -24,7 +26,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::vertBuff;	//頂点バッフ�
 
 //頂点バッファビューの作成
 D3D12_VERTEX_BUFFER_VIEW PostEffect::vbView{};
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::texBuff[2];
+Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::texBuff;
 
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapSRV;
 //深度バッファ
@@ -44,7 +46,7 @@ PostEffect::SendDataGPU* PostEffect::dataMap = nullptr;
 
 const float PostEffect::clearColor[4] = { 0.0f,0.0f,0.0f,0 };
 
-void PostEffect::Initialize(DirectXCommon* dxCommon)
+void PostEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fileName)
 {
 	HRESULT result;
 
@@ -64,37 +66,31 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 
 		CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor);
 
-		for (uint32_t i = 0; i < 2; i++) {
+		result = device_->CreateCommittedResource(
+			&heapProp,
+			D3D12_HEAP_FLAG_NONE,
+			&texresDesc,
+			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+			&clearValue,
+			IID_PPV_ARGS(&texBuff));
+		assert(SUCCEEDED(result));
 
-			result = device_->CreateCommittedResource(
-				&heapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&texresDesc,
-				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-				&clearValue,
-				IID_PPV_ARGS(&texBuff[i]));
+		{//テクスチャを赤クリア
+		//画素数(1280*720=921600ピクセル)
+			const UINT pixelCount = WinApp::window_width * WinApp::window_height;
+			//画像1行分のデータサイズ
+			const UINT rowPitch = sizeof(UINT) * WinApp::window_width;
+			//画像全体のデータサイズ
+			const UINT depthPitch = rowPitch * WinApp::window_height;
+			//画像イメージ
+			UINT* img = new UINT[pixelCount];
+			img = (UINT*)0xffffffff;
+
+			result = texBuff->WriteToSubresource(0, nullptr,
+				img, rowPitch, depthPitch);
 			assert(SUCCEEDED(result));
-
-			{//テクスチャを赤クリア
-			//画素数(1280*720=921600ピクセル)
-				const UINT pixelCount = WinApp::window_width * WinApp::window_height;
-				//画像1行分のデータサイズ
-				const UINT rowPitch = sizeof(UINT) * WinApp::window_width;
-				//画像全体のデータサイズ
-				const UINT depthPitch = rowPitch * WinApp::window_height;
-				//画像イメージ
-				UINT* img = new UINT[pixelCount];
-				for (uint32_t j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
-
-
-				result = texBuff[i]->WriteToSubresource(0, nullptr,
-					img, rowPitch, depthPitch);
-				assert(SUCCEEDED(result));
-				delete[] img;
-			}
-
+			delete[] img;
 		}
-
 	}
 	//SRV用のデスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeapDesc = {};
@@ -111,14 +107,12 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
 
-	for (uint32_t i = 0; i < 2; i++) {
-		//デスクリプタヒープにSRVを作成
-		device_->CreateShaderResourceView(texBuff[i].Get(),
-			&srvDesc,
-			CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), (INT)i,
-				device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
-		);
-	}
+	//デスクリプタヒープにSRVを作成
+	device_->CreateShaderResourceView(texBuff.Get(),
+		&srvDesc,
+		CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), (INT)0,
+			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
+	);
 
 	//RTV用のデスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
@@ -129,12 +123,10 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	result = device_->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
 	assert(SUCCEEDED(result));
 	//RTV用のデスクリプタヒープを生成
-	for (uint32_t i = 0; i < 2; i++) {
 		//デスクリプタヒープにRTVを作成
-		device_->CreateRenderTargetView(texBuff[i].Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
-			descHeapRTV->GetCPUDescriptorHandleForHeapStart(), (INT)i, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
-	}
-
+	device_->CreateRenderTargetView(texBuff.Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
+		descHeapRTV->GetCPUDescriptorHandleForHeapStart(),
+		(INT)0, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
 
 	descHeapDSV = dxCommon->GetdsvHeap();
 
@@ -190,7 +182,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	//頂点一つ分のデータサイズ
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
-	CreatGraphicsPipeline();
+	CreatGraphicsPipeline(fileName);
 
 
 	// ヒーププロパティ
@@ -224,9 +216,7 @@ void PostEffect::Finalize()
 {
 
 	vertBuff.Reset();
-	for (uint32_t i = 0; i < 2; i++) {
-		texBuff[i].Reset();
-	}
+	texBuff.Reset();
 	descHeapSRV.Reset();
 	depthBuff.Reset();
 	descHeapRTV.Reset();
@@ -236,7 +226,7 @@ void PostEffect::Finalize()
 
 }
 
-void PostEffect::CreatGraphicsPipeline()
+void PostEffect::CreatGraphicsPipeline(const std::wstring& fileName)
 {
 	HRESULT result;
 
@@ -244,10 +234,10 @@ void PostEffect::CreatGraphicsPipeline()
 	Microsoft::WRL::ComPtr<ID3DBlob> psBlob = nullptr;//ピクセルシェーダーオブジェクト
 
 	ID3DBlob* errorBlob = nullptr;//エラーオブジェクト
-
+	const std::wstring FULLPATH_VS = kDefaultShaderDirectoryPath + fileName + L"VS" + kShaderExtention;
 	//頂点シェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/SHADER/PostEffectVS.hlsl", //シェーダーファイル名
+		FULLPATH_VS.c_str(), //シェーダーファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,//インクルード可能にする
 		"main", "vs_5_0",//エントリーポイント名、シェーダーモデル指定
@@ -269,9 +259,10 @@ void PostEffect::CreatGraphicsPipeline()
 		OutputDebugStringA(error.c_str());
 		assert(0);
 	}
+	const std::wstring FULLPATH_PS = kDefaultShaderDirectoryPath + fileName + L"PS" + kShaderExtention;
 	//ピクセルシェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/SHADER/PostEffectPS.hlsl",
+		FULLPATH_PS.c_str(),
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"main", "ps_5_0",
@@ -397,19 +388,48 @@ void PostEffect::CreatGraphicsPipeline()
 	assert(SUCCEEDED(result));
 }
 
+void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
+{
+	commandList = cmdList;
+
+	//パイプラインステートとルートシグネチャの設定コマンド
+	commandList->SetPipelineState(pipelineState.Get());
+	commandList->SetGraphicsRootSignature(rootSignature.Get());
+
+	//SRVヒープの設定コマンド
+	ID3D12DescriptorHeap* ppHeaps[] = { descHeapSRV.Get() };
+	commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	//プリミティブ形状の設定コマンド
+	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	//頂点バッファビューの設定コマンド
+	commandList->IASetVertexBuffers(0, 1, &vbView);
+
+	//画像描画
+	//SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
+	commandList->SetGraphicsRootDescriptorTable(1, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 0,
+		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
+
+	commandList->SetGraphicsRootDescriptorTable(2, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 1,
+		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
+
+	commandList->SetGraphicsRootConstantBufferView(0, constDataBuff_->GetGPUVirtualAddress());
+
+	//描画コマンド
+	commandList->DrawInstanced(_countof(vertices), 1, 0, 0);//すべての頂点を使って描画
+}
+
+
 void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 {
 	commandList = cmdList;
 
-	for (uint32_t i = 0; i < 2; i++) {
-		CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
-			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-			D3D12_RESOURCE_STATE_RENDER_TARGET);
+	CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-		//リソースバリアを変更(シェーダーリソース→描画可能)
-		commandList->ResourceBarrier(1,
-			&resouceBar);
-	}
+	//リソースバリアを変更(シェーダーリソース→描画可能)
+	commandList->ResourceBarrier(1,
+		&resouceBar);
 
 	//レンダーターゲットビュー用のディスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs[2];
@@ -443,44 +463,13 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 	commandList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
-void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
-{
-	commandList = cmdList;
-
-	//パイプラインステートとルートシグネチャの設定コマンド
-	commandList->SetPipelineState(pipelineState.Get());
-	commandList->SetGraphicsRootSignature(rootSignature.Get());
-
-	//SRVヒープの設定コマンド
-	ID3D12DescriptorHeap* ppHeaps[] = { descHeapSRV.Get() };
-	commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	//プリミティブ形状の設定コマンド
-	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	//頂点バッファビューの設定コマンド
-	commandList->IASetVertexBuffers(0, 1, &vbView);
-
-	//画像描画
-	//SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
-	commandList->SetGraphicsRootDescriptorTable(1, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 0,
-		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
-
-	commandList->SetGraphicsRootDescriptorTable(2, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 1,
-		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
-
-	commandList->SetGraphicsRootConstantBufferView(0, constDataBuff_->GetGPUVirtualAddress());
-
-	//描画コマンド
-	commandList->DrawInstanced(_countof(vertices), 1, 0, 0);//すべての頂点を使って描画
-}
 
 void PostEffect::PostDrawScene()
 {
-	for (uint32_t i = 0; i < 2; i++) {
-		CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
-			D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
+		D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
-		commandList->ResourceBarrier(1, &RESOURCE_BARRIER);
-	}
+	commandList->ResourceBarrier(1, &RESOURCE_BARRIER);
 }
 
 void PostEffect::SetShadeNumber(uint32_t SetShadeNumber)

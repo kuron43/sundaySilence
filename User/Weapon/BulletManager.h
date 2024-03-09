@@ -11,7 +11,6 @@
 #pragma warning(disable: 4820)
 #include <forward_list>
 //#include <vector>
-#include <d3d12.h>
 #include <memory>
 
 #pragma warning(pop)
@@ -49,10 +48,11 @@ private:
 
 	BulletManager() = default;
 	BulletManager(const BulletManager&) = delete;
+	BulletManager& operator= (const BulletManager&) = delete;
+
 	~BulletManager() {
 		AllClearBullet();
 	};
-	BulletManager& operator= (const BulletManager&) = delete;
 
 	//弾のリスト
 	std::list<std::unique_ptr<Bullet>> bullets;

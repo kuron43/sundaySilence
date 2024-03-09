@@ -110,6 +110,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\2D\PostEffect.cpp" />
+    <ClCompile Include="Engine\2D\PostEffectManager.cpp" />
     <ClCompile Include="Engine\2D\Sprite.cpp" />
     <ClCompile Include="Engine\2D\SpriteCommon.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp" />
@@ -193,6 +194,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
     <ClInclude Include="Engine\2D\PostEffect.h" />
+    <ClInclude Include="Engine\2D\PostEffectManager.h" />
     <ClInclude Include="Engine\2D\Sprite.h" />
     <ClInclude Include="Engine\2D\SpriteCommon.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXLoader.h" />
