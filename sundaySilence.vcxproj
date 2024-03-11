@@ -109,6 +109,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\PostEffect.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
     <ClCompile Include="Engine\2D\Sprite.cpp" />
@@ -194,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
+    <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h" />
     <ClInclude Include="Engine\2D\PostEffect\PostEffect.h" />
     <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
     <ClInclude Include="Engine\2D\Sprite.h" />

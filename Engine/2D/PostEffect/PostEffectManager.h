@@ -1,5 +1,5 @@
 #pragma once
-#include "PostEffect.h"
+#include "IPostEffect.h"
 
 #pragma warning(push)
 #pragma warning(disable: 4819)

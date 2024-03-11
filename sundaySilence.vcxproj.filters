@@ -262,6 +262,7 @@
     </ClCompile>
     <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
     <ClCompile Include="User\GAMESCENE\stage\Game3Scene.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -520,6 +521,7 @@
     </ClInclude>
     <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
     <ClInclude Include="User\GAMESCENE\stage\Game3Scene.h" />
+    <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
