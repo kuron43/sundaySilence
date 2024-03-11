@@ -15,6 +15,7 @@
 #include "TransitionsScene.h"
 #include "GAME1Scene.h"
 #include "GAME2Scene.h"
+#include "Game3Scene.h"
 
 // チェンジシーン用のenum
 enum _SCENE_ {
@@ -25,5 +26,6 @@ enum _SCENE_ {
 	SCE_SELECT = 5,
 	SCE_TRANS = 6,
 	SCE_GAME1 = 7,
-	SCE_GAME2 = 8
+	SCE_GAME2 = 8,
+	SCE_GAME3 = 9
 };

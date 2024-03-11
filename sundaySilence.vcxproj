@@ -158,6 +158,7 @@
     <ClCompile Include="Engine\MATH\Vector3.cpp" />
     <ClCompile Include="Engine\MATH\Vector4.cpp" />
     <ClCompile Include="Engine\3D\Json\JsonLoader.cpp" />
+    <ClCompile Include="User\GAMESCENE\stage\Game3Scene.cpp" />
     <ClCompile Include="User\Human\BossManager\BossAttack.cpp" />
     <ClCompile Include="User\Human\BossManager\BossMove.cpp" />
     <ClCompile Include="User\Human\BossManager\BossWait.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="Engine\MATH\Vector2.h" />
     <ClInclude Include="Engine\MATH\Vector3.h" />
     <ClInclude Include="Engine\MATH\Vector4.h" />
+    <ClInclude Include="User\GAMESCENE\stage\Game3Scene.h" />
     <ClInclude Include="User\Human\BossManager\BossAttack.h" />
     <ClInclude Include="User\Human\BossManager\BossMove.h" />
     <ClInclude Include="User\Human\BossManager\BossWait.h" />

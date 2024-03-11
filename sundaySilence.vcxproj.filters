@@ -261,6 +261,7 @@
       <Filter>user\wepon</Filter>
     </ClCompile>
     <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
+    <ClCompile Include="User\GAMESCENE\stage\Game3Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -518,6 +519,7 @@
       <Filter>user\human</Filter>
     </ClInclude>
     <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
+    <ClInclude Include="User\GAMESCENE\stage\Game3Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
