@@ -5,7 +5,7 @@
 #pragma warning(disable: 4819)
 #pragma warning(disable: 4828)
 #pragma warning(disable: 4820)
-#include <forward_list>
+#include <vector>
 #include <memory>
 
 #pragma warning(pop)
@@ -15,14 +15,19 @@ class PostEffectManager
 public:
 	void Initialize();
 	void Update();
-	void Draw();
+	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void TargetPreDraw(ID3D12GraphicsCommandList* cmdList);
+	void TargetPostDraw();
+
 	void EffectMix();
-	void AddEffect();
+	void AddEffect(PostEffect* posteffect);
 	void UpdateEffect();
 
 public:
 
 private:
+
+	std::vector<PostEffect> postEffect;
 
 };
 

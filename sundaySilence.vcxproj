@@ -61,7 +61,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);DIRECTINPUT_VERSION=0x0800</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\2D\PostEffect;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -87,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);DIRECTINPUT_VERSION=0x0800</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\2D\PostEffect;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -109,8 +109,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\2D\PostEffect.cpp" />
-    <ClCompile Include="Engine\2D\PostEffectManager.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\PostEffect.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
     <ClCompile Include="Engine\2D\Sprite.cpp" />
     <ClCompile Include="Engine\2D\SpriteCommon.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp" />
@@ -193,8 +193,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
-    <ClInclude Include="Engine\2D\PostEffect.h" />
-    <ClInclude Include="Engine\2D\PostEffectManager.h" />
+    <ClInclude Include="Engine\2D\PostEffect\PostEffect.h" />
+    <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
     <ClInclude Include="Engine\2D\Sprite.h" />
     <ClInclude Include="Engine\2D\SpriteCommon.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXLoader.h" />
@@ -286,7 +286,7 @@
     <None Include="Resources\SHADER\FBX.hlsli" />
     <None Include="Resources\SHADER\OBJShaderHeader.hlsli" />
     <None Include="Resources\SHADER\Particle.hlsli" />
-    <None Include="Resources\SHADER\PostEffect.hlsli" />
+    <None Include="Resources\SHADER\POSTFX\PostEffect.hlsli" />
     <None Include="Resources\SHADER\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
@@ -325,11 +325,11 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Resources\SHADER\PostEffectPS.hlsl">
+    <FxCompile Include="Resources\SHADER\POSTFX\PostEffectPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="Resources\SHADER\PostEffectVS.hlsl">
+    <FxCompile Include="Resources\SHADER\POSTFX\PostEffectVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>

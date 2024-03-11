@@ -24,5 +24,6 @@ protected:
 	//FbxManager* fbxManager = nullptr;
 	GameScene* gameScene = nullptr;
 	PostEffect* postEffect = nullptr;
+	PostEffect* postEffectTest = nullptr;
 };
 

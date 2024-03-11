@@ -99,13 +99,13 @@ float4 main(VSOutput input) : SV_TARGET
     }
     if (shadeNumber == 4)
     {
-        float4 texcolor = tex0.Sample(smp, input.uv);
+        float4 texcolor = tex0.Sample(smp, input.uv)/2;
         float4 texcolorOLD = tex1.Sample(smp, input.uv)/2;
         float4 result = {0,0,0,1};
         
-        result = float4(texcolor.rgb,1);
+        result = texcolor + texcolorOLD;
         
-        return result + texcolorOLD;
+        return result ;
        
     }
     return float4(0, 0, 0, 1);

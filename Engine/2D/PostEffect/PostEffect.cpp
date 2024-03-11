@@ -9,7 +9,7 @@
 #include <d3dcompiler.h>
 #pragma warning(pop)
 
-const std::wstring PostEffect::kDefaultShaderDirectoryPath = L"Resources/SHADER/";
+const std::wstring PostEffect::kDefaultShaderDirectoryPath = L"Resources/SHADER/POSTFX/";
 const std::wstring PostEffect::kShaderExtention = L".hlsl";
 
 #pragma comment(lib, "d3dcompiler.lib")
@@ -319,6 +319,7 @@ void PostEffect::CreatGraphicsPipeline(const std::wstring& fileName)
 
 	CD3DX12_DESCRIPTOR_RANGE descRangeSRV1;
 	descRangeSRV1.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1); // t1 レジスタ
+
 	// ルートパラメータ
 	CD3DX12_ROOT_PARAMETER rootparams[3] = {};
 	rootparams[0].InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
@@ -411,8 +412,8 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	commandList->SetGraphicsRootDescriptorTable(1, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 0,
 		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
 
-	commandList->SetGraphicsRootDescriptorTable(2, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 1,
-		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
+	//commandList->SetGraphicsRootDescriptorTable(1, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 1,
+	//	device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
 
 	commandList->SetGraphicsRootConstantBufferView(0, constDataBuff_->GetGPUVirtualAddress());
 

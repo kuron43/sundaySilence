@@ -22,10 +22,10 @@
     <FxCompile Include="Resources\SHADER\ParticleVS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\SHADER\PostEffectPS.hlsl">
+    <FxCompile Include="Resources\SHADER\POSTFX\PostEffectPS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\SHADER\PostEffectVS.hlsl">
+    <FxCompile Include="Resources\SHADER\POSTFX\PostEffectVS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
     <FxCompile Include="Resources\SHADER\SpritePS.hlsl">
@@ -234,7 +234,7 @@
     <ClCompile Include="Engine\2D\SpriteCommon.cpp">
       <Filter>engine\2d\sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2D\PostEffect.cpp">
+    <ClCompile Include="Engine\2D\PostEffect\PostEffect.cpp">
       <Filter>engine\2d\postFX</Filter>
     </ClCompile>
     <ClCompile Include="Engine\2D\Sprite.cpp">
@@ -260,7 +260,7 @@
     <ClCompile Include="User\Weapon\BomFire.cpp">
       <Filter>user\wepon</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2D\PostEffectManager.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -485,7 +485,7 @@
     <ClInclude Include="Engine\2D\SpriteCommon.h">
       <Filter>engine\2d\sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2D\PostEffect.h">
+    <ClInclude Include="Engine\2D\PostEffect\PostEffect.h">
       <Filter>engine\2d\postFX</Filter>
     </ClInclude>
     <ClInclude Include="Engine\2D\Sprite.h">
@@ -517,7 +517,7 @@
     <ClInclude Include="User\Human\HumanList.h">
       <Filter>user\human</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2D\PostEffectManager.h" />
+    <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
@@ -529,7 +529,7 @@
     <None Include="Resources\SHADER\Particle.hlsli">
       <Filter>shader</Filter>
     </None>
-    <None Include="Resources\SHADER\PostEffect.hlsli">
+    <None Include="Resources\SHADER\POSTFX\PostEffect.hlsli">
       <Filter>shader</Filter>
     </None>
     <None Include="Resources\SHADER\Sprite.hlsli">

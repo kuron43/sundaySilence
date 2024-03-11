@@ -14,6 +14,12 @@ void MyGame::Initialize() {
 	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1f, 10);
 	postEffect->SetShadeNumber(0);
 
+	postEffectTest = new PostEffect();
+	postEffectTest->Initialize(dxCommon, L"PostEffect");
+	postEffectTest->SetKernelSize(3);
+	postEffectTest->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1f, 10);
+	postEffectTest->SetShadeNumber(4);
+
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon->GetDevice());
 	//パーティクル静的初期化
@@ -57,6 +63,9 @@ void MyGame::Update() {
 // 描画
 void MyGame::Draw() {
 
+	postEffectTest->PreDrawScene(dxCommon->GetCommandList());
+	postEffect->Draw(dxCommon->GetCommandList());
+	postEffectTest->PostDrawScene();
 
 	// ポストエフェクト用ゲームシーンの描画
 	postEffect->PreDrawScene(dxCommon->GetCommandList());
@@ -73,6 +82,7 @@ void MyGame::Draw() {
 
 	postEffect->Draw(dxCommon->GetCommandList());
 
+	postEffectTest->Draw(dxCommon->GetCommandList());
 	// Imgui受付終了
 	imgui->End();
 #ifdef _DEBUG

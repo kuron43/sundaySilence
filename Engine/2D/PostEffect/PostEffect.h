@@ -49,7 +49,6 @@ public:
 	static const std::wstring kShaderExtention;
     HRESULT result;
 public:
-public:
 
     static void Initialize(DirectXCommon* dxCommon, const std::wstring& fileName);
 
