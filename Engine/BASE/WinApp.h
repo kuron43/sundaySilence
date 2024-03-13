@@ -23,6 +23,10 @@ public:
 	// ウィンドウ縦幅
 	static const int window_height = 720;
 
+	// シングルトンインスタンスの取得
+	static WinApp* GetInstance();
+	float aspectRatio;
+
 public: //メンバ関数
 	//初期化
 	void Initialize();
@@ -38,5 +42,7 @@ private:
 
 	//ウィンドウクラスの設定
 	WNDCLASSEX w{};
+
+	static WinApp* winApp_;
 
 };

@@ -106,6 +106,7 @@
     <ClCompile Include="Engine\2D\PostEffect.cpp" />
     <ClCompile Include="Engine\2D\Sprite.cpp" />
     <ClCompile Include="Engine\2D\SpriteCommon.cpp" />
+    <ClCompile Include="Engine\2D\Text2D.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXModel.cpp">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Level4</WarningLevel>
@@ -176,6 +177,7 @@
     <ClInclude Include="Engine\2D\PostEffect.h" />
     <ClInclude Include="Engine\2D\Sprite.h" />
     <ClInclude Include="Engine\2D\SpriteCommon.h" />
+    <ClInclude Include="Engine\2D\Text2D.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXLoader.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXModel.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXObject3d.h" />

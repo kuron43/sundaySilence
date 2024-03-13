@@ -41,6 +41,15 @@ bool WinApp::ProcessMessage()
 	return false;
 }
 
+WinApp* WinApp::GetInstance() {
+	if (winApp_ == nullptr)
+	{
+		winApp_ = new WinApp();
+	}
+
+	return winApp_;
+}
+
 void WinApp::Initialize()
 {
 
@@ -54,6 +63,7 @@ void WinApp::Initialize()
 	RegisterClassEx(&w);
 	//ウィンドウサイズ{X座標　Y座標　横幅　縦幅}
 	RECT wrc = { 0,0,window_width,window_height };
+	aspectRatio = (float)window_width / window_height;
 	//関数を使ってウィンドウのサイズを自動で補正する
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 

@@ -52,11 +52,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	ParticleManager::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
-	sceneObjects = std::make_unique<SceneObjects>(dxCommon, camera);
-	sceneObjects->Initialize();
+	//sceneObjects = std::make_unique<SceneObjects>(dxCommon, camera);
+	//sceneObjects->Initialize();
 
-	sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
-	sceneManager->SceneInitialize();
+	//sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
+	//sceneManager->SceneInitialize();
 }
 
 /// <summary>
@@ -64,10 +64,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 /// </summary>
 void GameScene::Update() {
 
-	sceneManager->ChangeScene();
+	//sceneManager->ChangeScene();
 
-	sceneObjects->lightGroup->Update();
-	sceneManager->SceneUpdate(input_);
+	//sceneObjects->lightGroup->Update();
+	//sceneManager->SceneUpdate(input_);
 
 	bulletManager_->DeadUpdate();
 
@@ -80,7 +80,7 @@ void GameScene::Update() {
 /// </summary>
 void GameScene::Draw() {
 
-	sceneManager->SceneDraw();
+	//sceneManager->SceneDraw();
 
 	/*ImGui::Begin("Info");
 	ImGui::Text("E : particle");
