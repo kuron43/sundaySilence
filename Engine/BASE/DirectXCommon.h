@@ -46,7 +46,8 @@ public://メンバ関数
 
 	ID3D12DescriptorHeap* GetdsvHeap() { return dsvHeap.Get(); }
 
-	ID3D12Resource* GetbackBuffers() { return depthBuff.Get(); }
+	ID3D12Resource* GetbackBuffers(uint32_t num) { return backBuffers[num].Get(); }
+	ID3D12Resource* GetDepthBuffers() { return depthBuff.Get(); }
 
 	// シングルトンインスタンスの取得
 	static DirectXCommon* GetInstance();

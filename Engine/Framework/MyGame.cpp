@@ -9,16 +9,13 @@ void MyGame::Initialize() {
 	//fbxManager = FbxManager::Create();
 
 	postEffect = new PostEffect();
-	postEffect->Initialize(dxCommon,L"PostEffect");
+	postEffect->Initialize(dxCommon, L"PostEffect");
 	postEffect->SetKernelSize(3);
 	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1f, 10);
-	postEffect->SetShadeNumber(0);
+	postEffect->SetShadeNumber(5);
 
-	postEffectTest = new PostEffect();
-	postEffectTest->Initialize(dxCommon, L"PostEffect");
-	postEffectTest->SetKernelSize(3);
-	postEffectTest->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1f, 10);
-	postEffectTest->SetShadeNumber(4);
+	postEffectMix = new IPostEffect();
+	postEffectMix->Initialize(dxCommon, L"IPostEffect");
 
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon->GetDevice());
@@ -43,6 +40,8 @@ void MyGame::Finalize() {
 
 	postEffect->Finalize();
 	delete postEffect;
+	postEffectMix->Finalize();
+	delete postEffectMix;
 
 	////////////////////////
 
@@ -63,14 +62,19 @@ void MyGame::Update() {
 // 描画
 void MyGame::Draw() {
 
-	postEffectTest->PreDrawScene(dxCommon->GetCommandList());
-	postEffect->Draw(dxCommon->GetCommandList());
-	postEffectTest->PostDrawScene();
 
 	// ポストエフェクト用ゲームシーンの描画
 	postEffect->PreDrawScene(dxCommon->GetCommandList());
 	gameScene->Draw();
 	postEffect->PostDrawScene();
+
+	postEffectMix->PreDrawScene(dxCommon->GetCommandList(),0);
+	gameScene->Draw();
+	postEffectMix->PostDrawScene(0);
+
+	postEffectMix->PreDrawScene(dxCommon->GetCommandList(), 1);
+	postEffect->Draw(dxCommon->GetCommandList());
+	postEffectMix->PostDrawScene(1);
 
 	//4.描画コマンドここから
 	dxCommon->PreDraw();
@@ -80,9 +84,8 @@ void MyGame::Draw() {
 
 	//ポストエフェクトの描画
 
-	postEffect->Draw(dxCommon->GetCommandList());
-
-	postEffectTest->Draw(dxCommon->GetCommandList());
+	//postEffect->Draw(dxCommon->GetCommandList());
+	postEffectMix->Draw(dxCommon->GetCommandList());
 	// Imgui受付終了
 	imgui->End();
 #ifdef _DEBUG

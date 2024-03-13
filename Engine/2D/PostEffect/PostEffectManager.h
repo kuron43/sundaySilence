@@ -1,5 +1,5 @@
 #pragma once
-#include "IPostEffect.h"
+#include "PostEffect.h"
 
 #pragma warning(push)
 #pragma warning(disable: 4819)
@@ -26,8 +26,6 @@ public:
 public:
 
 private:
-
-	std::vector<PostEffect> postEffect;
 
 };
 

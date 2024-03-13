@@ -1,33 +1,32 @@
 #pragma once
-/**
- * @file IPosteffect.h
- * @brief 基底ポストエフェクトクラス
- */
+
 #pragma warning(push)
 #pragma warning(disable: 4819)
 #pragma warning(disable: 4514)
 #include <DirectXTex.h>
 #include <array>
-#include <memory>
 #include <string>
 #pragma warning(pop)
 
 #include"DirectXCommon.h"
 #include "WinApp.h"
 #include "Affin.h"
-class IPostEffect
+
+class VignetteEffect
 {
-public:
+
+protected: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	// DirectX::を省略
 
+public:
 	/// <summary>
 	/// 頂点データ構造体
 	/// </summary>
 	struct VertexPosUv {
 		Vector3 pos; // xyz座標
 		Vector2 uv;  // uv座標
-
 	};
 
 	/// <summary>
@@ -41,6 +40,10 @@ public:
 	//GPU
 	struct SendDataGPU {
 		int shadeNumber;	//SHADER番号
+		int kernelSize;		// ぼかし度
+		Vector2 center;		// 中心
+		float intensity;	// ブラーの広がりの強さ
+		int samples;		// サンプル回数
 	};
 
 	//デフォルトテクスチャ格納ディレクトリ
@@ -48,7 +51,7 @@ public:
 	static const std::wstring kShaderExtention;
 	HRESULT result;
 public:
-	IPostEffect();
+	VignetteEffect();
 	static void Initialize(DirectXCommon* dxCommon, const std::wstring& fileName);
 
 	static void Finalize();
@@ -62,7 +65,7 @@ public:
 	/// シーン描画前処理
 	/// </summary>
 	/// <param name="cmdList">コマンドリスト</param>
-	static void PreDrawScene(ID3D12GraphicsCommandList* cmdList,uint32_t TexNum);
+	static void PreDrawScene(ID3D12GraphicsCommandList* cmdList);
 
 	/// <summary>
 	/// シーン描画処理
@@ -73,7 +76,13 @@ public:
 	/// シーン描画後処理
 	/// </summary>
 	/// <param name="cmdList">コマンド処理</param>
-	static void PostDrawScene(uint32_t TexNum);
+	static void PostDrawScene();
+
+	static void SetShadeNumber(uint32_t SetShadeNumber);
+
+	static void SetKernelSize(uint32_t range);
+
+	static void SetRadialBlur(Vector2 senter, float intensity, uint32_t sample);
 
 private://静的メンバ変数
 	static const float clearColor[4];
@@ -90,7 +99,7 @@ private://静的メンバ変数
 
 	//頂点バッファビューの作成
 	static D3D12_VERTEX_BUFFER_VIEW vbView;
-	static ComPtr<ID3D12Resource> texBuff[2];
+	static ComPtr<ID3D12Resource> texBuff;
 
 	static ComPtr<ID3D12DescriptorHeap> descHeapSRV;
 	//深度バッファ
@@ -109,7 +118,7 @@ private:
 	static SendDataGPU* dataMap;
 
 	//コピーコンストラクタ・代入演算子削除
-	IPostEffect& operator=(const IPostEffect&) = delete;
-	IPostEffect(const IPostEffect&) = delete;
+	VignetteEffect& operator=(const VignetteEffect&) = delete;
+	VignetteEffect(const VignetteEffect&) = delete;
 };
 

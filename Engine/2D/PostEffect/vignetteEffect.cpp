@@ -1,4 +1,4 @@
-#include "PostEffect.h"
+#include "vignetteEffect.h"
 #include"WinApp.h"
 #pragma warning(push)
 #pragma warning(disable: 4819)
@@ -7,46 +7,52 @@
 #include<d3dx12.h>
 #include <cassert>
 #include <d3dcompiler.h>
-#pragma warning(pop)
 
-const std::wstring PostEffect::kDefaultShaderDirectoryPath = L"Resources/SHADER/POSTFX/";
-const std::wstring PostEffect::kShaderExtention = L".hlsl";
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 
-ID3D12Device* PostEffect::device_;
+ID3D12Device* VignetteEffect::device_;
 
-ID3D12GraphicsCommandList* PostEffect::commandList;
+ID3D12GraphicsCommandList* VignetteEffect::commandList;
 
-PostEffect::VertexPosUv PostEffect::vertices[4];
+VignetteEffect::VertexPosUv VignetteEffect::vertices[4];
 
-PostEffect::VertexPosUv* PostEffect::vertMap;
+VignetteEffect::VertexPosUv* VignetteEffect::vertMap;
 
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::vertBuff;	//頂点バッファ
+Microsoft::WRL::ComPtr<ID3D12Resource> VignetteEffect::vertBuff;	//頂点バッファ
 
 //頂点バッファビューの作成
-D3D12_VERTEX_BUFFER_VIEW PostEffect::vbView{};
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::texBuff;
+D3D12_VERTEX_BUFFER_VIEW VignetteEffect::vbView{};
+Microsoft::WRL::ComPtr<ID3D12Resource> VignetteEffect::texBuff;
 
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapSRV;
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> VignetteEffect::descHeapSRV;
 //深度バッファ
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::depthBuff;
+Microsoft::WRL::ComPtr<ID3D12Resource> VignetteEffect::depthBuff;
 //RTV用のデスクリプタヒープ
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapRTV;
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> VignetteEffect::descHeapRTV;
 //DSV用のデスクリプタヒープ
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapDSV;
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> VignetteEffect::descHeapDSV;
 
-Microsoft::WRL::ComPtr<ID3D12PipelineState> PostEffect::pipelineState;
-Microsoft::WRL::ComPtr<ID3D12RootSignature> PostEffect::rootSignature;
+Microsoft::WRL::ComPtr<ID3D12PipelineState> VignetteEffect::pipelineState;
+Microsoft::WRL::ComPtr<ID3D12RootSignature> VignetteEffect::rootSignature;
 
 // 定数バッファ
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::constDataBuff_;
+Microsoft::WRL::ComPtr<ID3D12Resource> VignetteEffect::constDataBuff_;
 // マッピング済みアドレス
-PostEffect::SendDataGPU* PostEffect::dataMap = nullptr;
+VignetteEffect::SendDataGPU* VignetteEffect::dataMap = nullptr;
 
-const float PostEffect::clearColor[4] = { 0.0f,0.0f,0.0f,0 };
+const float VignetteEffect::clearColor[4] = { 0.0f,0.0f,0.0f,0 };
 
-void PostEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fileName)
+const std::wstring VignetteEffect::kDefaultShaderDirectoryPath = L"Resources/SHADER/POSTFX/";
+const std::wstring VignetteEffect::kShaderExtention = L".hlsl";
+
+
+VignetteEffect::VignetteEffect()
+{
+}
+
+void VignetteEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fileName)
 {
 	HRESULT result;
 
@@ -84,9 +90,8 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fileNam
 			const UINT depthPitch = rowPitch * WinApp::window_height;
 			//画像イメージ
 			UINT* img = new UINT[pixelCount];
-			for (uint32_t i = 0; i < pixelCount; i++) {
-				img[i] = 0xffffffff;
-			}
+			for (uint32_t j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
+
 
 			result = texBuff->WriteToSubresource(0, nullptr,
 				img, rowPitch, depthPitch);
@@ -115,7 +120,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fileNam
 		CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), (INT)0,
 			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
 	);
-	
+
 	//RTV用のデスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
 
@@ -127,8 +132,9 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fileNam
 	//RTV用のデスクリプタヒープを生成
 		//デスクリプタヒープにRTVを作成
 	device_->CreateRenderTargetView(texBuff.Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
-		descHeapRTV->GetCPUDescriptorHandleForHeapStart(),
-		(INT)0, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
+		descHeapRTV->GetCPUDescriptorHandleForHeapStart(), (INT)0, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
+
+
 
 	descHeapDSV = dxCommon->GetdsvHeap();
 
@@ -214,7 +220,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fileNam
 	constDataBuff_->Unmap(0, nullptr);
 }
 
-void PostEffect::Finalize()
+void VignetteEffect::Finalize()
 {
 
 	vertBuff.Reset();
@@ -228,14 +234,14 @@ void PostEffect::Finalize()
 
 }
 
-void PostEffect::CreatGraphicsPipeline(const std::wstring& fileName)
+void VignetteEffect::CreatGraphicsPipeline(const std::wstring& fileName)
 {
 	HRESULT result;
 
 	Microsoft::WRL::ComPtr<ID3DBlob> vsBlob = nullptr;//頂点シェーダーオブジェクト
 	Microsoft::WRL::ComPtr<ID3DBlob> psBlob = nullptr;//ピクセルシェーダーオブジェクト
-
 	ID3DBlob* errorBlob = nullptr;//エラーオブジェクト
+
 	const std::wstring FULLPATH_VS = kDefaultShaderDirectoryPath + fileName + L"VS" + kShaderExtention;
 	//頂点シェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
@@ -319,7 +325,6 @@ void PostEffect::CreatGraphicsPipeline(const std::wstring& fileName)
 
 	CD3DX12_DESCRIPTOR_RANGE descRangeSRV1;
 	descRangeSRV1.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1); // t1 レジスタ
-
 	// ルートパラメータ
 	CD3DX12_ROOT_PARAMETER rootparams[3] = {};
 	rootparams[0].InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
@@ -370,10 +375,11 @@ void PostEffect::CreatGraphicsPipeline(const std::wstring& fileName)
 	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算
 	//blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;//1.0f-デストカラーの値
 	//blenddesc.DestBlend = D3D12_BLEND_ZERO;//使わない
-	//半透明合成
+	////半透明合成
 	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算
 	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;//ソースのアルファ値
 	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;//1.0f-ソースのアルファ値
+
 	//頂点レイアウトの設定
 	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
 	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
@@ -391,7 +397,48 @@ void PostEffect::CreatGraphicsPipeline(const std::wstring& fileName)
 	assert(SUCCEEDED(result));
 }
 
-void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
+void VignetteEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
+{
+	commandList = cmdList;
+
+	CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+	//リソースバリアを変更(シェーダーリソース→描画可能)
+	commandList->ResourceBarrier(1,
+		&resouceBar);
+
+	//レンダーターゲットビュー用のディスクリプタヒープのハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs;
+	rtvHs = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), (INT)0,
+		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
+
+
+	//深度ステンシルビュー用デスクリプタヒープのハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvH = descHeapDSV->GetCPUDescriptorHandleForHeapStart();
+	//レンダーターゲットをセット
+	commandList->OMSetRenderTargets(1, &rtvHs, false, &dsvH);
+
+	CD3DX12_VIEWPORT viewPorts;
+	CD3DX12_RECT scissorRects;
+
+	viewPorts = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
+	scissorRects = CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
+
+
+	//ビューポートの設定
+	commandList->RSSetViewports(2, &viewPorts);
+	//シザリング矩形の設定
+	commandList->RSSetScissorRects(2, &scissorRects);
+	//全画面のクリア
+	commandList->ClearRenderTargetView(rtvHs, clearColor, 0, nullptr);
+
+	//深度バッファのクリア
+	commandList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+}
+
+void VignetteEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	commandList = cmdList;
 
@@ -412,76 +459,36 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	commandList->SetGraphicsRootDescriptorTable(1, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 0,
 		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
 
-	//commandList->SetGraphicsRootDescriptorTable(1, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 1,
-	//	device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
+	commandList->SetGraphicsRootDescriptorTable(2, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 1,
+		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
 
 	commandList->SetGraphicsRootConstantBufferView(0, constDataBuff_->GetGPUVirtualAddress());
 
 	//描画コマンド
 	commandList->DrawInstanced(_countof(vertices), 1, 0, 0);//すべての頂点を使って描画
-	
 }
 
-
-void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
-{
-	commandList = cmdList;
-
-	CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
-		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-		D3D12_RESOURCE_STATE_RENDER_TARGET);
-
-	//リソースバリアを変更(シェーダーリソース→描画可能)
-	commandList->ResourceBarrier(1,
-		&resouceBar);
-
-	//レンダーターゲットビュー用のディスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs;
-		rtvHs = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), (INT)0,
-			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
-
-	//深度ステンシルビュー用デスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvH = descHeapDSV->GetCPUDescriptorHandleForHeapStart();
-	//レンダーターゲットをセット
-	commandList->OMSetRenderTargets(1, &rtvHs, false, &dsvH);
-
-	CD3DX12_VIEWPORT viewPorts;
-	CD3DX12_RECT scissorRects;
-
-		viewPorts = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
-		scissorRects = CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
-
-	//ビューポートの設定
-	commandList->RSSetViewports(1, &viewPorts);
-	//シザリング矩形の設定
-	commandList->RSSetScissorRects(1, &scissorRects);
-	//全画面のクリア
-	commandList->ClearRenderTargetView(rtvHs, clearColor, 0, nullptr);
-	//深度バッファのクリア
-	commandList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-}
-
-
-void PostEffect::PostDrawScene()
+void VignetteEffect::PostDrawScene()
 {
 	CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
 	commandList->ResourceBarrier(1, &RESOURCE_BARRIER);
+
 }
 
-void PostEffect::SetShadeNumber(uint32_t SetShadeNumber)
+void VignetteEffect::SetShadeNumber(uint32_t SetShadeNumber)
 {
 	dataMap->shadeNumber = (int)SetShadeNumber;
 }
 
-void PostEffect::SetKernelSize(uint32_t range) {
+void VignetteEffect::SetKernelSize(uint32_t range) {
 
 	dataMap->kernelSize = (int)range;
 
 }
 
-void PostEffect::SetRadialBlur(Vector2 center, float intensity, uint32_t sample)
+void VignetteEffect::SetRadialBlur(Vector2 center, float intensity, uint32_t sample)
 {
 	dataMap->center = center;
 	dataMap->intensity = (float)intensity;

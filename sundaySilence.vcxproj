@@ -110,8 +110,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\MotionBlur.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\PostEffect.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\vignetteEffect.cpp" />
     <ClCompile Include="Engine\2D\Sprite.cpp" />
     <ClCompile Include="Engine\2D\SpriteCommon.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp" />
@@ -196,8 +198,10 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
     <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h" />
+    <ClInclude Include="Engine\2D\PostEffect\MotionBlur.h" />
     <ClInclude Include="Engine\2D\PostEffect\PostEffect.h" />
     <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
+    <ClInclude Include="Engine\2D\PostEffect\vignetteEffect.h" />
     <ClInclude Include="Engine\2D\Sprite.h" />
     <ClInclude Include="Engine\2D\SpriteCommon.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXLoader.h" />
@@ -290,6 +294,20 @@
     <None Include="Resources\SHADER\FBX.hlsli" />
     <None Include="Resources\SHADER\OBJShaderHeader.hlsli" />
     <None Include="Resources\SHADER\Particle.hlsli" />
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlur.hlsli">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <None Include="Resources\SHADER\POSTFX\IPostEffect.hlsli" />
     <None Include="Resources\SHADER\POSTFX\PostEffect.hlsli" />
     <None Include="Resources\SHADER\Sprite.hlsli" />
   </ItemGroup>
@@ -329,6 +347,13 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <None Include="Resources\SHADER\POSTFX\MotionBlurPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
     <FxCompile Include="Resources\SHADER\POSTFX\PostEffectPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -336,6 +361,12 @@
     <FxCompile Include="Resources\SHADER\POSTFX\PostEffectVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlurVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\SHADER\SpritePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

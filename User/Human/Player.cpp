@@ -109,7 +109,8 @@ void Player::Initialize() {
 	PL_Barrier->SetRadius(5.0f);
 	PL_Barrier->Update();
 	PL_Barrier->SetAttribute(COLLISION_ATTR_PLAYERBARRIER);
-	barrierOnTime = BARRIER_RIMIT;
+	barrierOnTime = NUMBER::NUM_ONE;
+	isOnBarrier = false;
 
 	//test
 	coliderBarrierPosTest_ = Object3d::Create();
@@ -155,7 +156,7 @@ void Player::Update(Input* input, bool isTitle) {
 			barrierOnTime = BARRIER_RIMIT;
 		}
 	}
-	if (isCoolTimeON) {
+	if (isOnBarrier == true && isCoolTimeON) {
 		barrierCoolTime_++;
 		if (barrierCoolTime_ >= BARRIER_COOLTIME) {
 			isCoolTimeON = false;
@@ -264,7 +265,7 @@ void Player::Reset() {
 	pointDash_->Reset();
 	isHitEffect = false;
 	hitTime_ = NONE;
-	barrierOnTime = BARRIER_RIMIT;
+	barrierOnTime = NUMBER::NUM_ONE;
 	barrierCoolTime_ = NUMBER::NUM_ZERO;
 	isOnBarrier = true;
 	isCoolTimeON = false;

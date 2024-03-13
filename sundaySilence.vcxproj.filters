@@ -34,6 +34,10 @@
     <FxCompile Include="Resources\SHADER\SpriteVS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlurVS.hlsl" />
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlur.hlsli" />
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectPS.hlsl" />
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\MATH\Affin.cpp">
@@ -263,6 +267,8 @@
     <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
     <ClCompile Include="User\GAMESCENE\stage\Game3Scene.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\MotionBlur.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\vignetteEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -522,6 +528,8 @@
     <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
     <ClInclude Include="User\GAMESCENE\stage\Game3Scene.h" />
     <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h" />
+    <ClInclude Include="Engine\2D\PostEffect\MotionBlur.h" />
+    <ClInclude Include="Engine\2D\PostEffect\vignetteEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
@@ -539,6 +547,8 @@
     <None Include="Resources\SHADER\Sprite.hlsli">
       <Filter>shader</Filter>
     </None>
+    <None Include="Resources\SHADER\POSTFX\MotionBlurPS.hlsl" />
+    <None Include="Resources\SHADER\POSTFX\IPostEffect.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="engine">

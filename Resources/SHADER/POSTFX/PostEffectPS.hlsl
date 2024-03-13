@@ -99,6 +99,14 @@ float4 main(VSOutput input) : SV_TARGET
     }
     if (shadeNumber == 4)
     {
+        float4 tax0 = tex0.Sample(smp, input.uv) / 3;
+        float4 tax1 = tex1.Sample(smp, input.uv) / 3;
+        
+        return float4(tax0 + tax1);
+       
+    }
+    if (shadeNumber == 5)
+    {
         float2 samplePoint = input.uv;
         float4 Tex = tex0.Sample(smp, samplePoint);
         float vignette = length(float2(0.5, 0.5) - input.uv);
