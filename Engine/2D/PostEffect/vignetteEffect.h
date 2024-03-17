@@ -52,6 +52,7 @@ public:
 	HRESULT result;
 public:
 	VignetteEffect();
+	~VignetteEffect() { Finalize(); }
 	static void Initialize(DirectXCommon* dxCommon, const std::wstring& fileName);
 
 	static void Finalize();

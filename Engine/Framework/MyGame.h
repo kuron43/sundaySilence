@@ -1,10 +1,9 @@
 #pragma once
 
 #include "GameScene.h"
-#include "PostEffect.h"
 #include "fbxsdk.h"
 #include "Framework.h"
-#include "IPostEffect.h"
+#include "PostEffectManager.h"
 
 class MyGame : public Framework
 {
@@ -24,7 +23,8 @@ protected:
 	//ポインタ
 	//FbxManager* fbxManager = nullptr;
 	GameScene* gameScene = nullptr;
-	PostEffect* postEffect = nullptr;
-	IPostEffect* postEffectMix = nullptr;
+	std::unique_ptr<PostEffectManager> postFXManager;
+	//PostEffect* postEffect = nullptr;
+	//IPostEffect* postEffectMix = nullptr;
 };
 

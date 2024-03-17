@@ -8,14 +8,16 @@ void MyGame::Initialize() {
 
 	//fbxManager = FbxManager::Create();
 
-	postEffect = new PostEffect();
-	postEffect->Initialize(dxCommon, L"PostEffect");
-	postEffect->SetKernelSize(3);
-	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1f, 10);
-	postEffect->SetShadeNumber(5);
+	//postEffect = new PostEffect();
+	//postEffect->Initialize(dxCommon, L"PostEffect");
+	//postEffect->SetKernelSize(3);
+	//postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1f, 10);
+	//postEffect->SetShadeNumber(5);
 
-	postEffectMix = new IPostEffect();
-	postEffectMix->Initialize(dxCommon, L"IPostEffect");
+	//postEffectMix = new IPostEffect();
+	//postEffectMix->Initialize(dxCommon, L"IPostEffect");
+	postFXManager = std::make_unique<PostEffectManager>();
+	postFXManager->Initialize(dxCommon);
 
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon->GetDevice());
@@ -38,10 +40,10 @@ void MyGame::Finalize() {
 
 	delete gameScene;
 
-	postEffect->Finalize();
-	delete postEffect;
-	postEffectMix->Finalize();
-	delete postEffectMix;
+	//postEffect->Finalize();
+	//delete postEffect;
+	//postEffectMix->Finalize();
+	//delete postEffectMix;
 
 	////////////////////////
 
@@ -63,18 +65,19 @@ void MyGame::Update() {
 void MyGame::Draw() {
 
 
-	// ポストエフェクト用ゲームシーンの描画
-	postEffect->PreDrawScene(dxCommon->GetCommandList());
-	gameScene->Draw();
-	postEffect->PostDrawScene();
+	//// ポストエフェクト用ゲームシーンの描画
+	//postEffect->PreDrawScene(dxCommon->GetCommandList());
+	//gameScene->Draw();
+	//postEffect->PostDrawScene();
 
-	postEffectMix->PreDrawScene(dxCommon->GetCommandList(),0);
-	gameScene->Draw();
-	postEffectMix->PostDrawScene(0);
+	//postEffectMix->PreDrawScene(dxCommon->GetCommandList(),0);
+	//gameScene->Draw();
+	//postEffectMix->PostDrawScene(0);
 
-	postEffectMix->PreDrawScene(dxCommon->GetCommandList(), 1);
-	postEffect->Draw(dxCommon->GetCommandList());
-	postEffectMix->PostDrawScene(1);
+	//postEffectMix->PreDrawScene(dxCommon->GetCommandList(), 1);
+	//postEffect->Draw(dxCommon->GetCommandList());
+	//postEffectMix->PostDrawScene(1);
+	postFXManager->TargetPreDraw(dxCommon->GetCommandList(), gameScene);
 
 	//4.描画コマンドここから
 	dxCommon->PreDraw();
@@ -85,7 +88,9 @@ void MyGame::Draw() {
 	//ポストエフェクトの描画
 
 	//postEffect->Draw(dxCommon->GetCommandList());
-	postEffectMix->Draw(dxCommon->GetCommandList());
+	//postEffectMix->Draw(dxCommon->GetCommandList());
+	postFXManager->Draw(dxCommon->GetCommandList());
+	
 	// Imgui受付終了
 	imgui->End();
 #ifdef _DEBUG

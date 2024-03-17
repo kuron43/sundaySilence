@@ -49,7 +49,7 @@ public:
 	static const std::wstring kShaderExtention;
     HRESULT result;
 public:
-
+	~PostEffect() { Finalize();}
     static void Initialize(DirectXCommon* dxCommon, const std::wstring& fileName);
 
     static void Finalize();

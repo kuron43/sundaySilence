@@ -49,6 +49,7 @@ public:
 	HRESULT result;
 public:
 	IPostEffect();
+	~IPostEffect() { Finalize(); }
 	static void Initialize(DirectXCommon* dxCommon, const std::wstring& fileName);
 
 	static void Finalize();
