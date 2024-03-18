@@ -18,7 +18,6 @@ class VignetteEffect
 protected: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::を省略
 
 public:
 	/// <summary>
@@ -27,14 +26,6 @@ public:
 	struct VertexPosUv {
 		Vector3 pos; // xyz座標
 		Vector2 uv;  // uv座標
-	};
-
-	/// <summary>
-	/// 定数バッファ用データ構造体
-	/// </summary>
-	struct ConstBufferData {
-		Vector4 color; // 色 (RGBA)
-		Matrix4 mat;   // ３Ｄ変換行列
 	};
 
 	//GPU

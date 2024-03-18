@@ -103,7 +103,7 @@ void VignetteEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fil
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeapDesc = {};
 	srvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvDescHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	srvDescHeapDesc.NumDescriptors = 2;
+	srvDescHeapDesc.NumDescriptors = 1;
 	//SRVデスクリプタヒープ設定
 	result = device_->CreateDescriptorHeap(&srvDescHeapDesc, IID_PPV_ARGS(&descHeapSRV));
 	assert(SUCCEEDED(result));
@@ -125,7 +125,7 @@ void VignetteEffect::Initialize(DirectXCommon* dxCommon, const std::wstring& fil
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
 
 	rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-	rtvDescHeapDesc.NumDescriptors = 2;
+	rtvDescHeapDesc.NumDescriptors = 1;
 
 	result = device_->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
 	assert(SUCCEEDED(result));
@@ -323,13 +323,10 @@ void VignetteEffect::CreatGraphicsPipeline(const std::wstring& fileName)
 	CD3DX12_DESCRIPTOR_RANGE descRangeSRV0;
 	descRangeSRV0.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0); // t0 レジスタ
 
-	CD3DX12_DESCRIPTOR_RANGE descRangeSRV1;
-	descRangeSRV1.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1); // t1 レジスタ
 	// ルートパラメータ
-	CD3DX12_ROOT_PARAMETER rootparams[3] = {};
+	CD3DX12_ROOT_PARAMETER rootparams[2] = {};
 	rootparams[0].InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 	rootparams[1].InitAsDescriptorTable(1, &descRangeSRV0, D3D12_SHADER_VISIBILITY_ALL);
-	rootparams[2].InitAsDescriptorTable(1, &descRangeSRV1, D3D12_SHADER_VISIBILITY_ALL);
 
 	// スタティックサンプラー
 	CD3DX12_STATIC_SAMPLER_DESC samplerDesc =
@@ -459,8 +456,6 @@ void VignetteEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	commandList->SetGraphicsRootDescriptorTable(1, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 0,
 		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
 
-	commandList->SetGraphicsRootDescriptorTable(2, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 1,
-		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
 
 	commandList->SetGraphicsRootConstantBufferView(0, constDataBuff_->GetGPUVirtualAddress());
 

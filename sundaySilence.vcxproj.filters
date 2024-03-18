@@ -38,6 +38,8 @@
     <FxCompile Include="Resources\SHADER\POSTFX\MotionBlur.hlsli" />
     <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectPS.hlsl" />
     <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectVS.hlsl" />
+    <FxCompile Include="Resources\SHADER\POSTFX\VignettePS.hlsl" />
+    <FxCompile Include="Resources\SHADER\POSTFX\VignetteVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\MATH\Affin.cpp">
@@ -549,6 +551,7 @@
     </None>
     <None Include="Resources\SHADER\POSTFX\MotionBlurPS.hlsl" />
     <None Include="Resources\SHADER\POSTFX\IPostEffect.hlsli" />
+    <None Include="Resources\SHADER\POSTFX\Vignette.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="engine">

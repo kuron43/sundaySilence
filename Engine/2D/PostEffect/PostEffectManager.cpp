@@ -3,6 +3,8 @@
 
 void PostEffectManager::Initialize(DirectXCommon* dxCommon)
 {
+	vignetteFX = std::make_unique<VignetteEffect>();
+	vignetteFX->Initialize(dxCommon, L"Vignette");
 
 	postEffectMix = std::make_unique<IPostEffect>();
 	postEffectMix->Initialize(dxCommon, L"IPostEffect");
@@ -11,7 +13,7 @@ void PostEffectManager::Initialize(DirectXCommon* dxCommon)
 	testFX->Initialize(dxCommon, L"PostEffect");
 	testFX->SetKernelSize(3);
 	testFX->SetRadialBlur(Vector2(WinApp::window_width / 2, WinApp::window_height / 2), 0.1f, 10);
-	testFX->SetShadeNumber(5);
+	testFX->SetShadeNumber(0);
 }
 
 void PostEffectManager::Draw(ID3D12GraphicsCommandList* cmdList)
@@ -25,12 +27,18 @@ void PostEffectManager::TargetPreDraw(ID3D12GraphicsCommandList* cmdList,GameSce
 	gameScene->Draw();
 	testFX->PostDrawScene();
 
-	postEffectMix->PreDrawScene(cmdList, 0);
+	vignetteFX->PreDrawScene(cmdList);
 	gameScene->Draw();
+	vignetteFX->PostDrawScene();
+
+
+	//////////////
+	postEffectMix->PreDrawScene(cmdList, 0);
+	testFX->Draw(cmdList);
 	postEffectMix->PostDrawScene(0);
 
 	postEffectMix->PreDrawScene(cmdList, 1);
-	testFX->Draw(cmdList);
+	vignetteFX->Draw(cmdList);
 	postEffectMix->PostDrawScene(1);
 
 }
