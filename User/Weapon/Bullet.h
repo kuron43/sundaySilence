@@ -47,7 +47,7 @@ public:
 
 	virtual void Draw();
 
-	void OnColision();
+	void OnCollision();
 
 	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bulletObj_->wtf.matWorld); };
 

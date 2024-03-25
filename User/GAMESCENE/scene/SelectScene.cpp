@@ -51,7 +51,7 @@ void SelectScene::Update(Input* input) {
 
 	SelectSceneNum(input);
 	MoveScene();
-	SpriteColision();
+	SpriteCollision();
 #ifdef _DEBUG
 	// Imgui
 	ImGui::Begin("SELECT NUM");
@@ -121,7 +121,7 @@ void SelectScene::MoveScene() {
 	}
 }
 
-void SelectScene::SpriteColision()
+void SelectScene::SpriteCollision()
 {
 	switch (selectNum)
 	{

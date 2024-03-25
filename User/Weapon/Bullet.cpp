@@ -133,7 +133,7 @@ void Bullet::Draw()
 	bulletObj_->Draw();
 }
 
-void Bullet::OnColision() {
+void Bullet::OnCollision() {
 	isDead = true;
 }
 

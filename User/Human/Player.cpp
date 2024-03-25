@@ -196,7 +196,7 @@ void Player::Update(Input* input, bool isTitle) {
 
 
 	PhantomUpdate();
-	ColisionUpdate();
+	CollisionUpdate();
 	HitMyColor();
 	object_->Update();
 
@@ -358,18 +358,18 @@ void Player::HitMyColor()
 	}
 }
 
-void Player::ColisionUpdate() {
+void Player::CollisionUpdate() {
 	// コライダーのアップデート
 	object_->UpdateMatrix();
 
 	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true) {
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
-				OnColision(true);
+				OnCollision(true);
 			}
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIESFIRE) {
 				if (coolTimeFB_ <= NUM_ZERO) {
-					OnColision(false);
+					OnCollision(false);
 				}
 			}
 		}
@@ -451,7 +451,7 @@ void Player::ColisionUpdate() {
 
 }
 
-void Player::OnColision(bool bullet)
+void Player::OnCollision(bool bullet)
 {
 	if (bullet) {
 		hp_--;

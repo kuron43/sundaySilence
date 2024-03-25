@@ -54,14 +54,14 @@
     <ClCompile Include="Engine\LIGHT\CircleShadow.cpp">
       <Filter>engine\light</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\Collision.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\Collision.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\CollisionManager.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\CollisionManager.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\CollisionPrimitive.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\CollisionPrimitive.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
     <ClCompile Include="Engine\MATH\ConvertXM.cpp">
       <Filter>engine\math</Filter>
@@ -162,20 +162,20 @@
     <ClCompile Include="Engine\LIGHT\PointLight.cpp">
       <Filter>engine\light</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\MeshCollider.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\MeshCollider.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\ObbCollider.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\ObbCollider.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\QueryCallback.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\QueryCallback.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\RayCollider.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\RayCollider.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\SphereCollider.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\SphereCollider.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\Json\JsonLoader.cpp">
       <Filter>engine\3d\json</Filter>
@@ -279,8 +279,8 @@
     <ClInclude Include="Engine\AUDIO\Audio.h">
       <Filter>engine\audio</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\BaseCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\BaseCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
     <ClInclude Include="Engine\CAMERA\Camera.h">
       <Filter>engine\camera</Filter>
@@ -288,23 +288,23 @@
     <ClInclude Include="Engine\LIGHT\CircleShadow.h">
       <Filter>engine\light</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\Collision.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\Collision.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionAttribute.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionAttribute.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionInfo.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionInfo.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionManager.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionManager.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionPrimitive.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionPrimitive.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionTypes.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionTypes.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
     <ClInclude Include="Engine\MATH\ConvertXM.h">
       <Filter>engine\math</Filter>
@@ -405,23 +405,23 @@
     <ClInclude Include="Engine\LIGHT\PointLight.h">
       <Filter>engine\light</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\MeshCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\MeshCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\ObbCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\ObbCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\QueryCallback.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\QueryCallback.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\RaycastHit.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\RaycastHit.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\RayCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\RayCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\SphereCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\SphereCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp">
       <Filter>engine\3d\json</Filter>
@@ -578,9 +578,6 @@
     <Filter Include="engine\audio">
       <UniqueIdentifier>{edbea72a-c68c-4893-8e55-b5d7660f2ce2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="engine\colision">
-      <UniqueIdentifier>{30f666f6-3664-494e-b1d4-33fed5a16e2b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="engine\math">
       <UniqueIdentifier>{b4a84e92-1db5-42b3-9659-8e40b22ac464}</UniqueIdentifier>
     </Filter>
@@ -631,6 +628,9 @@
     </Filter>
     <Filter Include="user\skils">
       <UniqueIdentifier>{be90c4fa-a6bb-4a7d-b98f-c01bad566c95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\collision">
+      <UniqueIdentifier>{30f666f6-3664-494e-b1d4-33fed5a16e2b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

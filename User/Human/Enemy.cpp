@@ -115,7 +115,7 @@ void Enemy::Update(Input* input, bool isTitle) {
 	weapon_->Update(input, _isSlow);
 
 	FrontFace();
-	ColiderUpdate();
+	ColliderUpdate();
 
 }
 
@@ -186,7 +186,7 @@ void Enemy::FrontFace() {
 	object_->wtf.rotation = resultRot;
 }
 
-void Enemy::ColiderUpdate() {
+void Enemy::ColliderUpdate() {
 	oldFound = isFound;
 	isFound = false;
 	isBlocked = false;
@@ -199,7 +199,7 @@ void Enemy::ColiderUpdate() {
 	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true) {
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
-				OnColision();
+				OnCollision();
 				// パーティクルなぜかXそのままYZ入れ替えると治る
 				Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
 				particle_->RandParticle(10, patPos);
@@ -246,7 +246,7 @@ void Enemy::ColiderUpdate() {
 	}
 }
 
-void Enemy::OnColision()
+void Enemy::OnCollision()
 {
 	hp--;
 	isHitEffect = true;

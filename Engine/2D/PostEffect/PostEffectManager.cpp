@@ -5,6 +5,7 @@ void PostEffectManager::Initialize(DirectXCommon* dxCommon)
 {
 	vignetteFX = std::make_unique<VignetteEffect>();
 	vignetteFX->Initialize(dxCommon, L"Vignette");
+	vignetteFX->SetShadeNumber(0);
 
 	postEffectMix = std::make_unique<IPostEffect>();
 	postEffectMix->Initialize(dxCommon, L"IPostEffect");
@@ -13,7 +14,7 @@ void PostEffectManager::Initialize(DirectXCommon* dxCommon)
 	testFX->Initialize(dxCommon, L"PostEffect");
 	testFX->SetKernelSize(3);
 	testFX->SetRadialBlur(Vector2(WinApp::window_width / 2, WinApp::window_height / 2), 0.1f, 10);
-	testFX->SetShadeNumber(0);
+	testFX->SetShadeNumber(5);
 }
 
 void PostEffectManager::Draw(ID3D12GraphicsCommandList* cmdList)

@@ -48,8 +48,8 @@ private:
 	void Move(Input* input);
 	void FaceAngleUpdate();
 	void HitMyColor();
-	void ColisionUpdate();
-	void OnColision(bool bullet);
+	void CollisionUpdate();
+	void OnCollision(bool bullet);
 	void PhantomUpdate();
 private:
 	const uint32_t Tribe_ = HU_PLAYER;

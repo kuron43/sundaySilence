@@ -261,7 +261,7 @@ void FireBottle::Draw()
 	bottleObj_->Draw();
 }
 
-void FireBottle::OnColision() {
+void FireBottle::OnCollision() {
 	//isDead = true;
 	isExplosion = true;
 }

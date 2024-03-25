@@ -35,7 +35,7 @@ public:
 
 	void SelectSceneNum(Input* input);
 	void MoveScene();
-	void SpriteColision();
+	void SpriteCollision();
 
 private:
 	std::unique_ptr <Sprite> selectTitele_;

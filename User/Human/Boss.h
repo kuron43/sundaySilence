@@ -46,8 +46,8 @@ private:
 	//正面をレティクル方向に向かせる
 	void FrontFace();
 	// 当たり判定用のアップデート
-	void ColiderUpdate();
-	void OnColision();
+	void ColliderUpdate();
+	void OnCollision();
 
 	void HitMyColor();
 public:

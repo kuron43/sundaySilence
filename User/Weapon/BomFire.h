@@ -91,7 +91,7 @@ public:
 
 	void Draw() override;
 
-	void OnColision();
+	void OnCollision();
 
 	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bottleObj_->wtf.matWorld); };
 

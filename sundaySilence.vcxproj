@@ -61,7 +61,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);DIRECTINPUT_VERSION=0x0800</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\2D\PostEffect;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLLIDER;$(SolutionDir)Engine\2D\PostEffect;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -87,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);DIRECTINPUT_VERSION=0x0800</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\2D\PostEffect;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLLIDER;$(SolutionDir)Engine\2D\PostEffect;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -133,14 +133,14 @@
     <ClCompile Include="Engine\BASE\main.cpp" />
     <ClCompile Include="Engine\BASE\WinApp.cpp" />
     <ClCompile Include="Engine\CAMERA\Camera.cpp" />
-    <ClCompile Include="Engine\COLIDER\Collision.cpp" />
-    <ClCompile Include="Engine\COLIDER\CollisionManager.cpp" />
-    <ClCompile Include="Engine\COLIDER\CollisionPrimitive.cpp" />
-    <ClCompile Include="Engine\COLIDER\MeshCollider.cpp" />
-    <ClCompile Include="Engine\COLIDER\ObbCollider.cpp" />
-    <ClCompile Include="Engine\COLIDER\QueryCallback.cpp" />
-    <ClCompile Include="Engine\COLIDER\RayCollider.cpp" />
-    <ClCompile Include="Engine\COLIDER\SphereCollider.cpp" />
+    <ClCompile Include="Engine\COLLIDER\Collision.cpp" />
+    <ClCompile Include="Engine\COLLIDER\CollisionManager.cpp" />
+    <ClCompile Include="Engine\COLLIDER\CollisionPrimitive.cpp" />
+    <ClCompile Include="Engine\COLLIDER\MeshCollider.cpp" />
+    <ClCompile Include="Engine\COLLIDER\ObbCollider.cpp" />
+    <ClCompile Include="Engine\COLLIDER\QueryCallback.cpp" />
+    <ClCompile Include="Engine\COLLIDER\RayCollider.cpp" />
+    <ClCompile Include="Engine\COLLIDER\SphereCollider.cpp" />
     <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp" />
     <ClCompile Include="Engine\Framework\Framework.cpp" />
     <ClCompile Include="Engine\Framework\MyGame.cpp" />
@@ -219,19 +219,19 @@
     <ClInclude Include="Engine\BASE\FPS.h" />
     <ClInclude Include="Engine\BASE\WinApp.h" />
     <ClInclude Include="Engine\CAMERA\Camera.h" />
-    <ClInclude Include="Engine\COLIDER\BaseCollider.h" />
-    <ClInclude Include="Engine\COLIDER\Collision.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionAttribute.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionInfo.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionManager.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionPrimitive.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionTypes.h" />
-    <ClInclude Include="Engine\COLIDER\MeshCollider.h" />
-    <ClInclude Include="Engine\COLIDER\ObbCollider.h" />
-    <ClInclude Include="Engine\COLIDER\QueryCallback.h" />
-    <ClInclude Include="Engine\COLIDER\RaycastHit.h" />
-    <ClInclude Include="Engine\COLIDER\RayCollider.h" />
-    <ClInclude Include="Engine\COLIDER\SphereCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\BaseCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\Collision.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionAttribute.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionInfo.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionManager.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionPrimitive.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionTypes.h" />
+    <ClInclude Include="Engine\COLLIDER\MeshCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\ObbCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\QueryCallback.h" />
+    <ClInclude Include="Engine\COLLIDER\RaycastHit.h" />
+    <ClInclude Include="Engine\COLLIDER\RayCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\SphereCollider.h" />
     <ClInclude Include="Engine\DEBUG\ImGuiManager.h" />
     <ClInclude Include="Engine\Framework\Framework.h" />
     <ClInclude Include="Engine\Framework\MyGame.h" />
