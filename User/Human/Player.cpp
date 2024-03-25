@@ -246,10 +246,10 @@ void Player::Move(Input* input) {
 
 	//////////////////////////////////
 	if (input->MouseButtonPush(RIGHT_MOUSE)) {
-		_isSlow = true;
+		Human::_isSlow = true;
 	}
-	else {
-		_isSlow = false;
+	if(input->MouseButtonRelease(RIGHT_MOUSE)) {
+		Human::_isSlow = false;
 	}
 	if (input->MouseButtonRelease(RIGHT_MOUSE)) {
 		nowSetPoint = false;
@@ -481,9 +481,9 @@ void Player::WeaponUpdate()
 	}
 
 	for (uint32_t i = 0; i < 2; i++) {
-		weapon_[i]->Update(&Input::get_instance(), _isSlow);
+		weapon_[i]->Update(&Input::get_instance());
 	}
-
+	Weapon::SetIsSlow(_isSlow);
 }
 
 void Player::PointDashUpdate()

@@ -4,6 +4,7 @@
  */
 #include "Weapon.h"
 #include <cassert>
+bool Weapon::_isSlow = false;
 
 Weapon::Weapon() {
 
@@ -22,10 +23,7 @@ bool Weapon::Initialize() {
 }
 
 /// 更新を行う
-void Weapon::Update(Input* input, bool isSlow) {
-	if (isSlow == false) {
-
-	}
+void Weapon::Update(Input* input) {
 	if (input) {
 
 	}

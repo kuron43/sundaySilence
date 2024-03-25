@@ -19,13 +19,11 @@ bool BomFire::Initialize() {
 }
 
 /// 更新を行う
-void BomFire::Update(Input* input, bool isSlow) {
-
-	_isSlow = isSlow;
+void BomFire::Update(Input* input) {
 	if (input) {
 
 	}
-	if (isSlow == true) {
+	if (_isSlow == true) {
 		speed_ = nomalSpeed * _slowSpeed;
 	}
 	else

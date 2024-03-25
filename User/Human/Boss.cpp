@@ -147,7 +147,7 @@ void Boss::Update(Input* input, bool isTitle) {
 		bossFbxO_->AnimRotStop();
 		bossFbxO_->PlayAnimation(4);
 	}
-	weapon_->Update(input, _isSlow);
+	weapon_->Update(input);
 
 	FrontFace();
 	ColliderUpdate();

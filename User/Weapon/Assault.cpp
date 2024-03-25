@@ -19,13 +19,11 @@ bool Assault::Initialize() {
 }
 
 /// 更新を行う
-void Assault::Update(Input* input, bool isSlow) {
-
-	_isSlow = isSlow;
+void Assault::Update(Input* input) {
 	if (input) {
 
 	}
-	if (isSlow == true) {
+	if (_isSlow == true) {
 		speed_ = nomalSpeed * _slowSpeed;
 	}
 	else
@@ -33,28 +31,35 @@ void Assault::Update(Input* input, bool isSlow) {
 		speed_ = nomalSpeed;
 	}
 	// 
-	if (roadingTime <= 0) {
-		if (mag < 10) {
-			goShot = true;
-		}
-		if (mag >= 10) {
-			if (_isSlow == true) {
-				roadingTime = 150;
-				goShot = false;
-				mag = 0;
-			}
-			else {
-				roadingTime = 50;
-				goShot = false;
-				mag = 0;
-			}
-		}
+	if (mag < 10 && nowRoading == false) {
+		goShot = true;
 	}
+	else if (mag >= 10 && nowRoading == false) {
+		goShot = false;
+		nowRoading = true;
+
+		if (_isSlow == true) {
+			mag = 0;
+			roadingTime = 150*2;
+		}
+		else {
+			mag = 0;
+			roadingTime = 50*2;
+		}
+
+	}
+
+	if (roadingTime < 0) {
+		nowRoading = false;
+	}
+	roadingTime--;
+
+
+
 	if (coolTime > 0) {
 		coolTime--;
 	}
 
-	roadingTime--;
 
 
 

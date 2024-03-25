@@ -34,7 +34,7 @@ public:
 	bool Initialize() override;
 
 	/// 更新を行う
-	void Update(Input* input, bool isSlow) override;
+	void Update(Input* input/*, bool isSlow*/) override;
 
 	/// 描画を行う
 	void Draw(DirectXCommon* dxCommon) override;

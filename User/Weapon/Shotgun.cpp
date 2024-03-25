@@ -39,13 +39,13 @@ bool Shotgun::Initialize() {
 }
 
 /// 更新を行う
-void Shotgun::Update(Input* input, bool isSlow) {
+void Shotgun::Update(Input* input/*, bool isSlow*/) {
 
-	_isSlow = isSlow;
+	//_isSlow = isSlow;
 	if (input) {
 
 	}
-	if (isSlow == true) {
+	if (_isSlow == true) {
 		speed_ = nomalSpeed * _slowSpeed;
 	}
 	else
