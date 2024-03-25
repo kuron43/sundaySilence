@@ -51,6 +51,8 @@ private:
 	void CollisionUpdate();
 	void OnCollision(bool bullet);
 	void PhantomUpdate();
+	void WeaponUpdate();
+	void PointDashUpdate();
 private:
 	const uint32_t Tribe_ = HU_PLAYER;
 	uint32_t useWeapon_ = WP_ASSAULT;

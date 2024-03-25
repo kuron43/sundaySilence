@@ -132,69 +132,9 @@ void Player::Update(Input* input, bool isTitle) {
 	object_->wtf.position.y = NONE;
 	reticle->wtf.position = { mousepos.x * mouseSensitivity_, NONE, mousepos.y * mouseSensitivity_ };
 	reticle->Update();
-	// 武器の切り替え処理
-	if (input->KeyboardTrigger(DIK_E)) {
-		if (useWeapon_ == WP_SHOTGUN) {
-			useWeapon_ = WP_ASSAULT;
-		}
-		else if (useWeapon_ == WP_ASSAULT) {
-			useWeapon_ = WP_SHOTGUN;
-		}
-		else {
 
-		}
-	}
-	// 弾発射
-	if (input->KeyboardTrigger(DIK_SPACE) && !nowTitle && !_isSlow) {
-		//weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
-		isOnBarrier = true;
-	}
-	if (isOnBarrier == true && isCoolTimeON == false) {
-		barrierOnTime--;
-		if (barrierOnTime <= NUMBER::NUM_ZERO) {
-			isCoolTimeON = true;
-			barrierOnTime = BARRIER_RIMIT;
-		}
-	}
-	if (isOnBarrier == true && isCoolTimeON) {
-		barrierCoolTime_++;
-		if (barrierCoolTime_ >= BARRIER_COOLTIME) {
-			isCoolTimeON = false;
-			isOnBarrier = false;
-			barrierCoolTime_ = NUMBER::NUM_ZERO;
-		}
-	}
-
-	for (uint32_t i = 0; i < 2; i++) {
-		weapon_[i]->Update(input, _isSlow);
-	}
-
-	if (_isSlow == true) {
-		if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
-			if (input->MouseButtonTrigger(LEFT_MOUSE) && !nowTitle) {
-				pointDash_->SetPoint(reticle->wtf.position, input);
-				nowSetPoint = true;
-			}
-			reticle->SetModel(reticleMD_);
-			reticle->wtf.rotation.y += 0.05f;
-		}
-		else {
-			reticle->SetModel(reticleXMD_);
-			reticle->wtf.rotation.y = NONE;
-		}
-	}
-	else {
-		reticle->SetModel(reticleMD_);
-		reticle->wtf.rotation.y = NONE;
-	}
-	//object_->camera_->SetFocalLengs(pointDash_->F_lengs);
-
-	if (!nowTitle && pointDash_->isActive == true) {
-		pointDash_->GoToPoint();
-		object_->wtf.position = pointDash_->resultVec;
-	}
-
-
+	WeaponUpdate();
+	PointDashUpdate();
 	PhantomUpdate();
 	CollisionUpdate();
 	HitMyColor();
@@ -500,5 +440,77 @@ void Player::PhantomUpdate()
 
 	for (uint32_t i = NUM_ZERO; i < NUM_FOUR; i++) {
 		phantom_[i]->Update();
+	}
+}
+
+void Player::WeaponUpdate()
+{
+	// 武器の切り替え処理
+	if (Input::get_instance().KeyboardTrigger(DIK_E)) {
+		if (useWeapon_ == WP_SHOTGUN) {
+			useWeapon_ = WP_ASSAULT;
+		}
+		else if (useWeapon_ == WP_ASSAULT) {
+			useWeapon_ = WP_SHOTGUN;
+		}
+		else {
+
+		}
+	}
+	// 弾発射
+	if (isOnBarrier == false && isCoolTimeON == false) {
+		if (Input::get_instance().KeyboardTrigger(DIK_SPACE) && !nowTitle && !_isSlow) {
+			//weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
+			isOnBarrier = true;
+		}
+	}
+	if (isOnBarrier == true && isCoolTimeON == false) {
+		barrierOnTime--;
+		if (barrierOnTime <= NUMBER::NUM_ZERO) {
+			isCoolTimeON = true;
+			barrierOnTime = BARRIER_RIMIT;
+		}
+	}
+	if (isOnBarrier == true && isCoolTimeON == true) {
+		barrierCoolTime_++;
+		if (barrierCoolTime_ >= BARRIER_COOLTIME) {
+			isCoolTimeON = false;
+			isOnBarrier = false;
+			barrierCoolTime_ = NUMBER::NUM_ZERO;
+		}
+	}
+
+	for (uint32_t i = 0; i < 2; i++) {
+		weapon_[i]->Update(&Input::get_instance(), _isSlow);
+	}
+
+}
+
+void Player::PointDashUpdate()
+{
+
+	if (_isSlow == true) {
+		if (pointDash_->PointRayUpdate(Affin::GetWorldTrans(object_->wtf.matWorld), Affin::GetWorldTrans(reticle->wtf.matWorld))) {
+			if (Input::get_instance().MouseButtonTrigger(LEFT_MOUSE) && !nowTitle) {
+				pointDash_->SetPoint(reticle->wtf.position, &Input::get_instance());
+				nowSetPoint = true;
+			}
+			reticle->SetModel(reticleMD_);
+			reticle->wtf.rotation.y += 0.05f;
+		}
+		else {
+			reticle->SetModel(reticleXMD_);
+			reticle->wtf.rotation.y = NONE;
+		}
+	}
+	else {
+		reticle->SetModel(reticleMD_);
+		reticle->wtf.rotation.y = NONE;
+	}
+	//object_->camera_->SetFocalLengs(pointDash_->F_lengs);
+
+	if (!nowTitle && pointDash_->isActive == true) {
+		pointDash_->GoToPoint();
+		object_->wtf.position = pointDash_->resultVec;
 	}
 }

@@ -468,10 +468,14 @@ void SceneObjects::UIUpdate()
 		UIBarrierGaugeSP_->SetTextureIndex(37);
 		UIWeaponSPsize_.y = UISP_Wep_size * -(float)player->GetBarrierOnTime();
 	}
-	else {
+	else if(player->GetOnFire() && player->GetIsCoolTimeON()) {
 		UIWeaponSPsize_.y = UISP_Wep_size * 2.0f * -(float)player->GetBarrierCoolTime();
 		UIBarrierGaugeSP_->SetTextureIndex(36);
 		UIPointSP_->SetTextureIndex(46);
+	}
+	else {
+		UIWeaponSPsize_.y = UISP_Wep_size * -(float)player->GetBarrierOnTime();
+		UIBarrierGaugeSP_->SetTextureIndex(37);
 	}
 	if (player->GetIsSlow()) {
 		//UIWeaponSP_->SetTextureIndex(43);
