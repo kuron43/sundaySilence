@@ -17,10 +17,10 @@ Player::~Player() {
 	delete pointDash_;
 	delete weapon_[0];
 	delete weapon_[1];
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
-		delete coliderPosTest_[i];
+		delete colliderPosTest_[i];
 	}
 	CollisionManager::GetInstance()->RemoveCollider(PL_Barrier);
 	delete PL_Barrier;
@@ -79,12 +79,12 @@ void Player::Initialize() {
 
 	//当たり判定用
 	coolTimeFB_ = 0;
-	sphere.resize(SPHERE_COLISSION_NUM);
-	spherePos.resize(SPHERE_COLISSION_NUM);
+	sphere.resize(SPHERE_COLLISION_NUM);
+	spherePos.resize(SPHERE_COLLISION_NUM);
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
-	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
+	colliderPosTest_.resize(SPHERE_COLLISION_NUM);
 
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
@@ -94,12 +94,12 @@ void Player::Initialize() {
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_PLAYER);
 		//test
-		coliderPosTest_[i] = Object3d::Create();
-		coliderPosTest_[i]->SetModel(colPosTesM_);
-		coliderPosTest_[i]->wtf.position = (sphere[i]->center);
-		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
-		coliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
-		coliderPosTest_[i]->Update();
+		colliderPosTest_[i] = Object3d::Create();
+		colliderPosTest_[i]->SetModel(colPosTesM_);
+		colliderPosTest_[i]->wtf.position = (sphere[i]->center);
+		colliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
+		colliderPosTest_[i]->wtf.rotation = (Vector3{ 0,0,0 });
+		colliderPosTest_[i]->Update();
 	}
 	PL_Barrier = new SphereCollider;
 	CollisionManager::GetInstance()->AddCollider(PL_Barrier);
@@ -113,12 +113,12 @@ void Player::Initialize() {
 	isOnBarrier = false;
 
 	//test
-	coliderBarrierPosTest_ = Object3d::Create();
-	coliderBarrierPosTest_->SetModel(colPosTesM_);
-	coliderBarrierPosTest_->wtf.position = (PL_Barrier->center);
-	coliderBarrierPosTest_->wtf.scale = Vector3(PL_Barrier->GetRadius(), PL_Barrier->GetRadius(), PL_Barrier->GetRadius());
-	coliderBarrierPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
-	coliderBarrierPosTest_->Update();
+	colliderBarrierPosTest_ = Object3d::Create();
+	colliderBarrierPosTest_->SetModel(colPosTesM_);
+	colliderBarrierPosTest_->wtf.position = (PL_Barrier->center);
+	colliderBarrierPosTest_->wtf.scale = Vector3(PL_Barrier->GetRadius(), PL_Barrier->GetRadius(), PL_Barrier->GetRadius());
+	colliderBarrierPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+	colliderBarrierPosTest_->Update();
 }
 
 ///
@@ -202,7 +202,7 @@ void Player::Update(Input* input, bool isTitle) {
 
 #ifdef _DEBUG
 	// Imgui
-	Vector4 skaliCol = coliderPosTest_[0]->GetColor();
+	Vector4 skaliCol = colliderPosTest_[0]->GetColor();
 	int barrierRimit = BARRIER_RIMIT;
 	int barrierCooltime = BARRIER_COOLTIME;
 	ImGui::Begin("player");
@@ -222,7 +222,7 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::InputFloat3("Vec", &pointDash_->resultVec.x);
 	ImGui::InputFloat("spe :%f", &pointDash_->easeSpeed);
 	ImGui::End();
-	coliderPosTest_[0]->SetColor(skaliCol);
+	colliderPosTest_[0]->SetColor(skaliCol);
 	BARRIER_RIMIT = barrierRimit;
 	BARRIER_COOLTIME = barrierCooltime;
 	pointDash_->DebugImGui();
@@ -244,11 +244,11 @@ void Player::Draw(DirectXCommon* dxCommon) {
 		reticle->Draw();
 	}
 #ifdef _DEBUG
-	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
-		coliderPosTest_[i]->Draw();
+	for (uint32_t i = NONE; i < SPHERE_COLLISION_NUM; i++) {
+		colliderPosTest_[i]->Draw();
 	}
 #endif
-	coliderBarrierPosTest_->Draw();
+	colliderBarrierPosTest_->Draw();
 	Object3d::PostDraw();
 }
 
@@ -362,7 +362,7 @@ void Player::CollisionUpdate() {
 	// コライダーのアップデート
 	object_->UpdateMatrix();
 
-	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = NONE; i < SPHERE_COLLISION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true) {
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS) {
 				OnCollision(true);
@@ -386,19 +386,19 @@ void Player::CollisionUpdate() {
 	else {
 		PL_Barrier->center.y = 100.0f;
 	}
-	coliderBarrierPosTest_->wtf.position = (PL_Barrier->center);
-	coliderBarrierPosTest_->wtf.scale = Vector3(PL_Barrier->GetRadius(), PL_Barrier->GetRadius(), PL_Barrier->GetRadius());
-	coliderBarrierPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
-	coliderBarrierPosTest_->SetColor(Vector4{ 0,0,1.0f,0.5f });
-	coliderBarrierPosTest_->Update();
-	for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
+	colliderBarrierPosTest_->wtf.position = (PL_Barrier->center);
+	colliderBarrierPosTest_->wtf.scale = Vector3(PL_Barrier->GetRadius(), PL_Barrier->GetRadius(), PL_Barrier->GetRadius());
+	colliderBarrierPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+	colliderBarrierPosTest_->SetColor(Vector4{ 0,0,1.0f,0.5f });
+	colliderBarrierPosTest_->Update();
+	for (uint32_t i = NONE; i < SPHERE_COLLISION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
 		sphere[i]->Update();
 
-		coliderPosTest_[i]->wtf.position = (sphere[i]->center);
-		coliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
-		coliderPosTest_[i]->wtf.rotation.InIt();
-		coliderPosTest_[i]->Update();
+		colliderPosTest_[i]->wtf.position = (sphere[i]->center);
+		colliderPosTest_[i]->wtf.scale = Vector3(sphere[i]->GetRadius(), sphere[i]->GetRadius(), sphere[i]->GetRadius());
+		colliderPosTest_[i]->wtf.rotation.InIt();
+		colliderPosTest_[i]->Update();
 	}
 	// クエリーコールバッククラス
 	{
@@ -437,7 +437,7 @@ void Player::CollisionUpdate() {
 		};
 
 		//クエリーコールバックの関数オブジェクト
-		for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
+		for (uint32_t i = NONE; i < SPHERE_COLLISION_NUM; i++) {
 			PlayerQueryCallback callback(sphere[i]);
 			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback, COLLISION_ATTR_BARRIEROBJECT);
 			object_->wtf.position.x += callback.move.x;

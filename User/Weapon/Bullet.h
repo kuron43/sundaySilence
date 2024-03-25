@@ -64,6 +64,6 @@ public:
 private:
 	SphereCollider* sphere;
 	Vector3 spherePos;
-	Object3d* coliderPosTest_;
+	Object3d* colliderPosTest_;
 };
 

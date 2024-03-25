@@ -13,10 +13,10 @@ Boss::~Boss() {
 	delete weapon_;
 	delete rayHit;
 	//delete bossFbxM_;
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
-		delete coliderPosTest_[i];
+		delete colliderPosTest_[i];
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
@@ -75,16 +75,16 @@ void Boss::Initialize() {
 	manager_->SetBoss(this);
 
 	//当たり判定用
-	SPHERE_COLISSION_NUM = 1;
-	sphere.resize(SPHERE_COLISSION_NUM);
-	spherePos.resize(SPHERE_COLISSION_NUM);
+	SPHERE_COLLISION_NUM = 1;
+	sphere.resize(SPHERE_COLLISION_NUM);
+	spherePos.resize(SPHERE_COLLISION_NUM);
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
-	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
+	colliderPosTest_.resize(SPHERE_COLLISION_NUM);
 
 	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
 	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
 
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
@@ -94,12 +94,12 @@ void Boss::Initialize() {
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		//test
-		coliderPosTest_[i] = Object3d::Create();
-		coliderPosTest_[i]->SetModel(modelCol_);
-		coliderPosTest_[i]->wtf.position = rayvec;
-		coliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
-		coliderPosTest_[i]->wtf.rotation = { 0,0,0 };
-		coliderPosTest_[i]->Update();
+		colliderPosTest_[i] = Object3d::Create();
+		colliderPosTest_[i]->SetModel(modelCol_);
+		colliderPosTest_[i]->wtf.position = rayvec;
+		colliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
+		colliderPosTest_[i]->wtf.rotation = { 0,0,0 };
+		colliderPosTest_[i]->Update();
 	}
 	ray = new RayCollider;
 
@@ -164,8 +164,8 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 		if (nowTitle) {
 			//reticle->Draw();
 		}
-		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
-			//coliderPosTest_[i]->Draw();
+		for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
+			//colliderPosTest_[i]->Draw();
 		}
 		Object3d::PostDraw();
 		if (nowTitle) {
@@ -219,7 +219,7 @@ void Boss::ColliderUpdate() {
 	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
 	ray->SetDir(Affin::GetWorldTrans(reticle->wtf.matWorld));
 
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			OnCollision();
 			// パーティクルなぜかXそのままYZ入れ替えると治る
@@ -228,11 +228,11 @@ void Boss::ColliderUpdate() {
 		}
 	}
 
-	for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		spherePos[i] = object_->wtf.position;
-		coliderPosTest_[i]->wtf.position = ray->GetDir();
+		colliderPosTest_[i]->wtf.position = ray->GetDir();
 		sphere[i]->Update();
-		coliderPosTest_[i]->Update();
+		colliderPosTest_[i]->Update();
 	}
 	// クエリーコールバッククラス
 	{
@@ -271,7 +271,7 @@ void Boss::ColliderUpdate() {
 		};
 
 		//クエリーコールバックの関数オブジェクト
-		for (uint32_t i = NONE; i < SPHERE_COLISSION_NUM; i++) {
+		for (uint32_t i = NONE; i < SPHERE_COLLISION_NUM; i++) {
 			BossQueryCallback callback(sphere[i]);
 			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback, COLLISION_ATTR_BARRIEROBJECT);
 			object_->wtf.position.x += callback.move.x;
@@ -298,7 +298,7 @@ void Boss::ColliderUpdate() {
 		}
 	}
 	if (isDead) {
-		for (uint32_t i = 0; i < SPHERE_COLISSION_NUM; i++) {
+		for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 			CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 			//delete sphere[i];
 		}

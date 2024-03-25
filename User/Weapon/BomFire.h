@@ -107,10 +107,10 @@ public:
 	void SetSphere(SphereCollider* sphere_) { sphere = sphere_; }
 	SphereCollider* GetSphere() { return sphere; }
 private:
-	//int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	//int SPHERE_COLLISION_NUM;	//コライダー（スフィア）の数
 	//std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	SphereCollider* sphere;
 	//Ray* ray;
 	Vector3 spherePos;
-	Object3d* coliderPosTest_;
+	Object3d* colliderPosTest_;
 };

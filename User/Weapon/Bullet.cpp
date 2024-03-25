@@ -61,12 +61,12 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 
 
 	////test
-	//coliderPosTest_ = Object3d::Create();
-	//coliderPosTest_->SetModel(model);
-	//coliderPosTest_->wtf.position = (sphere->center);
-	//coliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
-	//coliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
-	//coliderPosTest_->Update();
+	//colliderPosTest_ = Object3d::Create();
+	//colliderPosTest_->SetModel(model);
+	//colliderPosTest_->wtf.position = (sphere->center);
+	//colliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
+	//colliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+	//colliderPosTest_->Update();
 }
 
 void Bullet::Update(float speed)
@@ -128,7 +128,7 @@ void Bullet::DeadUpdate() {
 
 void Bullet::Draw()
 {
-	//coliderPosTest_->Draw();
+	//colliderPosTest_->Draw();
 	//モデルの描画
 	bulletObj_->Draw();
 }

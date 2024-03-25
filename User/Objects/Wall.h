@@ -34,7 +34,7 @@ public:
 private:
 
 	ObbCollider* obb_;
-	Object3d* coliderPosTest_;
+	Object3d* colliderPosTest_;
 public:
 	Object3d* object_;
 	Model* model_;
