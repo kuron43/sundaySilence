@@ -80,6 +80,8 @@ void GAME1Scene::Update(Input* input) {
 	_objects->bossCount = 0;
 	_objects->floorGround->Update();
 	//_objects->bossFbxO_->Update();
+	
+
 
 
 	if (startTime_ == true && stageClear == false && stageFailed == false) {

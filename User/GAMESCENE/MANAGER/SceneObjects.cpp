@@ -303,24 +303,22 @@ void SceneObjects::UpdateImGui()
 	ImGui::SliderFloat3("DirPos", &rotateLight.x, 0.0f, Affin::radConvert(360.0f));
 	ImGui::Text("UI");
 	ImGui::SliderInt("BarrierUISize", &UISP_Weapon_size, 1, 4);
+	ImGui::Text("eneSize:%d",enemys.size());
+	ImGui::Text("bossSize:%d", boss.size());
 	ImGui::End();
 	lightDir = Affin::VecMat(pointLightPos, Affin::matRotation(rotateLight));
 	lightGroup->SetDirLightDir(0, Vector4(lightDir.x, lightDir.y, lightDir.z, 0));
 	UISP_Wep_size = UISP_Weapon_size;
 #endif
 
-	//デスフラグの立った弾を削除
-	boss.remove_if([](std::unique_ptr<Boss>& boss_) {
-		return boss_->HowDead();
-		});
-	//デスフラグの立った弾を削除
-	enemys.remove_if([](std::unique_ptr<Enemy>& enemy) {
-		if (enemy->HowDead()) {
-			int a=0;
-			a++;
-		}
-		return enemy->HowDead();
-		});
+	////デスフラグの立った弾を削除
+	//boss.remove_if([](std::unique_ptr<Boss>& boss_) {
+	//	return boss_->HowDead();
+	//	});
+	////デスフラグの立った弾を削除
+	//enemys.remove_if([](std::unique_ptr<Enemy>& enemy) {
+	//	return enemy->HowDead();
+	//	});
 }
 
 void SceneObjects::Reset()
