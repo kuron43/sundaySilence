@@ -18,7 +18,6 @@ GAME2Scene::~GAME2Scene() {
 	_objects->player->Reset();
 	_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / 10.0f));
 	_objects->plDamageRed_->Update();
-	delete leveData;
 }
 
 void GAME2Scene::Initialize() {
@@ -28,11 +27,6 @@ void GAME2Scene::Initialize() {
 	startTime_ = true;
 	stageClear = false;
 	stageFailed = false;
-	// Json
-	{
-		leveData = JsonLoader::LoadJsonFile("stageDemo2");
-		_objects->SetingLevel(leveData);
-	}
 
 	{
 		_controller->_camera->SetEye(camposEye);
@@ -104,6 +98,7 @@ void GAME2Scene::Update(Input* input) {
 				_objects->bossCount++;
 			}
 		}
+
 		for (std::unique_ptr < Wall>& walls : _objects->walls) {
 			walls->Update();
 		}

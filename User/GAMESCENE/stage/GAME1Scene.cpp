@@ -20,7 +20,6 @@ GAME1Scene::~GAME1Scene() {
 	_objects->SlowReset();
 	_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
 	_objects->plDamageRed_->Update();
-	delete leveData;
 }
 
 void GAME1Scene::Initialize() {
@@ -47,12 +46,6 @@ void GAME1Scene::Initialize() {
 	isInfoWEPC = false;
 	isAllFalse = true;
 	isTimeCount = false;
-	// Json
-	{
-		leveData = JsonLoader::LoadJsonFile("stageDEMO");
-		_objects->SetingLevel(leveData);	
-
-	}
 
 	{
 		_controller->_camera->SetEye(camposEye);

@@ -74,7 +74,7 @@ void SelectScene::Draw() {
 void SelectScene::SelectSceneNum(Input* input) {
 	if (selectNum == 0) {
 		if (_objects->mouseCursor_->Cursor2Sprite(left_.get()) && input->MouseButtonTrigger(0)) {
-			selectNum = 2;
+			selectNum = 3;
 		}
 		else if (_objects->mouseCursor_->Cursor2Sprite(right_.get()) && input->MouseButtonTrigger(0)) {
 			selectNum = 1;
@@ -91,6 +91,14 @@ void SelectScene::SelectSceneNum(Input* input) {
 	else if (selectNum == 2) {
 		if (_objects->mouseCursor_->Cursor2Sprite(left_.get()) && input->MouseButtonTrigger(0)) {
 			selectNum = 1;
+		}
+		else if (_objects->mouseCursor_->Cursor2Sprite(right_.get()) && input->MouseButtonTrigger(0)) {
+			selectNum = 3;
+		}
+	}
+	else if (selectNum == 3) {
+		if (_objects->mouseCursor_->Cursor2Sprite(left_.get()) && input->MouseButtonTrigger(0)) {
+			selectNum = 2;
 		}
 		else if (_objects->mouseCursor_->Cursor2Sprite(right_.get()) && input->MouseButtonTrigger(0)) {
 			selectNum = 0;
@@ -113,6 +121,9 @@ void SelectScene::MoveScene() {
 			break;
 		case 2:
 			_controller->SetSceneNum(SCE_GAME2);
+			break;
+		case 3:
+			_controller->SetSceneNum(SCE_GAME3);
 			break;
 		}
 	}
@@ -147,6 +158,14 @@ void SelectScene::SpriteCollision()
 		}
 		else {
 			stage1_->SetTextureIndex(22);
+		}
+		break;
+	case 3:
+		if (_objects->mouseCursor_->Cursor2Sprite(stage1_.get())) {
+			stage1_->SetTextureIndex(25);
+		}
+		else {
+			stage1_->SetTextureIndex(24);
 		}
 		break;
 	}

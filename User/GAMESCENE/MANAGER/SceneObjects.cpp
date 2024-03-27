@@ -141,6 +141,9 @@ void SceneObjects::Initialize() {
 		bossFbxO_->AnimIsRotateChange();
 	}
 
+	// レベルロード
+	LoadLevels();
+
 	{
 		player = std::make_unique<Player>();
 		player->Initialize();
@@ -169,34 +172,34 @@ void SceneObjects::Initialize() {
 	// バナー
 	{
 
-	{
-		bannerBuckSP_ = std::make_unique<Sprite>();
-		bannerBuckSP_->Initialize(spriteCommon_.get(), 12);
-		bannerBuckSP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
-		bannerBuckSPpos_ = { 0,WinApp::window_height / 2.0f };
-		bannerBuckSPscale_ = Vector3(1.0f, 0001.0f, 1.0f);
-		bannerBuckSP_->SetPozition(bannerBuckSPpos_);
-		bannerBuckSP_->SetScale(bannerBuckSPscale_);
+		{
+			bannerBuckSP_ = std::make_unique<Sprite>();
+			bannerBuckSP_->Initialize(spriteCommon_.get(), 12);
+			bannerBuckSP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
+			bannerBuckSPpos_ = { 0,WinApp::window_height / 2.0f };
+			bannerBuckSPscale_ = Vector3(1.0f, 0001.0f, 1.0f);
+			bannerBuckSP_->SetPozition(bannerBuckSPpos_);
+			bannerBuckSP_->SetScale(bannerBuckSPscale_);
+		}
+		{
+			bannerBuck2SP_ = std::make_unique<Sprite>();
+			bannerBuck2SP_->Initialize(spriteCommon_.get(), 12);
+			bannerBuck2SP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
+			bannerBuck2SPpos_ = { WinApp::window_width / 2.0f,WinApp::window_height / 2.0f };
+			bannerBuck2SPscale_ = Vector3(1.0f, 0.0001f, 1.0f);
+			bannerBuck2SP_->SetPozition(bannerBuck2SPpos_);
+			bannerBuck2SP_->SetScale(bannerBuck2SPscale_);
+		}
+		{
+			bannerWordSP_ = std::make_unique<Sprite>();
+			bannerWordSP_->Initialize(spriteCommon_.get(), 13);
+			bannerWordSP_->SetSize({ 300.0f ,100.0f });
+			bannerWordSPpos_ = { -300.0f, WinApp::window_height / 2.0f };
+			bannerWordSPscale_ = Vector3(1.0f, 1.0f, 1.0f);
+			bannerWordSP_->SetPozition(bannerWordSPpos_);
+			bannerWordSP_->SetScale(bannerWordSPscale_);
+		}
 	}
-	{
-		bannerBuck2SP_ = std::make_unique<Sprite>();
-		bannerBuck2SP_->Initialize(spriteCommon_.get(), 12);
-		bannerBuck2SP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
-		bannerBuck2SPpos_ = { WinApp::window_width / 2.0f,WinApp::window_height / 2.0f };
-		bannerBuck2SPscale_ = Vector3(1.0f, 0.0001f, 1.0f);
-		bannerBuck2SP_->SetPozition(bannerBuck2SPpos_);
-		bannerBuck2SP_->SetScale(bannerBuck2SPscale_);
-	}
-	{
-		bannerWordSP_ = std::make_unique<Sprite>();
-		bannerWordSP_->Initialize(spriteCommon_.get(), 13);
-		bannerWordSP_->SetSize({ 300.0f ,100.0f });
-		bannerWordSPpos_ = { -300.0f, WinApp::window_height / 2.0f };
-		bannerWordSPscale_ = Vector3(1.0f, 1.0f, 1.0f);
-		bannerWordSP_->SetPozition(bannerWordSPpos_);
-		bannerWordSP_->SetScale(bannerWordSPscale_);
-	}
-}
 	// スロー
 	{
 		slowSP_ = std::make_unique<Sprite>();
@@ -226,7 +229,7 @@ void SceneObjects::Initialize() {
 		{
 			UIPointSP_ = std::make_unique<Sprite>();
 			UIPointSP_->Initialize(spriteCommon_.get(), 46);
-			UIPointSPpos_ = Vector2{ UISlowSPpos_.x ,UISlowSPpos_.y + 100.0f};
+			UIPointSPpos_ = Vector2{ UISlowSPpos_.x ,UISlowSPpos_.y + 100.0f };
 			UIPointSPsize_ = Vector2{ 80.0f ,80.0f };
 			UIPointSP_->SetPozition(UIPointSPpos_);
 			UIPointSP_->SetSize(UIPointSPsize_);
@@ -235,7 +238,7 @@ void SceneObjects::Initialize() {
 			UIHPSP_ = std::make_unique<Sprite>();
 			UIHPSP_->Initialize(spriteCommon_.get(), 38);
 			UIHPSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f + 26.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
-			UIHPSPsize_ = Vector2{30.0f,8.0f * player->GetHP()  };
+			UIHPSPsize_ = Vector2{ 30.0f,8.0f * player->GetHP() };
 			UIHPSP_->SetPozition(UIHPSPpos_);
 			UIHPSP_->SetSize(UIHPSPsize_);
 			UIHPSP_->SetIsFlipY(true);
@@ -253,8 +256,8 @@ void SceneObjects::Initialize() {
 			UIBarrierGaugeSP_ = std::make_unique<Sprite>();
 			UIBarrierGaugeSP_->Initialize(spriteCommon_.get(), 37);
 			//UIWeaponSP_->Initialize(spriteCommon_.get(), 41);
-			UIWeaponSPpos_ = Vector2{ UIHPBaseSPpos_.x +30.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
-			UIWeaponSPsize_ = Vector2{ 20.0f ,(float)player->GetBarrierCoolTime()};
+			UIWeaponSPpos_ = Vector2{ UIHPBaseSPpos_.x + 30.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
+			UIWeaponSPsize_ = Vector2{ 20.0f ,(float)player->GetBarrierCoolTime() };
 			UIBarrierGaugeSP_->SetColorAlpha(0.5f);
 			UIBarrierGaugeSP_->SetPozition(UIWeaponSPpos_);
 			UIBarrierGaugeSP_->SetSize(UIWeaponSPsize_);
@@ -297,7 +300,7 @@ void SceneObjects::UpdateImGui()
 	ImGui::Begin("Objects");
 	ImGui::Text("DirLight");
 	ImGui::InputFloat3("DirRot", &pointLightPos.x);
-	ImGui::SliderFloat3("DirPos", &rotateLight.x,0.0f,Affin::radConvert(360.0f));
+	ImGui::SliderFloat3("DirPos", &rotateLight.x, 0.0f, Affin::radConvert(360.0f));
 	ImGui::Text("UI");
 	ImGui::SliderInt("BarrierUISize", &UISP_Weapon_size, 1, 4);
 	ImGui::End();
@@ -305,6 +308,19 @@ void SceneObjects::UpdateImGui()
 	lightGroup->SetDirLightDir(0, Vector4(lightDir.x, lightDir.y, lightDir.z, 0));
 	UISP_Wep_size = UISP_Weapon_size;
 #endif
+
+	//デスフラグの立った弾を削除
+	boss.remove_if([](std::unique_ptr<Boss>& boss_) {
+		return boss_->HowDead();
+		});
+	//デスフラグの立った弾を削除
+	enemys.remove_if([](std::unique_ptr<Enemy>& enemy) {
+		if (enemy->HowDead()) {
+			int a=0;
+			a++;
+		}
+		return enemy->HowDead();
+		});
 }
 
 void SceneObjects::Reset()
@@ -468,7 +484,7 @@ void SceneObjects::UIUpdate()
 		UIBarrierGaugeSP_->SetTextureIndex(37);
 		UIWeaponSPsize_.y = UISP_Wep_size * -(float)player->GetBarrierOnTime();
 	}
-	else if(player->GetOnFire() && player->GetIsCoolTimeON()) {
+	else if (player->GetOnFire() && player->GetIsCoolTimeON()) {
 		UIWeaponSPsize_.y = UISP_Wep_size * 2.0f * -(float)player->GetBarrierCoolTime();
 		UIBarrierGaugeSP_->SetTextureIndex(36);
 		UIPointSP_->SetTextureIndex(46);
@@ -488,7 +504,7 @@ void SceneObjects::UIUpdate()
 	else {
 		UISlowSP_->SetTextureIndex(44);
 	}
-	
+
 	UIHPSPsize_.y = 8.0f * player->GetHP();
 	UIBarrierGaugeSP_->SetSize(UIWeaponSPsize_);
 	UIHPSP_->SetSize(UIHPSPsize_);
@@ -510,6 +526,20 @@ void SceneObjects::UIDraw()
 	UIHPBaseSP_->Draw();
 	UIHPSP_->Draw();
 	UIPauseSP_->Draw();
+}
+
+void SceneObjects::LoadLevels()
+{
+	levelName_.push_back("title");
+	levelName_.push_back("stageDEMO");
+	levelName_.push_back("stageTEMP2");
+	levelName_.push_back("stageDEMO2");
+
+	for (int32_t i = 0; i < levelName_.size(); i++) {
+		std::unique_ptr<LevelData> levelData = std::move(JsonLoader::LoadJsonFile(levelName_[i]));
+		levels.emplace(std::make_pair(levelName_[i], std::move(levelData)));
+	}
+
 }
 
 void SceneObjects::SetingLevel(LevelData* data)

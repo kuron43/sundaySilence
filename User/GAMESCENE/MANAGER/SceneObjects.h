@@ -3,6 +3,8 @@
  * @file SceneObject.h
  * @brief シーンオブジェクト所持クラス
  */
+#include <map>
+#include <string>
 
 #include "LightGroup.h"
 #include "FBXObject3d.h"
@@ -95,8 +97,6 @@ private: // 演出用
 
 
 	Shake backWall;
-
-	
 public: // UI用
 	void UIUpdate();
 	void UIDraw();
@@ -106,6 +106,7 @@ public: // UI用
 	bool GetIsUIDraw() { return isUIDraw_; };
 
 public:
+	void LoadLevels();
 	void SetingLevel(LevelData* data);
 
 private: // UI用
@@ -166,7 +167,7 @@ public: // オブジェクトの管理
 	float damageRedAlpha_ = 0.0f;
 	Vector2 plDamageRedPos = { 0.0f,0.0f };
 
-	std::vector< std::unique_ptr<Enemy>> enemys;
+	std::list< std::unique_ptr<Enemy>> enemys;
 	uint32_t eneCount;
 	std::list<std::unique_ptr<Boss>> boss;
 	uint32_t bossCount;
@@ -177,6 +178,10 @@ public: // オブジェクトの管理
 
 	std::unique_ptr<Floor> floorGround;
 	Model* floorGroundMD;
+
+	// レベルデータ管理
+	std::vector<std::string> levelName_;
+	std::map<std::string, std::unique_ptr<LevelData>>levels;
 
 private: // ライト用
 	Vector3 rotateLight{ 10.0f,1,0 };

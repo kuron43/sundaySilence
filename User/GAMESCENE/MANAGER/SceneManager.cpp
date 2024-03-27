@@ -19,6 +19,7 @@ SceneManager::SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects
 	_dxCommon = dxCommon;
 	_objects = objects;
 	_scene.emplace(new TitleScene(&*this, _objects));
+	_objects->SetingLevel(_objects->levels.at(_objects->levelName_[0]).get());
 	_camera = camera;
 
 }
@@ -43,6 +44,7 @@ void SceneManager::ChangeScene() {
 		_scene.pop();
 		_scene.pop();
 		_scene.emplace(new TitleScene(&*this, _objects));
+		_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TITLE]).get());
 		SceneInitialize();
 		_objects->OFFIsUIDraw();
 		TransScene();
@@ -56,6 +58,7 @@ void SceneManager::ChangeScene() {
 		case SCE_TITLE:
 			_scene.pop();
 			_scene.emplace(new TitleScene(&*this, _objects));
+			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TITLE]).get());
 			SceneInitialize();
 			_objects->OFFIsUIDraw();
 			TransScene();
@@ -63,6 +66,7 @@ void SceneManager::ChangeScene() {
 		case SCE_GAME1:
 			_scene.pop();
 			_scene.emplace(new GAME1Scene(&*this, _objects));
+			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TUTRIAL]).get());
 			SceneInitialize();
 			_objects->ONIsUIDraw();
 			TransScene();
@@ -71,6 +75,15 @@ void SceneManager::ChangeScene() {
 		case SCE_GAME2:
 			_scene.pop();
 			_scene.emplace(new GAME2Scene(&*this, _objects));
+			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE1]).get());
+			SceneInitialize();
+			_objects->ONIsUIDraw();
+			TransScene();
+			break;
+		case SCE_GAME3:
+			_scene.pop();
+			_scene.emplace(new GAME2Scene(&*this, _objects));
+			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE2]).get());
 			SceneInitialize();
 			_objects->ONIsUIDraw();
 			TransScene();

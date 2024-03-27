@@ -199,7 +199,7 @@ void Player::Reset() {
 	hit_ = NONE;
 	isDeath_ = false;
 	_isSlow = false;
-	object_->wtf.Initialize();
+	//object_->wtf.Initialize();
 	reticle->wtf.Initialize();
 	object_->SetColor({ 0.8f,0.8f,0.8f,1.0f });
 	pointDash_->Reset();
@@ -458,6 +458,9 @@ void Player::WeaponUpdate()
 		}
 	}
 	// 弾発射
+	if (Input::get_instance().MouseButtonPush(0) && !nowTitle && !_isSlow) {
+		weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);
+	}
 	if (isOnBarrier == false && isCoolTimeON == false) {
 		if (Input::get_instance().KeyboardTrigger(DIK_SPACE) && !nowTitle && !_isSlow) {
 			//weapon_[useWeapon_]->Shot(object_->wtf, reticle->wtf, PLAYER);

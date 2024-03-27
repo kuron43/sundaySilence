@@ -267,7 +267,6 @@
       <Filter>user\wepon</Filter>
     </ClCompile>
     <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
-    <ClCompile Include="User\GAMESCENE\stage\Game3Scene.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\MotionBlur.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\vignetteEffect.cpp" />
@@ -528,7 +527,6 @@
       <Filter>user\human</Filter>
     </ClInclude>
     <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
-    <ClInclude Include="User\GAMESCENE\stage\Game3Scene.h" />
     <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h" />
     <ClInclude Include="Engine\2D\PostEffect\MotionBlur.h" />
     <ClInclude Include="Engine\2D\PostEffect\vignetteEffect.h" />

@@ -7,7 +7,15 @@
 const std::string JsonLoader::kDefaultBaseDirectory = "Resources/levels/";
 const std::string JsonLoader::kExtension = ".json";
 
-LevelData* JsonLoader::LoadJsonFile(const std::string& fileName) {
+JsonLoader::JsonLoader()
+{
+}
+
+JsonLoader::~JsonLoader()
+{
+}
+
+std::unique_ptr<LevelData> JsonLoader::LoadJsonFile(const std::string& fileName) {
 	// 連結してフルパスを得る
 	const std::string fullpath = kDefaultBaseDirectory + fileName + kExtension;
 
@@ -38,7 +46,7 @@ LevelData* JsonLoader::LoadJsonFile(const std::string& fileName) {
 	assert(name.compare("scene") == 0);
 
 	// レベルデータ格納用インスタンスを生成
-	LevelData* levelData = new LevelData();
+	std::unique_ptr<LevelData> levelData = std::make_unique<LevelData>();
 
 
 	// "objects"の全オブジェクトを走査

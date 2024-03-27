@@ -12,7 +12,6 @@ TitleScene::~TitleScene() {
 	_objects->walls.clear();
 	_objects->enemys.clear();
 	_objects->boss.clear();
-	delete leveData;
 	particle_.reset();
 	titleButton_.reset();
 	title_.reset();
@@ -48,12 +47,6 @@ void TitleScene::Initialize() {
 	sinMoveTitle = 0.0f;
 	titlePos = { 20,10 };
 	_objects->player->Reset();
-
-	// Json
-	{
-		leveData = JsonLoader::LoadJsonFile("title");
-		_objects->SetingLevel(leveData);
-	}
 	{
 		_controller->_camera->SetEye(camposEye);
 		_controller->_camera->SetTarget(camposTar);

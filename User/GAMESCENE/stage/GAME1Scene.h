@@ -35,7 +35,6 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw() override;
-
 private:
 	bool startTime_ = false;
 	bool stageClear = false;
@@ -58,7 +57,5 @@ private:
 	uint32_t nowInfoNum_,oldInfoNum_;
 	bool isInfoWASD, isInfoSHOT, isInfoSLOW, isInfoDUSH, isInfoWEPC,isAllFalse;
 	bool isTimeCount;
-public:
-	LevelData* leveData = nullptr;
 };
 
