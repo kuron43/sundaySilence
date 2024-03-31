@@ -50,10 +50,9 @@ void Player::Initialize() {
 
 	weapon_[WP_ASSAULT] = new Assault();
 	weapon_[WP_SHOTGUN] = new Shotgun();
-	//weapon_[WP_SHOTGUN] = new BomFire();
 	weapon_[WP_ASSAULT]->Initialize();
 	weapon_[WP_SHOTGUN]->Initialize();
-	useWeapon_ = WP_SHOTGUN;
+	useWeapon_ = WP_ASSAULT;
 
 	pointDash_ = new PointDash();
 	pointDash_->Initialize();

@@ -55,7 +55,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	ParticleManager::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
-	sceneObjects = std::make_unique<SceneObjects>(dxCommon, camera);
+	sceneObjects = std::make_unique<SceneObjects>(dxCommon);
 	sceneObjects->Initialize();
 
 	sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
@@ -105,4 +105,9 @@ void GameScene::Draw() {
 	ImGui::Text("E : particle");
 	ImGui::Text("WASD : ball rotate");
 	ImGui::End();*/
+}
+
+void GameScene::DrawUI()
+{
+
 }

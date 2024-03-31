@@ -42,7 +42,7 @@ void PauseScene::Update(Input* input) {
 	titleButton_->Update();
 
 	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
-
+		titleButton_->SetTextureIndex(51);
 		if (input->MouseButtonTrigger(0)) {
 			BulletManager::GetInstance()->AllClearBullet();
 			_objects->walls.clear();
@@ -51,7 +51,6 @@ void PauseScene::Update(Input* input) {
 
 			_controller->goToTitle = true;
 		}
-		titleButton_->SetTextureIndex(51);
 	}
 	else {
 		titleButton_->SetTextureIndex(50);

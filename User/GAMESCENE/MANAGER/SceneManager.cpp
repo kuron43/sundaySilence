@@ -24,7 +24,7 @@ SceneManager::SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects
 
 }
 SceneManager::~SceneManager() {
-	
+
 }
 
 void SceneManager::SceneInitialize() {
@@ -40,6 +40,7 @@ void SceneManager::SceneDraw() {
 }
 
 void SceneManager::ChangeScene() {
+
 	if (goToTitle == true) {
 		_scene.pop();
 		_scene.pop();
@@ -73,17 +74,15 @@ void SceneManager::ChangeScene() {
 			break;
 
 		case SCE_GAME2:
-			_scene.pop();
-			_scene.emplace(new GAME2Scene(&*this, _objects));
-			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE1]).get());
-			SceneInitialize();
-			_objects->ONIsUIDraw();
-			TransScene();
-			break;
 		case SCE_GAME3:
 			_scene.pop();
 			_scene.emplace(new GAME2Scene(&*this, _objects));
-			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE2]).get());
+			if (SCE_GAME2 == sceneNum) {
+				_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE1]).get());
+			}
+			else if (SCE_GAME3 == sceneNum) {
+				_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE2]).get());
+			}
 			SceneInitialize();
 			_objects->ONIsUIDraw();
 			TransScene();
@@ -114,7 +113,6 @@ void SceneManager::ChangeScene() {
 			Pause();
 			break;
 			/////////////////////////////////////////////////////
-		case 0:
 		default:
 			break;
 		}

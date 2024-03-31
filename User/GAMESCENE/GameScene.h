@@ -1,6 +1,10 @@
 #pragma once
 
-#include <string>
+#pragma warning(push)
+#pragma warning(disable: 4514)
+
+#include<string>
+#pragma warning(pop)
 
 #include "DirectXCommon.h"
 #include "Input.h"
@@ -49,9 +53,14 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// UI描画
+	/// </summary>
+	void DrawUI();
+
 public:
 
-	
+
 private: // メンバ変数 (固定)
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;

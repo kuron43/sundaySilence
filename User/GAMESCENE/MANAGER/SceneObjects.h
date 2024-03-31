@@ -40,11 +40,11 @@ typedef struct Shake {
 class SceneObjects
 {
 private:
-	DirectXCommon* _dxCommon;
-	Camera* _camera;
+	DirectXCommon* _dxcommon;
 public:
-	SceneObjects(DirectXCommon* DXCommon, Camera* camera);
+	SceneObjects(DirectXCommon* dxcommon);
 	~SceneObjects();
+
 
 	void Initialize();
 	void Reset();

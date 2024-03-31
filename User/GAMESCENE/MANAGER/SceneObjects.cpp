@@ -5,9 +5,8 @@
 #include "SceneObjects.h"
 
 
-SceneObjects::SceneObjects(DirectXCommon* DXCommon, Camera* camera) {
-	_dxCommon = DXCommon;
-	_camera = camera;
+SceneObjects::SceneObjects(DirectXCommon* dxcommon) {
+	_dxcommon = dxcommon;
 }
 SceneObjects::~SceneObjects() {
 	audio->Finalize();
@@ -18,6 +17,7 @@ SceneObjects::~SceneObjects() {
 	delete skydome_M;
 	delete floorGroundMD;
 }
+
 void SceneObjects::Initialize() {
 	ShowCursor(false);
 #ifdef _DEBUG
@@ -42,7 +42,7 @@ void SceneObjects::Initialize() {
 			};
 			//スプライト初期化
 			spriteCommon_ = std::make_unique<SpriteCommon>();
-			spriteCommon_->Initialize(_dxCommon);
+			spriteCommon_->Initialize(_dxcommon);
 			// TITLE
 			spriteCommon_->LoadTexture(1, "title.png");
 			spriteCommon_->LoadTexture(2, "inu.png");
@@ -132,7 +132,6 @@ void SceneObjects::Initialize() {
 	{
 		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Fbx_Rex"));
 		bossFbxO_ = std::make_unique<FBXObject3d>();
-		//bossFbxO_->SetCamera(_camera);
 		bossFbxO_->Initialize();
 		bossFbxO_->SetModel(bossFbxM_.get());
 		bossFbxO_->SetPosition({ 0,0,0 });
@@ -303,7 +302,7 @@ void SceneObjects::UpdateImGui()
 	ImGui::SliderFloat3("DirPos", &rotateLight.x, 0.0f, Affin::radConvert(360.0f));
 	ImGui::Text("UI");
 	ImGui::SliderInt("BarrierUISize", &UISP_Weapon_size, 1, 4);
-	ImGui::Text("eneSize:%d",enemys.size());
+	ImGui::Text("eneSize:%d", enemys.size());
 	ImGui::Text("bossSize:%d", boss.size());
 	ImGui::End();
 	lightDir = Affin::VecMat(pointLightPos, Affin::matRotation(rotateLight));

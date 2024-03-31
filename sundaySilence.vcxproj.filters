@@ -270,6 +270,7 @@
     <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\MotionBlur.cpp" />
     <ClCompile Include="Engine\2D\PostEffect\vignetteEffect.cpp" />
+    <ClCompile Include="User\GAMESCENE\MANAGER\SceneFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -530,6 +531,8 @@
     <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h" />
     <ClInclude Include="Engine\2D\PostEffect\MotionBlur.h" />
     <ClInclude Include="Engine\2D\PostEffect\vignetteEffect.h" />
+    <ClInclude Include="Engine\SCENE\ISceneFactory.h" />
+    <ClInclude Include="User\GAMESCENE\MANAGER\SceneFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
