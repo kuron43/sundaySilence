@@ -5,8 +5,8 @@
 #include "SelectScene.h"
 #include "SceneManager.h"
 
-SelectScene::SelectScene(SceneManager* controller, SceneObjects* objects) {
-	_controller = controller;
+SelectScene::SelectScene(SceneManager* manager, SceneObjects* objects) {
+	_manager = manager;
 	_objects = objects;
 }
 SelectScene::~SelectScene() {
@@ -61,7 +61,7 @@ void SelectScene::Update(Input* input) {
 }
 
 void SelectScene::Draw() {
-	_objects->floorGround->Draw(_controller->_dxCommon);
+	_objects->floorGround->Draw(_manager->_dxCommon);
 
 	selectTitele_->Draw();
 	stage1_->Draw();
@@ -114,16 +114,16 @@ void SelectScene::MoveScene() {
 		switch (resultNum)
 		{
 		case 0:
-			_controller->SetSceneNum(SCE_TITLE);
+			_manager->SetSceneNum(SCE_TITLE);
 			break;
 		case 1:
-			_controller->SetSceneNum(SCE_GAME1);
+			_manager->SetSceneNum(SCE_GAME1);
 			break;
 		case 2:
-			_controller->SetSceneNum(SCE_GAME2);
+			_manager->SetSceneNum(SCE_GAME2);
 			break;
 		case 3:
-			_controller->SetSceneNum(SCE_GAME3);
+			_manager->SetSceneNum(SCE_GAME3);
 			break;
 		}
 	}

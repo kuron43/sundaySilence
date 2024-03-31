@@ -7,8 +7,8 @@
 
 #include "TitleScene.h"
 
-EndScene::EndScene(SceneManager* controller, SceneObjects* objects) {
-	_controller = controller;
+EndScene::EndScene(SceneManager* manager, SceneObjects* objects) {
+	_manager = manager;
 	_objects = objects;
 }
 EndScene::~EndScene() {
@@ -28,7 +28,7 @@ void EndScene::Update(Input* input) {
 	end_->Update();
 
 	if (input->KeyboardTrigger(DIK_SPACE) || input->Pad_X_ButtonTrigger(LB)) {
-		_controller->SetSceneNum(SCE_TITLE);
+		_manager->SetSceneNum(SCE_TITLE);
 	}
 }
 

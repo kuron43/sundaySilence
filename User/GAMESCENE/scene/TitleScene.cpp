@@ -4,8 +4,8 @@
  */
 #include "SceneIntegrate.h"
 
-TitleScene::TitleScene(SceneManager* controller, SceneObjects* objects) {
-	_controller = controller;
+TitleScene::TitleScene(SceneManager* manager, SceneObjects* objects) {
+	_manager = manager;
 	_objects = objects;
 }
 TitleScene::~TitleScene() {
@@ -19,10 +19,10 @@ TitleScene::~TitleScene() {
 }
 
 void TitleScene::Initialize() {
-	_controller->_camera->SetEye(camposEye);
-	_controller->_camera->SetTarget(camposTar);
-	_controller->_camera->SetFocalLengs(forcalLengs);
-	_controller->_camera->Update();
+	_manager->_camera->SetEye(camposEye);
+	_manager->_camera->SetTarget(camposTar);
+	_manager->_camera->SetFocalLengs(forcalLengs);
+	_manager->_camera->Update();
 
 	particle_ = std::make_unique<ParticleManager>();
 	particle_->Initialize();
@@ -48,9 +48,9 @@ void TitleScene::Initialize() {
 	titlePos = { 20,10 };
 	_objects->player->Reset();
 	{
-		_controller->_camera->SetEye(camposEye);
-		_controller->_camera->SetTarget(camposTar);
-		_controller->_camera->Update();
+		_manager->_camera->SetEye(camposEye);
+		_manager->_camera->SetTarget(camposTar);
+		_manager->_camera->Update();
 		_objects->floorGround->Update();
 
 		BulletManager::GetInstance()->Update();
@@ -75,9 +75,9 @@ void TitleScene::Initialize() {
 }
 
 void TitleScene::Update(Input* input) {
-	_controller->_camera->SetEye(camposEye);
-	_controller->_camera->SetTarget(camposTar);
-	_controller->_camera->Update();
+	_manager->_camera->SetEye(camposEye);
+	_manager->_camera->SetTarget(camposTar);
+	_manager->_camera->Update();
 	if (titleTime_ % 50 == 0) {
 		particle_->RandParticle(100,Vector3(0, 100, 0));
 	}
@@ -85,6 +85,7 @@ void TitleScene::Update(Input* input) {
 
 	_objects->mouseCursor_->Update(input);
 	_objects->floorGround->Update();
+	_objects->player->SetPos({ 0,0,0 });
 	_objects->player->Update(input, true);
 
 	sinMoveTitle = 10.0f + sin(3.1415f / 2.0f / 120.0f * titleTime_) * 30.0f;
@@ -98,7 +99,7 @@ void TitleScene::Update(Input* input) {
 
 	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
 		if (input->MouseButtonTrigger(0)) {
-			_controller->SetSceneNum(SCE_SELECT);
+			_manager->SetSceneNum(SCE_SELECT);
 		}
 		titleButton_->SetTextureIndex(9);
 	}
@@ -108,17 +109,17 @@ void TitleScene::Update(Input* input) {
 }
 
 void TitleScene::Draw() {
-	_objects->floorGround->Draw(_controller->_dxCommon);
+	_objects->floorGround->Draw(_manager->_dxCommon);
 	for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
-		enemy->Draw(_controller->_dxCommon);
+		enemy->Draw(_manager->_dxCommon);
 	}
 	for (std::unique_ptr <Boss>& boss : _objects->boss) {
-		boss->Draw(_controller->_dxCommon);
+		boss->Draw(_manager->_dxCommon);
 	}
 	for (std::unique_ptr <Wall>& walls : _objects->walls) {
-		walls->Draw(_controller->_dxCommon);
+		walls->Draw(_manager->_dxCommon);
 	}
-	_objects->player->Draw(_controller->_dxCommon);
+	_objects->player->Draw(_manager->_dxCommon);
 
 	particle_->Draw();
 	title_->Draw();

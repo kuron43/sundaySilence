@@ -10,13 +10,13 @@ class SelectScene :
     public IScene
 {
 protected:
-	SceneManager* _controller;
+	SceneManager* _manager;
 	SceneObjects* _objects;
 public:
-	SelectScene(SceneManager* controller, SceneObjects* objects);
+	SelectScene(SceneManager* manager, SceneObjects* objects);
 	~SelectScene() override;
 
-	//void Cleate(SceneManager& controller) override;
+	//void Cleate(SceneManager& manager) override;
 	/// <summary>
 	/// 初期化
 	/// </summary>

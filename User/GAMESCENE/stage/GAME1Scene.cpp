@@ -5,8 +5,8 @@
 #include "GAME1Scene.h"
 #include "SceneManager.h"
 
-GAME1Scene::GAME1Scene(SceneManager* controller, SceneObjects* objects) {
-	_controller = controller;
+GAME1Scene::GAME1Scene(SceneManager* manager, SceneObjects* objects) {
+	_manager = manager;
 	_objects = objects;
 }
 
@@ -48,10 +48,10 @@ void GAME1Scene::Initialize() {
 	isTimeCount = false;
 
 	{
-		_controller->_camera->SetEye(camposEye);
-		_controller->_camera->SetTarget(camposTar);
-		_controller->_camera->SetFocalLengs(forcalLengs);
-		_controller->_camera->Update();
+		_manager->_camera->SetEye(camposEye);
+		_manager->_camera->SetTarget(camposTar);
+		_manager->_camera->SetFocalLengs(forcalLengs);
+		_manager->_camera->Update();
 		_objects->floorGround->Update();
 
 		BulletManager::GetInstance()->Update();
@@ -88,16 +88,16 @@ void GAME1Scene::Update(Input* input) {
 		startTime_ = _objects->Banner();
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == false) {
-		_controller->_camera->SetEye(camposEye);
-		_controller->_camera->SetTarget(camposTar);
+		_manager->_camera->SetEye(camposEye);
+		_manager->_camera->SetTarget(camposTar);
 
 #ifdef _DEBUG
 		if (Input::get_instance().KeyboardPush(DIK_P)) {
 			Vector3 eyeDebug = _objects->player->GetTransform().position;
 			eyeDebug.y = (float)3.5f;
-			_controller->_camera->SetEye(eyeDebug);
-			_controller->_camera->SetTarget(_objects->player->GetReticleTransform().position);
-			_controller->_camera->Update();
+			_manager->_camera->SetEye(eyeDebug);
+			_manager->_camera->SetTarget(_objects->player->GetReticleTransform().position);
+			_manager->_camera->Update();
 		}
 #endif // DEBUG
 		_objects->player->Update(input);
@@ -129,7 +129,7 @@ void GAME1Scene::Update(Input* input) {
 		_objects->SlowEffect(_objects->player->GetIsSlow());
 
 		if (input->KeyboardTrigger(DIK_TAB)) {
-			_controller->SetSceneNum(SCE_PAUSE);
+			_manager->SetSceneNum(SCE_PAUSE);
 		}
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
 			stageClear = true;
@@ -199,40 +199,40 @@ void GAME1Scene::Update(Input* input) {
 		infoSP_->SetTextureIndex(infoNum_);
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
-		stageFailed = _objects->Banner(1);
+		stageFailed = _objects->Banner(NUMBER::NUM_ONE);
 		if (stageFailed == false) {
-			_controller->SetSceneNum(SCE_GAME1);
+			_manager->SetSceneNum(SCE_GAME1);
 		}
 	}
 	else if (startTime_ == false && stageClear == true && stageFailed == false) {
-		stageClear = _objects->Banner(2);
+		stageClear = _objects->Banner(NUMBER::NUM_TWO);
 		if (stageClear == false) {
-			_controller->SetSceneNum(SCE_CLEAR);
+			_manager->SetSceneNum(SCE_CLEAR);
 		}
 	}
 	_objects->UIUpdate();
 }
 
 void GAME1Scene::Draw() {
-	_objects->floorGround->Draw(_controller->_dxCommon);
+	_objects->floorGround->Draw(_manager->_dxCommon);
 	for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
-		enemy->Draw(_controller->_dxCommon);
+		enemy->Draw(_manager->_dxCommon);
 	}
 	for (std::unique_ptr <Boss>& boss : _objects->boss) {
-		boss->Draw(_controller->_dxCommon);
+		boss->Draw(_manager->_dxCommon);
 	}
 	for (std::unique_ptr <Wall>& walls : _objects->walls) {
-		walls->Draw(_controller->_dxCommon);
+		walls->Draw(_manager->_dxCommon);
 	}
-	//_objects->bossFbxO_->Draw(_controller->_dxCommon->GetCommandList());
+	//_objects->bossFbxO_->Draw(_manager->_dxCommon->GetCommandList());
 
-	Object3d::PreDraw(_controller->_dxCommon->GetCommandList());
+	Object3d::PreDraw(_manager->_dxCommon->GetCommandList());
 
 	BulletManager::GetInstance()->Draw();
 
 	Object3d::PostDraw();
 	if (startTime_ == false) {
-		_objects->player->Draw(_controller->_dxCommon);
+		_objects->player->Draw(_manager->_dxCommon);
 	}
 	_objects->SlowEffectDraw();
 	_objects->plDamageRed_->Draw();

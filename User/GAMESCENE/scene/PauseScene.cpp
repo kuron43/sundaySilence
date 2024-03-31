@@ -6,8 +6,8 @@
 #include "SceneManager.h"
 #include "SceneIntegrate.h"
 
-PauseScene::PauseScene(SceneManager* controller, SceneObjects* objects) {
-	_controller = controller;
+PauseScene::PauseScene(SceneManager* manager, SceneObjects* objects) {
+	_manager = manager;
 	_objects = objects;
 }
 PauseScene::~PauseScene() {
@@ -49,36 +49,36 @@ void PauseScene::Update(Input* input) {
 			_objects->enemys.clear();
 			_objects->boss.clear();
 
-			_controller->goToTitle = true;
+			_manager->goToTitle = true;
 		}
 	}
 	else {
 		titleButton_->SetTextureIndex(50);
 	}
 	if (input->KeyboardTrigger(DIK_TAB) ) {
-		_controller->PopScene();
+		_manager->PopScene();
 	}
 	else if (_objects->mouseCursor_->Cursor2Sprite(pauseGoBuck_.get())) {
 		if (input->MouseButtonTrigger(0)) {
-			_controller->PopScene();
+			_manager->PopScene();
 		}
 	}
 }
 
 void PauseScene::Draw() {
-	_objects->floorGround->Draw(_controller->_dxCommon);
-	_objects->player->Draw(_controller->_dxCommon);
+	_objects->floorGround->Draw(_manager->_dxCommon);
+	_objects->player->Draw(_manager->_dxCommon);
 	for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
-		enemy->Draw(_controller->_dxCommon);
+		enemy->Draw(_manager->_dxCommon);
 	}
 	for (std::unique_ptr <Boss>& boss : _objects->boss) {
-		boss->Draw(_controller->_dxCommon);
+		boss->Draw(_manager->_dxCommon);
 	}
 	for (std::unique_ptr <Wall>& walls : _objects->walls) {
-		walls->Draw(_controller->_dxCommon);
+		walls->Draw(_manager->_dxCommon);
 	}
 
-	Object3d::PreDraw(_controller->_dxCommon->GetCommandList());
+	Object3d::PreDraw(_manager->_dxCommon->GetCommandList());
 
 	BulletManager::GetInstance()->Draw();
 

@@ -5,8 +5,8 @@
 #include "SceneIntegrate.h"
 #include "SceneManager.h"
 
-Clear::Clear(SceneManager* controller, SceneObjects* objects) {
-	_controller = controller;
+Clear::Clear(SceneManager* manager, SceneObjects* objects) {
+	_manager = manager;
 	_objects = objects;
 }
 Clear::~Clear() {
@@ -31,23 +31,23 @@ void Clear::Initialize() {
 		selectButton_->SetSize({ 256.0f,128.0f });
 		selectButton_->SetPozition({ (WinApp::window_width / 2) - 128,WinApp::window_height - 135 });
 	}
-	_controller->_camera->SetEye(camposEye);
-	_controller->_camera->SetTarget(camposTar);
-	_controller->_camera->Update();
+	_manager->_camera->SetEye(camposEye);
+	_manager->_camera->SetTarget(camposTar);
+	_manager->_camera->Update();
 	_objects->player->Reset();
 }
 
 void Clear::Update(Input* input) {
-	_controller->_camera->SetEye(camposEye);
-	_controller->_camera->SetTarget(camposTar);
-	_controller->_camera->Update();
+	_manager->_camera->SetEye(camposEye);
+	_manager->_camera->SetTarget(camposTar);
+	_manager->_camera->Update();
 
 	_objects->mouseCursor_->Update(input);	
 	clearSP_->Update();
 	titleButton_->Update();
 	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
 		if (input->MouseButtonTrigger(0)) {
-			_controller->SetSceneNum(SCE_TITLE);
+			_manager->SetSceneNum(SCE_TITLE);
 		}
 		titleButton_->SetTextureIndex(51);
 	}else {
@@ -56,7 +56,7 @@ void Clear::Update(Input* input) {
 	selectButton_->Update();
 	if (_objects->mouseCursor_->Cursor2Sprite(selectButton_.get())) {
 		if (input->MouseButtonTrigger(0)) {
-			_controller->SetSceneNum(SCE_SELECT);
+			_manager->SetSceneNum(SCE_SELECT);
 		}
 		selectButton_->SetTextureIndex(54);
 	}
@@ -66,7 +66,7 @@ void Clear::Update(Input* input) {
 }
 
 void Clear::Draw() {
-	_objects->floorGround->Draw(_controller->_dxCommon);
+	_objects->floorGround->Draw(_manager->_dxCommon);
 
 	clearSP_->Draw();
 	titleButton_->Draw();

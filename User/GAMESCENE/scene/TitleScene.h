@@ -10,11 +10,11 @@
 class TitleScene :public IScene
 {
 protected:
-	SceneManager* _controller;
+	SceneManager* _manager;
 	SceneObjects* _objects;
 public:
 
-	TitleScene(SceneManager* controller, SceneObjects* objects);
+	TitleScene(SceneManager* manager, SceneObjects* objects);
 	~TitleScene() override;
 
 	/// <summary>

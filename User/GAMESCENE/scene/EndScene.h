@@ -10,13 +10,13 @@ class EndScene :
     public IScene
 {
 protected:
-	SceneManager* _controller;
+	SceneManager* _manager;
 	SceneObjects* _objects;
 public:
-	EndScene(SceneManager* controller, SceneObjects* objects);
+	EndScene(SceneManager* manager, SceneObjects* objects);
 	~EndScene() override;
 
-	//void Cleate(SceneManager& controller) override;
+	//void Cleate(SceneManager& manager) override;
 
 	/// <summary>
 	/// 初期化

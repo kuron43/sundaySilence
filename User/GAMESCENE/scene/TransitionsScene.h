@@ -13,10 +13,10 @@ class TransitionsScene :
     public IScene
 {
 protected:
-	SceneManager* _controller;
+	SceneManager* _manager;
 	SceneObjects* _objects;
 public:
-	TransitionsScene(SceneManager* controller, SceneObjects* objects);
+	TransitionsScene(SceneManager* manager, SceneObjects* objects);
 	~TransitionsScene() override;
 
 	/// <summary>

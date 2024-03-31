@@ -13,13 +13,13 @@ class GAME1Scene :
     public IScene
 {
 protected:
-	SceneManager* _controller;
+	SceneManager* _manager;
 	SceneObjects* _objects;
 public:
-	GAME1Scene(SceneManager* controller, SceneObjects* objects);
+	GAME1Scene(SceneManager* manager, SceneObjects* objects);
 	~GAME1Scene() override;
 
-	//void Cleate(SceneManager& controller) override;
+	//void Cleate(SceneManager& manager) override;
 	/// <summary>
 	/// 初期化
 	/// </summary>

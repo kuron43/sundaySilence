@@ -1,17 +1,17 @@
 #include "SceneFactory.h"
 #include "SceneIntegrate.h"
 
-//Iscene* SceneFactory::CleateScene(const std::string& sceneName)
-//{
-//	IScene* newScene = nullptr;
-//
-//	if (sceneName == "TITLE") {
-//		newScene = new TitleScene()
-//	}
-//
-//
-//	return newScene;
-//}
+Iscene* SceneFactory::CleateScene(const std::string& sceneName)
+{
+	IScene* newScene = nullptr;
+
+	if (sceneName == "TITLE") {
+		newScene = new TitleScene();
+	}
+
+
+	return newScene;
+}
 
 //
 //void SceneManager::ChangeScene() {

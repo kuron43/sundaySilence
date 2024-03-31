@@ -10,13 +10,13 @@ class Clear :
 	public IScene
 {
 protected:
-	SceneManager* _controller;
+	SceneManager* _manager;
 	SceneObjects* _objects;
 public:
-	Clear(SceneManager* controller, SceneObjects* objects);
+	Clear(SceneManager* manager, SceneObjects* objects);
 	~Clear() override;
 
-	//void Cleate(SceneManager& controller) override;
+	//void Cleate(SceneManager& manager) override;
 
 	/// <summary>
 	/// 初期化

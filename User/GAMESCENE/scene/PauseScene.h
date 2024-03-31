@@ -9,13 +9,13 @@ class PauseScene :
     public IScene
 {
 protected:
-	SceneManager* _controller;
+	SceneManager* _manager;
 	SceneObjects* _objects;
 public:
-	PauseScene(SceneManager* controller, SceneObjects* objects);
+	PauseScene(SceneManager* manager, SceneObjects* objects);
 	~PauseScene() override;
 
-	//void Cleate(SceneManager& controller) override;
+	//void Cleate(SceneManager& manager) override;
 	/// <summary>
 	/// 初期化
 	/// </summary>

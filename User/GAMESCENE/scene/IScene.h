@@ -26,7 +26,7 @@ class IScene
 {
 protected:
 
-	SceneManager* _controller;
+	SceneManager* _manager;
 	SceneObjects* _objects;
 
 public:
@@ -34,7 +34,7 @@ public:
 	IScene();
 	virtual ~IScene();
 
-	//virtual Scene Create(SceneManager& controller) = 0;
+	//virtual Scene Create(SceneManager& manager) = 0;
 	/// シーンの初期化を行う
 	virtual void Initialize() = 0;
 
