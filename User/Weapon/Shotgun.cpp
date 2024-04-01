@@ -11,23 +11,6 @@ Shotgun::~Shotgun() {
 	delete model_;
 }
 
-Shotgun* Shotgun::Create()
-{
-	// 3Dオブジェクトのインスタンスを生成
-	Shotgun* instans = new Shotgun();
-	if (instans == nullptr) {
-		return nullptr;
-	}
-
-	// 初期化
-	if (!instans->Initialize()) {
-		delete instans;
-		assert(0);
-		return nullptr;
-	}
-
-	return instans;
-}
 
 /// 更新を行う
 bool Shotgun::Initialize() {
@@ -52,10 +35,10 @@ void Shotgun::Update(Input* input/*, bool isSlow*/) {
 		speed_ = nomalSpeed;
 	}
 	// 
-	if (mag < 5000 && nowRoading == false) {
+	if (mag < 5 && nowRoading == false) {
 		goShot = true;
 	}
-	else if (mag >= 5000 && nowRoading == false) {
+	else if (mag >= 5 && nowRoading == false) {
 		goShot = false;
 		nowRoading = true;
 
@@ -67,22 +50,14 @@ void Shotgun::Update(Input* input/*, bool isSlow*/) {
 			mag = 0;
 			roadingTime = 50*2;
 		}
-
 	}
-
 	if (roadingTime < 0) {
 		nowRoading = false;
 	}
 	roadingTime--;
-
-
-
 	if (coolTime > 0) {
 		coolTime--;
 	}
-
-
-
 	BulletManager::GetInstance()->SetSpeed(speed_);
 }
 

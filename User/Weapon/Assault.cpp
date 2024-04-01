@@ -15,6 +15,8 @@ Assault::~Assault() {
 bool Assault::Initialize() {
 	model_ = Model::LoadFromOBJ("sphere");
 	goShot = true;
+	nowRoading = false;
+	mag = 0;
 	return true;
 }
 
@@ -46,22 +48,15 @@ void Assault::Update(Input* input) {
 			mag = 0;
 			roadingTime = 50*2;
 		}
-
 	}
 
 	if (roadingTime < 0) {
 		nowRoading = false;
 	}
 	roadingTime--;
-
-
-
 	if (coolTime > 0) {
 		coolTime--;
 	}
-
-
-
 
 	BulletManager::GetInstance()->SetSpeed(speed_);
 }

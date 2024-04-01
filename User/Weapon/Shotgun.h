@@ -19,9 +19,9 @@ private:
 private:
 	const float nomalSpeed = 1.5f;
 	float speed_ = nomalSpeed;
-	uint32_t coolTime = 3;
-	uint32_t mag = 5;
-	uint32_t roadingTime = 500;
+	int32_t coolTime = 3;
+	int32_t mag = 5;
+	int32_t roadingTime = 500;
 	bool nowRoading;
 
 
