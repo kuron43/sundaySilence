@@ -103,9 +103,9 @@ private:
 	Vector3 oldVelocity_;
 
 private:
-	const uint32_t MAX_HP = 30;
-	uint32_t hp_ = MAX_HP;
-	uint32_t hit_;
+	const int32_t MAX_HP = 30;
+	int32_t hp_ = MAX_HP;
+	int32_t hit_;
 	bool isDeath_;
 	// 体の色変化
 	bool isHitEffect;

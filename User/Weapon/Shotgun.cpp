@@ -52,10 +52,10 @@ void Shotgun::Update(Input* input/*, bool isSlow*/) {
 		speed_ = nomalSpeed;
 	}
 	// 
-	if (mag < 10 && nowRoading == false) {
+	if (mag < 5000 && nowRoading == false) {
 		goShot = true;
 	}
-	else if (mag >= 10 && nowRoading == false) {
+	else if (mag >= 5000 && nowRoading == false) {
 		goShot = false;
 		nowRoading = true;
 

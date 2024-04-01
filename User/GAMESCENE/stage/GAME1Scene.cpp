@@ -29,24 +29,7 @@ void GAME1Scene::Initialize() {
 	startTime_ = true;
 	stageClear = false;
 	stageFailed = false;
-
-	//
-	infoSP_ = std::make_unique<Sprite>();
-	infoSP_->Initialize(_objects->spriteCommon_.get(), 60);
-	infoSP_->SetSize({ 300,150 });
-	infoSP_->SetPozition({ (WinApp::window_width / 1.5f) - 150,WinApp::window_height - 200 });
-	isDrawSP_ = true;
-	infoNum_ = 60;
-	nowInfoNum_ = 0;
-
-	isInfoWASD = false;
-	isInfoSHOT = false;
-	isInfoSLOW = false;
-	isInfoDUSH = false;
-	isInfoWEPC = false;
-	isAllFalse = true;
-	isTimeCount = false;
-
+	TutorialInitialize();
 	{
 		_manager->_camera->SetEye(camposEye);
 		_manager->_camera->SetTarget(camposTar);
@@ -80,7 +63,7 @@ void GAME1Scene::Update(Input* input) {
 	_objects->bossCount = 0;
 	_objects->floorGround->Update();
 	//_objects->bossFbxO_->Update();
-	
+
 
 
 
@@ -100,6 +83,7 @@ void GAME1Scene::Update(Input* input) {
 			_manager->_camera->Update();
 		}
 #endif // DEBUG
+
 		_objects->player->Update(input);
 		stageFailed = _objects->player->GetIsDeath();
 
@@ -134,69 +118,7 @@ void GAME1Scene::Update(Input* input) {
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
 			stageClear = true;
 		}
-
-		if ((input->KeyboardPush(DIK_W) || input->KeyboardPush(DIK_A) || input->KeyboardPush(DIK_S) || input->KeyboardPush(DIK_D))&&nowInfoNum_ == 0) {
-			isInfoWASD = true;
-			isTimeCount = true;
-		}
-		if ((input->MouseButtonPush(0) && !input->MouseButtonPush(1))&& nowInfoNum_ == 1) {
-			isInfoSHOT = true;
-			isTimeCount = true;
-		}
-		if ((!input->MouseButtonPush(0) && input->MouseButtonPush(1))&& nowInfoNum_ == 2) {
-			isInfoSLOW = true;
-			isTimeCount = true;
-		}
-		if ((input->MouseButtonPush(0) && input->MouseButtonPush(1))&& nowInfoNum_ == 3) {
-			isInfoDUSH = true;
-			isTimeCount = true;
-		}
-		if ((input->KeyboardPush(DIK_E))&& nowInfoNum_ == 4) {
-			isInfoWEPC = true;
-			isTimeCount = true;
-
-		}
-		if (isTimeCount) {
-			infoCountTime_++;
-		}
-		if (isInfoWASD == true && infoCountTime_ >= 150) {
-			nowInfoNum_ = 1;
-			infoNum_ = 61;
-			isInfoWASD = false;
-			isTimeCount = false;
-			infoCountTime_ = 0;
-		}
-		if (isInfoSHOT == true && infoCountTime_ >= 150) {
-			nowInfoNum_ = 2;
-			infoNum_ = 62;
-			isInfoSHOT = false;
-			isTimeCount = false;
-			infoCountTime_ = 0;
-		}
-		if (isInfoSLOW == true && infoCountTime_ >= 150) {
-			nowInfoNum_ = 3;
-			infoNum_ = 63;
-			isInfoSLOW = false;
-			isTimeCount = false;
-			infoCountTime_ = 0;
-		}
-		if (isInfoDUSH == true && infoCountTime_ >= 150) {
-			nowInfoNum_ = 4;
-			infoNum_ = 64;
-			isInfoDUSH = false;
-			isTimeCount = false;
-			infoCountTime_ = 0;
-		}
-		if (isInfoWEPC == true && infoCountTime_ >= 150) {
-			nowInfoNum_ = 0;
-			infoNum_ = 60;
-			isInfoWEPC = false;
-			isDrawSP_ = false;
-			isTimeCount = false;
-			infoCountTime_ = 0;
-		}
-
-		infoSP_->SetTextureIndex(infoNum_);
+		TutorialUpdate();
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
 		stageFailed = _objects->Banner(NUMBER::NUM_ONE);
@@ -237,10 +159,100 @@ void GAME1Scene::Draw() {
 	_objects->SlowEffectDraw();
 	_objects->plDamageRed_->Draw();
 	_objects->UIDraw();
-	if (startTime_ == false && stageClear == false && stageFailed == false && isDrawSP_ == true) {
-		//infoSP_->Draw();
+	if (startTime_ == false && stageClear == false && stageFailed == false) {
+		TutrialDraw(isDrawSP_);
 	}
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();
+	}
+}
+
+void GAME1Scene::TutorialInitialize()
+{
+	infoSP_ = std::make_unique<Sprite>();
+	infoSP_->Initialize(_objects->spriteCommon_.get(), 60);
+	infoSP_->SetSize({ 300,150 });
+	infoSP_->SetPozition({ (WinApp::window_width / 1.5f) - 150,WinApp::window_height - 200 });
+	isDrawSP_ = true;
+	infoNum_ = 60;
+	nowInfoNum_ = 0;
+
+	isInfoBarrier = false;
+	isInfoSHOT = false;
+	isInfoSLOW = false;
+	isInfoDUSH = false;
+	isInfoWEPC = false;
+	isAllFalse = true;
+	isTimeCount = false;
+}
+
+void GAME1Scene::TutorialUpdate() {
+	if (Input::get_instance().KeyboardPush(DIK_SPACE) && nowInfoNum_ == 0) {
+		isInfoBarrier = true;
+		isTimeCount = true;
+	}
+	if ((Input::get_instance().MouseButtonPush(0) && !Input::get_instance().MouseButtonPush(1)) && nowInfoNum_ == 1) {
+		isInfoSHOT = true;
+		isTimeCount = true;
+	}
+	if ((!Input::get_instance().MouseButtonPush(0) && Input::get_instance().MouseButtonPush(1)) && nowInfoNum_ == 2) {
+		isInfoSLOW = true;
+		isTimeCount = true;
+	}
+	if ((Input::get_instance().MouseButtonPush(0) && Input::get_instance().MouseButtonPush(1)) && nowInfoNum_ == 3) {
+		isInfoDUSH = true;
+		isTimeCount = true;
+	}
+	if ((Input::get_instance().KeyboardPush(DIK_E)) && nowInfoNum_ == 4) {
+		isInfoWEPC = true;
+		isTimeCount = true;
+
+	}
+	if (isTimeCount) {
+		infoCountTime_++;
+	}
+	if (isInfoBarrier == true && infoCountTime_ >= 150) {
+		nowInfoNum_ = 1;
+		infoNum_ = 61;
+		isInfoBarrier = false;
+		isTimeCount = false;
+		infoCountTime_ = 0;
+	}
+	if (isInfoSHOT == true && infoCountTime_ >= 150) {
+		nowInfoNum_ = 2;
+		infoNum_ = 62;
+		isInfoSHOT = false;
+		isTimeCount = false;
+		infoCountTime_ = 0;
+	}
+	if (isInfoSLOW == true && infoCountTime_ >= 150) {
+		nowInfoNum_ = 3;
+		infoNum_ = 63;
+		isInfoSLOW = false;
+		isTimeCount = false;
+		infoCountTime_ = 0;
+	}
+	if (isInfoDUSH == true && infoCountTime_ >= 150) {
+		nowInfoNum_ = 4;
+		infoNum_ = 64;
+		isInfoDUSH = false;
+		isTimeCount = false;
+		infoCountTime_ = 0;
+	}
+	if (isInfoWEPC == true && infoCountTime_ >= 150) {
+		nowInfoNum_ = 0;
+		infoNum_ = 60;
+		isInfoWEPC = false;
+		isDrawSP_ = false;
+		isTimeCount = false;
+		infoCountTime_ = 0;
+	}
+	infoSP_->SetTextureIndex(infoNum_);
+}
+
+void GAME1Scene::TutrialDraw(bool isTutrial)
+{
+	if (isTutrial == true) {
+		infoSP_->Draw();
 	}
 }

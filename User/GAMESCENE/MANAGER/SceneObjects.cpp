@@ -501,8 +501,11 @@ void SceneObjects::UIUpdate()
 	else {
 		UISlowSP_->SetTextureIndex(44);
 	}
-
-	UIHPSPsize_.y = 8.0f * player->GetHP();
+	if (player->GetHP() > 0) {
+		UIHPSPsize_.y = 8.0f * player->GetHP();
+	}else if (player->GetHP() <= 0) {
+		UIHPSPsize_.y = 0.0f;
+	}
 	UIBarrierGaugeSP_->SetSize(UIWeaponSPsize_);
 	UIHPSP_->SetSize(UIHPSPsize_);
 	UIBuckSP_->Update();

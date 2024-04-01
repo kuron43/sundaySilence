@@ -167,6 +167,9 @@ void PointDash::MakeMoveVec(Vector3 pos) {
 		}
 	}
 	for (uint32_t i = 0; i <= registNum; i++) {
+		debuglengs[i] = moveVec[i].length();
+	}
+	for (uint32_t i = 0; i <= registNum; i++) {
 		moveVec[i].nomalize();
 
 	}
@@ -290,6 +293,11 @@ void PointDash::DebugImGui()
 	ImGui::InputFloat3("Vec", &resultVec.x);
 	ImGui::InputFloat("speeed :%f", &easeSpeed);
 	ImGui::InputInt("Maxtime :%d", &maxtime);
+	ImGui::Text("lengs1:%f", debuglengs[0]);
+	ImGui::Text("lengs2:%f", debuglengs[1]);
+	ImGui::Text("lengs3:%f", debuglengs[2]);
+	ImGui::Text("lengs4:%f", debuglengs[3]);
+	ImGui::Text("lengs5:%f", debuglengs[4]);
 	ImGui::End();
 	easeMaxTime = (uint32_t)maxtime;
 }

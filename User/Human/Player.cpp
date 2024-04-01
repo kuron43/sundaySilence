@@ -404,6 +404,7 @@ void Player::OnCollision(bool bullet)
 		isHitEffect = true;
 	}
 	if (hp_ <= NONE) {
+		hp_ = NONE;
 		isDeath_ = true;
 	}
 }
