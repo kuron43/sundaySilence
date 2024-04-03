@@ -505,6 +505,10 @@ void Player::PointDashUpdate()
 			reticle->SetModel(reticleXMD_);
 			reticle->wtf.rotation.y = NONE;
 		}
+		if (pointDash_->pointsMax) {
+			reticle->SetModel(reticleXMD_);
+			reticle->wtf.rotation.y = NONE;
+		}
 	}
 	else {
 		reticle->SetModel(reticleMD_);
