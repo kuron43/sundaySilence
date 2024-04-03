@@ -11,9 +11,11 @@ class Shotgun :
     public Weapon
 {
 private:
-	Model* model_;
 	bool active_ = false;
 	bool goShot;
+	bool nowRoading;
+	bool PADDING[5];
+	Model* model_;
 	const uint32_t WeaponNum = 2;
 
 private:
@@ -22,7 +24,6 @@ private:
 	int32_t coolTime = 3;
 	int32_t mag = 5;
 	int32_t roadingTime = 500;
-	bool nowRoading;
 
 
 public:

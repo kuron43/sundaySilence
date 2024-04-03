@@ -31,7 +31,7 @@ public:
 
 	// セッター
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
-	void SetReticle(Vector3 ret) { reticle->wtf.position = ret; }
+	void SetReticle(Vector3 ret) { reticle.position = ret; }
 	void SetRestRotate(Vector3 rot) { restRotate_ = rot; }
 
 	// 種族番号取得
@@ -58,19 +58,21 @@ private:
 	bool oldFound = false;
 	bool isFire = false;
 	bool isBlocked = false;
+	bool isDead = false;
+	bool onPat_;
+	bool isHitEffect;
 
 
 	Model* model_;
-	Object3d* reticle;
+	Transform reticle;
 
 	Vector3 frontVec_;
-	bool isDead = false;
 	uint32_t hp = 3;
+
 
 	
 	//移動速度
 	const float kMoveSpeed_ = 0.5f;
-	bool isRun_ = false;
 	//移動ベクトル
 	Vector3 velocity_;
 	// 回転向き保存
@@ -84,19 +86,15 @@ private:
 	bool isLost = false;
 
 
-	Weapon* weapon_;
 	bool isWeaponOn = true;
-
-	// タイトル用の処理と切り分けるためのやつ
 	bool nowTitle = false;
+	Weapon* weapon_;
 
 	// パーティクル
 	std::unique_ptr <ParticleManager>  particle_;
 	uint32_t onPatTime_;
-	bool onPat_;
 
 	// 体の色変化
-	bool isHitEffect;
 	const uint32_t MAX_HITTIME = 5;
 	uint32_t hitTime_;
 
@@ -113,6 +111,7 @@ private:
 	RayCollider* ray;
 	RaycastHit* rayHit;
 	Vector3 rayvec;
+	uint32_t PADDING;
 
 private:
 	//代入演算子削除

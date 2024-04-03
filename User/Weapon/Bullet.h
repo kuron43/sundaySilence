@@ -64,6 +64,7 @@ public:
 private:
 	SphereCollider* sphere;
 	Vector3 spherePos;
+	uint32_t PADDING;
 	Object3d* colliderPosTest_;
 };
 

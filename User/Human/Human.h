@@ -34,6 +34,8 @@ protected:
 	float _SlowSpeed = 0.25f;
 	bool _isSlow;
 	bool _isTitle;
+private:
+	bool PADDING[2];
 public:
 
 	Human();

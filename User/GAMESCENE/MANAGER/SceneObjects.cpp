@@ -297,6 +297,8 @@ void SceneObjects::UpdateImGui()
 	// Imgui
 	int UISP_Weapon_size = UISP_Wep_size;
 	ImGui::Begin("Objects");
+	ImGui::Text("Objects");
+	ImGui::Text("JsonMapNum:%d",(int)levels.size());
 	ImGui::Text("DirLight");
 	ImGui::InputFloat3("DirRot", &pointLightPos.x);
 	ImGui::SliderFloat3("DirPos", &rotateLight.x, 0.0f, Affin::radConvert(360.0f));

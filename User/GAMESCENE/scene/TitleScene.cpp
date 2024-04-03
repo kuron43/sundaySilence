@@ -52,6 +52,7 @@ void TitleScene::Initialize() {
 		_objects->floorGround->Update();
 
 		BulletManager::GetInstance()->Update();
+
 		for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
 			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
 			enemy->Update();

@@ -20,12 +20,8 @@ Enemy::~Enemy() {
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
 	delete object_;
-	delete reticle;
 }
-	//乱数生成装置
-	std::random_device seed_gen;
-	std::mt19937_64 engine(seed_gen());
-	std::uniform_real_distribution<float>dist(0.0f, 50.0f);
+
 
 ///
 void Enemy::Initialize() {
@@ -34,13 +30,11 @@ void Enemy::Initialize() {
 	nowTitle = false;
 	model_ = Model::LoadFromOBJ("ene");
 
-	object_ = Object3d::Create();
+	object_ = new Object3d();
 	object_->SetModel(model_);
 	object_->Initialize();
 
-	reticle = Object3d::Create();
-	reticle->SetModel(model_);
-	reticle->Initialize();
+	reticle.Initialize();
 
 
 	if (useWeapon_ == WP_SHOTGUN) {
@@ -68,7 +62,7 @@ void Enemy::Initialize() {
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
 	colliderPosTest_.resize(SPHERE_COLLISION_NUM);
 
-	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
+	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		sphere[i] = new SphereCollider;
@@ -104,13 +98,13 @@ void Enemy::Update(Input* input, bool isTitle) {
 
 	HitMyColor();
 	object_->Update();
-	reticle->Update();
+	reticle.UpdateMat();
 
 	//particle_->SetTransform(object_->wtf);
 	particle_->Update();
 
 	if (isFire == true && isDead == false) {
-		weapon_->Shot(object_->wtf, reticle->wtf, ENEMY);
+		weapon_->Shot(object_->wtf, reticle, ENEMY);
 	}
 	weapon_->Update(input);
 
@@ -158,7 +152,7 @@ void Enemy::SetWeaponNum(uint32_t WeaponNum)
 void Enemy::FrontFace() {
 	Vector3 faceAngle, resultRot;
 	faceAngle.InIt();
-	faceAngle.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
+	faceAngle.y = (float)atan2(reticle.position.x - object_->wtf.position.x, reticle.position.z - object_->wtf.position.z);
 	if (isFound == true) {
 		stateRotate_ = object_->wtf.rotation;
 		frontVec_ = faceAngle;
@@ -193,8 +187,8 @@ void Enemy::ColliderUpdate() {
 	isFire = false;
 
 	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
-	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
-	ray->SetDir(Affin::GetWorldTrans(reticle->wtf.matWorld));
+	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle.matWorld));
+	ray->SetDir(Affin::GetWorldTrans(reticle.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true) {
