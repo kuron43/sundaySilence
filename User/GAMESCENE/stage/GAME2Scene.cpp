@@ -4,9 +4,7 @@
  */
 #include "GAME2Scene.h"
 #include "SceneManager.h"
-GAME2Scene::GAME2Scene(SceneManager* manager, SceneObjects* objects) {
-	_manager = manager;
-	_objects = objects;
+GAME2Scene::GAME2Scene() {
 }
 
 GAME2Scene::~GAME2Scene() {
@@ -109,7 +107,6 @@ void GAME2Scene::Update(Input* input) {
 			_manager->SetSceneNum(SCE_PAUSE);
 		}
 		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
-			//_manager->SetSceneNum(SCE_SELECT);
 			stageClear = true;
 		}
 	}

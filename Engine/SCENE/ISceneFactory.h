@@ -5,7 +5,7 @@
 #include<string>
 #pragma warning(pop)
 
-class Iscene;
+class IScene;
 
 /// <summary>
 /// 仮想シーン工場
@@ -15,6 +15,6 @@ class ISceneFactory
 public:
 	virtual ~ISceneFactory() = default;
 
-	virtual Iscene* CleateScene(const std::string& sceneName) = 0;
+	virtual IScene* CleateScene(const std::string& sceneName) = 0;
 };
 

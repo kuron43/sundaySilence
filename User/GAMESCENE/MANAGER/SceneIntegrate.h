@@ -7,7 +7,6 @@
 // 要らないなら消しておk
 
 #include "TitleScene.h"
-#include "EndScene.h"
 #include "PauseScene.h"
 #include "SelectScene.h"
 #include "Clear.h"
@@ -19,14 +18,13 @@
 // チェンジシーン用のenum
 enum _SCENE_ {
 	SCE_TITLE = 1,
-	SCE_OVER = 2,
-	SCE_CLEAR = 3,
-	SCE_PAUSE = 4,
-	SCE_SELECT = 5,
-	SCE_TRANS = 6,
-	SCE_GAME1 = 7,
-	SCE_GAME2 = 8,
-	SCE_GAME3 = 9
+	SCE_CLEAR ,
+	SCE_PAUSE ,
+	SCE_SELECT,
+	SCE_TRANS ,
+	SCE_GAME1 ,
+	SCE_GAME2 ,
+	SCE_GAME3 
 };
 
 enum LEVELS

@@ -5,9 +5,7 @@
 #include "SceneIntegrate.h"
 #include "SceneManager.h"
 
-Clear::Clear(SceneManager* manager, SceneObjects* objects) {
-	_manager = manager;
-	_objects = objects;
+Clear::Clear() {
 }
 Clear::~Clear() {
 

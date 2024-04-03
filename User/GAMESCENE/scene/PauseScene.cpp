@@ -6,9 +6,7 @@
 #include "SceneManager.h"
 #include "SceneIntegrate.h"
 
-PauseScene::PauseScene(SceneManager* manager, SceneObjects* objects) {
-	_manager = manager;
-	_objects = objects;
+PauseScene::PauseScene() {
 }
 PauseScene::~PauseScene() {
 

@@ -11,11 +11,8 @@
 class GAME2Scene :
 	public IScene
 {
-protected:
-	SceneManager* _manager;
-	SceneObjects* _objects;
 public:
-	GAME2Scene(SceneManager* manager, SceneObjects* objects);
+	GAME2Scene();
 	~GAME2Scene() override;
 
 	//void Cleate(SceneManager& manager) override;

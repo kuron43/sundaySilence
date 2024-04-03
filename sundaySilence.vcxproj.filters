@@ -96,9 +96,6 @@
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp">
       <Filter>engine\3d\fbx</Filter>
     </ClCompile>
-    <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp">
-      <Filter>user\scene</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3D\Fbx\FBXModel.cpp">
       <Filter>engine\3d\fbx</Filter>
     </ClCompile>
@@ -338,9 +335,6 @@
     </ClInclude>
     <ClInclude Include="Engine\3D\Fbx\FBXLoader.h">
       <Filter>engine\3d\fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="User\GAMESCENE\scene\EndScene.h">
-      <Filter>user\scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\Fbx\FBXObject3d.h">
       <Filter>engine\3d\fbx</Filter>

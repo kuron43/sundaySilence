@@ -5,9 +5,7 @@
 #include "SelectScene.h"
 #include "SceneManager.h"
 
-SelectScene::SelectScene(SceneManager* manager, SceneObjects* objects) {
-	_manager = manager;
-	_objects = objects;
+SelectScene::SelectScene() {
 }
 SelectScene::~SelectScene() {
 	_objects->player->Reset();

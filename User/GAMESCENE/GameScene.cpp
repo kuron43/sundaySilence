@@ -57,6 +57,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 
 	sceneObjects = std::make_unique<SceneObjects>(dxCommon);
 	sceneObjects->Initialize();
+	IScene::SetSceneObjects(sceneObjects.get());
 
 	sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
 	sceneManager->SceneInitialize();

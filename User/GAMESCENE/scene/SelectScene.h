@@ -9,11 +9,8 @@
 class SelectScene :
     public IScene
 {
-protected:
-	SceneManager* _manager;
-	SceneObjects* _objects;
 public:
-	SelectScene(SceneManager* manager, SceneObjects* objects);
+	SelectScene();
 	~SelectScene() override;
 
 	//void Cleate(SceneManager& manager) override;

@@ -9,11 +9,8 @@
 class Clear :
 	public IScene
 {
-protected:
-	SceneManager* _manager;
-	SceneObjects* _objects;
 public:
-	Clear(SceneManager* manager, SceneObjects* objects);
+	Clear();
 	~Clear() override;
 
 	//void Cleate(SceneManager& manager) override;

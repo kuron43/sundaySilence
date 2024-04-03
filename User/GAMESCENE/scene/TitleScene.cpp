@@ -4,9 +4,7 @@
  */
 #include "SceneIntegrate.h"
 
-TitleScene::TitleScene(SceneManager* manager, SceneObjects* objects) {
-	_manager = manager;
-	_objects = objects;
+TitleScene::TitleScene() {
 }
 TitleScene::~TitleScene() {
 	_objects->walls.clear();

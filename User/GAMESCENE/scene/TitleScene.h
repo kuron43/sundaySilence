@@ -9,12 +9,9 @@
 
 class TitleScene :public IScene
 {
-protected:
-	SceneManager* _manager;
-	SceneObjects* _objects;
 public:
 
-	TitleScene(SceneManager* manager, SceneObjects* objects);
+	TitleScene();
 	~TitleScene() override;
 
 	/// <summary>

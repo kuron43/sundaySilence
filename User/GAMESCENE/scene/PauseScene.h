@@ -8,11 +8,8 @@
 class PauseScene :
     public IScene
 {
-protected:
-	SceneManager* _manager;
-	SceneObjects* _objects;
 public:
-	PauseScene(SceneManager* manager, SceneObjects* objects);
+	PauseScene();
 	~PauseScene() override;
 
 	//void Cleate(SceneManager& manager) override;

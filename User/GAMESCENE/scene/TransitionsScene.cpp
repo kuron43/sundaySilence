@@ -8,9 +8,7 @@
 #include "Affin.h"
 
 
-TransitionsScene::TransitionsScene(SceneManager* manager, SceneObjects* objects) {
-	_manager = manager;
-	_objects = objects;
+TransitionsScene::TransitionsScene() {
 }
 TransitionsScene::~TransitionsScene() {
 

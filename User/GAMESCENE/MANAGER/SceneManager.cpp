@@ -18,7 +18,8 @@
 SceneManager::SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects* objects) {
 	_dxCommon = dxCommon;
 	_objects = objects;
-	_scene.emplace(new TitleScene(&*this, _objects));
+	IScene::SetSceneManager(&*this);
+	_scene.emplace(new TitleScene());
 	_objects->SetingLevel(_objects->levels.at(_objects->levelName_[0]).get());
 	_camera = camera;
 
@@ -44,7 +45,7 @@ void SceneManager::ChangeScene() {
 	if (goToTitle == true) {
 		_scene.pop();
 		_scene.pop();
-		_scene.emplace(new TitleScene(&*this, _objects));
+		_scene.emplace(new TitleScene());
 		_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TITLE]).get());
 		SceneInitialize();
 		_objects->OFFIsUIDraw();
@@ -58,7 +59,7 @@ void SceneManager::ChangeScene() {
 		{
 		case SCE_TITLE:
 			_scene.pop();
-			_scene.emplace(new TitleScene(&*this, _objects));
+			_scene.emplace(new TitleScene());
 			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TITLE]).get());
 			SceneInitialize();
 			_objects->OFFIsUIDraw();
@@ -66,7 +67,7 @@ void SceneManager::ChangeScene() {
 			break;
 		case SCE_GAME1:
 			_scene.pop();
-			_scene.emplace(new GAME1Scene(&*this, _objects));
+			_scene.emplace(new GAME1Scene());
 			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TUTRIAL]).get());
 			SceneInitialize();
 			_objects->ONIsUIDraw();
@@ -76,7 +77,7 @@ void SceneManager::ChangeScene() {
 		case SCE_GAME2:
 		case SCE_GAME3:
 			_scene.pop();
-			_scene.emplace(new GAME2Scene(&*this, _objects));
+			_scene.emplace(new GAME2Scene());
 			if (SCE_GAME2 == sceneNum) {
 				_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE1]).get());
 			}
@@ -87,24 +88,16 @@ void SceneManager::ChangeScene() {
 			_objects->ONIsUIDraw();
 			TransScene();
 			break;
-
-		case SCE_OVER:
-			_scene.pop();
-			_scene.emplace(new EndScene(&*this, _objects));
-			SceneInitialize();
-			_objects->OFFIsUIDraw();
-			TransScene();
-			break;
 		case SCE_SELECT:
 			_scene.pop();
-			_scene.emplace(new SelectScene(&*this, _objects));
+			_scene.emplace(new SelectScene());
 			SceneInitialize();
 			_objects->OFFIsUIDraw();
 			TransScene();
 			break;
 		case SCE_CLEAR:
 			_scene.pop();
-			_scene.emplace(new Clear(&*this, _objects));
+			_scene.emplace(new Clear());
 			SceneInitialize();
 			_objects->OFFIsUIDraw();
 			TransScene();
@@ -125,13 +118,13 @@ void SceneManager::ChangeScene() {
 
 void SceneManager::TransScene()
 {
-	_scene.emplace(new TransitionsScene(&*this, _objects));
+	_scene.emplace(new TransitionsScene());
 	SceneInitialize();
 }
 
 void SceneManager::Pause()
 {
-	_scene.emplace(new PauseScene(&*this, _objects));
+	_scene.emplace(new PauseScene());
 	SceneInitialize();
 }
 

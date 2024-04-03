@@ -26,8 +26,8 @@ class IScene
 {
 protected:
 
-	SceneManager* _manager;
-	SceneObjects* _objects;
+	static SceneManager* _manager;
+	static SceneObjects* _objects;
 
 public:
 
@@ -43,6 +43,9 @@ public:
 
 	/// シーンの描画を行う
 	virtual void Draw() = 0;
+
+	static void SetSceneManager(SceneManager* manager) { _manager = manager; };
+	static void SetSceneObjects(SceneObjects* objects) { _objects = objects; };
 
 };
 

@@ -5,9 +5,7 @@
 #include "GAME1Scene.h"
 #include "SceneManager.h"
 
-GAME1Scene::GAME1Scene(SceneManager* manager, SceneObjects* objects) {
-	_manager = manager;
-	_objects = objects;
+GAME1Scene::GAME1Scene() {
 }
 
 GAME1Scene::~GAME1Scene() {

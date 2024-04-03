@@ -11,6 +11,7 @@
 #include "SpriteCommon.h"
 #include "SceneManager.h"
 #include "SceneObjects.h"
+#include "IScene.h"
 #include "Affin.h"
 #include "Camera.h"
 #include "CollisionManager.h"

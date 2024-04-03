@@ -1,24 +1,41 @@
 #include "SceneFactory.h"
 #include "SceneIntegrate.h"
 
-//Iscene* SceneFactory::CleateScene(const std::string& sceneName)
-//{
-//	IScene* newScene = nullptr;
-//
-//	if (sceneName == "TITLE") {
-//		newScene = new TitleScene();
-//	}
-//
-//
-//	return newScene;
-//}
+IScene* SceneFactory::CleateScene(const std::string& sceneName)
+{
+	IScene* newScene = nullptr;
+
+	if (sceneName == "TITLE") {
+		newScene = new TitleScene();
+	}
+	if (sceneName == "CLEAR") {
+		newScene = new Clear();
+	}
+	if (sceneName == "PAUSE") {
+		newScene = new PauseScene();
+	}
+	if (sceneName == "SELECT") {
+		newScene = new SelectScene();
+	}
+	if (sceneName == "TRANS") {
+		newScene = new TransitionsScene();
+	}
+	if (sceneName == "TUTREAL") {
+		newScene = new GAME1Scene();
+	}
+	if (sceneName == "GAME") {
+		newScene = new GAME2Scene();
+	}
+
+	return newScene;
+}
 
 //
 //void SceneManager::ChangeScene() {
 //	if (goToTitle == true) {
 //		_scene.pop();
 //		_scene.pop();
-//		_scene.emplace(new TitleScene(&*this, _objects));
+//		_scene.emplace(new TitleScene());
 //		_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TITLE]).get());
 //		SceneInitialize();
 //		_objects->OFFIsUIDraw();
@@ -32,7 +49,7 @@
 //		{
 //		case SCE_TITLE:
 //			_scene.pop();
-//			_scene.emplace(new TitleScene(&*this, _objects));
+//			_scene.emplace(new TitleScene());
 //			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TITLE]).get());
 //			SceneInitialize();
 //			_objects->OFFIsUIDraw();
@@ -40,7 +57,7 @@
 //			break;
 //		case SCE_GAME1:
 //			_scene.pop();
-//			_scene.emplace(new GAME1Scene(&*this, _objects));
+//			_scene.emplace(new GAME1Scene());
 //			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TUTRIAL]).get());
 //			SceneInitialize();
 //			_objects->ONIsUIDraw();
@@ -49,7 +66,7 @@
 //
 //		case SCE_GAME2:
 //			_scene.pop();
-//			_scene.emplace(new GAME2Scene(&*this, _objects));
+//			_scene.emplace(new GAME2Scene());
 //			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE1]).get());
 //			SceneInitialize();
 //			_objects->ONIsUIDraw();
@@ -57,7 +74,7 @@
 //			break;
 //		case SCE_GAME3:
 //			_scene.pop();
-//			_scene.emplace(new GAME2Scene(&*this, _objects));
+//			_scene.emplace(new GAME2Scene());
 //			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE2]).get());
 //			SceneInitialize();
 //			_objects->ONIsUIDraw();
@@ -66,21 +83,21 @@
 //
 //		case SCE_OVER:
 //			_scene.pop();
-//			_scene.emplace(new EndScene(&*this, _objects));
+//			_scene.emplace(new EndScene());
 //			SceneInitialize();
 //			_objects->OFFIsUIDraw();
 //			TransScene();
 //			break;
 //		case SCE_SELECT:
 //			_scene.pop();
-//			_scene.emplace(new SelectScene(&*this, _objects));
+//			_scene.emplace(new SelectScene());
 //			SceneInitialize();
 //			_objects->OFFIsUIDraw();
 //			TransScene();
 //			break;
 //		case SCE_CLEAR:
 //			_scene.pop();
-//			_scene.emplace(new Clear(&*this, _objects));
+//			_scene.emplace(new Clear());
 //			SceneInitialize();
 //			_objects->OFFIsUIDraw();
 //			TransScene();
@@ -102,13 +119,13 @@
 //
 //void SceneManager::TransScene()
 //{
-//	_scene.emplace(new TransitionsScene(&*this, _objects));
+//	_scene.emplace(new TransitionsScene());
 //	SceneInitialize();
 //}
 //
 //void SceneManager::Pause()
 //{
-//	_scene.emplace(new PauseScene(&*this, _objects));
+//	_scene.emplace(new PauseScene());
 //	SceneInitialize();
 //}
 //

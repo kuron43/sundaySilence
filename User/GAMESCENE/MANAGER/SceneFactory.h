@@ -5,7 +5,7 @@ class SceneFactory :
     public ISceneFactory
 {
 public:
-	 Iscene* CleateScene(const std::string& sceneName) override;
+	 IScene* CleateScene(const std::string& sceneName) override;
 private:
 
 };

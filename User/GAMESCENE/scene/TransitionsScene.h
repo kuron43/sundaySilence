@@ -12,11 +12,8 @@
 class TransitionsScene :
     public IScene
 {
-protected:
-	SceneManager* _manager;
-	SceneObjects* _objects;
 public:
-	TransitionsScene(SceneManager* manager, SceneObjects* objects);
+	TransitionsScene();
 	~TransitionsScene() override;
 
 	/// <summary>
