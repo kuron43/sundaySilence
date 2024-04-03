@@ -61,6 +61,9 @@ private:
 
 
 	float debuglengs[5];
+
+	std::unique_ptr<Object3d> debugOBJ_;
+	Model* debugModel_;
 public:
 
 	~PointDash();

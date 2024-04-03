@@ -17,10 +17,16 @@ PointDash::~PointDash()
 		delete object_[i];
 	}
 	points.clear();
+	delete debugModel_;
 }
 
 void PointDash::Initialize()
 {
+	debugModel_ = Model::LoadFromOBJ("cube");
+	debugOBJ_ = std::make_unique<Object3d>();
+	debugOBJ_->Initialize();
+	debugOBJ_->SetModel(debugModel_);
+
 	model_ = Model::LoadFromOBJ("pointCircle");
 	for (uint32_t i = 0; i < 5; i++) {
 		object_[i] = Object3d::Create();
@@ -51,6 +57,7 @@ void PointDash::Draw(DirectXCommon* dxCommon)
 			object_[i]->Draw();
 		}
 	}
+	debugOBJ_->Draw();
 	Object3d::PostDraw();
 	particle_->Draw();
 }
@@ -63,6 +70,50 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 	for (uint32_t i = 0; i < 5; i++) {
 		object_[i]->wtf.rotation.y += registNum;
 		object_[i]->Update();
+	}
+
+	// ポイントダッシュ間のライン計算処理
+	{
+		//float debugLineAngle;
+		//Vector3 debugPos;
+		//switch (registNum)
+		//{
+		//case 0:
+		//	debugLineAngle = (float)atan2(ret.x - pos.x, ret.z - pos.z);
+		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
+		//	debugOBJ_->wtf.scale.z = (pos - ret).length() / 2;
+		//	debugOBJ_->wtf.position = debugPos.lerp(pos, ret, 0.5f);
+		//	break;
+		//case 1:
+		//	debugLineAngle = (float)atan2(ret.x - object_[0]->wtf.position.x, ret.z - object_[0]->wtf.position.z);
+		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
+		//	debugOBJ_->wtf.scale.z = (object_[0]->wtf.position - ret).length() / 2;
+		//	debugOBJ_->wtf.position = debugPos.lerp(object_[0]->wtf.position, ret, 0.5f);
+		//	break;
+		//case 2:
+		//	debugLineAngle = (float)atan2(ret.x - object_[1]->wtf.position.x, ret.z - object_[1]->wtf.position.z);
+		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
+		//	debugOBJ_->wtf.scale.z = (object_[1]->wtf.position - ret).length() / 2;
+		//	debugOBJ_->wtf.position = debugPos.lerp(object_[1]->wtf.position, ret, 0.5f);
+		//	break;
+		//case 3:
+		//	debugLineAngle = (float)atan2(ret.x - object_[2]->wtf.position.x, ret.z - object_[2]->wtf.position.z);
+		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
+		//	debugOBJ_->wtf.scale.z = (object_[2]->wtf.position - ret).length() / 2;
+		//	debugOBJ_->wtf.position = debugPos.lerp(object_[2]->wtf.position, ret, 0.5f);
+		//	break;
+		//case 4:
+		//	debugLineAngle = (float)atan2(ret.x - object_[3]->wtf.position.x, ret.z - object_[3]->wtf.position.z);
+		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
+		//	debugOBJ_->wtf.scale.z = (object_[3]->wtf.position - ret).length() / 2;
+		//	debugOBJ_->wtf.position = debugPos.lerp(object_[3]->wtf.position, ret, 0.5f);
+		//	break;
+		//default:
+		//	break;
+		//}
+		//debugOBJ_->wtf.scale.y = 0.1f;
+		//debugOBJ_->SetColor({ 0,1,1,1 });
+		debugOBJ_->Update();
 	}
 
 	if (registNum == 0) {

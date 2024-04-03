@@ -116,7 +116,7 @@ void GAME2Scene::Update(Input* input) {
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
 		stageFailed = _objects->Banner(1);
 		if (stageFailed == false) {
-			_manager->SetSceneNum(SCE_GAME2);
+			_manager->SetSceneNum(_manager->GetSceneNum());
 		}
 	}
 	else if (startTime_ == false && stageClear == true && stageFailed == false) {
