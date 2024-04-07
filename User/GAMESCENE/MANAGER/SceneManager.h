@@ -12,6 +12,8 @@
 
 #pragma warning(pop)
 
+#include "ISceneFactory.h"
+
 class Input;
 class IScene;
 class DirectXCommon;
@@ -31,6 +33,7 @@ public:
 
 	SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects* objects);
 	~SceneManager();
+	void Initialize();
 
 	// 各シーンのInitializeを呼び出す
 	void SceneInitialize();
@@ -54,6 +57,7 @@ public:
 	uint32_t sceneNum = 0;
 	bool isChange = false;
 	bool goToTitle = false;
+	uint16_t PADDING;
 };
 
 //	基本構成の参照元

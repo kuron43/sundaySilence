@@ -60,6 +60,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	IScene::SetSceneObjects(sceneObjects.get());
 
 	sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
+	IScene::SetSceneManager(sceneManager);
+	sceneManager->Initialize();
 	sceneManager->SceneInitialize();
 
 }

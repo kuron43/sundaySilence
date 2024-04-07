@@ -18,14 +18,16 @@
 SceneManager::SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects* objects) {
 	_dxCommon = dxCommon;
 	_objects = objects;
-	IScene::SetSceneManager(&*this);
-	_scene.emplace(new TitleScene());
-	_objects->SetingLevel(_objects->levels.at(_objects->levelName_[0]).get());
 	_camera = camera;
-
 }
 SceneManager::~SceneManager() {
 
+}
+
+void SceneManager::Initialize()
+{
+	_scene.emplace(new TitleScene());
+	_objects->SetingLevel(_objects->levels.at(_objects->levelName_[0]).get());
 }
 
 void SceneManager::SceneInitialize() {

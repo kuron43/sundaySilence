@@ -142,7 +142,6 @@ void SceneObjects::Initialize() {
 
 	// レベルロード
 	LoadLevels();
-
 	{
 		player = std::make_unique<Player>();
 		player->Initialize();
@@ -298,7 +297,7 @@ void SceneObjects::UpdateImGui()
 	int UISP_Weapon_size = UISP_Wep_size;
 	ImGui::Begin("Objects");
 	ImGui::Text("Objects");
-	ImGui::Text("JsonMapNum:%d",(int)levels.size());
+	ImGui::Text("JsonMapNum:%d", (int)levels.size());
 	ImGui::Text("DirLight");
 	ImGui::InputFloat3("DirRot", &pointLightPos.x);
 	ImGui::SliderFloat3("DirPos", &rotateLight.x, 0.0f, Affin::radConvert(360.0f));
@@ -316,9 +315,9 @@ void SceneObjects::UpdateImGui()
 	//boss.remove_if([](std::unique_ptr<Boss>& boss_) {
 	//	return boss_->HowDead();
 	//	});
-	////デスフラグの立った弾を削除
+	//デスフラグの立った弾を削除
 	//enemys.remove_if([](std::unique_ptr<Enemy>& enemy) {
-	//	return enemy->HowDead();
+	//	return !enemy->HowDead();
 	//	});
 }
 
@@ -505,7 +504,8 @@ void SceneObjects::UIUpdate()
 	}
 	if (player->GetHP() > 0) {
 		UIHPSPsize_.y = 8.0f * player->GetHP();
-	}else if (player->GetHP() <= 0) {
+	}
+	else if (player->GetHP() <= 0) {
 		UIHPSPsize_.y = 0.0f;
 	}
 	UIBarrierGaugeSP_->SetSize(UIWeaponSPsize_);
@@ -574,27 +574,7 @@ void SceneObjects::SetingLevel(LevelData* data)
 			//newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 			enemys.emplace_back(std::move(newEnemy));
 		}
-		if (objectData.fileName == "wall") {
-			std::unique_ptr<Wall> newWall = std::make_unique<Wall>();
-			newWall->Initialize(wallMD);
-			//座標
-			Vector3 pos;
-			pos = objectData.translation;
-			newWall->object_->wtf.position = pos;
-			//回転
-			Vector3 rot;
-			rot = objectData.rotation;
-			newWall->object_->wtf.rotation = rot;
-			//拡縮
-			Vector3 sca;
-			sca = objectData.scaling;
-			newWall->object_->wtf.scale = sca;
-			newWall->object_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-			newWall->object_->Update();
-			newWall->CollideInitialize();
-			walls.emplace_back(std::move(newWall));
-		}
-		if (objectData.fileName == "boss") {
+		else if (objectData.fileName == "boss") {
 			std::unique_ptr<Boss> newBoss = std::make_unique<Boss>();
 			if (objectData.weapon == "ASSAULT") {
 				newBoss->SetWeaponNum(WP_ASSAULT);
@@ -621,10 +601,29 @@ void SceneObjects::SetingLevel(LevelData* data)
 			//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 			boss.emplace_back(std::move(newBoss));
 		}
-		if (objectData.fileName == "player") {
+		else if (objectData.fileName == "wall") {
+			std::unique_ptr<Wall> newWall = std::make_unique<Wall>();
+			newWall->Initialize(wallMD);
+			//座標
+			Vector3 pos;
+			pos = objectData.translation;
+			newWall->object_->wtf.position = pos;
+			//回転
+			Vector3 rot;
+			rot = objectData.rotation;
+			newWall->object_->wtf.rotation = rot;
+			//拡縮
+			Vector3 sca;
+			sca = objectData.scaling;
+			newWall->object_->wtf.scale = sca;
+			newWall->object_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+			newWall->object_->Update();
+			newWall->CollideInitialize();
+			walls.emplace_back(std::move(newWall));
+		}
+		else if (objectData.fileName == "player") {
 			Vector3 position = objectData.translation;
 			player->SetPos(position);
 		}
-
 	}
 }
