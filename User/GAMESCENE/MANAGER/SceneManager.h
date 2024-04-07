@@ -28,11 +28,13 @@ public:
 	DirectXCommon* _dxCommon;
 	Camera* _camera;
 	SceneObjects* _objects;
+	ISceneFactory* _factory;
 	
 public:
 
 	SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects* objects);
 	~SceneManager();
+	void SetFactory(ISceneFactory* sceneFactory) { _factory = sceneFactory; };
 	void Initialize();
 
 	// 各シーンのInitializeを呼び出す

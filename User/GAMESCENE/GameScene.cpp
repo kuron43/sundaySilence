@@ -26,6 +26,7 @@ GameScene::~GameScene() {
 
 	delete spriteCommon;
 	delete camera;
+	delete sceneFactory;
 	delete sceneManager;
 	CollisionManager::GetInstance()->Finalize();
 }
@@ -55,11 +56,15 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	ParticleManager::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
+	// シーン管理
 	sceneObjects = std::make_unique<SceneObjects>(dxCommon);
 	sceneObjects->Initialize();
 	IScene::SetSceneObjects(sceneObjects.get());
 
+	sceneFactory = new SceneFactory();
+
 	sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
+	sceneManager->SetFactory(sceneFactory);
 	IScene::SetSceneManager(sceneManager);
 	sceneManager->Initialize();
 	sceneManager->SceneInitialize();

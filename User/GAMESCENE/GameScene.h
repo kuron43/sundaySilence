@@ -11,6 +11,7 @@
 #include "SpriteCommon.h"
 #include "SceneManager.h"
 #include "SceneObjects.h"
+#include "SceneFactory.h"
 #include "IScene.h"
 #include "Affin.h"
 #include "Camera.h"
@@ -69,6 +70,7 @@ private: // メンバ変数 (固定)
 	Camera* camera = nullptr;
 	// mane-ja-
 	SceneManager* sceneManager = nullptr;
+	SceneFactory* sceneFactory = nullptr;
 	CollisionManager* collisionManager_ = nullptr;
 	BulletManager* bulletManager_ = nullptr;
 	//ParticleManager* particleManager_ = nullptr;
