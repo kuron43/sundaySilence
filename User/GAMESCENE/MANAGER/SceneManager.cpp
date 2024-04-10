@@ -26,7 +26,7 @@ SceneManager::~SceneManager() {
 
 void SceneManager::Initialize()
 {
-	_scene.emplace(new TitleScene());
+	_scene.emplace(_factory->CleateScene("TITLE"));
 	_objects->SetingLevel(_objects->levels.at(_objects->levelName_[0]).get());
 }
 
@@ -47,7 +47,7 @@ void SceneManager::ChangeScene() {
 	if (goToTitle == true) {
 		_scene.pop();
 		_scene.pop();
-		_scene.emplace(new TitleScene());
+		_scene.emplace(_factory->CleateScene("TITLE"));
 		_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TITLE]).get());
 		SceneInitialize();
 		_objects->OFFIsUIDraw();
@@ -61,7 +61,7 @@ void SceneManager::ChangeScene() {
 		{
 		case SCE_TITLE:
 			_scene.pop();
-			_scene.emplace(new TitleScene());
+			_scene.emplace(_factory->CleateScene("TITLE"));
 			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TITLE]).get());
 			SceneInitialize();
 			_objects->OFFIsUIDraw();
@@ -69,7 +69,7 @@ void SceneManager::ChangeScene() {
 			break;
 		case SCE_GAME1:
 			_scene.pop();
-			_scene.emplace(new GAME1Scene());
+			_scene.emplace(_factory->CleateScene("TUTREAL"));
 			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TUTRIAL]).get());
 			SceneInitialize();
 			_objects->ONIsUIDraw();
@@ -79,7 +79,7 @@ void SceneManager::ChangeScene() {
 		case SCE_GAME2:
 		case SCE_GAME3:
 			_scene.pop();
-			_scene.emplace(new GAME2Scene());
+			_scene.emplace(_factory->CleateScene("GAME"));
 			if (SCE_GAME2 == sceneNum) {
 				_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE1]).get());
 			}
@@ -92,14 +92,14 @@ void SceneManager::ChangeScene() {
 			break;
 		case SCE_SELECT:
 			_scene.pop();
-			_scene.emplace(new SelectScene());
+			_scene.emplace(_factory->CleateScene("SELECT"));
 			SceneInitialize();
 			_objects->OFFIsUIDraw();
 			TransScene();
 			break;
 		case SCE_CLEAR:
 			_scene.pop();
-			_scene.emplace(new Clear());
+			_scene.emplace(_factory->CleateScene("CLEAR"));
 			SceneInitialize();
 			_objects->OFFIsUIDraw();
 			TransScene();
@@ -120,13 +120,13 @@ void SceneManager::ChangeScene() {
 
 void SceneManager::TransScene()
 {
-	_scene.emplace(new TransitionsScene());
+	_scene.emplace(_factory->CleateScene("TRANS"));
 	SceneInitialize();
 }
 
 void SceneManager::Pause()
 {
-	_scene.emplace(new PauseScene());
+	_scene.emplace(_factory->CleateScene("PAUSE"));
 	SceneInitialize();
 }
 
