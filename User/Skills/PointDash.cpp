@@ -23,9 +23,11 @@ PointDash::~PointDash()
 void PointDash::Initialize()
 {
 	debugModel_ = Model::LoadFromOBJ("cube");
-	debugOBJ_ = std::make_unique<Object3d>();
-	debugOBJ_->Initialize();
-	debugOBJ_->SetModel(debugModel_);
+	for (uint32_t i = 0; i < 5; i++) {
+		debugOBJ_[i] = std::make_unique<Object3d>();
+		debugOBJ_[i]->Initialize();
+		debugOBJ_[i]->SetModel(debugModel_);
+	}
 
 	model_ = Model::LoadFromOBJ("pointCircle");
 	for (uint32_t i = 0; i < 5; i++) {
@@ -48,6 +50,57 @@ void PointDash::Initialize()
 	rayHit = new RaycastHit;
 }
 
+void PointDash::Update(Vector3 pos, Vector3 ret)
+{
+
+	// ポイントダッシュ間のライン計算処理
+	{
+		float debugLineAngle;
+		Vector3 debugPos;
+		switch (registNum)
+		{
+		case POINT_1:
+			debugLineAngle = (float)atan2(ret.x - pos.x, ret.z - pos.z);
+			debugOBJ_[POINT_1]->wtf.rotation.y = debugLineAngle;
+			debugOBJ_[POINT_1]->wtf.scale.z = (pos - ret).length() / 2;
+			debugOBJ_[POINT_1]->wtf.position = debugPos.lerp(pos, ret, 0.5f);
+			break;
+		case POINT_2:
+			debugLineAngle = (float)atan2(ret.x - object_[0]->wtf.position.x, ret.z - object_[0]->wtf.position.z);
+			debugOBJ_[POINT_2]->wtf.rotation.y = debugLineAngle;
+			debugOBJ_[POINT_2]->wtf.scale.z = (object_[0]->wtf.position - ret).length() / 2;
+			debugOBJ_[POINT_2]->wtf.position = debugPos.lerp(object_[0]->wtf.position, ret, 0.5f);
+			break;
+		case POINT_3:
+			debugLineAngle = (float)atan2(ret.x - object_[1]->wtf.position.x, ret.z - object_[1]->wtf.position.z);
+			debugOBJ_[POINT_3]->wtf.rotation.y = debugLineAngle;
+			debugOBJ_[POINT_3]->wtf.scale.z = (object_[1]->wtf.position - ret).length() / 2;
+			debugOBJ_[POINT_3]->wtf.position = debugPos.lerp(object_[1]->wtf.position, ret, 0.5f);
+			break;
+		case POINT_4:
+			debugLineAngle = (float)atan2(ret.x - object_[2]->wtf.position.x, ret.z - object_[2]->wtf.position.z);
+			debugOBJ_[POINT_4]->wtf.rotation.y = debugLineAngle;
+			debugOBJ_[POINT_4]->wtf.scale.z = (object_[2]->wtf.position - ret).length() / 2;
+			debugOBJ_[POINT_4]->wtf.position = debugPos.lerp(object_[2]->wtf.position, ret, 0.5f);
+			break;
+		case POINT_5:
+			debugLineAngle = (float)atan2(ret.x - object_[3]->wtf.position.x, ret.z - object_[3]->wtf.position.z);
+			debugOBJ_[POINT_5]->wtf.rotation.y = debugLineAngle;
+			debugOBJ_[POINT_5]->wtf.scale.z = (object_[3]->wtf.position - ret).length() / 2;
+			debugOBJ_[POINT_5]->wtf.position = debugPos.lerp(object_[3]->wtf.position, ret, 0.5f);
+			break;
+		default:
+			break;
+		}
+		for (uint32_t i = 0; i < POINT_MAX; i++) {
+			debugOBJ_[i]->wtf.scale.y = 0.1f;
+			debugOBJ_[i]->wtf.scale.x = 0.7f;
+			debugOBJ_[i]->SetColor({0,1,1,1});
+			debugOBJ_[i]->Update();
+		}
+	}
+}
+
 void PointDash::Draw(DirectXCommon* dxCommon)
 {
 	Object3d::PreDraw(dxCommon->GetCommandList());
@@ -55,9 +108,9 @@ void PointDash::Draw(DirectXCommon* dxCommon)
 	for (uint32_t i = 0; i < 5; i++) {
 		if (pointActive_[i] == true) {
 			object_[i]->Draw();
+			debugOBJ_[i]->Draw();
 		}
 	}
-	debugOBJ_->Draw();
 	Object3d::PostDraw();
 	particle_->Draw();
 }
@@ -72,87 +125,27 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 		object_[i]->Update();
 	}
 
-	// ポイントダッシュ間のライン計算処理
-	{
-		//float debugLineAngle;
-		//Vector3 debugPos;
-		//switch (registNum)
-		//{
-		//case 0:
-		//	debugLineAngle = (float)atan2(ret.x - pos.x, ret.z - pos.z);
-		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
-		//	debugOBJ_->wtf.scale.z = (pos - ret).length() / 2;
-		//	debugOBJ_->wtf.position = debugPos.lerp(pos, ret, 0.5f);
-		//	break;
-		//case 1:
-		//	debugLineAngle = (float)atan2(ret.x - object_[0]->wtf.position.x, ret.z - object_[0]->wtf.position.z);
-		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
-		//	debugOBJ_->wtf.scale.z = (object_[0]->wtf.position - ret).length() / 2;
-		//	debugOBJ_->wtf.position = debugPos.lerp(object_[0]->wtf.position, ret, 0.5f);
-		//	break;
-		//case 2:
-		//	debugLineAngle = (float)atan2(ret.x - object_[1]->wtf.position.x, ret.z - object_[1]->wtf.position.z);
-		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
-		//	debugOBJ_->wtf.scale.z = (object_[1]->wtf.position - ret).length() / 2;
-		//	debugOBJ_->wtf.position = debugPos.lerp(object_[1]->wtf.position, ret, 0.5f);
-		//	break;
-		//case 3:
-		//	debugLineAngle = (float)atan2(ret.x - object_[2]->wtf.position.x, ret.z - object_[2]->wtf.position.z);
-		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
-		//	debugOBJ_->wtf.scale.z = (object_[2]->wtf.position - ret).length() / 2;
-		//	debugOBJ_->wtf.position = debugPos.lerp(object_[2]->wtf.position, ret, 0.5f);
-		//	break;
-		//case 4:
-		//	debugLineAngle = (float)atan2(ret.x - object_[3]->wtf.position.x, ret.z - object_[3]->wtf.position.z);
-		//	debugOBJ_->wtf.rotation.y = debugLineAngle;
-		//	debugOBJ_->wtf.scale.z = (object_[3]->wtf.position - ret).length() / 2;
-		//	debugOBJ_->wtf.position = debugPos.lerp(object_[3]->wtf.position, ret, 0.5f);
-		//	break;
-		//default:
-		//	break;
-		//}
-		//debugOBJ_->wtf.scale.y = 0.1f;
-		//debugOBJ_->SetColor({ 0,1,1,1 });
-		debugOBJ_->Update();
-	}
+	Update(pos, ret);
 
-	if (registNum == 0) {
+	if (registNum == POINT_1) {
 		ray->SetStart(pos);
-		ray->SetDir(ret);
-		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			return false;
-		}
 	}
-	else if (registNum == 1) {
+	if (registNum == POINT_2) {
 		ray->SetStart(points[0]);
-		ray->SetDir(ret);
-		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			return false;
-		}
 	}
-	else if (registNum == 2) {
+	if (registNum == POINT_3) {
 		ray->SetStart(points[1]);
-		ray->SetDir(ret);
-		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			return false;
-		}
 	}
-	else if (registNum == 3) {
+	if (registNum == POINT_4) {
 		ray->SetStart(points[2]);
-		ray->SetDir(ret);
-		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			return false;
-		}
 	}
-	else if (registNum == 4) {
+	if (registNum == POINT_5) {
 		ray->SetStart(points[3]);
-		ray->SetDir(ret);
-		if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
-			return false;
-		}
 	}
-	else {
 
+	ray->SetDir(ret);
+	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+		return false;
 	}
 	return true;
 }

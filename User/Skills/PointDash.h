@@ -62,12 +62,13 @@ private:
 
 	float debuglengs[5];
 
-	std::unique_ptr<Object3d> debugOBJ_;
+	std::unique_ptr<Object3d> debugOBJ_[5];
 	Model* debugModel_;
 public:
 
 	~PointDash();
 	void Initialize();
+	void Update(Vector3 pos, Vector3 ret);
 	void Draw(DirectXCommon* dxCommon);
 	// 更新
 	bool PointRayUpdate(Vector3 pos,Vector3 ret);
