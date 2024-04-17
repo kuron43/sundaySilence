@@ -29,7 +29,7 @@ public:
 	};
 
 public:
-	const uint32_t MAX_POINTNUM = 5;
+	const uint32_t MAX_POINTNUM = POINT_MAX;
 	std::vector<Vector3> points;
 	Vector3 resultVec;
 	float easeSpeed;
@@ -37,8 +37,8 @@ public:
 	bool isActive;
 	bool pointsMax;
 private:
-	Object3d* object_[5];
-	bool pointActive_[5];
+	Object3d* circleOBJ_[POINT_MAX];
+	bool pointActive_[POINT_MAX];
 	Model* model_;
 
 	Vector3 startPos;
@@ -55,15 +55,19 @@ private:
 	bool timeEnd = false;
 
 	// パーティクル
+	bool onPat_;
 	std::unique_ptr <ParticleManager>  particle_;
 	uint32_t onPatTime_;
-	bool onPat_;
 
 
-	float debuglengs[5];
 
-	std::unique_ptr<Object3d> debugOBJ_[5];
-	Model* debugModel_;
+	float debuglengs[POINT_MAX];
+	float Padding__;
+	std::unique_ptr<Object3d> lineOBJ_[POINT_MAX];
+	Model* lineModel_;
+	bool isLineActive_[POINT_MAX];
+	bool PADIING__;
+
 public:
 
 	~PointDash();

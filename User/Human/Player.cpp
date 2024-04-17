@@ -170,18 +170,20 @@ void Player::Update(Input* input, bool isTitle) {
 
 ///
 void Player::Draw(DirectXCommon* dxCommon) {
-	pointDash_->Draw(dxCommon);
-	Object3d::PreDraw(dxCommon->GetCommandList());
-	for (uint32_t i = 0; i < 4; i++)
-	{
-		if (isPhantom_) {
-			phantom_[i]->Draw();
-		}
-	}
-	object_->Draw();
 	if (!nowTitle) {
+		pointDash_->Draw(dxCommon);
+	}
+	Object3d::PreDraw(dxCommon->GetCommandList());
+	if (!nowTitle) {
+		for (uint32_t i = 0; i < 4; i++)
+		{
+			if (isPhantom_) {
+				phantom_[i]->Draw();
+			}
+		}
 		reticle->Draw();
 	}
+	object_->Draw();
 #ifdef _DEBUG
 	for (uint32_t i = NONE; i < SPHERE_COLLISION_NUM; i++) {
 		colliderPosTest_[i]->Draw();
@@ -247,7 +249,7 @@ void Player::Move(Input* input) {
 	if (input->MouseButtonPush(RIGHT_MOUSE)) {
 		Human::_isSlow = true;
 	}
-	if(input->MouseButtonRelease(RIGHT_MOUSE)) {
+	if (input->MouseButtonRelease(RIGHT_MOUSE)) {
 		Human::_isSlow = false;
 	}
 	if (input->MouseButtonRelease(RIGHT_MOUSE)) {

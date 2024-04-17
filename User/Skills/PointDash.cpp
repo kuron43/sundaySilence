@@ -13,28 +13,29 @@ PointDash::~PointDash()
 	delete ray;
 	delete rayHit;
 	delete model_;
-	for (uint32_t i = 0; i < 5; i++) {
-		delete object_[i];
+	for (uint32_t i = 0; i < POINT_MAX; i++) {
+		delete circleOBJ_[i];
 	}
 	points.clear();
-	delete debugModel_;
+	delete lineModel_;
 }
 
 void PointDash::Initialize()
 {
-	debugModel_ = Model::LoadFromOBJ("cube");
-	for (uint32_t i = 0; i < 5; i++) {
-		debugOBJ_[i] = std::make_unique<Object3d>();
-		debugOBJ_[i]->Initialize();
-		debugOBJ_[i]->SetModel(debugModel_);
+	lineModel_ = Model::LoadFromOBJ("cube");
+	for (uint32_t i = 0; i < POINT_MAX; i++) {
+		lineOBJ_[i] = std::make_unique<Object3d>();
+		lineOBJ_[i]->Initialize();
+		lineOBJ_[i]->SetModel(lineModel_);
+		isLineActive_[i] = false;
 	}
 
 	model_ = Model::LoadFromOBJ("pointCircle");
-	for (uint32_t i = 0; i < 5; i++) {
-		object_[i] = Object3d::Create();
-		object_[i]->SetModel(model_);
-		object_[i]->Initialize();
-		object_[i]->wtf.scale = Vector3(1.5f, 1.5f, 1.5f);
+	for (uint32_t i = 0; i < POINT_MAX; i++) {
+		circleOBJ_[i] = Object3d::Create();
+		circleOBJ_[i]->SetModel(model_);
+		circleOBJ_[i]->Initialize();
+		circleOBJ_[i]->wtf.scale = Vector3(1.5f, 1.5f, 1.5f);
 		pointActive_[i] = false;
 	}
 
@@ -54,63 +55,68 @@ void PointDash::Update(Vector3 pos, Vector3 ret)
 {
 
 	// ポイントダッシュ間のライン計算処理
+	isLineActive_[registNum] = true;
+	float debugLineAngle;
+	Vector3 debugPos;
+	switch (registNum)
 	{
-		float debugLineAngle;
-		Vector3 debugPos;
-		switch (registNum)
-		{
-		case POINT_1:
-			debugLineAngle = (float)atan2(ret.x - pos.x, ret.z - pos.z);
-			debugOBJ_[POINT_1]->wtf.rotation.y = debugLineAngle;
-			debugOBJ_[POINT_1]->wtf.scale.z = (pos - ret).length() / 2;
-			debugOBJ_[POINT_1]->wtf.position = debugPos.lerp(pos, ret, 0.5f);
-			break;
-		case POINT_2:
-			debugLineAngle = (float)atan2(ret.x - object_[0]->wtf.position.x, ret.z - object_[0]->wtf.position.z);
-			debugOBJ_[POINT_2]->wtf.rotation.y = debugLineAngle;
-			debugOBJ_[POINT_2]->wtf.scale.z = (object_[0]->wtf.position - ret).length() / 2;
-			debugOBJ_[POINT_2]->wtf.position = debugPos.lerp(object_[0]->wtf.position, ret, 0.5f);
-			break;
-		case POINT_3:
-			debugLineAngle = (float)atan2(ret.x - object_[1]->wtf.position.x, ret.z - object_[1]->wtf.position.z);
-			debugOBJ_[POINT_3]->wtf.rotation.y = debugLineAngle;
-			debugOBJ_[POINT_3]->wtf.scale.z = (object_[1]->wtf.position - ret).length() / 2;
-			debugOBJ_[POINT_3]->wtf.position = debugPos.lerp(object_[1]->wtf.position, ret, 0.5f);
-			break;
-		case POINT_4:
-			debugLineAngle = (float)atan2(ret.x - object_[2]->wtf.position.x, ret.z - object_[2]->wtf.position.z);
-			debugOBJ_[POINT_4]->wtf.rotation.y = debugLineAngle;
-			debugOBJ_[POINT_4]->wtf.scale.z = (object_[2]->wtf.position - ret).length() / 2;
-			debugOBJ_[POINT_4]->wtf.position = debugPos.lerp(object_[2]->wtf.position, ret, 0.5f);
-			break;
-		case POINT_5:
-			debugLineAngle = (float)atan2(ret.x - object_[3]->wtf.position.x, ret.z - object_[3]->wtf.position.z);
-			debugOBJ_[POINT_5]->wtf.rotation.y = debugLineAngle;
-			debugOBJ_[POINT_5]->wtf.scale.z = (object_[3]->wtf.position - ret).length() / 2;
-			debugOBJ_[POINT_5]->wtf.position = debugPos.lerp(object_[3]->wtf.position, ret, 0.5f);
-			break;
-		default:
-			break;
-		}
-		for (uint32_t i = 0; i < POINT_MAX; i++) {
-			debugOBJ_[i]->wtf.scale.y = 0.1f;
-			debugOBJ_[i]->wtf.scale.x = 0.7f;
-			debugOBJ_[i]->SetColor({0,1,1,1});
-			debugOBJ_[i]->Update();
-		}
+	case POINT_1:
+		debugLineAngle = (float)atan2(ret.x - pos.x, ret.z - pos.z);
+		lineOBJ_[POINT_1]->wtf.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_1]->wtf.scale.z = (pos - ret).length() / 2;
+		lineOBJ_[POINT_1]->wtf.position = debugPos.lerp(pos, ret, 0.5f);
+		break;
+	case POINT_2:
+		debugLineAngle = (float)atan2(ret.x - circleOBJ_[0]->wtf.position.x, ret.z - circleOBJ_[0]->wtf.position.z);
+		lineOBJ_[POINT_2]->wtf.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_2]->wtf.scale.z = (circleOBJ_[0]->wtf.position - ret).length() / 2;
+		lineOBJ_[POINT_2]->wtf.position = debugPos.lerp(circleOBJ_[0]->wtf.position, ret, 0.5f);
+		break;
+	case POINT_3:
+		debugLineAngle = (float)atan2(ret.x - circleOBJ_[1]->wtf.position.x, ret.z - circleOBJ_[1]->wtf.position.z);
+		lineOBJ_[POINT_3]->wtf.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_3]->wtf.scale.z = (circleOBJ_[1]->wtf.position - ret).length() / 2;
+		lineOBJ_[POINT_3]->wtf.position = debugPos.lerp(circleOBJ_[1]->wtf.position, ret, 0.5f);
+		break;
+	case POINT_4:
+		debugLineAngle = (float)atan2(ret.x - circleOBJ_[2]->wtf.position.x, ret.z - circleOBJ_[2]->wtf.position.z);
+		lineOBJ_[POINT_4]->wtf.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_4]->wtf.scale.z = (circleOBJ_[2]->wtf.position - ret).length() / 2;
+		lineOBJ_[POINT_4]->wtf.position = debugPos.lerp(circleOBJ_[2]->wtf.position, ret, 0.5f);
+		break;
+	case POINT_5:
+		debugLineAngle = (float)atan2(ret.x - circleOBJ_[3]->wtf.position.x, ret.z - circleOBJ_[3]->wtf.position.z);
+		lineOBJ_[POINT_5]->wtf.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_5]->wtf.scale.z = (circleOBJ_[3]->wtf.position - ret).length() / 2;
+		lineOBJ_[POINT_5]->wtf.position = debugPos.lerp(circleOBJ_[3]->wtf.position, ret, 0.5f);
+		break;
+	default:
+		break;
 	}
+	float scaleX = 1;
+	for (uint32_t i = 0; i < POINT_MAX; i++) {
+		lineOBJ_[i]->wtf.scale.y = 0.1f;
+		lineOBJ_[i]->wtf.scale.x = 0.7f / (scaleX);
+		lineOBJ_[i]->SetColor({ 0,1,1,1 });
+		lineOBJ_[i]->Update();
+		scaleX++;
+	}
+
 }
 
 void PointDash::Draw(DirectXCommon* dxCommon)
 {
 	Object3d::PreDraw(dxCommon->GetCommandList());
 
-	for (uint32_t i = 0; i < 5; i++) {
+	for (uint32_t i = 0; i < POINT_MAX; i++) {
 		if (pointActive_[i] == true) {
-			object_[i]->Draw();
-			debugOBJ_[i]->Draw();
+			circleOBJ_[i]->Draw();
+		}
+		if (isLineActive_[i] == true) {
+			lineOBJ_[i]->Draw();
 		}
 	}
+
 	Object3d::PostDraw();
 	particle_->Draw();
 }
@@ -120,9 +126,9 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 	particle_->Update();
 	ray->Update();
 
-	for (uint32_t i = 0; i < 5; i++) {
-		object_[i]->wtf.rotation.y += registNum;
-		object_[i]->Update();
+	for (uint32_t i = 0; i < POINT_MAX; i++) {
+		circleOBJ_[i]->wtf.rotation.y += registNum;
+		circleOBJ_[i]->Update();
 	}
 
 	Update(pos, ret);
@@ -144,7 +150,13 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 	}
 
 	ray->SetDir(ret);
+
 	if (CollisionManager::GetInstance()->Raycast(*ray, COLLISION_ATTR_BARRIEROBJECT, rayHit)) {
+		for (uint32_t i = 0; i < POINT_MAX; i++) {
+			if (registNum == i) {
+				isLineActive_[i] = false;
+			}
+		}
 		return false;
 	}
 	return true;
@@ -159,31 +171,31 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	if (registNum == POINT_1) {
 		points[POINT_1] = point;
 		pointActive_[POINT_1] = true;
-		object_[POINT_1]->wtf.position = point;
+		circleOBJ_[POINT_1]->wtf.position = point;
 		registNum = POINT_2;
 	}
 	else if (registNum == POINT_2) {
 		points[POINT_2] = point;
 		pointActive_[POINT_2] = true;
-		object_[POINT_2]->wtf.position = point;
+		circleOBJ_[POINT_2]->wtf.position = point;
 		registNum = POINT_3;
 	}
 	else if (registNum == POINT_3) {
 		points[POINT_3] = point;
 		pointActive_[POINT_3] = true;
-		object_[POINT_3]->wtf.position = point;
+		circleOBJ_[POINT_3]->wtf.position = point;
 		registNum = POINT_4;
 	}
 	else if (registNum == POINT_4) {
 		points[POINT_4] = point;
 		pointActive_[POINT_4] = true;
-		object_[POINT_4]->wtf.position = point;
+		circleOBJ_[POINT_4]->wtf.position = point;
 		registNum = POINT_5;
 	}
 	else if (registNum == POINT_5) {
 		points[POINT_5] = point;
 		pointActive_[POINT_5] = true;
-		object_[POINT_5]->wtf.position = point;
+		circleOBJ_[POINT_5]->wtf.position = point;
 		registNum = POINT_MAX;
 		pointsMax = true;
 	}
@@ -236,6 +248,7 @@ void PointDash::GoToPoint() {
 				time = 1;
 				easetime = 0;
 				pointActive_[0] = false;
+				isLineActive_[0] = false;
 				timeEnd = true;
 				onPat_ = true;
 				inversVec3 = -inversVec3;
@@ -250,6 +263,7 @@ void PointDash::GoToPoint() {
 				time = 1;
 				easetime = 0;
 				pointActive_[1] = false;
+				isLineActive_[1] = false;
 				timeEnd = true;
 				onPat_ = true;
 				inversVec3 = -inversVec3;
@@ -264,6 +278,7 @@ void PointDash::GoToPoint() {
 				time = 1;
 				easetime = 0;
 				pointActive_[2] = false;
+				isLineActive_[2] = false;
 				timeEnd = true;
 				onPat_ = true;
 				inversVec3 = -inversVec3;
@@ -278,6 +293,7 @@ void PointDash::GoToPoint() {
 				time = 1;
 				easetime = 0;
 				pointActive_[3] = false;
+				isLineActive_[3] = false;
 				timeEnd = true;
 				onPat_ = true;
 				inversVec3 = -inversVec3;
@@ -292,6 +308,7 @@ void PointDash::GoToPoint() {
 				time = 1;
 				easetime = 0;
 				pointActive_[4] = false;
+				isLineActive_[4] = false;
 				timeEnd = true;
 				inversVec3 = -inversVec3;
 			}
@@ -312,9 +329,11 @@ void PointDash::GoToPoint() {
 }
 void PointDash::Reset() {
 	points.clear();
-	for (uint32_t i = 0; i < 5; i++) {
+	for (uint32_t i = 0; i < POINT_MAX; i++) {
 		pointActive_[i] = false;
-		object_[i]->wtf.position = Vector3(0, -10, 0);
+		circleOBJ_[i]->wtf.position = Vector3(0, -10, 0);
+		isLineActive_[i] = false;
+		lineOBJ_[i]->wtf.position = Vector3(0, -10, 0);
 	}
 	registNum = 0;
 	isActive = false;
