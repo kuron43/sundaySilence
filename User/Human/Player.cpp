@@ -175,13 +175,13 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	}
 	Object3d::PreDraw(dxCommon->GetCommandList());
 	if (!nowTitle) {
-		for (uint32_t i = 0; i < 4; i++)
-		{
-			if (isPhantom_) {
+		reticle->Draw();
+		if (isPhantom_) {
+			for (uint32_t i = 0; i < 4; i++)
+			{
 				phantom_[i]->Draw();
 			}
 		}
-		reticle->Draw();
 	}
 	object_->Draw();
 #ifdef _DEBUG
