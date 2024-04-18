@@ -33,6 +33,7 @@ public:
 	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
 	void SetReticle(Vector3 ret) { reticle.position = ret; }
 	void SetRestRotate(Vector3 rot) { restRotate_ = rot; }
+	void SetModel(Model* md) { model_ = md; }
 
 	// 種族番号取得
 	uint32_t HowTribe() { return Tribe_; }
@@ -49,7 +50,7 @@ private:
 
 	void HitMyColor();
 public:
-	Object3d* object_;
+	std::unique_ptr<Object3d> object_;
 private:
 	const uint32_t Tribe_ = HU_ENEMY;
 	uint32_t useWeapon_ = WP_ASSAULT;
@@ -88,7 +89,7 @@ private:
 
 	bool isWeaponOn = true;
 	bool nowTitle = false;
-	Weapon* weapon_;
+	std::unique_ptr<Weapon> weapon_;
 
 	// パーティクル
 	std::unique_ptr <ParticleManager>  particle_;
@@ -104,10 +105,10 @@ public:
 	std::vector<SphereCollider*> GetSphere() { return sphere; }
 private:
 	uint32_t SPHERE_COLLISION_NUM = 1;	//コライダー（スフィア）の数
-	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
+	//std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	std::vector<SphereCollider*> sphere;
 	std::vector<Vector3> spherePos;
-	std::vector<Object3d*> colliderPosTest_;
+	std::vector<std::unique_ptr<Object3d>> colliderPosTest_;
 	RayCollider* ray;
 	RaycastHit* rayHit;
 	Vector3 rayvec;

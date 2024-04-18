@@ -166,7 +166,7 @@ public: // オブジェクトの管理
 	std::unique_ptr <Sprite> plDamageRed_;
 	float damageRedAlpha_ = 0.0f;
 	Vector2 plDamageRedPos = { 0.0f,0.0f };
-
+	Model* enemyMD;
 	std::list<std::unique_ptr<Enemy>> enemys;
 	uint32_t eneCount;
 	std::list<std::unique_ptr<Boss>> boss;

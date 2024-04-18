@@ -9,17 +9,13 @@ Enemy::Enemy() {
 
 }
 Enemy::~Enemy() {
-	delete model_;
-	delete weapon_;
 	delete rayHit;
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
-		delete colliderPosTest_[i];
 	}
 	CollisionManager::GetInstance()->RemoveCollider(ray);
 	delete ray;
-	delete object_;
 }
 
 
@@ -27,10 +23,9 @@ Enemy::~Enemy() {
 void Enemy::Initialize() {
 	isFound = false;
 	isDead = false;
-	nowTitle = false;
-	model_ = Model::LoadFromOBJ("ene");
+	nowTitle = false;	
 
-	object_ = new Object3d();
+	object_ = std::make_unique<Object3d>();
 	object_->SetModel(model_);
 	object_->Initialize();
 
@@ -38,14 +33,14 @@ void Enemy::Initialize() {
 
 
 	if (useWeapon_ == WP_SHOTGUN) {
-		weapon_ = new Shotgun();
+		weapon_ = std::make_unique<Shotgun>();
 	}
 	else if(useWeapon_ == WP_ASSAULT){
-		weapon_ = new Assault();
+		weapon_ = std::make_unique<Assault>();
 	}
 	else if (useWeapon_ == WP_BOMFIRE)
 	{
-		weapon_ = new BomFire();
+		weapon_ = std::make_unique<BomFire>();
 	}
 	weapon_->Initialize();
 
@@ -68,14 +63,15 @@ void Enemy::Initialize() {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
-		sphere[i]->SetObject3d(object_);
+		sphere[i]->SetObject3d(object_.get());
 		sphere[i]->SetBasisPos(&spherePos[i]);
 		sphere[i]->SetRadius(2.0f);
 		sphere[i]->Update();
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		//test
-		colliderPosTest_[i] = Object3d::Create();
+		colliderPosTest_[i] = std::make_unique<Object3d>();
 		colliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
+		colliderPosTest_[i]->Initialize();
 		colliderPosTest_[i]->wtf.position = Affin::GetWorldTrans(object_->wtf.matWorld);
 		colliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
 		colliderPosTest_[i]->wtf.rotation.InIt();
@@ -85,7 +81,7 @@ void Enemy::Initialize() {
 
 	ray->SetStart(Affin::GetWorldTrans(object_->wtf.matWorld));
 	ray->SetDir(rayvec);
-	ray->SetObject3d(object_);
+	ray->SetObject3d(object_.get());
 	CollisionManager::GetInstance()->AddCollider(ray);
 	rayHit = new RaycastHit;
 	hp = 3;

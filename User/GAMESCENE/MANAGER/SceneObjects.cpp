@@ -14,6 +14,7 @@ SceneObjects::~SceneObjects() {
 	walls.clear();
 	boss.clear();
 	delete wallMD;
+	delete enemyMD;
 	delete skydome_M;
 	delete floorGroundMD;
 }
@@ -159,6 +160,7 @@ void SceneObjects::Initialize() {
 		floorGround = std::make_unique<Floor>();
 		floorGround->Initialize(floorGroundMD);
 	}
+	enemyMD = Model::LoadFromOBJ("ene");
 	skydome_O = std::make_unique<Object3d>();
 	skydome_M = Model::LoadFromOBJ("skydome");
 	skydome_O->SetModel(skydome_M);
@@ -557,6 +559,7 @@ void SceneObjects::SetingLevel(LevelData* data)
 			}if (objectData.weapon == "BOMFIRE") {
 				newEnemy->SetWeaponNum(WP_BOMFIRE);
 			}
+			newEnemy->SetModel(enemyMD);
 			newEnemy->Initialize();
 			//座標
 			Vector3 pos;
