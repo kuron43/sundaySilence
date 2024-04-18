@@ -131,7 +131,7 @@ void SceneObjects::Initialize() {
 
 	// fbx テスト
 	{
-		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Fbx_Rex"));
+		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Fbx_Rex",false));
 		bossFbxO_ = std::make_unique<FBXObject3d>();
 		bossFbxO_->Initialize();
 		bossFbxO_->SetModel(bossFbxM_.get());

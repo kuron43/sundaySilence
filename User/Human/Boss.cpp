@@ -41,7 +41,7 @@ void Boss::Initialize() {
 	bossFbxO_->SetPosition({ 0,0,0 });
 	bossFbxO_->SetScale({ 0.8f,0.8f,0.8f });
 	bossFbxO_->PlayAnimation(0);
-	bossFbxO_->AnimIsRotateChange();
+	bossFbxO_->AnimIsRotateChange(false);
 
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
@@ -138,13 +138,13 @@ void Boss::Update(Input* input, bool isTitle) {
 	particle_->Update();
 
 	if (isFire == true && isDead == false) {		
-		bossFbxO_->AnimRotStop();
+		bossFbxO_->AnimIsRotateChange(false);
 		bossFbxO_->PlayAnimation(3);
 		isFireOld = true;
 		weapon_->Shot(object_->wtf, reticle->wtf, Team::ENEMY);
 	}
 	if(isFireOld == true && isFire == true && isDead == false) {
-		bossFbxO_->AnimRotStop();
+		bossFbxO_->AnimIsRotateChange(false);
 		bossFbxO_->PlayAnimation(4);
 	}
 	weapon_->Update(input);
@@ -205,7 +205,7 @@ void Boss::FrontFace() {
 	}
 
 	object_->wtf.rotation = frontVec_;
-	bossFbxO_->wtf.rotation = frontVec_;
+	bossFbxO_->transform_.rotation = frontVec_;
 }
 
 void Boss::ColliderUpdate() {

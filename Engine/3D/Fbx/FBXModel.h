@@ -1,9 +1,9 @@
+/**
+ * @file FbxModel.h
+ * @brief FBXSDKのモデルクラス
+ */
+
 #pragma once
-#pragma warning(push)
-#pragma warning(disable: 4819)
-#pragma warning(disable: 4820)
-#pragma warning(disable: 4061)
-#pragma warning(disable: 4514)
 #include <string>
 #include <DirectXMath.h>
 #include <vector>
@@ -13,31 +13,28 @@
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <fbxsdk.h>
-
-#pragma warning(pop)
 #include "Affin.h"
 
 
-
-
-// ノード
-struct FBXNode
+#pragma warning(disable: 4324)
+ // ノード
+struct Node
 {
 	// 名前
 	std::string name;
 	// ローカルスケール
-	Vector4 scaling = { 1,1,1,0 };
+	DirectX::XMVECTOR scaling = { 1,1,1,0 };
 	// ローカル回転角
-	Vector4 rotation = { 0,0,0,0 };
+	DirectX::XMVECTOR rotation = { 0,0,0,0 };
 	// ローカル移動
-	Vector4 translation = { 0,0,0,1 };
+	DirectX::XMVECTOR translation = { 0,0,0,1 };
 	// ローカル変形行列
-	Matrix4 transform;
+	DirectX::XMMATRIX transform;
 	// グローバル変形行列
-	Matrix4 globalTransform;
+	DirectX::XMMATRIX globalTransform;
 	// 親ノード
-	FBXNode* parent = nullptr;
-	
+	Node* parent = nullptr;
+
 };
 
 class FBXModel
@@ -77,8 +74,7 @@ public: // サブクラス
 	};
 
 	//ボーンインデックスの最大数
-	static const uint32_t MAX_BONE_INDICES = 4;
-
+	static const int MAX_BONE_INDICES = 4;
 
 	// 頂点データ構造体
 	struct VertexPosNormalUv
@@ -88,6 +84,7 @@ public: // サブクラス
 		DirectX::XMFLOAT2 uv;  // uv座標
 		UINT boneIndex[MAX_BONE_INDICES];//ボーン 番号
 		float boneWeight[MAX_BONE_INDICES];//ボーン 重み
+		std::vector<std::pair<UINT, float>> boneData;
 	};
 
 public:
@@ -98,7 +95,7 @@ public:
 	// 描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 	// モデルの変形行列取得
-	const Matrix4& GetModelTransform() { return meshNode->globalTransform; }
+	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
 	//getter
 	FbxScene* GetFbxScene() { return fbxScene; }
 
@@ -111,9 +108,9 @@ private:
 	// モデル名
 	std::string name;
 	// ノード配列
-	std::vector<FBXNode> nodes;
+	std::vector<Node> nodes;
 	// メッシュを持つノード
-	FBXNode* meshNode = nullptr;
+	Node* meshNode = nullptr;
 	// 頂点データ配列
 	std::vector<VertexPosNormalUv> vertices;
 	// 頂点インデックス配列

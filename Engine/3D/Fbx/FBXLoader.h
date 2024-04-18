@@ -1,18 +1,16 @@
+/**
+ * @file FbxLoader.h
+ * @brief FBXSDKのローダー
+ */
 #pragma once
 
-#include "FBXModel.h"
-
-#pragma warning(push)
-#pragma warning(disable: 4819)
-#pragma warning(disable: 4820)
-#pragma warning(disable: 4365)
-#pragma warning(disable: 4061)
 #include <fbxsdk.h>
+#include "FBXModel.h"
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <string>
-
-#pragma warning(pop)
+#include <array>
+#include <unordered_map>
 
 
 class FbxLoader
@@ -50,7 +48,7 @@ public:
 	/// ファイルからFBXモデル読込
 	/// </summary>
 	/// <param name="modelName">モデル名</param>
-	FBXModel* LoadModelFromFile(const string& modelName);
+	FBXModel* LoadModelFromFile(const string& modelName, bool isSmooth);
 
 	/// <summary>
 	/// FBXの行列XMMatrixに変換
@@ -62,10 +60,31 @@ public:
 	//スキニング情報の読み取り
 	void ParseSkin(FBXModel* fbxmodel, FbxMesh* fbxMesh);
 
+	//同一頂点の法線座標かUVが重なる際の関数(新しく頂点インデックス作成)
+	static bool IsExistNormalUVInfo(const std::vector<float>& vertexInfo);
+
+	// 頂点情報生成
+	static std::vector<float> CreateVertexInfo(const std::vector<float>& vertex, const FbxVector4& normalVec4, const FbxVector2& uvVec2);
+
+	// 新しく頂点index生成
+	static int CreateNewVertexIndex(const std::vector<float>& vertexInfo, const FbxVector4& normalVec4, const FbxVector2& uvVec2,
+		std::vector<std::vector<float>>& vertexInfoList, int oldIndex, std::vector<std::array<int, 2>>& oldNewIndexPairList);
+
+	// 一括にまとめたpos,norm,uv情報を整理
+	static bool IsSetNormalUV(const std::vector<float> vertexInfo, const FbxVector4& normalVec4, const FbxVector2& uvVec2);
+
+	std::vector<std::vector<int>> meshVertice;
+	std::unordered_map<int, std::vector<int>> meshVerticeControlpoints;
+
+	template<typename T>
+	T Min(T a, T b) {
+		return (a < b) ? a : b;
+	}
+
 
 private:
 	// D3D12デバイス
-	ID3D12Device* device_ = nullptr;
+	ID3D12Device* device = nullptr;
 	// FBXマネージャ
 	FbxManager* fbxManager = nullptr;
 	// FBXインポータ
@@ -87,7 +106,7 @@ private:
 	/// <param name="model">読み込み先モデルオブジェクト</param>
 	/// <param name="fbxNode">解析対象のノード</param>
 	/// <param name="parent">親ノード</param>
-	void ParseNodeRecursive(FBXModel* fbxmodel, FbxNode* fbxNode, FBXNode* parent = nullptr);
+	void ParseNodeRecursive(FBXModel* fbxmodel, FbxNode* fbxNode, Node* parent = nullptr);
 
 	/// <summary>
 	/// メッシュ読み取り
@@ -101,13 +120,19 @@ private:
 	void ParseMeshFaces(FBXModel* fbxmodel, FbxMesh* fbxMesh);
 	// マテリアル読み取り
 	void ParseMaterial(FBXModel* fbxmodel, FbxNode* fbxNode);
+	// ボーンデータのVSBufferへの格納
+	void SetBoneDataToVertices(FbxMesh* pMesh, FBXModel* pModel, std::vector<FBXModel::VertexPosNormalUv>& vertices);
+	//
+	int FindJointIndexByName(const std::string& name, FBXModel* model);
 	// テクスチャ読み込み
 	void LoadTexture(FBXModel* fbxmodel, const std::string& fullpath);
 
 	// ディレクトリを含んだファイルパスからファイル名を抽出する
 	std::string ExtractFileName(const std::string& path);
 
-
+	//頂点法線スムージング用データ
+	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothDate;
+	bool smoothing = false;
 
 
 };
