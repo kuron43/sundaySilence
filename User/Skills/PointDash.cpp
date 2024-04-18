@@ -229,6 +229,7 @@ void PointDash::MakeMoveVec(Vector3 pos) {
 		moveVec[i].nomalize();
 
 	}
+	isLineActive_[registNum] = false;
 	isActive = true;
 	nowPointNum = 0;
 }
