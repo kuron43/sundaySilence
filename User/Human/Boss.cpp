@@ -12,7 +12,6 @@ Boss::~Boss() {
 	delete modelCol_;
 	delete weapon_;
 	delete rayHit;
-	//delete bossFbxM_;
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		CollisionManager::GetInstance()->RemoveCollider(sphere[i]);
 		delete sphere[i];
@@ -35,7 +34,6 @@ void Boss::Initialize() {
 	modelCol_ = Model::LoadFromOBJ("sphere");
 
 	bossFbxO_ = std::make_unique<FBXObject3d>();
-	//bossFbxO_->SetCamera(_camera);
 	bossFbxO_->Initialize();
 	bossFbxO_->SetModel(bossFbxM_);
 	bossFbxO_->SetPosition({ 0,0,0 });
@@ -116,36 +114,44 @@ void Boss::Update(Input* input, bool isTitle) {
 	object_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
 	nowTitle = false;
 	nowTitle = !isTitle;
-	if (Input::get_instance().KeyboardPush(DIK_1)) {
-		debugNum_ = 0;
+	/*if (Input::get_instance().KeyboardPush(DIK_1)) {
+		stateNum_ = 0;
 	}
 	if (Input::get_instance().KeyboardPush(DIK_2)) {
-		debugNum_ = 1;
+		stateNum_ = 1;
 	}
 	if (Input::get_instance().KeyboardPush(DIK_3)) {
-		debugNum_ = 2;
-	}
+		stateNum_ = 2;
+	}*/
 
-	manager_->Update(debugNum_);
+	manager_->Update(stateNum_);
 
 	HitMyColor();
 	object_->Update();
 	reticle->Update();
 	bossFbxO_->SetPosition(object_->wtf.position);
+	bossFbxO_->SetRotate(object_->wtf.rotation);
 	bossFbxO_->Update();
-
 	//particle_->SetTransform(object_->wtf);
 	particle_->Update();
 
-	if (isFire == true && isDead == false) {		
-		bossFbxO_->AnimIsRotateChange(false);
-		bossFbxO_->PlayAnimation(3);
-		isFireOld = true;
-		weapon_->Shot(object_->wtf, reticle->wtf, Team::ENEMY);
+
+	if (isFire == true && isDead == false) {
+		//bossFbxO_->PlayAnimation(4);
+		//bossFbxO_->AnimIsRotateChange(true);
+		//isFireOld = true;
+		/*if (bossFbxO_->GetEndTime() == bossFbxO_->GetCurrentTimer()) {
+			weapon_->Shot(object_->wtf, reticle->wtf, Team::ENEMY);
+		}*/
+		stateNum_ = 2;
 	}
-	if(isFireOld == true && isFire == true && isDead == false) {
-		bossFbxO_->AnimIsRotateChange(false);
-		bossFbxO_->PlayAnimation(4);
+	else {
+		stateNum_ = 0;
+	}
+	if (isFireOld == true && isFire == false && isDead == false && bossFbxO_->GetEndTime() == bossFbxO_->GetCurrentTimer()) {
+		/*bossFbxO_->AnimIsRotateChange(true);
+		bossFbxO_->PlayAnimation(4);*/
+		isFireOld = false;
 	}
 	weapon_->Update(input);
 
@@ -197,13 +203,6 @@ void Boss::FrontFace() {
 	}if (isFire == false) {
 		frontVec_ = restRotate_;
 	}
-	if (!isDead) {
-		//ImGui::Begin("faceAngle_Y");
-		//ImGui::Text("Angle : Y %f", faceAngle.y);
-		//ImGui::End();
-
-	}
-
 	object_->wtf.rotation = frontVec_;
 	bossFbxO_->transform_.rotation = frontVec_;
 }
@@ -213,9 +212,7 @@ void Boss::ColliderUpdate() {
 	isBlocked = false;
 	isFound = false;
 	isFire = false;
-	isFireOld = false;
 
-	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
 	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
 	ray->SetDir(Affin::GetWorldTrans(reticle->wtf.matWorld));
 
@@ -224,7 +221,7 @@ void Boss::ColliderUpdate() {
 			OnCollision();
 			// パーティクルなぜかXそのままYZ入れ替えると治る
 			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
-			particle_->RandParticle(10,patPos);
+			particle_->RandParticle(10, patPos);
 		}
 	}
 
@@ -307,7 +304,7 @@ void Boss::ColliderUpdate() {
 			onPatTime_--;
 			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
 			particle_->LoadTexture("purple.png");
-			particle_->RandParticle(8,patPos);
+			particle_->RandParticle(8, patPos);
 		}
 	}
 	if (onPatTime_ < 1) {

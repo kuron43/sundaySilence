@@ -57,7 +57,7 @@ public:
 	Weapon* weapon_;
 
 //private:
-	uint32_t debugNum_ = 0;
+	uint32_t stateNum_ = 0;
 	const uint32_t Tribe_ = HU_BOSS;
 	uint32_t useWeapon_ = WP_ASSAULT;
 	bool isWeaponOn = true;

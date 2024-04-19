@@ -95,6 +95,13 @@ void TitleScene::Update(Input* input) {
 	title_->Update();
 	titleButton_->Update();
 
+	for (std::unique_ptr <Boss>& boss : _objects->boss) {
+		boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
+		boss->Update();
+		if (!boss->HowDead()) {
+			_objects->bossCount++;
+		}
+	}
 
 	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
 		if (input->MouseButtonTrigger(0)) {

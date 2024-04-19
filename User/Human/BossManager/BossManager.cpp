@@ -10,7 +10,7 @@ void BossManager::Update(uint32_t pattNum)
 	case 0: // 待機
 		if (boss_->isDead == false) {
 
-			boss_->bossFbxO_->AnimIsRotateChange(true);
+			boss_->bossFbxO_->AnimIsRotateChange(false);
 			boss_->bossFbxO_->PlayAnimation(0);
 		}
 		break;
@@ -18,19 +18,51 @@ void BossManager::Update(uint32_t pattNum)
 	case 1: // 移動
 		if (boss_->isDead == false) {
 
-			boss_->bossFbxO_->AnimIsRotateChange(true);
-			boss_->bossFbxO_->PlayAnimation(2);
-			boss_->object_->wtf.position.x += 0.1f;
+			boss_->bossFbxO_->AnimIsRotateChange(false);
+			boss_->bossFbxO_->PlayAnimation(3);
 		}
 		break;
 
 	case 2:	// 攻撃
 		if (boss_->isFire == true && boss_->isDead == false) {
-			boss_->bossFbxO_->AnimIsRotateChange(true);
-			boss_->bossFbxO_->PlayAnimation(4);
-			boss_->isFireOld = true;
-			boss_->weapon_->Shot(boss_->object_->wtf, boss_->reticle->wtf, ENEMY);
+			if (!isPlayAnim) {
+				boss_->bossFbxO_->AnimIsRotateChange(false);
+				boss_->bossFbxO_->PlayAnimation(4);
+				isPlayAnim = true;
+			}
+			else if(isPlayAnim){
+				boss_->bossFbxO_->AnimIsRotateChange(false);
+				boss_->bossFbxO_->PlayAnimation(5);
+				boss_->weapon_->Shot(boss_->object_->wtf, boss_->reticle->wtf, Team::ENEMY);
+				isPlayAnim = false;
+			}
 		}
 		break;
+	}
+
+
+
+	//-----animationUpdate-----//
+	if (isPlayAnim == true) {
+		int32_t maxFlame = 30;
+
+		animFlameCT++;
+
+		if (animFlameCT >= maxFlame) {
+			animFlameCT = 0;
+		}
+
+		//boss_->bossFbxO_->AnimFlameInter(animFlameCT, maxFlame);
+
+	}
+	else {
+		int32_t maxFlame = 30;
+
+		animFlameCT++;
+		if (animFlameCT >= maxFlame) {
+			animFlameCT = 0;
+		}
+
+		//boss_->bossFbxO_->AnimFlameInter(animFlameCT, maxFlame);
 	}
 }
