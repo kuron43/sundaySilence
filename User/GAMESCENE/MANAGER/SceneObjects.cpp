@@ -540,6 +540,7 @@ void SceneObjects::LoadLevels()
 	levelName_.push_back("stageDEMO2");
 	levelName_.push_back("Tutorial_1");
 	levelName_.push_back("Tutorial_2");
+	levelName_.push_back("Tutorial_3");
 
 	for (int32_t i = 0; i < levelName_.size(); i++) {
 		std::unique_ptr<LevelData> levelData = std::move(JsonLoader::LoadJsonFile(levelName_[i]));

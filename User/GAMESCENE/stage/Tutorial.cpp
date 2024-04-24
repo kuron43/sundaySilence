@@ -88,8 +88,9 @@ void Tutorial::Update(Input* input) {
 		if (stageClear == false) {
 			/*_manager->SetSceneNum(SCE_CLEAR);*/
 			_manager->SetSceneNum(SCE_GAME1);
-			if (_manager->tutorialNum == TUTO_8) {
+			if (_manager->tutorialNum == TUTO_3) {
 				_manager->TutorialOFF();
+				_manager->SetSceneNum(SCE_CLEAR);
 			}
 		}
 	}
@@ -184,82 +185,68 @@ void Tutorial::SpriteInitialize()
 	infoSP_->SetSize({ 300,150 });
 	infoSP_->SetPozition({ (WinApp::window_width / 1.5f) - 150,WinApp::window_height - 200 });
 	isDrawSP_ = true;
-	infoNum_ = 60;
+	infoNum_ = 61;
 	nowInfoNum_ = 0;
 
 	isInfoBarrier = false;
 	isInfoSHOT = false;
-	isInfoSLOW = false;
+	isInfoSLOW = true;
 	isInfoDUSH = false;
 	isInfoWEPC = false;
 	isAllFalse = true;
 	isTimeCount = false;
+	if (_manager->tutorialNum == TUTO_2) {
+		infoNum_ = 62;
+	}
 }
 
 void Tutorial::SpriteUpdate(uint32_t tutorialNum) {
-	if (tutorialNum) {
 
-	}
-	if (Input::get_instance().KeyboardPush(DIK_SPACE) && nowInfoNum_ == 0) {
-		isInfoBarrier = true;
-		isTimeCount = true;
-	}
-	if ((Input::get_instance().MouseButtonPush(0) && !Input::get_instance().MouseButtonPush(1)) && nowInfoNum_ == 1) {
-		isInfoSHOT = true;
-		isTimeCount = true;
-	}
-	if ((!Input::get_instance().MouseButtonPush(0) && Input::get_instance().MouseButtonPush(1)) && nowInfoNum_ == 2) {
-		isInfoSLOW = true;
-		isTimeCount = true;
-	}
-	if ((Input::get_instance().MouseButtonPush(0) && Input::get_instance().MouseButtonPush(1)) && nowInfoNum_ == 3) {
-		isInfoDUSH = true;
-		isTimeCount = true;
-	}
-	if ((Input::get_instance().KeyboardPush(DIK_E)) && nowInfoNum_ == 4) {
-		isInfoWEPC = true;
-		isTimeCount = true;
-
-	}
 	if (isTimeCount) {
 		infoCountTime_++;
 	}
-	if (isInfoBarrier == true && infoCountTime_ >= 150) {
+	if (isInfoSLOW == true && infoCountTime_ > 150) {
 		nowInfoNum_ = 1;
-		infoNum_ = 61;
-		isInfoBarrier = false;
-		isTimeCount = false;
-		infoCountTime_ = 0;
-	}
-	if (isInfoSHOT == true && infoCountTime_ >= 150) {
-		nowInfoNum_ = 2;
-		infoNum_ = 62;
-		isInfoSHOT = false;
-		isTimeCount = false;
-		infoCountTime_ = 0;
-	}
-	if (isInfoSLOW == true && infoCountTime_ >= 150) {
-		nowInfoNum_ = 3;
-		infoNum_ = 63;
 		isInfoSLOW = false;
 		isTimeCount = false;
 		infoCountTime_ = 0;
-	}
-	if (isInfoDUSH == true && infoCountTime_ >= 150) {
-		nowInfoNum_ = 4;
-		infoNum_ = 64;
+		isInfoDUSH = true;
+	}else if (isInfoDUSH == true && infoCountTime_ > 150) {
+		nowInfoNum_ = 1;
 		isInfoDUSH = false;
 		isTimeCount = false;
 		infoCountTime_ = 0;
+		isInfoSLOW = true;
 	}
-	if (isInfoWEPC == true && infoCountTime_ >= 150) {
-		nowInfoNum_ = 0;
-		infoNum_ = 60;
-		isInfoWEPC = false;
-		isDrawSP_ = false;
-		isTimeCount = false;
-		infoCountTime_ = 0;
+	else {
+
 	}
+	switch (tutorialNum)
+	{
+	case TUTO_1:
+	//InfoBarrier
+		infoNum_ = 60;	
+	break;
+	case TUTO_2:
+	// InfoSlow&Dash
+		isTimeCount = true;
+	if (isInfoSLOW == true && infoCountTime_ >= 150) {
+		infoNum_ = 62;
+	}
+	if (isInfoDUSH == true && infoCountTime_ >= 150) {
+		infoNum_ = 63;
+	}if (isInfoDUSH == false && isInfoSLOW == false|| isInfoDUSH == true && isInfoSLOW == true) {
+		isInfoSLOW = true;
+		isInfoDUSH = false;
+	}
+	break;
+	case TUTO_3:
+		infoNum_ = 64;
+	break;
+	default:
+		break;
+	}
+
 	infoSP_->SetTextureIndex(infoNum_);
 }
 
