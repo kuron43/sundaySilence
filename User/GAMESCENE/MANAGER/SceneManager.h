@@ -55,11 +55,17 @@ public:
 	void TransScene();
 	void Pause();
 
+	//
+	void TutorialOFF() { nowTutorial = false; };
+	void SetTutorialNum(uint32_t num) { tutorialNum = num; };
+
 public:
 	uint32_t sceneNum = 0;
+	uint32_t tutorialNum = 0;
 	bool isChange = false;
 	bool goToTitle = false;
-	uint16_t PADDING;
+	bool nowTutorial = false;
+	bool padding;
 };
 
 //	基本構成の参照元

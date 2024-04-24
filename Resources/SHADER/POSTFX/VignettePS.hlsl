@@ -16,8 +16,8 @@ float4 main(VSOutput input) : SV_TARGET
         float2 samplePoint = input.uv;
         float4 Tex = tex0.Sample(smp, samplePoint);
         float vignette = length(float2(0.5, 0.5) - input.uv);
-        vignette = clamp(vignette - 0.5, 0, 1);
-        Tex.rgb -= vignette;
+        vignette = clamp(vignette - 0.4, 0, 1);
+        Tex.rgb += vignette * (1.0,0.0,0.0);
         return float4(Tex.rgb, 1.0);
        
     }

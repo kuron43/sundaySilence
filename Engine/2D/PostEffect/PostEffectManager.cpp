@@ -5,7 +5,7 @@ void PostEffectManager::Initialize(DirectXCommon* dxCommon)
 {
 	vignetteFX = std::make_unique<VignetteEffect>();
 	vignetteFX->Initialize(dxCommon, L"Vignette");
-	vignetteFX->SetShadeNumber(0);
+	vignetteFX->SetShadeNumber(1);
 
 	postEffectMix = std::make_unique<IPostEffect>();
 	postEffectMix->Initialize(dxCommon, L"IPostEffect");

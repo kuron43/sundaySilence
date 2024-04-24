@@ -26,6 +26,9 @@ IScene* SceneFactory::CleateScene(const std::string& sceneName)
 	if (sceneName == "GAME") {
 		newScene = new GAME2Scene();
 	}
+	if (sceneName == "TUTORIAL") {
+		newScene = new Tutorial();
+	}
 
 	return newScene;
 }

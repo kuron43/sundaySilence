@@ -55,7 +55,7 @@ void SceneManager::ChangeScene() {
 		goToTitle = false;
 	}
 
-	if (isChange == true && goToTitle == false) {
+	if (isChange == true && goToTitle == false ) {
 
 		switch (sceneNum)
 		{
@@ -63,16 +63,16 @@ void SceneManager::ChangeScene() {
 			_scene.pop();
 			_scene.emplace(_factory->CleateScene("TITLE"));
 			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TITLE]).get());
-			SceneInitialize();
 			_objects->OFFIsUIDraw();
+			SceneInitialize();
 			TransScene();
 			break;
 		case SCE_GAME1:
 			_scene.pop();
-			_scene.emplace(_factory->CleateScene("TUTREAL"));
-			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::TUTRIAL]).get());
-			SceneInitialize();
+			_scene.emplace(_factory->CleateScene("TUTORIAL"));
+			_objects->SetingLevel(_objects->levels.at(_objects->levelName_[(LEVELS::TUTRIAL_1)+tutorialNum]).get());
 			_objects->ONIsUIDraw();
+			SceneInitialize();
 			TransScene();
 			break;
 
@@ -86,22 +86,22 @@ void SceneManager::ChangeScene() {
 			else if (SCE_GAME3 == sceneNum) {
 				_objects->SetingLevel(_objects->levels.at(_objects->levelName_[LEVELS::STAGE2]).get());
 			}
-			SceneInitialize();
 			_objects->ONIsUIDraw();
+			SceneInitialize();
 			TransScene();
 			break;
 		case SCE_SELECT:
 			_scene.pop();
 			_scene.emplace(_factory->CleateScene("SELECT"));
-			SceneInitialize();
 			_objects->OFFIsUIDraw();
+			SceneInitialize();
 			TransScene();
 			break;
 		case SCE_CLEAR:
 			_scene.pop();
 			_scene.emplace(_factory->CleateScene("CLEAR"));
-			SceneInitialize();
 			_objects->OFFIsUIDraw();
+			SceneInitialize();
 			TransScene();
 			break;
 		case SCE_PAUSE:
@@ -112,7 +112,7 @@ void SceneManager::ChangeScene() {
 			break;
 		}
 		isChange = false;
-	}
+	}	
 	else {
 		isChange = false;
 	}
