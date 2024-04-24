@@ -361,3 +361,4 @@ MigrationBackup/
 FodyWeavers.xsd
 libignore
 fbx_sdk
+/Resources/Stages
