@@ -29,7 +29,7 @@ void Tutorial::Initialize() {
 	startTime_ = true;
 	stageClear = false;
 	stageFailed = false;
-	TutorialInitialize();
+	SpriteInitialize();
 	{
 		_manager->_camera->SetEye(camposEye);
 		_manager->_camera->SetTarget(camposTar);
@@ -63,7 +63,9 @@ void Tutorial::Update(Input* input) {
 	_objects->bossCount = 0;
 	_objects->floorGround->Update();
 	//_objects->bossFbxO_->Update();
+	if (input) {
 
+	}
 
 
 
@@ -73,52 +75,7 @@ void Tutorial::Update(Input* input) {
 	else if (startTime_ == false && stageClear == false && stageFailed == false) {
 		_manager->_camera->SetEye(camposEye);
 		_manager->_camera->SetTarget(camposTar);
-
-#ifdef _DEBUG
-		if (Input::get_instance().KeyboardPush(DIK_P)) {
-			Vector3 eyeDebug = _objects->player->GetTransform().position;
-			eyeDebug.y = (float)3.5f;
-			_manager->_camera->SetEye(eyeDebug);
-			_manager->_camera->SetTarget(_objects->player->GetReticleTransform().position);
-			_manager->_camera->Update();
-		}
-#endif // DEBUG
-
-		_objects->player->Update(input);
-		stageFailed = _objects->player->GetIsDeath();
-
-		_objects->damageRedAlpha_ = (float)_objects->player->GetHIT() / (float)_objects->player->GetMAXHP();
-		_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
-
-		BulletManager::GetInstance()->Update();
-
-		for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
-			enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
-			enemy->Update();
-			if (!enemy->HowDead()) {
-				_objects->eneCount++;
-			}
-		}
-		for (std::unique_ptr <Boss>& boss : _objects->boss) {
-			boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
-			boss->Update();
-			if (!boss->HowDead()) {
-				_objects->bossCount++;
-			}
-		}
-		for (std::unique_ptr < Wall>& walls : _objects->walls) {
-			walls->Update();
-		}
-
-		_objects->SlowEffect(_objects->player->GetIsSlow());
-
-		if (input->KeyboardTrigger(DIK_TAB)) {
-			_manager->SetSceneNum(SCE_PAUSE);
-		}
-		else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
-			stageClear = true;
-		}
-		TutorialUpdate();
+		TutorialUpdate(_manager->tutorialNum);
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {
 		stageFailed = _objects->Banner(NUMBER::NUM_ONE);
@@ -129,7 +86,11 @@ void Tutorial::Update(Input* input) {
 	else if (startTime_ == false && stageClear == true && stageFailed == false) {
 		stageClear = _objects->Banner(NUMBER::NUM_TWO);
 		if (stageClear == false) {
-			_manager->SetSceneNum(SCE_CLEAR);
+			/*_manager->SetSceneNum(SCE_CLEAR);*/
+			_manager->SetSceneNum(SCE_GAME1);
+			if (_manager->tutorialNum == TUTO_8) {
+				_manager->TutorialOFF();
+			}
 		}
 	}
 	_objects->UIUpdate();
@@ -160,14 +121,63 @@ void Tutorial::Draw() {
 	_objects->plDamageRed_->Draw();
 	_objects->UIDraw();
 	if (startTime_ == false && stageClear == false && stageFailed == false) {
-		TutrialDraw(isDrawSP_);
+		SpriteDraw(isDrawSP_);
 	}
 	if (startTime_ == true || stageFailed == true || stageClear == true) {
 		_objects->BannerDraw();
 	}
 }
 
-void Tutorial::TutorialInitialize()
+void Tutorial::TutorialUpdate(uint32_t tutorialNum)
+{
+#ifdef _DEBUG
+	if (Input::get_instance().KeyboardPush(DIK_P)) {
+		Vector3 eyeDebug = _objects->player->GetTransform().position;
+		eyeDebug.y = (float)3.5f;
+		_manager->_camera->SetEye(eyeDebug);
+		_manager->_camera->SetTarget(_objects->player->GetReticleTransform().position);
+		_manager->_camera->Update();
+	}
+#endif // DEBUG
+
+	_objects->player->Update(&Input::get_instance());
+	_objects->SlowEffect(_objects->player->GetIsSlow());
+	_objects->damageRedAlpha_ = (float)_objects->player->GetHIT() / (float)_objects->player->GetMAXHP();
+	_objects->plDamageRed_->SetColor(Vector4(1, 0, 0, _objects->damageRedAlpha_ / (float)_objects->player->GetMAXHP()));
+
+	stageFailed = _objects->player->GetIsDeath();
+
+	SpriteUpdate(tutorialNum);
+	BulletManager::GetInstance()->Update();
+
+	for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
+		enemy->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
+		enemy->Update();
+		if (!enemy->HowDead()) {
+			_objects->eneCount++;
+		}
+	}
+	for (std::unique_ptr <Boss>& boss : _objects->boss) {
+		boss->SetReticle(Affin::GetWorldTrans(_objects->player->GetTransform().matWorld));
+		boss->Update();
+		if (!boss->HowDead()) {
+			_objects->bossCount++;
+		}
+	}
+	for (std::unique_ptr < Wall>& walls : _objects->walls) {
+		walls->Update();
+	}	
+
+	if (Input::get_instance().KeyboardTrigger(DIK_TAB)) {
+		_manager->SetSceneNum(SCE_PAUSE);
+	}
+	else if (_objects->eneCount == 0 && _objects->bossCount == 0) {
+		stageClear = true;
+		_manager->tutorialNum += 1;
+	}
+}
+
+void Tutorial::SpriteInitialize()
 {
 	infoSP_ = std::make_unique<Sprite>();
 	infoSP_->Initialize(_objects->spriteCommon_.get(), 60);
@@ -186,7 +196,10 @@ void Tutorial::TutorialInitialize()
 	isTimeCount = false;
 }
 
-void Tutorial::TutorialUpdate() {
+void Tutorial::SpriteUpdate(uint32_t tutorialNum) {
+	if (tutorialNum) {
+
+	}
 	if (Input::get_instance().KeyboardPush(DIK_SPACE) && nowInfoNum_ == 0) {
 		isInfoBarrier = true;
 		isTimeCount = true;
@@ -250,7 +263,7 @@ void Tutorial::TutorialUpdate() {
 	infoSP_->SetTextureIndex(infoNum_);
 }
 
-void Tutorial::TutrialDraw(bool isTutrial)
+void Tutorial::SpriteDraw(bool isTutrial)
 {
 	if (isTutrial == true) {
 		infoSP_->Draw();

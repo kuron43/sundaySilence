@@ -29,9 +29,10 @@ public:
 	/// </summary>
 	void Draw() override;
 private:
-	void TutorialInitialize();
-	void TutorialUpdate();
-	void TutrialDraw(bool isTutrial);
+	void TutorialUpdate(uint32_t tutorialNum);
+	void SpriteInitialize();
+	void SpriteUpdate(uint32_t tutorialNum);
+	void SpriteDraw(bool isTutrial);
 private:
 	bool startTime_ = false;
 	bool stageClear = false;
