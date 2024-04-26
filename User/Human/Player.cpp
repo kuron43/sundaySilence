@@ -105,7 +105,7 @@ void Player::Initialize() {
 	BarrierPos_ = Affin::GetWorldTrans(object_->wtf.matWorld);
 	PL_Barrier->SetObject3d(object_);
 	PL_Barrier->SetBasisPos(&BarrierPos_);
-	PL_Barrier->SetRadius(5.0f);
+	PL_Barrier->SetRadius(6.0f);
 	PL_Barrier->Update();
 	PL_Barrier->SetAttribute(COLLISION_ATTR_PLAYERBARRIER);
 	barrierOnTime = NUMBER::NUM_ONE;
@@ -127,11 +127,8 @@ void Player::Update(Input* input, bool isTitle) {
 	if (pointDash_->isActive == false) {
 		Move(input);
 	}
-	Vector2 mousepos = input->GetMousePosition();
-	object_->wtf.position.y = NONE;
-	reticle->wtf.position = { mousepos.x * mouseSensitivity_, NONE, mousepos.y * mouseSensitivity_ };
-	reticle->Update();
 
+	ReticleUpdate();
 	WeaponUpdate();
 	PointDashUpdate();
 	PhantomUpdate();
@@ -282,6 +279,17 @@ void Player::FaceAngleUpdate()
 	faceAngle = faceAngle_;
 
 	object_->wtf.rotation = faceAngle;
+}
+
+void Player::ReticleUpdate()
+{
+
+	Vector2 mousepos = Input::get_instance().GetMousePosition();
+	Vector3 camTerPos = object_->camera_->GetTarget();
+	object_->wtf.position.y = NUM_ZERO;
+	reticle->wtf.position = { (mousepos.x * mouseSensitivity_) + camTerPos.x, (object_->wtf.position.y), (mousepos.y * mouseSensitivity_) + camTerPos.z };
+	reticle->Update();
+
 }
 
 void Player::HitMyColor()

@@ -31,10 +31,13 @@ void Tutorial::Initialize() {
 	stageFailed = false;
 	SpriteInitialize();
 	{
+
 		_manager->_camera->SetEye(camposEye);
 		_manager->_camera->SetTarget(camposTar);
 		_manager->_camera->SetFocalLengs(forcalLengs);
 		_manager->_camera->Update();
+		camMoveTime_ = NUMBER::NUM_ZERO;
+
 		_objects->floorGround->Update();
 
 		BulletManager::GetInstance()->Update();
@@ -66,15 +69,24 @@ void Tutorial::Update(Input* input) {
 	if (input) {
 
 	}
+	_manager->_camera->SetEye(camposEye);
+	_manager->_camera->SetTarget(camposTar);
 
-
-
+#ifdef _DEBUG
+	ImGui::Begin("Tutorial_S");
+	ImGui::SliderFloat3("Position", &moveCameraPos.x,-50.0,50.0);
+	ImGui::End();
+#endif
+	Vector3 debugEyE = { 0.0f,90.0f,-10.0001f };
+	Vector3 debugTar = { 0,0,0 };
+		camposEye = debugEyE + moveCameraPos;
+		camposTar = debugTar + moveCameraPos;
 	if (startTime_ == true && stageClear == false && stageFailed == false) {
 		startTime_ = _objects->Banner();
+		camMoveTime_++;
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == false) {
-		_manager->_camera->SetEye(camposEye);
-		_manager->_camera->SetTarget(camposTar);
+
 		TutorialUpdate(_manager->tutorialNum);
 	}
 	else if (startTime_ == false && stageClear == false && stageFailed == true) {

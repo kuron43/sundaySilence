@@ -47,6 +47,7 @@ public:
 private:
 	void Move(Input* input);
 	void FaceAngleUpdate();
+	void ReticleUpdate();
 	void HitMyColor();
 	void CollisionUpdate();
 	void OnCollision(bool bullet);

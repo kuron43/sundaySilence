@@ -40,9 +40,11 @@ private:
 	bool isDrawSP_ = true;
 
 	// カメラ座標
+	Vector3 moveCameraPos = { 0,0,0 };
 	Vector3 camposEye = { 0.0f,90.0f,-10.0001f };
-	Vector3 camposTar = { 0,0,0 };
 	float forcalLengs = 30.0f;
+	Vector3 camposTar = { 0,0,0 };
+	int32_t camMoveTime_;
 
 
 	std::unique_ptr <Sprite> infoSP_;
