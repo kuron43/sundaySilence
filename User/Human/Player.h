@@ -26,10 +26,10 @@ public:
 	/// 武器の番号セット
 	void SetWeaponNum(uint32_t WeaponNum) override;
 
-	void SetPos(Vector3 pos) { object_->wtf.position = pos; };
+	void SetPos(Vector3 pos) { object_->transForm.position = pos; };
 	void MatUpdate() { object_->UpdateMatrix(); };
-	Transform GetTransform() { return object_->wtf; };
-	Transform GetReticleTransform() { return reticle->wtf; };
+	Transform GetTransform() { return object_->transForm; };
+	Transform GetReticleTransform() { return reticle->transForm; };
 	bool GetIsDeath() { return isDeath_; };
 	bool GetIsSlow() { return _isSlow; }
 	bool GetOnFire() { return isOnBarrier; }

@@ -35,7 +35,7 @@ void PointDash::Initialize()
 		circleOBJ_[i] = Object3d::Create();
 		circleOBJ_[i]->SetModel(model_);
 		circleOBJ_[i]->Initialize();
-		circleOBJ_[i]->wtf.scale = Vector3(1.5f, 1.5f, 1.5f);
+		circleOBJ_[i]->transForm.scale = Vector3(1.5f, 1.5f, 1.5f);
 		pointActive_[i] = false;
 	}
 
@@ -62,41 +62,41 @@ void PointDash::Update(Vector3 pos, Vector3 ret)
 	{
 	case POINT_1:
 		debugLineAngle = (float)atan2(ret.x - pos.x, ret.z - pos.z);
-		lineOBJ_[POINT_1]->wtf.rotation.y = debugLineAngle;
-		lineOBJ_[POINT_1]->wtf.scale.z = (pos - ret).length() / 2;
-		lineOBJ_[POINT_1]->wtf.position = debugPos.lerp(pos, ret, 0.5f);
+		lineOBJ_[POINT_1]->transForm.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_1]->transForm.scale.z = (pos - ret).length() / 2;
+		lineOBJ_[POINT_1]->transForm.position = debugPos.lerp(pos, ret, 0.5f);
 		break;
 	case POINT_2:
-		debugLineAngle = (float)atan2(ret.x - circleOBJ_[0]->wtf.position.x, ret.z - circleOBJ_[0]->wtf.position.z);
-		lineOBJ_[POINT_2]->wtf.rotation.y = debugLineAngle;
-		lineOBJ_[POINT_2]->wtf.scale.z = (circleOBJ_[0]->wtf.position - ret).length() / 2;
-		lineOBJ_[POINT_2]->wtf.position = debugPos.lerp(circleOBJ_[0]->wtf.position, ret, 0.5f);
+		debugLineAngle = (float)atan2(ret.x - circleOBJ_[0]->transForm.position.x, ret.z - circleOBJ_[0]->transForm.position.z);
+		lineOBJ_[POINT_2]->transForm.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_2]->transForm.scale.z = (circleOBJ_[0]->transForm.position - ret).length() / 2;
+		lineOBJ_[POINT_2]->transForm.position = debugPos.lerp(circleOBJ_[0]->transForm.position, ret, 0.5f);
 		break;
 	case POINT_3:
-		debugLineAngle = (float)atan2(ret.x - circleOBJ_[1]->wtf.position.x, ret.z - circleOBJ_[1]->wtf.position.z);
-		lineOBJ_[POINT_3]->wtf.rotation.y = debugLineAngle;
-		lineOBJ_[POINT_3]->wtf.scale.z = (circleOBJ_[1]->wtf.position - ret).length() / 2;
-		lineOBJ_[POINT_3]->wtf.position = debugPos.lerp(circleOBJ_[1]->wtf.position, ret, 0.5f);
+		debugLineAngle = (float)atan2(ret.x - circleOBJ_[1]->transForm.position.x, ret.z - circleOBJ_[1]->transForm.position.z);
+		lineOBJ_[POINT_3]->transForm.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_3]->transForm.scale.z = (circleOBJ_[1]->transForm.position - ret).length() / 2;
+		lineOBJ_[POINT_3]->transForm.position = debugPos.lerp(circleOBJ_[1]->transForm.position, ret, 0.5f);
 		break;
 	case POINT_4:
-		debugLineAngle = (float)atan2(ret.x - circleOBJ_[2]->wtf.position.x, ret.z - circleOBJ_[2]->wtf.position.z);
-		lineOBJ_[POINT_4]->wtf.rotation.y = debugLineAngle;
-		lineOBJ_[POINT_4]->wtf.scale.z = (circleOBJ_[2]->wtf.position - ret).length() / 2;
-		lineOBJ_[POINT_4]->wtf.position = debugPos.lerp(circleOBJ_[2]->wtf.position, ret, 0.5f);
+		debugLineAngle = (float)atan2(ret.x - circleOBJ_[2]->transForm.position.x, ret.z - circleOBJ_[2]->transForm.position.z);
+		lineOBJ_[POINT_4]->transForm.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_4]->transForm.scale.z = (circleOBJ_[2]->transForm.position - ret).length() / 2;
+		lineOBJ_[POINT_4]->transForm.position = debugPos.lerp(circleOBJ_[2]->transForm.position, ret, 0.5f);
 		break;
 	case POINT_5:
-		debugLineAngle = (float)atan2(ret.x - circleOBJ_[3]->wtf.position.x, ret.z - circleOBJ_[3]->wtf.position.z);
-		lineOBJ_[POINT_5]->wtf.rotation.y = debugLineAngle;
-		lineOBJ_[POINT_5]->wtf.scale.z = (circleOBJ_[3]->wtf.position - ret).length() / 2;
-		lineOBJ_[POINT_5]->wtf.position = debugPos.lerp(circleOBJ_[3]->wtf.position, ret, 0.5f);
+		debugLineAngle = (float)atan2(ret.x - circleOBJ_[3]->transForm.position.x, ret.z - circleOBJ_[3]->transForm.position.z);
+		lineOBJ_[POINT_5]->transForm.rotation.y = debugLineAngle;
+		lineOBJ_[POINT_5]->transForm.scale.z = (circleOBJ_[3]->transForm.position - ret).length() / 2;
+		lineOBJ_[POINT_5]->transForm.position = debugPos.lerp(circleOBJ_[3]->transForm.position, ret, 0.5f);
 		break;
 	default:
 		break;
 	}
 	float scaleX = 1;
 	for (uint32_t i = 0; i < POINT_MAX; i++) {
-		lineOBJ_[i]->wtf.scale.y = 0.1f;
-		lineOBJ_[i]->wtf.scale.x = 0.7f / (scaleX);
+		lineOBJ_[i]->transForm.scale.y = 0.1f;
+		lineOBJ_[i]->transForm.scale.x = 0.7f / (scaleX);
 		lineOBJ_[i]->SetColor({ 0,1,1,1 });
 		lineOBJ_[i]->Update();
 		scaleX++;
@@ -127,7 +127,7 @@ bool PointDash::PointRayUpdate(Vector3 pos, Vector3 ret)
 	ray->Update();
 
 	for (uint32_t i = 0; i < POINT_MAX; i++) {
-		circleOBJ_[i]->wtf.rotation.y += registNum;
+		circleOBJ_[i]->transForm.rotation.y += registNum;
 		circleOBJ_[i]->Update();
 	}
 
@@ -171,31 +171,31 @@ void PointDash::SetPoint(Vector3& point, Input* input) {
 	if (registNum == POINT_1) {
 		points[POINT_1] = point;
 		pointActive_[POINT_1] = true;
-		circleOBJ_[POINT_1]->wtf.position = point;
+		circleOBJ_[POINT_1]->transForm.position = point;
 		registNum = POINT_2;
 	}
 	else if (registNum == POINT_2) {
 		points[POINT_2] = point;
 		pointActive_[POINT_2] = true;
-		circleOBJ_[POINT_2]->wtf.position = point;
+		circleOBJ_[POINT_2]->transForm.position = point;
 		registNum = POINT_3;
 	}
 	else if (registNum == POINT_3) {
 		points[POINT_3] = point;
 		pointActive_[POINT_3] = true;
-		circleOBJ_[POINT_3]->wtf.position = point;
+		circleOBJ_[POINT_3]->transForm.position = point;
 		registNum = POINT_4;
 	}
 	else if (registNum == POINT_4) {
 		points[POINT_4] = point;
 		pointActive_[POINT_4] = true;
-		circleOBJ_[POINT_4]->wtf.position = point;
+		circleOBJ_[POINT_4]->transForm.position = point;
 		registNum = POINT_5;
 	}
 	else if (registNum == POINT_5) {
 		points[POINT_5] = point;
 		pointActive_[POINT_5] = true;
-		circleOBJ_[POINT_5]->wtf.position = point;
+		circleOBJ_[POINT_5]->transForm.position = point;
 		registNum = POINT_MAX;
 		pointsMax = true;
 	}
@@ -332,9 +332,9 @@ void PointDash::Reset() {
 	points.clear();
 	for (uint32_t i = 0; i < POINT_MAX; i++) {
 		pointActive_[i] = false;
-		circleOBJ_[i]->wtf.position = Vector3(0, -10, 0);
+		circleOBJ_[i]->transForm.position = Vector3(0, -10, 0);
 		isLineActive_[i] = false;
-		lineOBJ_[i]->wtf.position = Vector3(0, -10, 0);
+		lineOBJ_[i]->transForm.position = Vector3(0, -10, 0);
 	}
 	registNum = 0;
 	isActive = false;

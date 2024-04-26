@@ -93,7 +93,7 @@ public:
 
 	void OnCollision();
 
-	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bottleObj_->wtf.matWorld); };
+	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bottleObj_->transForm.matWorld); };
 
 	bool IsDead() override;
 	void Dead() { isDead = true; }

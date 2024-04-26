@@ -33,7 +33,7 @@ void BossManager::Update(uint32_t pattNum)
 			else if(isPlayAnim){
 				boss_->bossFbxO_->AnimIsRotateChange(false);
 				boss_->bossFbxO_->PlayAnimation(5);
-				boss_->weapon_->Shot(boss_->object_->wtf, boss_->reticle->wtf, Team::ENEMY);
+				boss_->weapon_->Shot(boss_->object_->transForm, boss_->reticle->transForm, Team::ENEMY);
 				isPlayAnim = false;
 			}
 		}

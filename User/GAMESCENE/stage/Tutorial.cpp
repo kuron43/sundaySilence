@@ -77,6 +77,9 @@ void Tutorial::Update(Input* input) {
 	ImGui::SliderFloat3("Position", &moveCameraPos.x,-50.0,50.0);
 	ImGui::End();
 #endif
+	// {-47,0,-29}POS,{70}FL
+	forcalLengs = 70.0f;
+
 	Vector3 debugEyE = { 0.0f,90.0f,-10.0001f };
 	Vector3 debugTar = { 0,0,0 };
 		camposEye = debugEyE + moveCameraPos;

@@ -47,7 +47,7 @@ void MeshCollider::ConstructTriangles(Model* model)
 //更新処理
 void MeshCollider::Update()
 {
-	objectMatWorld = GetObject3d()->wtf.matWorld;
+	objectMatWorld = GetObject3d()->transForm.matWorld;
 }
 
 //球との当たり判定
@@ -77,7 +77,7 @@ bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter,Ve
 		{
 			if (inter)
 			{
-				const Matrix4& matWorld = GetObject3d()->wtf.matWorld;
+				const Matrix4& matWorld = GetObject3d()->transForm.matWorld;
 
 				Matrix4 interMat;
 				interMat = Affin::matUnit();
@@ -92,7 +92,7 @@ bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter,Ve
 
 			}
 			if (reject) {
-				const Matrix4& matWorld = GetObject3d()->wtf.matWorld;
+				const Matrix4& matWorld = GetObject3d()->transForm.matWorld;
 
 				*reject = Affin::VecMat(*reject, matWorld);
 			}
@@ -125,7 +125,7 @@ bool MeshCollider::CheckCollisionRay(const Ray& ray , float* distance , Vector3*
 
 		if (Collision::CheckRay2Triangle(localRay , triangle , nullptr , &tempInter))
 		{
-			const Matrix4& matWorld = GetObject3d()->wtf.matWorld;
+			const Matrix4& matWorld = GetObject3d()->transForm.matWorld;
 
 			Matrix4 interMat;
 			interMat = Affin::matUnit();

@@ -135,8 +135,8 @@ void FireBottle::Initialize(Model* model, const Vector3& position, Vector3 move,
 	bottleObj_ = Object3d::Create();
 	bottleObj_->SetModel(model);
 
-	bottleObj_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
-	bottleObj_->wtf.position = position;
+	bottleObj_->transForm.scale = Vector3(0.5f, 0.5f, 0.5f);
+	bottleObj_->transForm.position = position;
 	deathCount = 0;
 	timeCount = 0;
 	isDead = false;
@@ -149,10 +149,10 @@ void FireBottle::Initialize(Model* model, const Vector3& position, Vector3 move,
 	//当たり判定用
 	sphere = new SphereCollider;
 	CollisionManager::GetInstance()->AddCollider(sphere);
-	spherePos = Affin::GetWorldTrans(bottleObj_->wtf.matWorld);
+	spherePos = Affin::GetWorldTrans(bottleObj_->transForm.matWorld);
 	sphere->SetObject3d(bottleObj_);
 	//sphere->SetBasisPos(&spherePos[i]);
-	sphere->SetRadius(bottleObj_->wtf.scale.x);
+	sphere->SetRadius(bottleObj_->transForm.scale.x);
 	sphere->Update();
 
 	if (team_ == PLAYER) { // 自機弾
@@ -169,9 +169,9 @@ void FireBottle::Initialize(Model* model, const Vector3& position, Vector3 move,
 	////test
 	//colliderPosTest_ = Object3d::Create();
 	//colliderPosTest_->SetModel(model);
-	//colliderPosTest_->wtf.position = (sphere->center);
-	//colliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
-	//colliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+	//colliderPosTest_->transForm.position = (sphere->center);
+	//colliderPosTest_->transForm.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
+	//colliderPosTest_->transForm.rotation = (Vector3{ 0,0,0 });
 	//colliderPosTest_->Update();
 }
 
@@ -188,14 +188,14 @@ void FireBottle::Update(float speed)
 		Dead();
 	}
 	if (isExplosion) {
-		bottleObj_->wtf.position.y = 0.0f;
+		bottleObj_->transForm.position.y = 0.0f;
 	}
 	else {
 		// Y速度を計算(鉛直投げ上げ)
 		bottleYSpeed = 2.5f - 9.8f * (static_cast<float>(timeCount) / 120.0f);
-		bottleObj_->wtf.position.x += (moveVec.x * (vecLength / 70.0f));
-		bottleObj_->wtf.position.y += (bottleYSpeed);
-		bottleObj_->wtf.position.z += (moveVec.z * (vecLength / 70.0f));
+		bottleObj_->transForm.position.x += (moveVec.x * (vecLength / 70.0f));
+		bottleObj_->transForm.position.y += (bottleYSpeed);
+		bottleObj_->transForm.position.z += (moveVec.z * (vecLength / 70.0f));
 	}
 
 	//行列の再計算
@@ -214,7 +214,7 @@ void FireBottle::Update(float speed)
 			sphere->SetAttribute(COLLISION_ATTR_ENEMIESFIRE);
 		}
 	}
-	if (bottleObj_->wtf.position.y <= 0) {
+	if (bottleObj_->transForm.position.y <= 0) {
 		if (team_ == PLAYER) {
 			//isDead = true;
 			isExplosion = true;
@@ -227,11 +227,11 @@ void FireBottle::Update(float speed)
 		}
 	}
 	if (isExplosion) {
-		bottleObj_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
+		bottleObj_->transForm.scale = Vector3(0.5f, 0.5f, 0.5f);
 		sphere->SetRadius(5.0f);
 	}
 	else {
-		bottleObj_->wtf.scale = Vector3(0.05f, 0.05f, 0.05f);
+		bottleObj_->transForm.scale = Vector3(0.05f, 0.05f, 0.05f);
 		sphere->SetRadius(0.5f);
 	}
 	bottleObj_->SetColor(Vector4(1.0f, 0.0f, 0.0f,1.0f));

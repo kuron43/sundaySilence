@@ -174,6 +174,6 @@ public:
 
 	static float win_wi, win_hi;
 public:
-	Transform wtf;
+	Transform transForm;
 
 };

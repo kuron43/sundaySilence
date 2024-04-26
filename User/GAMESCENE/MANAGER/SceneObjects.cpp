@@ -165,7 +165,7 @@ void SceneObjects::Initialize() {
 	skydome_M = Model::LoadFromOBJ("skydome");
 	skydome_O->SetModel(skydome_M);
 	skydome_O->Initialize();
-	skydome_O->wtf.scale = Vector3(10000.0f, 10000.0f, 10000.0f);
+	skydome_O->transForm.scale = Vector3(10000.0f, 10000.0f, 10000.0f);
 
 
 	// 演出用の初期化
@@ -567,16 +567,16 @@ void SceneObjects::SetingLevel(LevelData* data)
 			//座標
 			Vector3 pos;
 			pos = objectData.translation;
-			newEnemy->object_->wtf.position = pos;
+			newEnemy->object_->transForm.position = pos;
 			//回転
 			Vector3 rot;
 			rot = objectData.rotation;
-			newEnemy->object_->wtf.rotation = rot;
+			newEnemy->object_->transForm.rotation = rot;
 			newEnemy->SetRestRotate(rot);
 			//拡縮
 			Vector3 sca;
 			sca = objectData.scaling;
-			newEnemy->object_->wtf.scale = sca;
+			newEnemy->object_->transForm.scale = sca;
 			//newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 			enemys.emplace_back(std::move(newEnemy));
 		}
@@ -594,16 +594,16 @@ void SceneObjects::SetingLevel(LevelData* data)
 			//座標
 			Vector3 pos;
 			pos = objectData.translation;
-			newBoss->object_->wtf.position = pos;
+			newBoss->object_->transForm.position = pos;
 			//回転
 			Vector3 rot;
 			rot = objectData.rotation;
-			newBoss->object_->wtf.rotation = rot;
+			newBoss->object_->transForm.rotation = rot;
 			newBoss->SetRestRotate(rot);
 			//拡縮
 			Vector3 sca;
 			sca = objectData.scaling;
-			newBoss->object_->wtf.scale = sca;
+			newBoss->object_->transForm.scale = sca;
 			//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 			boss.emplace_back(std::move(newBoss));
 		}
@@ -613,15 +613,15 @@ void SceneObjects::SetingLevel(LevelData* data)
 			//座標
 			Vector3 pos;
 			pos = objectData.translation;
-			newWall->object_->wtf.position = pos;
+			newWall->object_->transForm.position = pos;
 			//回転
 			Vector3 rot;
 			rot = objectData.rotation;
-			newWall->object_->wtf.rotation = rot;
+			newWall->object_->transForm.rotation = rot;
 			//拡縮
 			Vector3 sca;
 			sca = objectData.scaling;
-			newWall->object_->wtf.scale = sca;
+			newWall->object_->transForm.scale = sca;
 			newWall->object_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 			newWall->object_->Update();
 			newWall->CollideInitialize();

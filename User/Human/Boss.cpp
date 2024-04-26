@@ -44,7 +44,7 @@ void Boss::Initialize() {
 	object_ = Object3d::Create();
 	object_->SetModel(model_);
 	object_->Initialize();
-	object_->wtf.scale = Vector3(0.3f, 0.3f, 0.3f);
+	object_->transForm.scale = Vector3(0.3f, 0.3f, 0.3f);
 
 	reticle = Object3d::Create();
 	reticle->SetModel(model_);
@@ -79,13 +79,13 @@ void Boss::Initialize() {
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
 	colliderPosTest_.resize(SPHERE_COLLISION_NUM);
 
-	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
-	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
+	//rayvec = Affin::GetWorldTrans(reticle->transForm.matWorld) - Affin::GetWorldTrans(object_->transForm.matWorld);
+	rayvec = -(Affin::GetWorldTrans(object_->transForm.matWorld) - Affin::GetWorldTrans(reticle->transForm.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
-		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
+		spherePos[i] = Affin::GetWorldTrans(object_->transForm.matWorld);
 		sphere[i]->SetObject3d(object_);
 		sphere[i]->SetBasisPos(&spherePos[i]);
 		sphere[i]->SetRadius(3.0f);
@@ -94,14 +94,14 @@ void Boss::Initialize() {
 		//test
 		colliderPosTest_[i] = Object3d::Create();
 		colliderPosTest_[i]->SetModel(modelCol_);
-		colliderPosTest_[i]->wtf.position = rayvec;
-		colliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
-		colliderPosTest_[i]->wtf.rotation = { 0,0,0 };
+		colliderPosTest_[i]->transForm.position = rayvec;
+		colliderPosTest_[i]->transForm.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
+		colliderPosTest_[i]->transForm.rotation = { 0,0,0 };
 		colliderPosTest_[i]->Update();
 	}
 	ray = new RayCollider;
 
-	ray->SetStart(Affin::GetWorldTrans(object_->wtf.matWorld));
+	ray->SetStart(Affin::GetWorldTrans(object_->transForm.matWorld));
 	ray->SetDir(rayvec);
 	ray->SetObject3d(object_);
 	CollisionManager::GetInstance()->AddCollider(ray);
@@ -111,7 +111,7 @@ void Boss::Initialize() {
 
 ///
 void Boss::Update(Input* input, bool isTitle) {
-	object_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
+	object_->transForm.scale = Vector3(0.5f, 0.5f, 0.5f);
 	nowTitle = false;
 	nowTitle = !isTitle;
 	/*if (Input::get_instance().KeyboardPush(DIK_1)) {
@@ -129,10 +129,10 @@ void Boss::Update(Input* input, bool isTitle) {
 	HitMyColor();
 	object_->Update();
 	reticle->Update();
-	bossFbxO_->SetPosition(object_->wtf.position);
-	bossFbxO_->SetRotate(object_->wtf.rotation);
+	bossFbxO_->SetPosition(object_->transForm.position);
+	bossFbxO_->SetRotate(object_->transForm.rotation);
 	bossFbxO_->Update();
-	//particle_->SetTransform(object_->wtf);
+	//particle_->SetTransform(object_->transForm);
 	particle_->Update();
 
 
@@ -141,7 +141,7 @@ void Boss::Update(Input* input, bool isTitle) {
 		//bossFbxO_->AnimIsRotateChange(true);
 		//isFireOld = true;
 		/*if (bossFbxO_->GetEndTime() == bossFbxO_->GetCurrentTimer()) {
-			weapon_->Shot(object_->wtf, reticle->wtf, Team::ENEMY);
+			weapon_->Shot(object_->transForm, reticle->transForm, Team::ENEMY);
 		}*/
 		stateNum_ = 2;
 	}
@@ -197,13 +197,13 @@ void Boss::SetWeaponNum(uint32_t WeaponNum)
 /// </summary>
 void Boss::FrontFace() {
 	Vector3 faceAngle = { 0,0,0 };
-	faceAngle.y = (float)atan2(reticle->wtf.position.x - object_->wtf.position.x, reticle->wtf.position.z - object_->wtf.position.z);
+	faceAngle.y = (float)atan2(reticle->transForm.position.x - object_->transForm.position.x, reticle->transForm.position.z - object_->transForm.position.z);
 	if (isFire == true) {
 		frontVec_ = faceAngle;
 	}if (isFire == false) {
 		frontVec_ = restRotate_;
 	}
-	object_->wtf.rotation = frontVec_;
+	object_->transForm.rotation = frontVec_;
 	bossFbxO_->transform_.rotation = frontVec_;
 }
 
@@ -213,21 +213,21 @@ void Boss::ColliderUpdate() {
 	isFound = false;
 	isFire = false;
 
-	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle->wtf.matWorld));
-	ray->SetDir(Affin::GetWorldTrans(reticle->wtf.matWorld));
+	rayvec = -(Affin::GetWorldTrans(object_->transForm.matWorld) - Affin::GetWorldTrans(reticle->transForm.matWorld));
+	ray->SetDir(Affin::GetWorldTrans(reticle->transForm.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			OnCollision();
 			// パーティクルなぜかXそのままYZ入れ替えると治る
-			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
+			Vector3 patPos = { object_->transForm.position.x,object_->transForm.position.z,object_->transForm.position.y };
 			particle_->RandParticle(10, patPos);
 		}
 	}
 
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
-		spherePos[i] = object_->wtf.position;
-		colliderPosTest_[i]->wtf.position = ray->GetDir();
+		spherePos[i] = object_->transForm.position;
+		colliderPosTest_[i]->transForm.position = ray->GetDir();
 		sphere[i]->Update();
 		colliderPosTest_[i]->Update();
 	}
@@ -271,9 +271,9 @@ void Boss::ColliderUpdate() {
 		for (uint32_t i = NONE; i < SPHERE_COLLISION_NUM; i++) {
 			BossQueryCallback callback(sphere[i]);
 			CollisionManager::GetInstance()->QuerySphere(*sphere[i], &callback, COLLISION_ATTR_BARRIEROBJECT);
-			object_->wtf.position.x += callback.move.x;
-			object_->wtf.position.y += callback.move.y;
-			object_->wtf.position.z += callback.move.z;
+			object_->transForm.position.x += callback.move.x;
+			object_->transForm.position.y += callback.move.y;
+			object_->transForm.position.z += callback.move.z;
 
 			object_->UpdateMatrix();
 			sphere[i]->Update();
@@ -302,7 +302,7 @@ void Boss::ColliderUpdate() {
 		CollisionManager::GetInstance()->RemoveCollider(ray);
 		if (onPat_) {
 			onPatTime_--;
-			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
+			Vector3 patPos = { object_->transForm.position.x,object_->transForm.position.z,object_->transForm.position.y };
 			particle_->LoadTexture("purple.png");
 			particle_->RandParticle(8, patPos);
 		}

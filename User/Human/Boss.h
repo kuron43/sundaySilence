@@ -30,8 +30,8 @@ public:
 	void SetWeaponNum(uint32_t WeaponNum) override;
 
 	// セッター
-	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
-	void SetReticle(Vector3 ret) { reticle->wtf.position = ret; }
+	void SetPos(Vector3 pos) { object_->transForm.position = pos; }
+	void SetReticle(Vector3 ret) { reticle->transForm.position = ret; }
 	void SetRestRotate(Vector3 rot) { restRotate_ = rot; }
 
 	void SetFBXModel(FBXModel* model) { bossFbxM_ = model; }
@@ -40,7 +40,7 @@ public:
 	uint32_t HowTribe() { return Tribe_; }
 	bool HowDead() { return isDead; }
 
-	Transform GetTransform() { return object_->wtf; }
+	Transform GetTransform() { return object_->transForm; }
 
 private:
 	//正面をレティクル方向に向かせる

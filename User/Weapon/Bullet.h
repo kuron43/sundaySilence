@@ -49,7 +49,7 @@ public:
 
 	void OnCollision();
 
-	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bulletObj_->wtf.matWorld); };
+	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bulletObj_->transForm.matWorld); };
 
 	virtual bool IsDead();
 	void Dead() { isDead = true; }

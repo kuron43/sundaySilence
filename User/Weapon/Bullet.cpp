@@ -31,8 +31,8 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	bulletObj_ = Object3d::Create();
 	bulletObj_->SetModel(model);
 
-	bulletObj_->wtf.scale = Vector3(0.8f, 0.8f, 0.8f);
-	bulletObj_->wtf.position = position;
+	bulletObj_->transForm.scale = Vector3(0.8f, 0.8f, 0.8f);
+	bulletObj_->transForm.position = position;
 	timeCount = 0;
 	isDead = false;
 	if (team_ == PLAYER) {
@@ -44,7 +44,7 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	//当たり判定用
 	sphere = new SphereCollider;
 	CollisionManager::GetInstance()->AddCollider(sphere);
-	spherePos = Affin::GetWorldTrans(bulletObj_->wtf.matWorld);
+	spherePos = Affin::GetWorldTrans(bulletObj_->transForm.matWorld);
 	sphere->SetObject3d(bulletObj_);
 	//sphere->SetBasisPos(&spherePos[i]);
 	sphere->SetRadius(0.8f);
@@ -63,9 +63,9 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	////test
 	//colliderPosTest_ = Object3d::Create();
 	//colliderPosTest_->SetModel(model);
-	//colliderPosTest_->wtf.position = (sphere->center);
-	//colliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
-	//colliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
+	//colliderPosTest_->transForm.position = (sphere->center);
+	//colliderPosTest_->transForm.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
+	//colliderPosTest_->transForm.rotation = (Vector3{ 0,0,0 });
 	//colliderPosTest_->Update();
 }
 
@@ -75,7 +75,7 @@ void Bullet::Update(float speed)
 	if (timeCount >= DEATH_TIME) {
 		Dead();
 	}
-	bulletObj_->wtf.position += (moveVec * speed);
+	bulletObj_->transForm.position += (moveVec * speed);
 	//行列の再計算
 	bulletObj_->Update();
 

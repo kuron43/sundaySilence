@@ -57,12 +57,12 @@ void Enemy::Initialize() {
 	//FbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
 	colliderPosTest_.resize(SPHERE_COLLISION_NUM);
 
-	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle.matWorld));
+	rayvec = -(Affin::GetWorldTrans(object_->transForm.matWorld) - Affin::GetWorldTrans(reticle.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		sphere[i] = new SphereCollider;
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
-		spherePos[i] = Affin::GetWorldTrans(object_->wtf.matWorld);
+		spherePos[i] = Affin::GetWorldTrans(object_->transForm.matWorld);
 		sphere[i]->SetObject3d(object_.get());
 		sphere[i]->SetBasisPos(&spherePos[i]);
 		sphere[i]->SetRadius(2.0f);
@@ -72,14 +72,14 @@ void Enemy::Initialize() {
 		colliderPosTest_[i] = std::make_unique<Object3d>();
 		colliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
 		colliderPosTest_[i]->Initialize();
-		colliderPosTest_[i]->wtf.position = Affin::GetWorldTrans(object_->wtf.matWorld);
-		colliderPosTest_[i]->wtf.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
-		colliderPosTest_[i]->wtf.rotation.InIt();
+		colliderPosTest_[i]->transForm.position = Affin::GetWorldTrans(object_->transForm.matWorld);
+		colliderPosTest_[i]->transForm.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };
+		colliderPosTest_[i]->transForm.rotation.InIt();
 		colliderPosTest_[i]->Update();
 	}
 	ray = new RayCollider;
 
-	ray->SetStart(Affin::GetWorldTrans(object_->wtf.matWorld));
+	ray->SetStart(Affin::GetWorldTrans(object_->transForm.matWorld));
 	ray->SetDir(rayvec);
 	ray->SetObject3d(object_.get());
 	CollisionManager::GetInstance()->AddCollider(ray);
@@ -96,11 +96,11 @@ void Enemy::Update(Input* input, bool isTitle) {
 	object_->Update();
 	reticle.UpdateMat();
 
-	//particle_->SetTransform(object_->wtf);
+	//particle_->SetTransform(object_->transForm);
 	particle_->Update();
 
 	if (isFire == true && isDead == false) {
-		weapon_->Shot(object_->wtf, reticle, ENEMY);
+		weapon_->Shot(object_->transForm, reticle, ENEMY);
 	}
 	weapon_->Update(input);
 
@@ -148,9 +148,9 @@ void Enemy::SetWeaponNum(uint32_t WeaponNum)
 void Enemy::FrontFace() {
 	Vector3 faceAngle, resultRot;
 	faceAngle.InIt();
-	faceAngle.y = (float)atan2(reticle.position.x - object_->wtf.position.x, reticle.position.z - object_->wtf.position.z);
+	faceAngle.y = (float)atan2(reticle.position.x - object_->transForm.position.x, reticle.position.z - object_->transForm.position.z);
 	if (isFound == true) {
-		stateRotate_ = object_->wtf.rotation;
+		stateRotate_ = object_->transForm.rotation;
 		frontVec_ = faceAngle;
 	}
 	else {
@@ -158,7 +158,7 @@ void Enemy::FrontFace() {
 		frontVec_ = restRotate_;
 	}
 	if (isLost == true) {
-		stateRotate_ = object_->wtf.rotation;
+		stateRotate_ = object_->transForm.rotation;
 		easeTimer++;
 
 		easetime = (float)easeTimer / easeMaxTime;
@@ -173,7 +173,7 @@ void Enemy::FrontFace() {
 		}
 	}
 	resultRot = frontVec_;
-	object_->wtf.rotation = resultRot;
+	object_->transForm.rotation = resultRot;
 }
 
 void Enemy::ColliderUpdate() {
@@ -182,8 +182,8 @@ void Enemy::ColliderUpdate() {
 	isBlocked = false;
 	isFire = false;
 
-	//rayvec = Affin::GetWorldTrans(reticle->wtf.matWorld) - Affin::GetWorldTrans(object_->wtf.matWorld);
-	rayvec = -(Affin::GetWorldTrans(object_->wtf.matWorld) - Affin::GetWorldTrans(reticle.matWorld));
+	//rayvec = Affin::GetWorldTrans(reticle->transForm.matWorld) - Affin::GetWorldTrans(object_->transForm.matWorld);
+	rayvec = -(Affin::GetWorldTrans(object_->transForm.matWorld) - Affin::GetWorldTrans(reticle.matWorld));
 	ray->SetDir(Affin::GetWorldTrans(reticle.matWorld));
 
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
@@ -191,15 +191,15 @@ void Enemy::ColliderUpdate() {
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 				OnCollision();
 				// パーティクルなぜかXそのままYZ入れ替えると治る
-				Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
+				Vector3 patPos = { object_->transForm.position.x,object_->transForm.position.z,object_->transForm.position.y };
 				particle_->RandParticle(10, patPos);
 			}
 		}
 	}
 
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
-		spherePos[i] = object_->wtf.position;
-		colliderPosTest_[i]->wtf.position = Affin::GetWorldTrans(object_->wtf.matWorld);
+		spherePos[i] = object_->transForm.position;
+		colliderPosTest_[i]->transForm.position = Affin::GetWorldTrans(object_->transForm.matWorld);
 		sphere[i]->Update();
 		colliderPosTest_[i]->Update();
 	}
@@ -227,7 +227,7 @@ void Enemy::ColliderUpdate() {
 		CollisionManager::GetInstance()->RemoveCollider(ray);
 		if (onPat_) {
 			onPatTime_--;
-			Vector3 patPos = { object_->wtf.position.x,object_->wtf.position.z,object_->wtf.position.y };
+			Vector3 patPos = { object_->transForm.position.x,object_->transForm.position.z,object_->transForm.position.y };
 			particle_->RandParticle(15, patPos);
 		}
 	}
