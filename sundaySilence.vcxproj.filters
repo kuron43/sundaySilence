@@ -34,12 +34,24 @@
     <FxCompile Include="Resources\SHADER\SpriteVS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlurVS.hlsl" />
-    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlur.hlsli" />
-    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectPS.hlsl" />
-    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectVS.hlsl" />
-    <FxCompile Include="Resources\SHADER\POSTFX\VignettePS.hlsl" />
-    <FxCompile Include="Resources\SHADER\POSTFX\VignetteVS.hlsl" />
+    <FxCompile Include="Resources\SHADER\POSTFX\VignetteVS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\VignettePS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectVS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectPS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlur.hlsli">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlurVS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\MATH\Affin.cpp">
@@ -178,7 +190,7 @@
       <Filter>engine\3d\json</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\Particle\ParticleManager.cpp">
-      <Filter>engine\3d\particle</Filter>
+      <Filter>engine\2d\particle</Filter>
     </ClCompile>
     <ClCompile Include="Engine\INPUT\Input.cpp">
       <Filter>engine\input</Filter>
@@ -255,20 +267,44 @@
     <ClCompile Include="User\GAMESCENE\scene\Clear.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
-    <ClCompile Include="User\Human\BossManager\BossManager.cpp" />
-    <ClCompile Include="User\Human\BossManager\IBossState.cpp" />
-    <ClCompile Include="User\Human\BossManager\BossMove.cpp" />
-    <ClCompile Include="User\Human\BossManager\BossAttack.cpp" />
-    <ClCompile Include="User\Human\BossManager\BossWait.cpp" />
     <ClCompile Include="User\Weapon\BomFire.cpp">
       <Filter>user\wepon</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
-    <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp" />
-    <ClCompile Include="Engine\2D\PostEffect\MotionBlur.cpp" />
-    <ClCompile Include="Engine\2D\PostEffect\vignetteEffect.cpp" />
-    <ClCompile Include="User\GAMESCENE\MANAGER\SceneFactory.cpp" />
-    <ClCompile Include="User\GAMESCENE\stage\Tutorial.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\vignetteEffect.cpp">
+      <Filter>engine\2d\postFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp">
+      <Filter>engine\2d\postFX</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\BossAttack.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\BossManager.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\BossMove.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\BossWait.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\IBossState.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp">
+      <Filter>engine\2d\postFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\PostEffect\MotionBlur.cpp">
+      <Filter>engine\2d\postFX</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\MANAGER\SceneFactory.cpp">
+      <Filter>user\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\stage\Tutorial.cpp">
+      <Filter>user\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Paarticle\ObjectParticle.cpp" />
+    <ClCompile Include="Engine\2D\Particle\ParticleManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -425,7 +461,7 @@
       <Filter>engine\3d\json</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\Particle\ParticleManager.h">
-      <Filter>engine\3d\particle</Filter>
+      <Filter>engine\2d\particle</Filter>
     </ClInclude>
     <ClInclude Include="Engine\INPUT\Input.h">
       <Filter>engine\input</Filter>
@@ -511,24 +547,50 @@
     <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h">
       <Filter>user\scene</Filter>
     </ClInclude>
-    <ClInclude Include="User\Human\BossManager\BossManager.h" />
-    <ClInclude Include="User\Human\BossManager\IBossState.h" />
-    <ClInclude Include="User\Human\BossManager\BossMove.h" />
-    <ClInclude Include="User\Human\BossManager\BossAttack.h" />
-    <ClInclude Include="User\Human\BossManager\BossWait.h" />
     <ClInclude Include="User\Weapon\BomFire.h">
       <Filter>user\wepon</Filter>
     </ClInclude>
     <ClInclude Include="User\Human\HumanList.h">
       <Filter>user\human</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
-    <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h" />
-    <ClInclude Include="Engine\2D\PostEffect\MotionBlur.h" />
-    <ClInclude Include="Engine\2D\PostEffect\vignetteEffect.h" />
-    <ClInclude Include="Engine\SCENE\ISceneFactory.h" />
-    <ClInclude Include="User\GAMESCENE\MANAGER\SceneFactory.h" />
-    <ClInclude Include="User\GAMESCENE\stage\Tutorial.h" />
+    <ClInclude Include="Engine\2D\PostEffect\vignetteEffect.h">
+      <Filter>engine\2d\postFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h">
+      <Filter>engine\2d\postFX</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\BossAttack.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\BossManager.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\BossMove.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\BossWait.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\IBossState.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h">
+      <Filter>engine\2d\postFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\PostEffect\MotionBlur.h">
+      <Filter>engine\2d\postFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SCENE\ISceneFactory.h">
+      <Filter>user\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\MANAGER\SceneFactory.h">
+      <Filter>user\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\stage\Tutorial.h">
+      <Filter>user\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Paarticle\ObjectParticle.h" />
+    <ClInclude Include="Engine\2D\Particle\ParticleManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
@@ -546,9 +608,15 @@
     <None Include="Resources\SHADER\Sprite.hlsli">
       <Filter>shader</Filter>
     </None>
-    <None Include="Resources\SHADER\POSTFX\MotionBlurPS.hlsl" />
-    <None Include="Resources\SHADER\POSTFX\IPostEffect.hlsli" />
-    <None Include="Resources\SHADER\POSTFX\Vignette.hlsli" />
+    <None Include="Resources\SHADER\POSTFX\IPostEffect.hlsli">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="Resources\SHADER\POSTFX\MotionBlurPS.hlsl">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="Resources\SHADER\POSTFX\Vignette.hlsli">
+      <Filter>engine\2d\postFX</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="engine">
@@ -556,9 +624,6 @@
     </Filter>
     <Filter Include="user">
       <UniqueIdentifier>{53324cfa-3f37-4dee-80d1-93c49b264b70}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="shader">
-      <UniqueIdentifier>{c32523f7-b17a-4ad1-bc77-9961eadf0e36}</UniqueIdentifier>
     </Filter>
     <Filter Include="engine\base">
       <UniqueIdentifier>{2b632ccf-af11-479d-bc38-5ea928075cd9}</UniqueIdentifier>
@@ -586,9 +651,6 @@
     </Filter>
     <Filter Include="engine\3d\fbx">
       <UniqueIdentifier>{9395df03-0342-4ee5-9bfb-ba99f150e564}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="engine\3d\particle">
-      <UniqueIdentifier>{ba2c4f0c-c2b1-4774-96c4-6cc4a137b9d3}</UniqueIdentifier>
     </Filter>
     <Filter Include="engine\2d\sprite">
       <UniqueIdentifier>{f3fc0490-b4e7-4804-94d5-8b0396743d38}</UniqueIdentifier>
@@ -628,6 +690,15 @@
     </Filter>
     <Filter Include="engine\collision">
       <UniqueIdentifier>{30f666f6-3664-494e-b1d4-33fed5a16e2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\2d\particle">
+      <UniqueIdentifier>{ba2c4f0c-c2b1-4774-96c4-6cc4a137b9d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{c32523f7-b17a-4ad1-bc77-9961eadf0e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\human\bossManager">
+      <UniqueIdentifier>{a2241f99-a9dd-4979-baf3-3a1b1c3a5c1d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

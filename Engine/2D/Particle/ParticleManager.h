@@ -17,7 +17,7 @@
 #include "Camera.h"
 
 /// <summary>
-/// 3Dオブジェクト
+/// 2Dオブジェクト
 /// </summary>
 class ParticleManager
 {
