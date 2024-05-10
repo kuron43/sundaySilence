@@ -13,8 +13,6 @@ SceneObjects::~SceneObjects() {
 	enemys.clear();
 	walls.clear();
 	boss.clear();
-	delete wallMD;
-	delete enemyMD;
 	delete skydome_M;
 	delete floorGroundMD;
 }
@@ -131,7 +129,7 @@ void SceneObjects::Initialize() {
 
 	// fbx テスト
 	{
-		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Fbx_Rex",false));
+		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Fbx_Rex", false));
 		bossFbxO_ = std::make_unique<FBXObject3d>();
 		bossFbxO_->Initialize();
 		bossFbxO_->SetModel(bossFbxM_.get());
@@ -155,12 +153,12 @@ void SceneObjects::Initialize() {
 		plDamageRed_->SetColor(Vector4(0, 0, 0, 0));
 	}
 	{
-		wallMD = Model::LoadFromOBJ("wall");
+		wallMD.reset(Model::LoadFromOBJ("wall"));
 		floorGroundMD = Model::LoadFromOBJ("stage");
 		floorGround = std::make_unique<Floor>();
 		floorGround->Initialize(floorGroundMD);
 	}
-	enemyMD = Model::LoadFromOBJ("ene");
+	enemyMD.reset(Model::LoadFromOBJ("ene"));
 	skydome_O = std::make_unique<Object3d>();
 	skydome_M = Model::LoadFromOBJ("skydome");
 	skydome_O->SetModel(skydome_M);
@@ -562,7 +560,7 @@ void SceneObjects::SetingLevel(LevelData* data)
 			}if (objectData.weapon == "BOMFIRE") {
 				newEnemy->SetWeaponNum(WP_BOMFIRE);
 			}
-			newEnemy->SetModel(enemyMD);
+			newEnemy->SetModel(enemyMD.get());
 			newEnemy->Initialize();
 			//座標
 			Vector3 pos;
@@ -609,7 +607,7 @@ void SceneObjects::SetingLevel(LevelData* data)
 		}
 		else if (objectData.fileName == "wall") {
 			std::unique_ptr<Wall> newWall = std::make_unique<Wall>();
-			newWall->Initialize(wallMD);
+			newWall->Initialize(wallMD.get());
 			//座標
 			Vector3 pos;
 			pos = objectData.translation;

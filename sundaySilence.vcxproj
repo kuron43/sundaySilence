@@ -125,9 +125,9 @@
     <ClCompile Include="Engine\3D\Material.cpp" />
     <ClCompile Include="Engine\3D\Mesh.cpp" />
     <ClCompile Include="Engine\3D\Model.cpp" />
+    <ClCompile Include="Engine\3D\ModelManager.cpp" />
     <ClCompile Include="Engine\3D\Object3d.cpp" />
     <ClCompile Include="Engine\3D\Paarticle\ObjectParticle.cpp" />
-    <ClCompile Include="Engine\3D\Particle\ParticleManager.cpp" />
     <ClCompile Include="Engine\3D\Transform.cpp" />
     <ClCompile Include="Engine\AUDIO\Audio.cpp" />
     <ClCompile Include="Engine\BASE\DirectXCommon.cpp" />
@@ -157,6 +157,7 @@
     <ClCompile Include="Engine\MATH\Affin.cpp" />
     <ClCompile Include="Engine\MATH\ConvertXM.cpp" />
     <ClCompile Include="Engine\MATH\Easing.cpp" />
+    <ClCompile Include="Engine\MATH\MathUtility.cpp" />
     <ClCompile Include="Engine\MATH\Matrix4.cpp" />
     <ClCompile Include="Engine\MATH\Quaternion.cpp" />
     <ClCompile Include="Engine\MATH\Vector2.cpp" />
@@ -214,9 +215,9 @@
     <ClInclude Include="Engine\3D\Material.h" />
     <ClInclude Include="Engine\3D\Mesh.h" />
     <ClInclude Include="Engine\3D\Model.h" />
+    <ClInclude Include="Engine\3D\ModelManager.h" />
     <ClInclude Include="Engine\3D\Object3d.h" />
     <ClInclude Include="Engine\3D\Paarticle\ObjectParticle.h" />
-    <ClInclude Include="Engine\3D\Particle\ParticleManager.h" />
     <ClInclude Include="Engine\3D\Transform.h" />
     <ClInclude Include="Engine\AUDIO\Audio.h" />
     <ClInclude Include="Engine\BASE\DirectXCommon.h" />
@@ -251,6 +252,7 @@
     <ClInclude Include="Engine\MATH\Affin.h" />
     <ClInclude Include="Engine\MATH\ConvertXM.h" />
     <ClInclude Include="Engine\MATH\Easing.h" />
+    <ClInclude Include="Engine\MATH\MathUtility.h" />
     <ClInclude Include="Engine\MATH\Matrix4.h" />
     <ClInclude Include="Engine\MATH\Quaternion.h" />
     <ClInclude Include="Engine\MATH\Vector2.h" />

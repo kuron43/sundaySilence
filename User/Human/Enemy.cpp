@@ -23,7 +23,9 @@ Enemy::~Enemy() {
 void Enemy::Initialize() {
 	isFound = false;
 	isDead = false;
-	nowTitle = false;	
+	nowTitle = false;
+
+	colliderPosTest_MD.reset(Model::LoadFromOBJ("sphere"));
 
 	object_ = std::make_unique<Object3d>();
 	object_->SetModel(model_);
@@ -70,7 +72,7 @@ void Enemy::Initialize() {
 		sphere[i]->SetAttribute(COLLISION_ATTR_ENEMIES);
 		//test
 		colliderPosTest_[i] = std::make_unique<Object3d>();
-		colliderPosTest_[i]->SetModel(Model::LoadFromOBJ("sphere"));
+		colliderPosTest_[i]->SetModel(colliderPosTest_MD.get());
 		colliderPosTest_[i]->Initialize();
 		colliderPosTest_[i]->transForm.position = Affin::GetWorldTrans(object_->transForm.matWorld);
 		colliderPosTest_[i]->transForm.scale = Vector3{ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() };

@@ -31,7 +31,7 @@ class Human
 {
 
 protected:
-	float _SlowSpeed = 0.25f;
+	const float _SlowSpeed = 0.25f;
 	bool _isSlow;
 	bool _isTitle;
 private:

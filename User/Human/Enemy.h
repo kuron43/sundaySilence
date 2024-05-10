@@ -65,10 +65,11 @@ private:
 
 
 	Model* model_;
+	std::unique_ptr<Model> colliderPosTest_MD;
 	Transform reticle;
 
 	Vector3 frontVec_;
-	uint32_t hp = 3;
+	int32_t hp = 3;
 
 
 	

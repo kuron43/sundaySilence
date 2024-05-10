@@ -21,6 +21,11 @@ SceneManager::SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects
 	_camera = camera;
 }
 SceneManager::~SceneManager() {
+	if (!_scene.empty()) {
+		for (size_t i = 0; i < _scene.size(); i++) {
+			_scene.pop();
+		}
+	}
 
 }
 
@@ -55,7 +60,7 @@ void SceneManager::ChangeScene() {
 		goToTitle = false;
 	}
 
-	if (isChange == true && goToTitle == false ) {
+	if (isChange == true && goToTitle == false) {
 
 		switch (sceneNum)
 		{
@@ -112,7 +117,7 @@ void SceneManager::ChangeScene() {
 			break;
 		}
 		isChange = false;
-	}	
+	}
 	else {
 		isChange = false;
 	}

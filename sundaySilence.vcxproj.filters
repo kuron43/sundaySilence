@@ -189,9 +189,6 @@
     <ClCompile Include="Engine\3D\Json\JsonLoader.cpp">
       <Filter>engine\3d\json</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\Particle\ParticleManager.cpp">
-      <Filter>engine\2d\particle</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\INPUT\Input.cpp">
       <Filter>engine\input</Filter>
     </ClCompile>
@@ -304,7 +301,11 @@
       <Filter>user\scene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\Paarticle\ObjectParticle.cpp" />
-    <ClCompile Include="Engine\2D\Particle\ParticleManager.cpp" />
+    <ClCompile Include="Engine\2D\Particle\ParticleManager.cpp">
+      <Filter>engine\2d\particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MATH\MathUtility.cpp" />
+    <ClCompile Include="Engine\3D\ModelManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -460,9 +461,6 @@
     <ClInclude Include="Engine\3D\Json\JsonLoader.h">
       <Filter>engine\3d\json</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3D\Particle\ParticleManager.h">
-      <Filter>engine\2d\particle</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\INPUT\Input.h">
       <Filter>engine\input</Filter>
     </ClInclude>
@@ -590,7 +588,11 @@
       <Filter>user\scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\Paarticle\ObjectParticle.h" />
-    <ClInclude Include="Engine\2D\Particle\ParticleManager.h" />
+    <ClInclude Include="Engine\2D\Particle\ParticleManager.h">
+      <Filter>engine\2d\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MATH\MathUtility.h" />
+    <ClInclude Include="Engine\3D\ModelManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">

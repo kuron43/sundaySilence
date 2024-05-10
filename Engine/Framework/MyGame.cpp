@@ -40,11 +40,6 @@ void MyGame::Finalize() {
 
 	delete gameScene;
 
-	//postEffect->Finalize();
-	//delete postEffect;
-	//postEffectMix->Finalize();
-	//delete postEffectMix;
-
 	////////////////////////
 
 	Framework::Finalize();
@@ -66,17 +61,6 @@ void MyGame::Draw() {
 
 
 	//// ポストエフェクト用ゲームシーンの描画
-	//postEffect->PreDrawScene(dxCommon->GetCommandList());
-	//gameScene->Draw();
-	//postEffect->PostDrawScene();
-
-	//postEffectMix->PreDrawScene(dxCommon->GetCommandList(),0);
-	//gameScene->Draw();
-	//postEffectMix->PostDrawScene(0);
-
-	//postEffectMix->PreDrawScene(dxCommon->GetCommandList(), 1);
-	//postEffect->Draw(dxCommon->GetCommandList());
-	//postEffectMix->PostDrawScene(1);
 	postFXManager->TargetPreDraw(dxCommon->GetCommandList(), gameScene);
 
 	//4.描画コマンドここから
@@ -86,9 +70,6 @@ void MyGame::Draw() {
 	//gameScene->Draw();
 
 	//ポストエフェクトの描画
-
-	//postEffect->Draw(dxCommon->GetCommandList());
-	//postEffectMix->Draw(dxCommon->GetCommandList());
 	postFXManager->Draw(dxCommon->GetCommandList());
 	
 	// Imgui受付終了
