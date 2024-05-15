@@ -362,3 +362,5 @@ FodyWeavers.xsd
 libignore
 fbx_sdk
 /Resources/Stages
+/Engine/3D/Particle/ObjectParticle.cpp
+/Engine/3D/Particle/ObjectParticle.h
