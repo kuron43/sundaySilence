@@ -57,9 +57,25 @@ private:
 	bool isDead = false;
 };
 
+
+
 class ObjParticleManager
 {
 public:
+	// インスタンス
+	static ObjParticleManager* GetInstance();
+
+	struct ParticlePreset
+	{
+		Vector3 pos_;
+		Vector2 velocityMinMax = { -1.0,1.0 };
+		size_t volume = 10;
+		float scale = 1.0f;
+		Vector4 color = { 1,1,1,1 };
+	};
+
+public:
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -81,13 +97,7 @@ public:
 	/// <param name="pos_"></param>
 	/// <param name="minMax"></param>
 	void SetAnyExp(const Vector3& pos_, Vector2 velocityMinMax = {-1.0,1.0}, size_t volume = 10,float scale = 1.0f,Vector4 color = { 1,1,1,1 });
-
-public:
-	// インスタンス
-	static ObjParticleManager* GetInstance();
-
-	// 解放
-	void Delete();
+	void SetAnyExp(ParticlePreset preset);
 
 private:
 	std::list<std::unique_ptr<ObjectParticle>> objParticles_;

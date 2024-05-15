@@ -93,7 +93,6 @@ private:
 	std::unique_ptr<Weapon> weapon_;
 
 	// パーティクル
-	std::unique_ptr <ParticleManager>  particle_;
 	uint32_t onPatTime_;
 
 	// 体の色変化

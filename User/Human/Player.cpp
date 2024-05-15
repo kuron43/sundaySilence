@@ -303,6 +303,9 @@ void Player::HitMyColor()
 	if (isHitEffect == true) {
 		object_->SetColor({ NUM_ONE,NUM_ZERO,NUM_ZERO,NUM_ONE });
 		hitTime_++;
+		ObjParticleManager::GetInstance()->SetAnyExp(
+			Affin::GetWorldTrans(object_->transForm.matWorld),
+			{ -0.2f,0.2f }, 5, 0.1f,{0.5f,0,0,1});
 		if (hitTime_ >= MAX_HITTIME) {
 			isHitEffect = false;
 			hitTime_ = NUMBER::NUM_ZERO;

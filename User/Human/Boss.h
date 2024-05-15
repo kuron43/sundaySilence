@@ -89,7 +89,7 @@ public:
 
 	// パーティクル関係
 	uint32_t onPatTime_;
-	std::unique_ptr <ParticleManager>  particle_;
+	ObjParticleManager::ParticlePreset patPreset_;
 
 	// 体の色変化
 	const uint32_t MAX_HITTIME = 5;

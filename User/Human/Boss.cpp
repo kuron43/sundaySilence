@@ -62,10 +62,11 @@ void Boss::Initialize() {
 	}
 	weapon_->Initialize();
 
-	particle_ = std::make_unique<ParticleManager>();
-	particle_->Initialize();
-	particle_->LoadTexture("red.png");
-	particle_->Update();
+	patPreset_.pos_ = object_->transForm.position;
+	patPreset_.velocityMinMax = { -0.5,0.5 };
+	patPreset_.scale = 0.5f;
+	patPreset_.volume = 10;
+	patPreset_.color = { 1,0,0,1 };
 	onPatTime_ = 0;
 	onPat_ = false;
 
@@ -132,8 +133,6 @@ void Boss::Update(Input* input, bool isTitle) {
 	bossFbxO_->SetPosition(object_->transForm.position);
 	bossFbxO_->SetRotate(object_->transForm.rotation);
 	bossFbxO_->Update();
-	//particle_->SetTransform(object_->transForm);
-	particle_->Update();
 
 
 	if (isFire == true && isDead == false) {
@@ -178,7 +177,6 @@ void Boss::Draw(DirectXCommon* dxCommon) {
 			weapon_->Draw(dxCommon);
 		}
 	}
-	particle_->Draw();
 }
 
 /// リセットを行う
@@ -219,9 +217,6 @@ void Boss::ColliderUpdate() {
 	for (uint32_t i = 0; i < SPHERE_COLLISION_NUM; i++) {
 		if (sphere[i]->GetIsHit() == true && sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 			OnCollision();
-			// パーティクルなぜかXそのままYZ入れ替えると治る
-			Vector3 patPos = { object_->transForm.position.x,object_->transForm.position.z,object_->transForm.position.y };
-			particle_->RandParticle(10, patPos);
 		}
 	}
 
@@ -302,9 +297,7 @@ void Boss::ColliderUpdate() {
 		CollisionManager::GetInstance()->RemoveCollider(ray);
 		if (onPat_) {
 			onPatTime_--;
-			Vector3 patPos = { object_->transForm.position.x,object_->transForm.position.z,object_->transForm.position.y };
-			particle_->LoadTexture("purple.png");
-			particle_->RandParticle(8, patPos);
+			ObjParticleManager::GetInstance()->SetAnyExp(patPreset_);
 		}
 	}
 	if (onPatTime_ < 1) {
@@ -314,9 +307,9 @@ void Boss::ColliderUpdate() {
 
 void Boss::OnCollision()
 {
-	//object_->SetColor({ 1,0,0 });
 	hp -= 1;
 	isHitEffect = true;
+	ObjParticleManager::GetInstance()->SetAnyExp(patPreset_);
 	if (hp < 1) {
 		isDead = true;
 		onPat_ = true;

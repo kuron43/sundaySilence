@@ -59,14 +59,6 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 		sphere->SetAttribute(COLLISION_ATTR_UNKNOWN);
 	}
 
-
-	////test
-	//colliderPosTest_ = Object3d::Create();
-	//colliderPosTest_->SetModel(model);
-	//colliderPosTest_->transForm.position = (sphere->center);
-	//colliderPosTest_->transForm.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
-	//colliderPosTest_->transForm.rotation = (Vector3{ 0,0,0 });
-	//colliderPosTest_->Update();
 }
 
 void Bullet::Update(float speed)
@@ -82,7 +74,7 @@ void Bullet::Update(float speed)
 	if (sphere->GetIsHit() == true) {
 		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT && team_ == PLAYER ||
 			sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT && team_ == ENEMY) {
-			isDead = true;
+			OnCollision();
 		}
 		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIES && team_ == PLAYER) {
 			isDead = true;
@@ -135,6 +127,11 @@ void Bullet::Draw()
 
 void Bullet::OnCollision() {
 	isDead = true;
+	ObjParticleManager::GetInstance()->SetAnyExp(
+		bulletObj_->transForm.position,
+		{ -0.2f,0.2f }, 5, 0.1f,
+		bulletObj_->GetColor()
+	);
 }
 
 bool Bullet::IsDead()

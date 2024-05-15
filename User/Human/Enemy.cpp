@@ -46,10 +46,6 @@ void Enemy::Initialize() {
 	}
 	weapon_->Initialize();
 
-	particle_ = std::make_unique<ParticleManager>();
-	particle_->Initialize();
-	particle_->LoadTexture("red.png");
-	particle_->Update();
 	onPatTime_ = 0;
 	onPat_ = false;
 
@@ -97,10 +93,6 @@ void Enemy::Update(Input* input, bool isTitle) {
 	HitMyColor();
 	object_->Update();
 	reticle.UpdateMat();
-
-	//particle_->SetTransform(object_->transForm);
-	particle_->Update();
-
 	if (isFire == true && isDead == false) {
 		weapon_->Shot(object_->transForm, reticle, ENEMY);
 	}
@@ -130,7 +122,6 @@ void Enemy::Draw(DirectXCommon* dxCommon) {
 			weapon_->Draw(dxCommon);
 		}
 	}
-	particle_->Draw();
 }
 
 /// リセットを行う
@@ -192,9 +183,6 @@ void Enemy::ColliderUpdate() {
 		if (sphere[i]->GetIsHit() == true) {
 			if (sphere[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBULLETS) {
 				OnCollision();
-				// パーティクルなぜかXそのままYZ入れ替えると治る
-				Vector3 patPos = { object_->transForm.position.x,object_->transForm.position.z,object_->transForm.position.y };
-				particle_->RandParticle(10, patPos);
 			}
 		}
 	}
@@ -229,8 +217,9 @@ void Enemy::ColliderUpdate() {
 		CollisionManager::GetInstance()->RemoveCollider(ray);
 		if (onPat_) {
 			onPatTime_--;
-			Vector3 patPos = { object_->transForm.position.x,object_->transForm.position.z,object_->transForm.position.y };
-			particle_->RandParticle(15, patPos);
+			ObjParticleManager::GetInstance()->SetAnyExp(
+				Affin::GetWorldTrans(object_->transForm.matWorld),
+				{ -0.5f,0.5 }, 5, 0.5f, { 0.5f,0,0,1 });
 		}
 	}
 	if (onPatTime_ < 1) {
@@ -253,6 +242,9 @@ void Enemy::HitMyColor()
 	if (isHitEffect == true) {
 		object_->SetColor({ 1,0,0,1.0f });
 		hitTime_++;
+		ObjParticleManager::GetInstance()->SetAnyExp(
+			Affin::GetWorldTrans(object_->transForm.matWorld),
+			{ -0.5f,0.5 }, 5, 0.5f, { 0.5f,0,0,1 });
 		if (hitTime_ >= MAX_HITTIME) {
 			isHitEffect = false;
 			hitTime_ = 0;
