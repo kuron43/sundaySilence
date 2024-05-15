@@ -306,6 +306,7 @@
     </ClCompile>
     <ClCompile Include="Engine\MATH\MathUtility.cpp" />
     <ClCompile Include="Engine\3D\ModelManager.cpp" />
+    <ClCompile Include="Engine\3D\Particle\ObjectParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -593,6 +594,7 @@
     </ClInclude>
     <ClInclude Include="Engine\MATH\MathUtility.h" />
     <ClInclude Include="Engine\3D\ModelManager.h" />
+    <ClInclude Include="Engine\3D\Particle\ObjectParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
