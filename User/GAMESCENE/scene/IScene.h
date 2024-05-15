@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "SceneObjects.h"
 #include "ParticleManager.h"
+#include "ObjectParticle.h"
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "Camera.h"

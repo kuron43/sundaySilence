@@ -68,6 +68,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	IScene::SetSceneManager(sceneManager);
 	sceneManager->Initialize();
 	sceneManager->SceneInitialize();
+	objParticleManager_ = ObjParticleManager::GetInstance();
+	objParticleManager_->Init(sceneObjects->box);
 
 }
 
@@ -85,8 +87,7 @@ void GameScene::Update() {
 	sceneObjects->UpdateImGui();
 
 	sceneManager->SceneUpdate(input_);
-
-
+	objParticleManager_->Update();
 	collisionManager_->CheckAllCollisions();
 	camera->Update();
 #ifdef _DEBUG

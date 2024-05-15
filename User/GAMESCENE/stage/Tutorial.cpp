@@ -128,6 +128,7 @@ void Tutorial::Draw() {
 	Object3d::PreDraw(_manager->_dxCommon->GetCommandList());
 
 	BulletManager::GetInstance()->Draw();
+	ObjParticleManager::GetInstance()->Draw();
 
 	Object3d::PostDraw();
 	if (startTime_ == false) {

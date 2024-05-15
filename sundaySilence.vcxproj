@@ -127,7 +127,7 @@
     <ClCompile Include="Engine\3D\Model.cpp" />
     <ClCompile Include="Engine\3D\ModelManager.cpp" />
     <ClCompile Include="Engine\3D\Object3d.cpp" />
-    <ClCompile Include="Engine\3D\Paarticle\ObjectParticle.cpp" />
+    <ClCompile Include="Engine\3D\Particle\ObjectParticle.cpp" />
     <ClCompile Include="Engine\3D\Transform.cpp" />
     <ClCompile Include="Engine\AUDIO\Audio.cpp" />
     <ClCompile Include="Engine\BASE\DirectXCommon.cpp" />
@@ -217,7 +217,7 @@
     <ClInclude Include="Engine\3D\Model.h" />
     <ClInclude Include="Engine\3D\ModelManager.h" />
     <ClInclude Include="Engine\3D\Object3d.h" />
-    <ClInclude Include="Engine\3D\Paarticle\ObjectParticle.h" />
+    <ClInclude Include="Engine\3D\Particle\ObjectParticle.h" />
     <ClInclude Include="Engine\3D\Transform.h" />
     <ClInclude Include="Engine\AUDIO\Audio.h" />
     <ClInclude Include="Engine\BASE\DirectXCommon.h" />

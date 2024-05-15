@@ -164,15 +164,6 @@ void FireBottle::Initialize(Model* model, const Vector3& position, Vector3 move,
 	else {
 		sphere->SetAttribute(COLLISION_ATTR_UNKNOWN);
 	}
-
-
-	////test
-	//colliderPosTest_ = Object3d::Create();
-	//colliderPosTest_->SetModel(model);
-	//colliderPosTest_->transForm.position = (sphere->center);
-	//colliderPosTest_->transForm.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
-	//colliderPosTest_->transForm.rotation = (Vector3{ 0,0,0 });
-	//colliderPosTest_->Update();
 }
 
 void FireBottle::Update(float speed)
@@ -229,6 +220,8 @@ void FireBottle::Update(float speed)
 	if (isExplosion) {
 		bottleObj_->transForm.scale = Vector3(0.5f, 0.5f, 0.5f);
 		sphere->SetRadius(5.0f);
+		ObjParticleManager::GetInstance()->SetAnyExp(bottleObj_->transForm.position,
+			{ -0.2f,0.2f }, 2, 0.1f,{1,0,0,1});
 	}
 	else {
 		bottleObj_->transForm.scale = Vector3(0.05f, 0.05f, 0.05f);
@@ -237,6 +230,7 @@ void FireBottle::Update(float speed)
 	bottleObj_->SetColor(Vector4(1.0f, 0.0f, 0.0f,1.0f));
 	sphere->Update();
 
+////IMGUI
 	//Vector4 col = bulletObj_->GetColor();
 	//ImGui::Begin("bullet");
 	//ImGui::InputFloat4("color", &col.x);

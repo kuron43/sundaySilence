@@ -18,7 +18,7 @@
 #include "CollisionManager.h"
 #include "BulletManager.h"
 #include "JsonLoader.h"
-#include "p"
+#include "ObjectParticle.h"
 
 
 /// <summary>
@@ -74,6 +74,7 @@ private: // メンバ変数 (固定)
 	SceneFactory* sceneFactory = nullptr;
 	CollisionManager* collisionManager_ = nullptr;
 	BulletManager* bulletManager_ = nullptr;
+	ObjParticleManager* objParticleManager_ = nullptr;
 	//ParticleManager* particleManager_ = nullptr;
 
 private:	//メンバ変数

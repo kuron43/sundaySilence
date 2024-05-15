@@ -156,6 +156,7 @@ public: // オブジェクトの管理
 
 	std::unique_ptr <Object3d> skydome_O;
 	Model* skydome_M;
+	Model* box;
 
 	//FBXモデル
 	std::unique_ptr<FBXModel> bossFbxM_;

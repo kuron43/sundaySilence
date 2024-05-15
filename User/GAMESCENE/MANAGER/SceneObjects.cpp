@@ -14,6 +14,7 @@ SceneObjects::~SceneObjects() {
 	walls.clear();
 	boss.clear();
 	delete skydome_M;
+	delete box;
 	delete floorGroundMD;
 }
 
@@ -161,6 +162,7 @@ void SceneObjects::Initialize() {
 	enemyMD.reset(Model::LoadFromOBJ("ene"));
 	skydome_O = std::make_unique<Object3d>();
 	skydome_M = Model::LoadFromOBJ("skydome");
+	box = Model::LoadFromOBJ("cube");
 	skydome_O->SetModel(skydome_M);
 	skydome_O->Initialize();
 	skydome_O->transForm.scale = Vector3(10000.0f, 10000.0f, 10000.0f);

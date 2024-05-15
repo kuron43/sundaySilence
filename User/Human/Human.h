@@ -25,6 +25,7 @@
 #include"RayCollider.h"
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
+#include "ObjectParticle.h"
 
  // ヒトガタ基底クラス
 class Human

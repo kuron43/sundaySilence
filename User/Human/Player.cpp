@@ -162,6 +162,12 @@ void Player::Update(Input* input, bool isTitle) {
 	BARRIER_RIMIT = barrierRimit;
 	BARRIER_COOLTIME = barrierCooltime;
 	pointDash_->DebugImGui();
+
+	if (Input::get_instance().KeyboardPush(DIK_B)) {
+	ObjParticleManager::GetInstance()->SetAnyExp(
+		Affin::GetWorldTrans(object_->transForm.matWorld),
+		{-0.5f,0.5},5,0.5f);
+	}
 #endif
 }
 

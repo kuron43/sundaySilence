@@ -8,6 +8,7 @@
 #include"SphereCollider.h"
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
+#include "ObjectParticle.h"
 
 enum Team
 {

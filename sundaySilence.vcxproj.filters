@@ -300,12 +300,15 @@
     <ClCompile Include="User\GAMESCENE\stage\Tutorial.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\Paarticle\ObjectParticle.cpp" />
     <ClCompile Include="Engine\2D\Particle\ParticleManager.cpp">
       <Filter>engine\2d\particle</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\MATH\MathUtility.cpp" />
-    <ClCompile Include="Engine\3D\ModelManager.cpp" />
+    <ClCompile Include="Engine\MATH\MathUtility.cpp">
+      <Filter>engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\ModelManager.cpp">
+      <Filter>engine\3d</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\3D\Particle\ObjectParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -588,12 +591,15 @@
     <ClInclude Include="User\GAMESCENE\stage\Tutorial.h">
       <Filter>user\scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3D\Paarticle\ObjectParticle.h" />
     <ClInclude Include="Engine\2D\Particle\ParticleManager.h">
       <Filter>engine\2d\particle</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\MATH\MathUtility.h" />
-    <ClInclude Include="Engine\3D\ModelManager.h" />
+    <ClInclude Include="Engine\MATH\MathUtility.h">
+      <Filter>engine\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\ModelManager.h">
+      <Filter>engine\3d</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\3D\Particle\ObjectParticle.h" />
   </ItemGroup>
   <ItemGroup>
