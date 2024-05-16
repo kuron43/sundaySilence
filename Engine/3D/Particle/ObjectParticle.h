@@ -94,9 +94,13 @@ public:
 	/// <summary>
 	/// 爆発演出
 	/// </summary>
-	/// <param name="pos_"></param>
-	/// <param name="minMax"></param>
-	void SetAnyExp(const Vector3& pos_, Vector2 velocityMinMax = {-1.0,1.0}, size_t volume = 10,float scale = 1.0f,Vector4 color = { 1,1,1,1 });
+	/// <param name="pos">発生位置</param>
+	/// <param name="minMax">広がり値</param>
+	/// <param name="volume">一回で出す量</param>
+	/// <param name="scale">オブジェクトスケール</param>
+	/// <param name="color">オブジェクトカラー</param>
+	void SetAnyExp(const Vector3& pos, Vector2 velocityMinMax = {-1.0,1.0}, size_t volume = 10,float scale = 1.0f,Vector4 color = { 1,1,1,1 });
+	/// <param name="ParticlePreset">プリセット</param>
 	void SetAnyExp(ParticlePreset preset);
 
 private:
