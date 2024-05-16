@@ -26,9 +26,6 @@
 /// </summary>
 class GameScene
 {
-private: // 静的メンバ変数
-	//static const int debugTextTexNumber = 0;
-
 public: // メンバ関数
 
 	/// <summary>

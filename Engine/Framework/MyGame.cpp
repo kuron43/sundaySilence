@@ -6,16 +6,6 @@ void MyGame::Initialize() {
 	////////////////////////////
 	Framework::Initialize();
 
-	//fbxManager = FbxManager::Create();
-
-	//postEffect = new PostEffect();
-	//postEffect->Initialize(dxCommon, L"PostEffect");
-	//postEffect->SetKernelSize(3);
-	//postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1f, 10);
-	//postEffect->SetShadeNumber(5);
-
-	//postEffectMix = new IPostEffect();
-	//postEffectMix->Initialize(dxCommon, L"IPostEffect");
 	postFXManager = std::make_unique<PostEffectManager>();
 	postFXManager->Initialize(dxCommon);
 

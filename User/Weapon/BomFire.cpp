@@ -226,6 +226,11 @@ void FireBottle::Update(float speed)
 	else {
 		bottleObj_->transForm.scale = Vector3(0.05f, 0.05f, 0.05f);
 		sphere->SetRadius(0.5f);
+		ObjParticleManager::GetInstance()->SetAnyExp(
+			bottleObj_->transForm.position,
+			{ -0.05f,0.05f },
+			2, 0.05f,
+			{ 0.5f,0,0,1 });
 	}
 	bottleObj_->SetColor(Vector4(1.0f, 0.0f, 0.0f,1.0f));
 	sphere->Update();

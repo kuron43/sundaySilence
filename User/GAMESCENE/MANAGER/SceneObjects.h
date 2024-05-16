@@ -151,9 +151,6 @@ public: // オブジェクトの管理
 	std::unique_ptr <SpriteCommon> spriteCommon_;
 	std::unique_ptr<Cursor> mouseCursor_;
 
-	std::unique_ptr<ParticleManager> particleManager_;
-	std::unique_ptr<ParticleManager> particleManager2_;
-
 	std::unique_ptr <Object3d> skydome_O;
 	Model* skydome_M;
 	Model* box;
@@ -176,7 +173,6 @@ public: // オブジェクトの管理
 
 	std::unique_ptr<Model> wallMD;
 	std::list< std::unique_ptr <Wall>> walls;
-	//std::vector< std::unique_ptr <Wall>> walls;
 
 	std::unique_ptr<Floor> floorGround;
 	Model* floorGroundMD;

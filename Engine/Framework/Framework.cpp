@@ -45,12 +45,12 @@ void Framework::Initialize() {
 }
 
 void Framework::Finalize() {
-	// メモリりーく
-	//ID3D12DebugDevice* debugInterface;
-	//if (SUCCEEDED(dxCommon->GetDevice()->QueryInterface(&debugInterface))) {
-	//	debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
-	//	debugInterface->Release();
-	//}
+	//// メモリりーく
+	ID3D12DebugDevice* debugInterface;
+	if (SUCCEEDED(dxCommon->GetDevice()->QueryInterface(&debugInterface))) {
+		debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
+		debugInterface->Release();
+	}
 
 	imgui->Finalize();
 	//WindowsAPIの終了処理

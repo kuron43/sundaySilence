@@ -28,7 +28,6 @@ GameScene::~GameScene() {
 	delete camera;
 	delete sceneFactory;
 	delete sceneManager;
-	CollisionManager::GetInstance()->Finalize();
 }
 
 /// <summary>
