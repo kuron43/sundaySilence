@@ -71,17 +71,6 @@ void GAME1Scene::Update(Input* input) {
 	else if (startTime_ == false && stageClear == false && stageFailed == false) {
 		_manager->_camera->SetEye(camposEye);
 		_manager->_camera->SetTarget(camposTar);
-
-#ifdef _DEBUG
-		if (Input::get_instance().KeyboardPush(DIK_P)) {
-			Vector3 eyeDebug = _objects->player->GetTransform().position;
-			eyeDebug.y = (float)3.5f;
-			_manager->_camera->SetEye(eyeDebug);
-			_manager->_camera->SetTarget(_objects->player->GetReticleTransform().position);
-			_manager->_camera->Update();
-		}
-#endif // DEBUG
-
 		_objects->player->Update(input);
 		stageFailed = _objects->player->GetIsDeath();
 

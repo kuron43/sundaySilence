@@ -146,7 +146,8 @@ void Player::Update(Input* input, bool isTitle) {
 	ImGui::Text("window H :%d", WinApp::window_height);
 	ImGui::Text("Palams");
 	ImGui::Text("ph:%d", countPH_);
-	ImGui::InputFloat3("Position", &object_->transForm.position.x);
+	ImGui::InputFloat3("OBJPosition", &object_->transForm.position.x);
+	ImGui::InputFloat3("RETPosition", &reticle->transForm.position.x);
 	ImGui::InputFloat4("Col", &skaliCol.x);
 	ImGui::Text("Barrier");
 	ImGui::InputInt("BarrierRimit", &barrierRimit);
