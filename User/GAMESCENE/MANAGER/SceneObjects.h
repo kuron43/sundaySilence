@@ -144,6 +144,9 @@ private: // UI用
 	std::unique_ptr <Sprite> UIHPBaseSP_;
 	Vector2 UIHPBaseSPpos_;
 	Vector2 UIHPBaseSPsize_;
+	std::array<std::unique_ptr <Sprite>, NUMBER::NUM_FIVE> UIDushSP_;
+	Vector2 UIDushPos_;
+	Vector2 UIDushSize_;
 
 public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;

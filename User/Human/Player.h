@@ -34,6 +34,7 @@ public:
 	bool GetIsSlow() { return _isSlow; }
 	bool GetOnFire() { return isOnBarrier; }
 	bool GetPointMAX() { return pointDash_->pointsMax; }
+	uint32_t GetPointNum() { return (uint32_t)pointDash_->points.size(); }
 	uint32_t GetHP() { return hp_; };
 	uint32_t GetHIT() { return hit_; };
 	const uint32_t GetMAXHP() { return MAX_HP; };

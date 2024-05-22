@@ -274,6 +274,17 @@ void SceneObjects::Initialize() {
 			UIPauseSP_->SetPozition(UIPauseSPpos_);
 			UIPauseSP_->SetSize(UIPauseSPsize_);
 		}
+		{
+			UIDushPos_ = Vector2{ 30 ,WinApp::window_height / 7.0f };
+			UIDushSize_ = Vector2{ 64.0f,64.0f };
+			for (size_t i = 0; i < UIDushSP_.size(); i++) {
+				UIDushSP_[i] = std::make_unique<Sprite>();
+				UIDushSP_[i]->Initialize(spriteCommon_.get(), 48);
+				UIDushPos_ += Vector2{ 0 ,64 };
+				UIDushSP_[i]->SetPozition(UIDushPos_);
+				UIDushSP_[i]->SetSize(UIDushSize_);
+			}
+		}
 	}
 
 
@@ -519,6 +530,9 @@ void SceneObjects::UIUpdate()
 	UIHPSP_->Update();
 	UIHPBaseSP_->Update();
 	UIPauseSP_->Update();
+	for (size_t i = 0; i < NUMBER::NUM_FIVE; i++) {
+		// UIDushSP_[i]->Update();
+	}
 }
 
 void SceneObjects::UIDraw()
@@ -530,6 +544,10 @@ void SceneObjects::UIDraw()
 	UIHPBaseSP_->Draw();
 	UIHPSP_->Draw();
 	UIPauseSP_->Draw();
+	for (size_t i = 0; i < NUMBER::NUM_FIVE; i++) {
+		// UIDushSP_[i]->Draw();
+		// リソース待ち
+	}
 }
 
 void SceneObjects::LoadLevels()
