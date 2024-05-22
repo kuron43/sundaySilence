@@ -10,7 +10,7 @@ public:
 	/// 作成
 	/// </summary>
 	/// <returns></returns>
-	static ObjectParticle* Create(const Vector3& pos_, Model* model_, const Vector3& velocity,float scale = 1.0f,Vector4 color = {1,1,1,1});
+	static ObjectParticle* Create(const Vector3& pos_, Model* model_, const Vector3& velocity, float scale = 1.0f, Vector4 color = { 1,1,1,1 });
 
 	/// <summary>
 	/// 初期化
@@ -18,7 +18,7 @@ public:
 	/// <param name="pos_"></param>
 	/// <param name="model_"></param>
 	/// <param name="pipeline_"></param>
-	void Init(const Vector3& pos_, Model* model_, const Vector3& velocity,float scale,Vector4 color);
+	void Init(const Vector3& pos_, Model* model_, const Vector3& velocity, float scale, Vector4 color);
 
 	/// <summary>
 	/// 更新
@@ -67,10 +67,15 @@ public:
 
 	struct ParticlePreset
 	{
+		// 発生位置
 		Vector3 pos_;
+		// 広がり値
 		Vector2 velocityMinMax = { -1.0,1.0 };
+		// 一回で出す量
 		size_t volume = 10;
+		// オブジェクトスケール
 		float scale = 1.0f;
+		// オブジェクトカラー
 		Vector4 color = { 1,1,1,1 };
 	};
 
@@ -99,7 +104,7 @@ public:
 	/// <param name="volume">一回で出す量</param>
 	/// <param name="scale">オブジェクトスケール</param>
 	/// <param name="color">オブジェクトカラー</param>
-	void SetAnyExp(const Vector3& pos, Vector2 velocityMinMax = {-1.0,1.0}, size_t volume = 10,float scale = 1.0f,Vector4 color = { 1,1,1,1 });
+	void SetAnyExp(const Vector3& pos, Vector2 velocityMinMax = { -1.0,1.0 }, size_t volume = 10, float scale = 1.0f, Vector4 color = { 1,1,1,1 });
 	/// <param name="ParticlePreset">プリセット</param>
 	void SetAnyExp(ParticlePreset preset);
 
