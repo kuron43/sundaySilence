@@ -87,6 +87,9 @@ public:
 
 	void DebugImGui();
 
+	uint32_t GetRegistNum() { return registNum; };
+	bool GetLineActive(uint32_t num) { return isLineActive_[num]; };
+
 	//コライダー
 private:
 	RayCollider* ray;

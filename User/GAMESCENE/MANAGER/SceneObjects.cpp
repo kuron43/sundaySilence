@@ -531,8 +531,17 @@ void SceneObjects::UIUpdate()
 	UIHPBaseSP_->Update();
 	UIPauseSP_->Update();
 	for (size_t i = 0; i < NUMBER::NUM_FIVE; i++) {
-		// UIDushSP_[i]->Update();
+		UIDushSP_[i]->Update();
 	}
+	for (size_t i = 0; i < NUMBER::NUM_FIVE; i++) {
+		if (player->GetPoint()->GetRegistNum() - NUMBER::NUM_ONE == i) {
+			UIDushSP_[i]->SetColor({1,0,0,1});
+		}
+		else if (player->GetPoint()->GetLineActive((uint32_t)i) == false) {
+			UIDushSP_[i]->SetColor({ 1,1,1,1 });
+		}
+	}
+
 }
 
 void SceneObjects::UIDraw()
@@ -545,7 +554,7 @@ void SceneObjects::UIDraw()
 	UIHPSP_->Draw();
 	UIPauseSP_->Draw();
 	for (size_t i = 0; i < NUMBER::NUM_FIVE; i++) {
-		// UIDushSP_[i]->Draw();
+		UIDushSP_[i]->Draw();
 		// リソース待ち
 	}
 }
