@@ -100,6 +100,7 @@ void SceneObjects::Initialize() {
 			spriteCommon_->LoadTexture(46, "Point1ICON.png");
 			spriteCommon_->LoadTexture(47, "Point2ICON.png");
 			spriteCommon_->LoadTexture(48, "pauseInfo.png");
+			spriteCommon_->LoadTexture(49, "pointpic.png");
 		}
 		// スプライトロード  50~ // シーン用
 		{
@@ -279,7 +280,7 @@ void SceneObjects::Initialize() {
 			UIDushSize_ = Vector2{ 64.0f,64.0f };
 			for (size_t i = 0; i < UIDushSP_.size(); i++) {
 				UIDushSP_[i] = std::make_unique<Sprite>();
-				UIDushSP_[i]->Initialize(spriteCommon_.get(), 48);
+				UIDushSP_[i]->Initialize(spriteCommon_.get(), 49);
 				UIDushPos_ += Vector2{ 0 ,64 };
 				UIDushSP_[i]->SetPozition(UIDushPos_);
 				UIDushSP_[i]->SetSize(UIDushSize_);
