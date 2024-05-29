@@ -5,6 +5,7 @@
 #include "DirectXCommon.h"
 #include "FPS.h"
 #include "ImGuiManager.h"
+#include "Audio.h"
 #pragma warning(push)
 #pragma warning(disable: 4514)
 #include <cassert>
@@ -38,6 +39,7 @@ protected:
 	FPS* fps = nullptr;
 	Input* input = nullptr;
 	ImGuiManager* imgui = nullptr;
+	Audio* audio = nullptr;
 
 };
 

@@ -3,11 +3,13 @@
 #include <cassert>
 #pragma comment (lib,"xaudio2.lib")
 
-void Audio::Initialize(const std::string& directoryPath)
+Audio* Audio::get_instance() {
+	static Audio instance;
+	return &instance;
+}
+
+void Audio::Initialize()
 {
-
-	directoryPath_ = directoryPath;
-
 	HRESULT result;
 	IXAudio2MasteringVoice* masterVoice;
 
@@ -39,6 +41,8 @@ void Audio::Finalize()
 
 void Audio::LoadWave(const std::string& filename)
 {
+	Audio::directoryPath_ = "Resources/AUDIO/";
+
 	if (soundDates_.find(filename) != soundDates_.end()) {
 
 		return;

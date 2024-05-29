@@ -9,7 +9,6 @@ SceneObjects::SceneObjects(DirectXCommon* dxcommon) {
 	_dxcommon = dxcommon;
 }
 SceneObjects::~SceneObjects() {
-	audio->Finalize();
 	enemys.clear();
 	walls.clear();
 	boss.clear();
@@ -23,8 +22,10 @@ void SceneObjects::Initialize() {
 #ifdef _DEBUG
 	ShowCursor(true);
 #endif
-	audio = std::make_unique<Audio>();
-	audio->Initialize();
+	// オーディオロード
+	{
+		Audio::get_instance()->LoadWave("shot.wav");
+	}
 	// スプライトロード集
 	{
 		{
