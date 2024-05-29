@@ -9,12 +9,9 @@
 
 class TitleScene :public IScene
 {
-protected:
-	SceneManager* _controller;
-	SceneObjects* _objects;
 public:
 
-	TitleScene(SceneManager* controller, SceneObjects* objects);
+	TitleScene();
 	~TitleScene() override;
 
 	/// <summary>
@@ -42,8 +39,6 @@ private:
 	Vector3 camposTar = { 0,0,0 };
 
 	float forcalLengs = 30.0f;
-
-	LevelData* leveData = nullptr;
 	std::unique_ptr <ParticleManager>  particle_;
 public:
 

@@ -1,0 +1,235 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "enemy.007",
+            "transform": {
+                "translation": [
+                    35.0,
+                    -0.0011957217939198017,
+                    -20.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
+        },
+        {
+            "type": "MESH",
+            "name": "wall",
+            "transform": {
+                "translation": [
+                    2.0,
+                    -0.0011925697326660156,
+                    50.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    66.0,
+                    2.0,
+                    1.0
+                ]
+            },
+            "file_name": "wall",
+            "Weapon": "NONE"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.009",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -0.0011925079161301255,
+                    39.459720611572266
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    10.0,
+                    1.7000000476837158,
+                    0.5
+                ]
+            },
+            "file_name": "wall",
+            "Weapon": "NONE"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.008",
+            "transform": {
+                "translation": [
+                    46.36406707763672,
+                    -0.0011913945199921727,
+                    -9.285825729370117
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    20.0,
+                    1.7000000476837158,
+                    1.0
+                ]
+            },
+            "file_name": "wall",
+            "Weapon": "NONE"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.005",
+            "transform": {
+                "translation": [
+                    2.0,
+                    -0.0011925697326660156,
+                    -45.034912109375
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    66.0,
+                    2.0,
+                    1.0
+                ]
+            },
+            "file_name": "wall",
+            "Weapon": "NONE"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.001",
+            "transform": {
+                "translation": [
+                    67.0,
+                    -0.0011925697326660156,
+                    2.5762693881988525
+                ],
+                "rotation": [
+                    -0.0,
+                    89.99999237060547,
+                    0.0
+                ],
+                "scaling": [
+                    48.0,
+                    2.0,
+                    1.0
+                ]
+            },
+            "file_name": "wall",
+            "Weapon": "NONE"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.003",
+            "transform": {
+                "translation": [
+                    -63.0,
+                    -0.0011925697326660156,
+                    2.5762693881988525
+                ],
+                "rotation": [
+                    -0.0,
+                    89.99999237060547,
+                    0.0
+                ],
+                "scaling": [
+                    48.0,
+                    2.0,
+                    1.0
+                ]
+            },
+            "file_name": "wall",
+            "Weapon": "NONE"
+        },
+        {
+            "type": "MESH",
+            "name": "player",
+            "transform": {
+                "translation": [
+                    45.0,
+                    -0.001205479959025979,
+                    -35.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "player",
+            "Weapon": "NONE"
+        },
+        {
+            "type": "MESH",
+            "name": "wall.011",
+            "transform": {
+                "translation": [
+                    26.601783752441406,
+                    -0.0011959479888901114,
+                    -27.447368621826172
+                ],
+                "rotation": [
+                    -0.0,
+                    89.99999237060547,
+                    0.0
+                ],
+                "scaling": [
+                    18.06999969482422,
+                    1.6999999284744263,
+                    1.0
+                ]
+            },
+            "file_name": "wall",
+            "Weapon": "NONE"
+        },
+        {
+            "type": "MESH",
+            "name": "enemy.001",
+            "transform": {
+                "translation": [
+                    58.0,
+                    -0.001195743796415627,
+                    -20.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -179.99998474121094,
+                    -0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
+        }
+    ]
+}

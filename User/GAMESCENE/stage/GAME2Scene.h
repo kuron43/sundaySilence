@@ -9,16 +9,13 @@
 #include "SceneIntegrate.h"
 
 class GAME2Scene :
-    public IScene
+	public IScene
 {
-protected:
-	SceneManager* _controller;
-	SceneObjects* _objects;
 public:
-	GAME2Scene(SceneManager* controller, SceneObjects* objects);
+	GAME2Scene();
 	~GAME2Scene() override;
 
-	//void Cleate(SceneManager& controller) override;
+	//void Cleate(SceneManager& manager) override;
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -44,17 +41,5 @@ private:
 	Vector3 camposEye = { 0.0f,90.0f,-10.0001f };
 	Vector3 camposTar = { 0,0,0 };
 	float forcalLengs = 30.0f;
-
-public:
-
-
-	// json
-	//Model* modelcube = nullptr;
-	//Model* modelREX = nullptr;
-
-	LevelData* leveData = nullptr;
-	//std::map<std::string, Model*> jsonModels;
-	//std::vector<Object3d*> JsonObjects;
-
 };
 

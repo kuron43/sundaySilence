@@ -21,11 +21,12 @@ private:
 	float speed_ = nomalSpeed;
 	uint32_t coolTime = 0;
 	uint32_t mag = 0;
-	uint32_t roadingTime = 0;
+	int32_t roadingTime = 0;
+	bool nowRoading = false;
 
 	bool active_ = false;
 	bool goShot;
-	uint16_t padding;
+	bool padding;
 
 public:
 	Assault();
@@ -36,7 +37,7 @@ public:
 	bool Initialize() override;
 
 	/// 更新を行う
-	void Update(Input* input, bool isSlow) override;
+	void Update(Input* input/*, bool isSlow*/) override;
 
 	/// 描画を行う
 	void Draw(DirectXCommon* dxCommon) override;

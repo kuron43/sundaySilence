@@ -5,9 +5,7 @@
 #include "SelectScene.h"
 #include "SceneManager.h"
 
-SelectScene::SelectScene(SceneManager* controller, SceneObjects* objects) {
-	_controller = controller;
-	_objects = objects;
+SelectScene::SelectScene() {
 }
 SelectScene::~SelectScene() {
 	_objects->player->Reset();
@@ -28,8 +26,8 @@ void SelectScene::Initialize() {
 
 	stage1_ = std::make_unique<Sprite>();
 	stage1_->Initialize(_objects->spriteCommon_.get(), 20);
-	stage1_->SetSize({256,128});
-	stage1_->SetPozition({ (WinApp::window_width / 2)-128,WinApp::window_height - 200 });
+	stage1_->SetSize({ 256,128 });
+	stage1_->SetPozition({ (WinApp::window_width / 2) - 128,WinApp::window_height - 200 });
 
 	left_ = std::make_unique<Sprite>();
 	left_->Initialize(_objects->spriteCommon_.get(), 26);
@@ -51,15 +49,17 @@ void SelectScene::Update(Input* input) {
 
 	SelectSceneNum(input);
 	MoveScene();
-	SpriteColision();
-
+	SpriteCollision();
+#ifdef _DEBUG
+	// Imgui
 	ImGui::Begin("SELECT NUM");
 	ImGui::Text("SelectNum : %d", selectNum);
 	ImGui::End();
+#endif
 }
 
 void SelectScene::Draw() {
-	_objects->floorGround->Draw(_controller->_dxCommon);
+	_objects->floorGround->Draw(_manager->_dxCommon);
 
 	selectTitele_->Draw();
 	stage1_->Draw();
@@ -72,7 +72,7 @@ void SelectScene::Draw() {
 void SelectScene::SelectSceneNum(Input* input) {
 	if (selectNum == 0) {
 		if (_objects->mouseCursor_->Cursor2Sprite(left_.get()) && input->MouseButtonTrigger(0)) {
-			selectNum = 2;
+			selectNum = 3;
 		}
 		else if (_objects->mouseCursor_->Cursor2Sprite(right_.get()) && input->MouseButtonTrigger(0)) {
 			selectNum = 1;
@@ -91,6 +91,14 @@ void SelectScene::SelectSceneNum(Input* input) {
 			selectNum = 1;
 		}
 		else if (_objects->mouseCursor_->Cursor2Sprite(right_.get()) && input->MouseButtonTrigger(0)) {
+			selectNum = 3;
+		}
+	}
+	else if (selectNum == 3) {
+		if (_objects->mouseCursor_->Cursor2Sprite(left_.get()) && input->MouseButtonTrigger(0)) {
+			selectNum = 2;
+		}
+		else if (_objects->mouseCursor_->Cursor2Sprite(right_.get()) && input->MouseButtonTrigger(0)) {
 			selectNum = 0;
 		}
 	}
@@ -104,13 +112,16 @@ void SelectScene::MoveScene() {
 		switch (resultNum)
 		{
 		case 0:
-			_controller->SetSceneNum(SCE_TITLE);
+			_manager->SetSceneNum(SCE_TITLE);
 			break;
 		case 1:
-			_controller->SetSceneNum(SCE_GAME1);
+			_manager->SetSceneNum(SCE_GAME1);
 			break;
 		case 2:
-			_controller->SetSceneNum(SCE_GAME2);
+			_manager->SetSceneNum(SCE_GAME2);
+			break;
+		case 3:
+			_manager->SetSceneNum(SCE_GAME3);
 			break;
 		}
 	}
@@ -119,7 +130,7 @@ void SelectScene::MoveScene() {
 	}
 }
 
-void SelectScene::SpriteColision()
+void SelectScene::SpriteCollision()
 {
 	switch (selectNum)
 	{
@@ -145,6 +156,14 @@ void SelectScene::SpriteColision()
 		}
 		else {
 			stage1_->SetTextureIndex(22);
+		}
+		break;
+	case 3:
+		if (_objects->mouseCursor_->Cursor2Sprite(stage1_.get())) {
+			stage1_->SetTextureIndex(25);
+		}
+		else {
+			stage1_->SetTextureIndex(24);
 		}
 		break;
 	}

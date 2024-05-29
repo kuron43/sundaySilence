@@ -34,7 +34,7 @@ public:
 	bool Initialize() override;
 
 	/// 更新を行う
-	void Update(Input* input, bool isSlow) override;
+	void Update(Input* input/*, bool isSlow*/) override;
 
 	/// 描画を行う
 	void Draw(DirectXCommon* dxCommon) override;
@@ -91,9 +91,9 @@ public:
 
 	void Draw() override;
 
-	void OnColision();
+	void OnCollision();
 
-	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bottleObj_->wtf.matWorld); };
+	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bottleObj_->transForm.matWorld); };
 
 	bool IsDead() override;
 	void Dead() { isDead = true; }
@@ -107,10 +107,10 @@ public:
 	void SetSphere(SphereCollider* sphere_) { sphere = sphere_; }
 	SphereCollider* GetSphere() { return sphere; }
 private:
-	//int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
+	//int SPHERE_COLLISION_NUM;	//コライダー（スフィア）の数
 	//std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	SphereCollider* sphere;
 	//Ray* ray;
 	Vector3 spherePos;
-	Object3d* coliderPosTest_;
+	Object3d* colliderPosTest_;
 };

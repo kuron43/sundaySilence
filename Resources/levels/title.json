@@ -21,7 +21,8 @@
                     1.0
                 ]
             },
-            "file_name": "enemy"
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -43,7 +44,8 @@
                     1.0
                 ]
             },
-            "file_name": "enemy"
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -65,7 +67,8 @@
                     1.0
                 ]
             },
-            "file_name": "enemy"
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -87,7 +90,8 @@
                     0.9999999403953552
                 ]
             },
-            "file_name": "enemy"
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -109,7 +113,8 @@
                     1.0
                 ]
             },
-            "file_name": "enemy"
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -131,7 +136,8 @@
                     1.0
                 ]
             },
-            "file_name": "enemy"
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -153,7 +159,8 @@
                     1.0
                 ]
             },
-            "file_name": "enemy"
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -175,7 +182,8 @@
                     1.0
                 ]
             },
-            "file_name": "enemy"
+            "file_name": "enemy",
+            "Weapon": "ASSAULT"
         },
         {
             "type": "MESH",
@@ -197,7 +205,8 @@
                     1.0
                 ]
             },
-            "file_name": "wall"
+            "file_name": "wall",
+            "Weapon": "NONE"
         },
         {
             "type": "MESH",
@@ -219,7 +228,8 @@
                     1.0
                 ]
             },
-            "file_name": "wall"
+            "file_name": "wall",
+            "Weapon": "NONE"
         },
         {
             "type": "MESH",
@@ -241,7 +251,8 @@
                     1.0
                 ]
             },
-            "file_name": "wall"
+            "file_name": "wall",
+            "Weapon": "NONE"
         },
         {
             "type": "MESH",
@@ -263,7 +274,8 @@
                     1.0
                 ]
             },
-            "file_name": "wall"
+            "file_name": "wall",
+            "Weapon": "NONE"
         },
         {
             "type": "MESH",
@@ -285,7 +297,8 @@
                     2.0
                 ]
             },
-            "file_name": "boss"
+            "file_name": "boss",
+            "Weapon": "ASSAULT"
         }
     ]
 }

@@ -19,6 +19,10 @@ private:
 	Boss* boss_;
 
 	uint32_t patNum_;
+private:
+	bool isPlayAnim;
+	bool PADDING[3];
+	int32_t animFlameCT;
 
 public:
 	void SetBoss(Boss* boss) { boss_ = boss; }

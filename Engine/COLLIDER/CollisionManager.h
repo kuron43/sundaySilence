@@ -22,8 +22,8 @@ public:
 
 	//メンバ関数
 public:
-	inline void Finalize() {
-
+	inline void Finalize()
+	{
 		colliders.clear();
 	}
 	//コライダーの追加

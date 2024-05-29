@@ -54,7 +54,7 @@ public:
 	JsonLoader();
 	~JsonLoader();
 
-	static LevelData* LoadJsonFile(const string& filename);
+	static std::unique_ptr<LevelData> LoadJsonFile(const string& filename);
 	//void NodeRecursive(nlohmann::json deserialized, LevelData* levelData);
 
 	//void MakeScene(LevelData* leveData);
@@ -62,6 +62,6 @@ public:
 private:
 	// 度数法 -> ラジアン
 	static float RadConvert(float value);
-	std::map<std::string,Model*> models;
+	//std::map<std::string,Model*> models;
 };
 

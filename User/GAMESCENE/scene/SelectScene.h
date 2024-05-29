@@ -9,14 +9,11 @@
 class SelectScene :
     public IScene
 {
-protected:
-	SceneManager* _controller;
-	SceneObjects* _objects;
 public:
-	SelectScene(SceneManager* controller, SceneObjects* objects);
+	SelectScene();
 	~SelectScene() override;
 
-	//void Cleate(SceneManager& controller) override;
+	//void Cleate(SceneManager& manager) override;
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -35,7 +32,7 @@ public:
 
 	void SelectSceneNum(Input* input);
 	void MoveScene();
-	void SpriteColision();
+	void SpriteCollision();
 
 private:
 	std::unique_ptr <Sprite> selectTitele_;

@@ -3,6 +3,8 @@
  * @file SceneObject.h
  * @brief シーンオブジェクト所持クラス
  */
+#include <map>
+#include <string>
 
 #include "LightGroup.h"
 #include "FBXObject3d.h"
@@ -38,14 +40,15 @@ typedef struct Shake {
 class SceneObjects
 {
 private:
-	DirectXCommon* _dxCommon;
-	Camera* _camera;
+	DirectXCommon* _dxcommon;
 public:
-	SceneObjects(DirectXCommon* DXCommon, Camera* camera);
+	SceneObjects(DirectXCommon* dxcommon);
 	~SceneObjects();
+
 
 	void Initialize();
 	void Reset();
+	void UpdateImGui();
 
 public: // 演出用
 
@@ -94,8 +97,6 @@ private: // 演出用
 
 
 	Shake backWall;
-
-	
 public: // UI用
 	void UIUpdate();
 	void UIDraw();
@@ -105,6 +106,7 @@ public: // UI用
 	bool GetIsUIDraw() { return isUIDraw_; };
 
 public:
+	void LoadLevels();
 	void SetingLevel(LevelData* data);
 
 private: // UI用
@@ -116,9 +118,10 @@ private: // UI用
 	Vector2 UIBuckSPsize_;
 
 	// 武器
-	std::unique_ptr <Sprite> UIWeaponSP_;
+	std::unique_ptr <Sprite> UIBarrierGaugeSP_;
 	Vector2 UIWeaponSPpos_;
 	Vector2 UIWeaponSPsize_;
+	uint32_t UISP_Wep_size;
 	bool isFire_;
 	// スロー
 	std::unique_ptr <Sprite> UISlowSP_;
@@ -141,6 +144,9 @@ private: // UI用
 	std::unique_ptr <Sprite> UIHPBaseSP_;
 	Vector2 UIHPBaseSPpos_;
 	Vector2 UIHPBaseSPsize_;
+	std::array<std::unique_ptr <Sprite>, NUMBER::NUM_FIVE> UIDushSP_;
+	Vector2 UIDushPos_;
+	Vector2 UIDushSize_;
 
 public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;
@@ -148,11 +154,9 @@ public: // オブジェクトの管理
 	std::unique_ptr <SpriteCommon> spriteCommon_;
 	std::unique_ptr<Cursor> mouseCursor_;
 
-	std::unique_ptr<ParticleManager> particleManager_;
-	std::unique_ptr<ParticleManager> particleManager2_;
-
 	std::unique_ptr <Object3d> skydome_O;
 	Model* skydome_M;
+	Model* box;
 
 	//FBXモデル
 	std::unique_ptr<FBXModel> bossFbxM_;
@@ -163,19 +167,26 @@ public: // オブジェクトの管理
 	std::unique_ptr <Sprite> plDamageRed_;
 	float damageRedAlpha_ = 0.0f;
 	Vector2 plDamageRedPos = { 0.0f,0.0f };
-
-	std::vector< std::unique_ptr<Enemy>> enemys;
+	std::unique_ptr<Model> enemyMD;
+	std::unique_ptr<Model> maruMD;
+	std::list<std::unique_ptr<Enemy>> enemys;
 	uint32_t eneCount;
-	std::vector<std::unique_ptr<Boss>> boss;
+	std::list<std::unique_ptr<Boss>> boss;
 	uint32_t bossCount;
 
-	Model* wallMD;
-	std::vector< std::unique_ptr <Wall>> walls;
+	std::unique_ptr<Model> wallMD;
+	std::list< std::unique_ptr <Wall>> walls;
 
 	std::unique_ptr<Floor> floorGround;
 	Model* floorGroundMD;
 
-private: // ライト用 
+	// レベルデータ管理
+	std::vector<std::string> levelName_;
+	std::map<std::string, std::unique_ptr<LevelData>>levels;
+
+private: // ライト用
+	Vector3 rotateLight{ 10.0f,1,0 };
+	Vector3 lightDir = { 0,1,0 };
 	float ambientColor0[3] = { 1,1,1 };
 
 	//光線方向初期値
@@ -186,7 +197,7 @@ private: // ライト用
 	float lightDir2[3] = { 1,0,0 };
 	float lightColor2[3] = { 1,1,1 };
 
-	float pointLightPos[3] = { 0,4,0 };
+	Vector3 pointLightPos = { 10.0f,4.0f,0 };
 	float pointLightColor[3] = { 1,1,1 };
 	float pointLightAtten[3] = { 0.3f,0.1f,0.1f };
 

@@ -5,16 +5,19 @@
 #include "SceneObjects.h"
 
 
-SceneObjects::SceneObjects(DirectXCommon* DXCommon, Camera* camera) {
-	_dxCommon = DXCommon;
-	_camera = camera;
+SceneObjects::SceneObjects(DirectXCommon* dxcommon) {
+	_dxcommon = dxcommon;
 }
 SceneObjects::~SceneObjects() {
 	audio->Finalize();
-	delete wallMD;
+	enemys.clear();
+	walls.clear();
+	boss.clear();
 	delete skydome_M;
+	delete box;
 	delete floorGroundMD;
 }
+
 void SceneObjects::Initialize() {
 	ShowCursor(false);
 #ifdef _DEBUG
@@ -39,7 +42,7 @@ void SceneObjects::Initialize() {
 			};
 			//スプライト初期化
 			spriteCommon_ = std::make_unique<SpriteCommon>();
-			spriteCommon_->Initialize(_dxCommon);
+			spriteCommon_->Initialize(_dxcommon);
 			// TITLE
 			spriteCommon_->LoadTexture(1, "title.png");
 			spriteCommon_->LoadTexture(2, "inu.png");
@@ -97,6 +100,7 @@ void SceneObjects::Initialize() {
 			spriteCommon_->LoadTexture(46, "Point1ICON.png");
 			spriteCommon_->LoadTexture(47, "Point2ICON.png");
 			spriteCommon_->LoadTexture(48, "pauseInfo.png");
+			spriteCommon_->LoadTexture(49, "pointpic.png");
 		}
 		// スプライトロード  50~ // シーン用
 		{
@@ -127,9 +131,8 @@ void SceneObjects::Initialize() {
 
 	// fbx テスト
 	{
-		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Fbx_Rex"));
+		bossFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Fbx_Rex", false));
 		bossFbxO_ = std::make_unique<FBXObject3d>();
-		//bossFbxO_->SetCamera(_camera);
 		bossFbxO_->Initialize();
 		bossFbxO_->SetModel(bossFbxM_.get());
 		bossFbxO_->SetPosition({ 0,0,0 });
@@ -138,6 +141,8 @@ void SceneObjects::Initialize() {
 		bossFbxO_->AnimIsRotateChange();
 	}
 
+	// レベルロード
+	LoadLevels();
 	{
 		player = std::make_unique<Player>();
 		player->Initialize();
@@ -150,50 +155,52 @@ void SceneObjects::Initialize() {
 		plDamageRed_->SetColor(Vector4(0, 0, 0, 0));
 	}
 	{
-		wallMD = Model::LoadFromOBJ("wall");
+		wallMD.reset(Model::LoadFromOBJ("wall"));
 		floorGroundMD = Model::LoadFromOBJ("stage");
 		floorGround = std::make_unique<Floor>();
 		floorGround->Initialize(floorGroundMD);
 	}
+	enemyMD.reset(Model::LoadFromOBJ("ene"));
 	skydome_O = std::make_unique<Object3d>();
 	skydome_M = Model::LoadFromOBJ("skydome");
+	box = Model::LoadFromOBJ("cube");
 	skydome_O->SetModel(skydome_M);
 	skydome_O->Initialize();
-	skydome_O->wtf.scale = Vector3(10000.0f, 10000.0f, 10000.0f);
+	skydome_O->transForm.scale = Vector3(10000.0f, 10000.0f, 10000.0f);
 
 
 	// 演出用の初期化
 	// バナー
 	{
 
-	{
-		bannerBuckSP_ = std::make_unique<Sprite>();
-		bannerBuckSP_->Initialize(spriteCommon_.get(), 12);
-		bannerBuckSP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
-		bannerBuckSPpos_ = { 0,WinApp::window_height / 2.0f };
-		bannerBuckSPscale_ = Vector3(1.0f, 0001.0f, 1.0f);
-		bannerBuckSP_->SetPozition(bannerBuckSPpos_);
-		bannerBuckSP_->SetScale(bannerBuckSPscale_);
+		{
+			bannerBuckSP_ = std::make_unique<Sprite>();
+			bannerBuckSP_->Initialize(spriteCommon_.get(), 12);
+			bannerBuckSP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
+			bannerBuckSPpos_ = { 0,WinApp::window_height / 2.0f };
+			bannerBuckSPscale_ = Vector3(1.0f, 0001.0f, 1.0f);
+			bannerBuckSP_->SetPozition(bannerBuckSPpos_);
+			bannerBuckSP_->SetScale(bannerBuckSPscale_);
+		}
+		{
+			bannerBuck2SP_ = std::make_unique<Sprite>();
+			bannerBuck2SP_->Initialize(spriteCommon_.get(), 12);
+			bannerBuck2SP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
+			bannerBuck2SPpos_ = { WinApp::window_width / 2.0f,WinApp::window_height / 2.0f };
+			bannerBuck2SPscale_ = Vector3(1.0f, 0.0001f, 1.0f);
+			bannerBuck2SP_->SetPozition(bannerBuck2SPpos_);
+			bannerBuck2SP_->SetScale(bannerBuck2SPscale_);
+		}
+		{
+			bannerWordSP_ = std::make_unique<Sprite>();
+			bannerWordSP_->Initialize(spriteCommon_.get(), 13);
+			bannerWordSP_->SetSize({ 300.0f ,100.0f });
+			bannerWordSPpos_ = { -300.0f, WinApp::window_height / 2.0f };
+			bannerWordSPscale_ = Vector3(1.0f, 1.0f, 1.0f);
+			bannerWordSP_->SetPozition(bannerWordSPpos_);
+			bannerWordSP_->SetScale(bannerWordSPscale_);
+		}
 	}
-	{
-		bannerBuck2SP_ = std::make_unique<Sprite>();
-		bannerBuck2SP_->Initialize(spriteCommon_.get(), 12);
-		bannerBuck2SP_->SetSize({ WinApp::window_width / 2.0f ,100.0f });
-		bannerBuck2SPpos_ = { WinApp::window_width / 2.0f,WinApp::window_height / 2.0f };
-		bannerBuck2SPscale_ = Vector3(1.0f, 0.0001f, 1.0f);
-		bannerBuck2SP_->SetPozition(bannerBuck2SPpos_);
-		bannerBuck2SP_->SetScale(bannerBuck2SPscale_);
-	}
-	{
-		bannerWordSP_ = std::make_unique<Sprite>();
-		bannerWordSP_->Initialize(spriteCommon_.get(), 13);
-		bannerWordSP_->SetSize({ 300.0f ,100.0f });
-		bannerWordSPpos_ = { -300.0f, WinApp::window_height / 2.0f };
-		bannerWordSPscale_ = Vector3(1.0f, 1.0f, 1.0f);
-		bannerWordSP_->SetPozition(bannerWordSPpos_);
-		bannerWordSP_->SetScale(bannerWordSPscale_);
-	}
-}
 	// スロー
 	{
 		slowSP_ = std::make_unique<Sprite>();
@@ -213,17 +220,9 @@ void SceneObjects::Initialize() {
 			UIBuckSP_->SetSize(UIBuckSPsize_);
 		}
 		{
-			UIWeaponSP_ = std::make_unique<Sprite>();
-			UIWeaponSP_->Initialize(spriteCommon_.get(), 41);
-			UIWeaponSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f ,WinApp::window_height / 9.0f };
-			UIWeaponSPsize_ = Vector2{ 80.0f ,80.0f };
-			UIWeaponSP_->SetPozition(UIWeaponSPpos_);
-			UIWeaponSP_->SetSize(UIWeaponSPsize_);
-		}
-		{
 			UISlowSP_ = std::make_unique<Sprite>();
 			UISlowSP_->Initialize(spriteCommon_.get(), 44);
-			UISlowSPpos_ = Vector2{ UIWeaponSPpos_.x  ,UIWeaponSPpos_.y + 100.0f };
+			UISlowSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f  ,WinApp::window_height / 9.0f + 100.0f };
 			UISlowSPsize_ = Vector2{ 80.0f ,80.0f };
 			UISlowSP_->SetPozition(UISlowSPpos_);
 			UISlowSP_->SetSize(UISlowSPsize_);
@@ -231,7 +230,7 @@ void SceneObjects::Initialize() {
 		{
 			UIPointSP_ = std::make_unique<Sprite>();
 			UIPointSP_->Initialize(spriteCommon_.get(), 46);
-			UIPointSPpos_ = Vector2{ UISlowSPpos_.x ,UISlowSPpos_.y + 100.0f};
+			UIPointSPpos_ = Vector2{ UISlowSPpos_.x ,UISlowSPpos_.y + 100.0f };
 			UIPointSPsize_ = Vector2{ 80.0f ,80.0f };
 			UIPointSP_->SetPozition(UIPointSPpos_);
 			UIPointSP_->SetSize(UIPointSPsize_);
@@ -239,8 +238,8 @@ void SceneObjects::Initialize() {
 		{
 			UIHPSP_ = std::make_unique<Sprite>();
 			UIHPSP_->Initialize(spriteCommon_.get(), 38);
-			UIHPSPpos_ = Vector2{ UIWeaponSPpos_.x + 26.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
-			UIHPSPsize_ = Vector2{30.0f,8.0f * player->GetHP()  };
+			UIHPSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f + 26.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
+			UIHPSPsize_ = Vector2{ 30.0f,8.0f * player->GetHP() };
 			UIHPSP_->SetPozition(UIHPSPpos_);
 			UIHPSP_->SetSize(UIHPSPsize_);
 			UIHPSP_->SetIsFlipY(true);
@@ -248,11 +247,22 @@ void SceneObjects::Initialize() {
 		{
 			UIHPBaseSP_ = std::make_unique<Sprite>();
 			UIHPBaseSP_->Initialize(spriteCommon_.get(), 30);
-			UIHPBaseSPpos_ = Vector2{ UIWeaponSPpos_.x + 26.0f,WinApp::window_height - WinApp::window_height / 7.0f };
+			UIHPBaseSPpos_ = Vector2{ WinApp::window_width - WinApp::window_width / 9.0f + 26.0f,WinApp::window_height - WinApp::window_height / 7.0f };
 			UIHPBaseSPsize_ = Vector2{ 30.0f,8.0f * player->GetHP() };
 			UIHPBaseSP_->SetPozition(UIHPBaseSPpos_);
 			UIHPBaseSP_->SetSize(UIHPBaseSPsize_);
 			UIHPBaseSP_->SetIsFlipY(true);
+		}
+		{
+			UIBarrierGaugeSP_ = std::make_unique<Sprite>();
+			UIBarrierGaugeSP_->Initialize(spriteCommon_.get(), 37);
+			//UIWeaponSP_->Initialize(spriteCommon_.get(), 41);
+			UIWeaponSPpos_ = Vector2{ UIHPBaseSPpos_.x + 30.0f ,WinApp::window_height - WinApp::window_height / 7.0f };
+			UIWeaponSPsize_ = Vector2{ 20.0f ,(float)player->GetBarrierCoolTime() };
+			UIBarrierGaugeSP_->SetColorAlpha(0.5f);
+			UIBarrierGaugeSP_->SetPozition(UIWeaponSPpos_);
+			UIBarrierGaugeSP_->SetSize(UIWeaponSPsize_);
+			UISP_Wep_size = NUMBER::NUM_THREE;
 		}
 		{
 			backWall = { 0,2,10,21,0,0, };
@@ -265,6 +275,17 @@ void SceneObjects::Initialize() {
 			UIPauseSP_->SetPozition(UIPauseSPpos_);
 			UIPauseSP_->SetSize(UIPauseSPsize_);
 		}
+		{
+			UIDushPos_ = Vector2{ 30 ,WinApp::window_height / 7.0f };
+			UIDushSize_ = Vector2{ 64.0f,64.0f };
+			for (size_t i = 0; i < UIDushSP_.size(); i++) {
+				UIDushSP_[i] = std::make_unique<Sprite>();
+				UIDushSP_[i]->Initialize(spriteCommon_.get(), 49);
+				UIDushPos_ += Vector2{ 0 ,64 };
+				UIDushSP_[i]->SetPozition(UIDushPos_);
+				UIDushSP_[i]->SetSize(UIDushSize_);
+			}
+		}
 	}
 
 
@@ -273,15 +294,45 @@ void SceneObjects::Initialize() {
 	lightGroup->Initialize();
 
 	lightGroup->SetDirLightActive(0, true);
-	pointLightPos[0] = 0.0f;
-	pointLightPos[1] = 5.0f;
-	pointLightPos[2] = 0.0f;
+	rotateLight = { Affin::radConvert(60.0f), Affin::radConvert(30.0f), Affin::radConvert(0.0f) };
 
 	lightGroup->SetDirLightColor(0, Vector3(1, 1, 1));
-	lightGroup->SetDirLightDir(0, Vector4(0, 0, 0, 0));
+	lightDir = Affin::VecMat(pointLightPos, Affin::matRotation(rotateLight));
+	lightGroup->SetDirLightDir(0, Vector4(lightDir.x, lightDir.y, lightDir.z, 0));
 
 	//3Dオブジェクトにライトをセット
 	Object3d::SetLight(lightGroup.get());
+}
+
+void SceneObjects::UpdateImGui()
+{
+#ifdef _DEBUG
+	// Imgui
+	int UISP_Weapon_size = UISP_Wep_size;
+	ImGui::Begin("Objects");
+	ImGui::Text("Objects");
+	ImGui::Text("JsonMapNum:%d", (int)levels.size());
+	ImGui::Text("DirLight");
+	ImGui::InputFloat3("DirRot", &pointLightPos.x);
+	ImGui::SliderFloat3("DirPos", &rotateLight.x, 0.0f, Affin::radConvert(360.0f));
+	ImGui::Text("UI");
+	ImGui::SliderInt("BarrierUISize", &UISP_Weapon_size, 1, 4);
+	ImGui::Text("eneSize:%d", enemys.size());
+	ImGui::Text("bossSize:%d", boss.size());
+	ImGui::End();
+	lightDir = Affin::VecMat(pointLightPos, Affin::matRotation(rotateLight));
+	lightGroup->SetDirLightDir(0, Vector4(lightDir.x, lightDir.y, lightDir.z, 0));
+	UISP_Wep_size = UISP_Weapon_size;
+#endif
+
+	////デスフラグの立った弾を削除
+	//boss.remove_if([](std::unique_ptr<Boss>& boss_) {
+	//	return boss_->HowDead();
+	//	});
+	//デスフラグの立った弾を削除
+	//enemys.remove_if([](std::unique_ptr<Enemy>& enemy) {
+	//	return !enemy->HowDead();
+	//	});
 }
 
 void SceneObjects::Reset()
@@ -290,6 +341,7 @@ void SceneObjects::Reset()
 	boss.clear();
 	walls.clear();
 }
+
 
 bool SceneObjects::Banner(uint32_t isStart)
 {
@@ -440,15 +492,21 @@ void SceneObjects::SlowEffectDraw()
 
 void SceneObjects::UIUpdate()
 {
-	if (player->GetOnFire()) {
-		UIWeaponSP_->SetTextureIndex(42);
+	if (player->GetOnFire() && !player->GetIsCoolTimeON()) {
+		UIBarrierGaugeSP_->SetTextureIndex(37);
+		UIWeaponSPsize_.y = UISP_Wep_size * -(float)player->GetBarrierOnTime();
 	}
-	else {
-		UIWeaponSP_->SetTextureIndex(41);
+	else if (player->GetOnFire() && player->GetIsCoolTimeON()) {
+		UIWeaponSPsize_.y = UISP_Wep_size * 2.0f * -(float)player->GetBarrierCoolTime();
+		UIBarrierGaugeSP_->SetTextureIndex(36);
 		UIPointSP_->SetTextureIndex(46);
 	}
+	else {
+		UIWeaponSPsize_.y = UISP_Wep_size * -(float)player->GetBarrierOnTime();
+		UIBarrierGaugeSP_->SetTextureIndex(37);
+	}
 	if (player->GetIsSlow()) {
-		UIWeaponSP_->SetTextureIndex(43);
+		//UIWeaponSP_->SetTextureIndex(43);
 		UISlowSP_->SetTextureIndex(45);
 		UIPointSP_->SetTextureIndex(47);
 		if (player->GetPointMAX()) {
@@ -458,30 +516,65 @@ void SceneObjects::UIUpdate()
 	else {
 		UISlowSP_->SetTextureIndex(44);
 	}
-	ImGui::Begin("SpritePos");
-	ImGui::InputFloat2("PAUSE TAB POS", &UIPauseSPpos_.x);
-	ImGui::End();
-
-	UIHPSPsize_.y = 8.0f * player->GetHP();
+	if (player->GetHP() > 0) {
+		UIHPSPsize_.y = 8.0f * player->GetHP();
+	}
+	else if (player->GetHP() <= 0) {
+		UIHPSPsize_.y = 0.0f;
+	}
+	UIBarrierGaugeSP_->SetSize(UIWeaponSPsize_);
 	UIHPSP_->SetSize(UIHPSPsize_);
 	UIBuckSP_->Update();
-	UIWeaponSP_->Update();
+	UIBarrierGaugeSP_->Update();
 	UISlowSP_->Update();
 	UIPointSP_->Update();
 	UIHPSP_->Update();
 	UIHPBaseSP_->Update();
 	UIPauseSP_->Update();
+	for (size_t i = 0; i < NUMBER::NUM_FIVE; i++) {
+		UIDushSP_[i]->Update();
+	}
+	for (size_t i = 0; i < NUMBER::NUM_FIVE; i++) {
+		if (player->GetPoint()->GetRegistNum() - NUMBER::NUM_ONE == i) {
+			UIDushSP_[i]->SetColor({1,0,0,1});
+		}
+		else if (player->GetPoint()->GetLineActive((uint32_t)i) == false) {
+			UIDushSP_[i]->SetColor({ 1,1,1,1 });
+		}
+	}
+
 }
 
 void SceneObjects::UIDraw()
 {
 	//UIBuckSP_->Draw();
-	UIWeaponSP_->Draw();
+	UIBarrierGaugeSP_->Draw();
 	UISlowSP_->Draw();
 	UIPointSP_->Draw();
 	UIHPBaseSP_->Draw();
 	UIHPSP_->Draw();
 	UIPauseSP_->Draw();
+	for (size_t i = 0; i < NUMBER::NUM_FIVE; i++) {
+		UIDushSP_[i]->Draw();
+		// リソース待ち
+	}
+}
+
+void SceneObjects::LoadLevels()
+{
+	levelName_.push_back("title");
+	levelName_.push_back("stageDEMO");
+	levelName_.push_back("stageTEMP2");
+	levelName_.push_back("stageDEMO2");
+	levelName_.push_back("Tutorial_1");
+	levelName_.push_back("Tutorial_2");
+	levelName_.push_back("Tutorial_3");
+
+	for (int32_t i = 0; i < levelName_.size(); i++) {
+		std::unique_ptr<LevelData> levelData = std::move(JsonLoader::LoadJsonFile(levelName_[i]));
+		levels.emplace(std::make_pair(levelName_[i], std::move(levelData)));
+	}
+
 }
 
 void SceneObjects::SetingLevel(LevelData* data)
@@ -497,44 +590,25 @@ void SceneObjects::SetingLevel(LevelData* data)
 			}if (objectData.weapon == "BOMFIRE") {
 				newEnemy->SetWeaponNum(WP_BOMFIRE);
 			}
+			newEnemy->SetModel(enemyMD.get());
 			newEnemy->Initialize();
 			//座標
 			Vector3 pos;
 			pos = objectData.translation;
-			newEnemy->object_->wtf.position = pos;
+			newEnemy->object_->transForm.position = pos;
 			//回転
 			Vector3 rot;
 			rot = objectData.rotation;
-			newEnemy->object_->wtf.rotation = rot;
+			newEnemy->object_->transForm.rotation = rot;
 			newEnemy->SetRestRotate(rot);
 			//拡縮
 			Vector3 sca;
 			sca = objectData.scaling;
-			newEnemy->object_->wtf.scale = sca;
+			newEnemy->object_->transForm.scale = sca;
 			//newEnemy->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 			enemys.emplace_back(std::move(newEnemy));
 		}
-		if (objectData.fileName == "wall") {
-			std::unique_ptr<Wall> newWall = std::make_unique<Wall>();
-			newWall->Initialize(wallMD);
-			//座標
-			Vector3 pos;
-			pos = objectData.translation;
-			newWall->object_->wtf.position = pos;
-			//回転
-			Vector3 rot;
-			rot = objectData.rotation;
-			newWall->object_->wtf.rotation = rot;
-			//拡縮
-			Vector3 sca;
-			sca = objectData.scaling;
-			newWall->object_->wtf.scale = sca;
-			newWall->object_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-			newWall->object_->Update();
-			newWall->CollideInitialize();
-			walls.emplace_back(std::move(newWall));
-		}
-		if (objectData.fileName == "boss") {
+		else if (objectData.fileName == "boss") {
 			std::unique_ptr<Boss> newBoss = std::make_unique<Boss>();
 			if (objectData.weapon == "ASSAULT") {
 				newBoss->SetWeaponNum(WP_ASSAULT);
@@ -548,23 +622,42 @@ void SceneObjects::SetingLevel(LevelData* data)
 			//座標
 			Vector3 pos;
 			pos = objectData.translation;
-			newBoss->object_->wtf.position = pos;
+			newBoss->object_->transForm.position = pos;
 			//回転
 			Vector3 rot;
 			rot = objectData.rotation;
-			newBoss->object_->wtf.rotation = rot;
+			newBoss->object_->transForm.rotation = rot;
 			newBoss->SetRestRotate(rot);
 			//拡縮
 			Vector3 sca;
 			sca = objectData.scaling;
-			newBoss->object_->wtf.scale = sca;
+			newBoss->object_->transForm.scale = sca;
 			//newBoss->object_->SetColor(Vector4(0.5f, 1, 1, 0));
 			boss.emplace_back(std::move(newBoss));
 		}
-		if (objectData.fileName == "player") {
+		else if (objectData.fileName == "wall") {
+			std::unique_ptr<Wall> newWall = std::make_unique<Wall>();
+			newWall->Initialize(wallMD.get());
+			//座標
+			Vector3 pos;
+			pos = objectData.translation;
+			newWall->object_->transForm.position = pos;
+			//回転
+			Vector3 rot;
+			rot = objectData.rotation;
+			newWall->object_->transForm.rotation = rot;
+			//拡縮
+			Vector3 sca;
+			sca = objectData.scaling;
+			newWall->object_->transForm.scale = sca;
+			newWall->object_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+			newWall->object_->Update();
+			newWall->CollideInitialize();
+			walls.emplace_back(std::move(newWall));
+		}
+		else if (objectData.fileName == "player") {
 			Vector3 position = objectData.translation;
 			player->SetPos(position);
 		}
-
 	}
 }

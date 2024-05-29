@@ -29,7 +29,7 @@ public:
 	};
 
 public:
-	const uint32_t MAX_POINTNUM = 5;
+	const uint32_t MAX_POINTNUM = POINT_MAX;
 	std::vector<Vector3> points;
 	Vector3 resultVec;
 	float easeSpeed;
@@ -37,8 +37,8 @@ public:
 	bool isActive;
 	bool pointsMax;
 private:
-	Object3d* object_[5];
-	bool pointActive_[5];
+	Object3d* circleOBJ_[POINT_MAX];
+	bool pointActive_[POINT_MAX];
 	Model* model_;
 
 	Vector3 startPos;
@@ -50,19 +50,29 @@ private:
 	bool moveEnd;
 
 	uint32_t time;
-	uint32_t easeMaxTime = 30;
+	uint32_t easeMaxTime = 40;
 	float easetime;
 	bool timeEnd = false;
 
 	// パーティクル
+	bool onPat_;
 	std::unique_ptr <ParticleManager>  particle_;
 	uint32_t onPatTime_;
-	bool onPat_;
+
+
+
+	float debuglengs[POINT_MAX];
+	float Padding__;
+	std::unique_ptr<Object3d> lineOBJ_[POINT_MAX];
+	Model* lineModel_;
+	bool isLineActive_[POINT_MAX];
+	bool PADIING__;
 
 public:
 
 	~PointDash();
 	void Initialize();
+	void Update(Vector3 pos, Vector3 ret);
 	void Draw(DirectXCommon* dxCommon);
 	// 更新
 	bool PointRayUpdate(Vector3 pos,Vector3 ret);
@@ -74,6 +84,11 @@ public:
 	void GoToPoint();
 	// リセット
 	void Reset();
+
+	void DebugImGui();
+
+	uint32_t GetRegistNum() { return registNum; };
+	bool GetLineActive(uint32_t num) { return isLineActive_[num]; };
 
 	//コライダー
 private:

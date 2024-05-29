@@ -18,7 +18,7 @@ Wall::~Wall() {
 	CollisionManager::GetInstance()->RemoveCollider(obb_);
 	delete obb_;
 	delete object_;
-	delete coliderPosTest_;
+	delete colliderPosTest_;
 }
 
 /// 更新を行う
@@ -30,20 +30,20 @@ void Wall::Initialize(Model* model) {
 void Wall::CollideInitialize() {
 	obb_ = new ObbCollider;
 	obb_->SetObject3d(object_);
-	obb_->CreateOBB(object_->model_->GetVertices(), &object_->wtf);
+	obb_->CreateOBB(object_->model_->GetVertices(), &object_->transForm);
 	CollisionManager::GetInstance()->AddCollider(obb_);
 	obb_->Update();
 	obb_->SetAttribute(COLLISION_ATTR_BARRIEROBJECT);
 	//test
 	model_ = Model::LoadFromOBJ("wall");
-	coliderPosTest_ = Object3d::Create();
-	coliderPosTest_->SetModel(model_);
-	coliderPosTest_->wtf.position = obb_->GetPos_();
-	coliderPosTest_->wtf.scale.x = obb_->GetLength(0);
-	coliderPosTest_->wtf.scale.y = obb_->GetLength(1);
-	coliderPosTest_->wtf.scale.z = obb_->GetLength(2);
-	coliderPosTest_->wtf.rotation = obb_->Getrotate_();
-	coliderPosTest_->Update();
+	colliderPosTest_ = Object3d::Create();
+	colliderPosTest_->SetModel(model_);
+	colliderPosTest_->transForm.position = obb_->GetPos_();
+	colliderPosTest_->transForm.scale.x = obb_->GetLength(0);
+	colliderPosTest_->transForm.scale.y = obb_->GetLength(1);
+	colliderPosTest_->transForm.scale.z = obb_->GetLength(2);
+	colliderPosTest_->transForm.rotation = obb_->Getrotate_();
+	colliderPosTest_->Update();
 }
 
 /// 更新を行う
@@ -51,18 +51,18 @@ void Wall::Update() {
 	isHit = false;
 	obb_->Update();
 	object_->SetColor({ 0.5f,0.5f,0.5f,1.0f});
-	object_->wtf.position = obb_->GetPos_();
-	object_->wtf.scale.x = obb_->GetLength(0);
-	object_->wtf.scale.y = obb_->GetLength(1);
-	object_->wtf.scale.z = obb_->GetLength(2);
-	object_->wtf.rotation = obb_->Getrotate_();
+	object_->transForm.position = obb_->GetPos_();
+	object_->transForm.scale.x = obb_->GetLength(0);
+	object_->transForm.scale.y = obb_->GetLength(1);
+	object_->transForm.scale.z = obb_->GetLength(2);
+	object_->transForm.rotation = obb_->Getrotate_();
 	object_->Update();
-	coliderPosTest_->wtf.position = obb_->GetPos_();
-	coliderPosTest_->wtf.scale.x = obb_->GetLength(0);
-	coliderPosTest_->wtf.scale.y = obb_->GetLength(1);
-	coliderPosTest_->wtf.scale.z = obb_->GetLength(2);
-	coliderPosTest_->wtf.rotation = obb_->Getrotate_();
-	coliderPosTest_->Update();
+	colliderPosTest_->transForm.position = obb_->GetPos_();
+	colliderPosTest_->transForm.scale.x = obb_->GetLength(0);
+	colliderPosTest_->transForm.scale.y = obb_->GetLength(1);
+	colliderPosTest_->transForm.scale.z = obb_->GetLength(2);
+	colliderPosTest_->transForm.rotation = obb_->Getrotate_();
+	colliderPosTest_->Update();
 
 }
 
@@ -70,7 +70,7 @@ void Wall::Update() {
 void Wall::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw(dxCommon->GetCommandList());
 	object_->Draw();
-	//coliderPosTest_->Draw();
+	//colliderPosTest_->Draw();
 	Object3d::PostDraw();
 }
 

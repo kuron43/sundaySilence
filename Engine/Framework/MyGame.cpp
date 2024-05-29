@@ -6,13 +6,8 @@ void MyGame::Initialize() {
 	////////////////////////////
 	Framework::Initialize();
 
-	//fbxManager = FbxManager::Create();
-
-	postEffect = new PostEffect();
-	postEffect->Initialize(dxCommon);
-	postEffect->SetKernelSize(3);
-	postEffect->SetRadialBlur(Vector2(winApp->window_width / 2, winApp->window_height / 2), 0.1f, 10);
-	postEffect->SetShadeNumber(0);
+	postFXManager = std::make_unique<PostEffectManager>();
+	postFXManager->Initialize(dxCommon);
 
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon->GetDevice());
@@ -35,9 +30,6 @@ void MyGame::Finalize() {
 
 	delete gameScene;
 
-	postEffect->Finalize();
-	delete postEffect;
-
 	////////////////////////
 
 	Framework::Finalize();
@@ -58,26 +50,24 @@ void MyGame::Update() {
 void MyGame::Draw() {
 
 
-	// ポストエフェクト用ゲームシーンの描画
-	postEffect->PreDrawScene(dxCommon->GetCommandList());
-	gameScene->Draw();
-	postEffect->PostDrawScene();
+	//// ポストエフェクト用ゲームシーンの描画
+	postFXManager->TargetPreDraw(dxCommon->GetCommandList(), gameScene);
 
 	//4.描画コマンドここから
 	dxCommon->PreDraw();
 
 	// ゲームシーンの描画
-	gameScene->Draw();
+	//gameScene->Draw();
 
 	//ポストエフェクトの描画
-	//postEffect->Draw(dxCommon->GetCommandList());
-
+	postFXManager->Draw(dxCommon->GetCommandList());
+	
 	// Imgui受付終了
 	imgui->End();
 #ifdef _DEBUG
+#endif
 	// Imgui描画
 	imgui->Draw();
-#endif
 	// 描画終了
 	dxCommon->PostDraw();
 

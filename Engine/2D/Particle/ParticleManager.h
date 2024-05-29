@@ -17,7 +17,7 @@
 #include "Camera.h"
 
 /// <summary>
-/// 3Dオブジェクト
+/// 2Dオブジェクト
 /// </summary>
 class ParticleManager
 {
@@ -193,7 +193,7 @@ public: // メンバ関数
 
 	static void SetCamera(Camera* camera) { ParticleManager::camera_ = camera; }
 
-	void SetTransform(Transform wtf) { wtf_ = wtf; };
+	void SetTransform(Transform transForm) { wtf_ = transForm; };
 
 	void Setposition(Vector3 position) { wtf_.position = position; };
 private: // メンバ変数

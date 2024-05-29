@@ -31,8 +31,8 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	bulletObj_ = Object3d::Create();
 	bulletObj_->SetModel(model);
 
-	bulletObj_->wtf.scale = Vector3(0.8f, 0.8f, 0.8f);
-	bulletObj_->wtf.position = position;
+	bulletObj_->transForm.scale = Vector3(0.8f, 0.8f, 0.8f);
+	bulletObj_->transForm.position = position;
 	timeCount = 0;
 	isDead = false;
 	if (team_ == PLAYER) {
@@ -44,7 +44,7 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 	//当たり判定用
 	sphere = new SphereCollider;
 	CollisionManager::GetInstance()->AddCollider(sphere);
-	spherePos = Affin::GetWorldTrans(bulletObj_->wtf.matWorld);
+	spherePos = Affin::GetWorldTrans(bulletObj_->transForm.matWorld);
 	sphere->SetObject3d(bulletObj_);
 	//sphere->SetBasisPos(&spherePos[i]);
 	sphere->SetRadius(0.8f);
@@ -59,14 +59,6 @@ void Bullet::Initialize(Model* model, const Vector3& position, Vector3 move, uin
 		sphere->SetAttribute(COLLISION_ATTR_UNKNOWN);
 	}
 
-
-	////test
-	//coliderPosTest_ = Object3d::Create();
-	//coliderPosTest_->SetModel(model);
-	//coliderPosTest_->wtf.position = (sphere->center);
-	//coliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
-	//coliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
-	//coliderPosTest_->Update();
 }
 
 void Bullet::Update(float speed)
@@ -75,14 +67,14 @@ void Bullet::Update(float speed)
 	if (timeCount >= DEATH_TIME) {
 		Dead();
 	}
-	bulletObj_->wtf.position += (moveVec * speed);
+	bulletObj_->transForm.position += (moveVec * speed);
 	//行列の再計算
 	bulletObj_->Update();
 
 	if (sphere->GetIsHit() == true) {
 		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT && team_ == PLAYER ||
 			sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_BARRIEROBJECT && team_ == ENEMY) {
-			isDead = true;
+			OnCollision();
 		}
 		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIES && team_ == PLAYER) {
 			isDead = true;
@@ -90,7 +82,26 @@ void Bullet::Update(float speed)
 		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYER && team_ == ENEMY) {
 			isDead = true;
 		}
+		if (sphere->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_PLAYERBARRIER && team_ == ENEMY) {
+			isInversion = true;
+		}
 	}
+	if (isInversion == true && team_ == ENEMY) {
+		isInversion = false;
+		sphere->SetAttribute(COLLISION_ATTR_PLAYERBULLETS);
+		team_ = PLAYER;
+		moveVec = -moveVec;
+	}
+	else {
+
+	}
+
+	if (team_ == PLAYER) {
+		bulletObj_->SetColor({ 0,1,1,1 }); // カラー?RGB の順番
+	}if (team_ == ENEMY) {
+		bulletObj_->SetColor({ 1,1,0,1 });
+	}
+
 	sphere->Update();
 
 	//ImGui::Begin("bullet");
@@ -109,13 +120,18 @@ void Bullet::DeadUpdate() {
 
 void Bullet::Draw()
 {
-	//coliderPosTest_->Draw();
+	//colliderPosTest_->Draw();
 	//モデルの描画
 	bulletObj_->Draw();
 }
 
-void Bullet::OnColision() {
+void Bullet::OnCollision() {
 	isDead = true;
+	ObjParticleManager::GetInstance()->SetAnyExp(
+		bulletObj_->transForm.position,
+		{ -0.2f,0.2f }, 5, 0.1f,
+		bulletObj_->GetColor()
+	);
 }
 
 bool Bullet::IsDead()

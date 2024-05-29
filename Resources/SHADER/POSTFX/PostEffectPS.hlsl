@@ -97,5 +97,32 @@ float4 main(VSOutput input) : SV_TARGET
         col.a = 1;
         return col;
     }
+    if (shadeNumber == 4)
+    {
+        float4 tax0 = tex0.Sample(smp, input.uv) / 3;
+        float4 tax1 = tex1.Sample(smp, input.uv) / 3;
+        
+        return float4(tax0 + tax1);
+       
+    }
+    if (shadeNumber == 5)
+    {
+        float2 samplePointR = input.uv;
+        float2 samplePointB = input.uv;
+        float4 Tex = tex0.Sample(smp, input.uv);
+        
+        samplePointR.x += 0.001;
+        Tex.r = tex0.Sample(smp, samplePointR).r;
+        samplePointB.x -= 0.001;
+        Tex.b = tex0.Sample(smp, samplePointB).b;
+        //return float4(Tex.rgb,1);
+        
+        //float2 samplePoint = input.uv;
+        //float4 Tex = tex0.Sample(smp, samplePoint);
+        float vignette = length(float2(0.5, 0.5) - input.uv);
+        vignette = clamp(vignette - 0.5, 0, 1);
+        Tex.xy -= vignette;
+        return float4(Tex.rgb, 1.0);
+    }
     return float4(0, 0, 0, 1);
 }

@@ -22,16 +22,34 @@
     <FxCompile Include="Resources\SHADER\ParticleVS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\SHADER\PostEffectPS.hlsl">
+    <FxCompile Include="Resources\SHADER\POSTFX\PostEffectPS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\SHADER\PostEffectVS.hlsl">
+    <FxCompile Include="Resources\SHADER\POSTFX\PostEffectVS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
     <FxCompile Include="Resources\SHADER\SpritePS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
     <FxCompile Include="Resources\SHADER\SpriteVS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\VignetteVS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\VignettePS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectVS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectPS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlur.hlsli">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlurVS.hlsl">
       <Filter>shader</Filter>
     </FxCompile>
   </ItemGroup>
@@ -48,14 +66,14 @@
     <ClCompile Include="Engine\LIGHT\CircleShadow.cpp">
       <Filter>engine\light</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\Collision.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\Collision.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\CollisionManager.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\CollisionManager.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\CollisionPrimitive.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\CollisionPrimitive.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
     <ClCompile Include="Engine\MATH\ConvertXM.cpp">
       <Filter>engine\math</Filter>
@@ -89,9 +107,6 @@
     </ClCompile>
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp">
       <Filter>engine\3d\fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp">
-      <Filter>user\scene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\Fbx\FBXModel.cpp">
       <Filter>engine\3d\fbx</Filter>
@@ -156,26 +171,23 @@
     <ClCompile Include="Engine\LIGHT\PointLight.cpp">
       <Filter>engine\light</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\MeshCollider.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\MeshCollider.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\ObbCollider.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\ObbCollider.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\QueryCallback.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\QueryCallback.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\RayCollider.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\RayCollider.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\COLIDER\SphereCollider.cpp">
-      <Filter>engine\colision</Filter>
+    <ClCompile Include="Engine\COLLIDER\SphereCollider.cpp">
+      <Filter>engine\collision</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\Json\JsonLoader.cpp">
       <Filter>engine\3d\json</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3D\Particle\ParticleManager.cpp">
-      <Filter>engine\3d\particle</Filter>
     </ClCompile>
     <ClCompile Include="Engine\INPUT\Input.cpp">
       <Filter>engine\input</Filter>
@@ -234,7 +246,7 @@
     <ClCompile Include="Engine\2D\SpriteCommon.cpp">
       <Filter>engine\2d\sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2D\PostEffect.cpp">
+    <ClCompile Include="Engine\2D\PostEffect\PostEffect.cpp">
       <Filter>engine\2d\postFX</Filter>
     </ClCompile>
     <ClCompile Include="Engine\2D\Sprite.cpp">
@@ -252,12 +264,52 @@
     <ClCompile Include="User\GAMESCENE\scene\Clear.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
-    <ClCompile Include="User\Weapon\BomFire.cpp" />
-    <ClCompile Include="User\Human\BossManager\BossManager.cpp" />
-    <ClCompile Include="User\Human\BossManager\IBossState.cpp" />
-    <ClCompile Include="User\Human\BossManager\BossMove.cpp" />
-    <ClCompile Include="User\Human\BossManager\BossAttack.cpp" />
-    <ClCompile Include="User\Human\BossManager\BossWait.cpp" />
+    <ClCompile Include="User\Weapon\BomFire.cpp">
+      <Filter>user\wepon</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\PostEffect\vignetteEffect.cpp">
+      <Filter>engine\2d\postFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp">
+      <Filter>engine\2d\postFX</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\BossAttack.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\BossManager.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\BossMove.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\BossWait.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="User\Human\BossManager\IBossState.cpp">
+      <Filter>user\human\bossManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp">
+      <Filter>engine\2d\postFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\PostEffect\MotionBlur.cpp">
+      <Filter>engine\2d\postFX</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\MANAGER\SceneFactory.cpp">
+      <Filter>user\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="User\GAMESCENE\stage\Tutorial.cpp">
+      <Filter>user\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\Particle\ParticleManager.cpp">
+      <Filter>engine\2d\particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MATH\MathUtility.cpp">
+      <Filter>engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\ModelManager.cpp">
+      <Filter>engine\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Particle\ObjectParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -266,8 +318,8 @@
     <ClInclude Include="Engine\AUDIO\Audio.h">
       <Filter>engine\audio</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\BaseCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\BaseCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
     <ClInclude Include="Engine\CAMERA\Camera.h">
       <Filter>engine\camera</Filter>
@@ -275,23 +327,23 @@
     <ClInclude Include="Engine\LIGHT\CircleShadow.h">
       <Filter>engine\light</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\Collision.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\Collision.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionAttribute.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionAttribute.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionInfo.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionInfo.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionManager.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionManager.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionPrimitive.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionPrimitive.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\CollisionTypes.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\CollisionTypes.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
     <ClInclude Include="Engine\MATH\ConvertXM.h">
       <Filter>engine\math</Filter>
@@ -325,9 +377,6 @@
     </ClInclude>
     <ClInclude Include="Engine\3D\Fbx\FBXLoader.h">
       <Filter>engine\3d\fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="User\GAMESCENE\scene\EndScene.h">
-      <Filter>user\scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\Fbx\FBXObject3d.h">
       <Filter>engine\3d\fbx</Filter>
@@ -392,32 +441,29 @@
     <ClInclude Include="Engine\LIGHT\PointLight.h">
       <Filter>engine\light</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\MeshCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\MeshCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\ObbCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\ObbCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\QueryCallback.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\QueryCallback.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\RaycastHit.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\RaycastHit.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\RayCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\RayCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\COLIDER\SphereCollider.h">
-      <Filter>engine\colision</Filter>
+    <ClInclude Include="Engine\COLLIDER\SphereCollider.h">
+      <Filter>engine\collision</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp">
       <Filter>engine\3d\json</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\Json\JsonLoader.h">
       <Filter>engine\3d\json</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Particle\ParticleManager.h">
-      <Filter>engine\3d\particle</Filter>
     </ClInclude>
     <ClInclude Include="Engine\INPUT\Input.h">
       <Filter>engine\input</Filter>
@@ -482,7 +528,7 @@
     <ClInclude Include="Engine\2D\SpriteCommon.h">
       <Filter>engine\2d\sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2D\PostEffect.h">
+    <ClInclude Include="Engine\2D\PostEffect\PostEffect.h">
       <Filter>engine\2d\postFX</Filter>
     </ClInclude>
     <ClInclude Include="Engine\2D\Sprite.h">
@@ -503,13 +549,58 @@
     <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h">
       <Filter>user\scene</Filter>
     </ClInclude>
-    <ClInclude Include="User\Human\HumanList.h" />
-    <ClInclude Include="User\Weapon\BomFire.h" />
-    <ClInclude Include="User\Human\BossManager\BossManager.h" />
-    <ClInclude Include="User\Human\BossManager\IBossState.h" />
-    <ClInclude Include="User\Human\BossManager\BossMove.h" />
-    <ClInclude Include="User\Human\BossManager\BossAttack.h" />
-    <ClInclude Include="User\Human\BossManager\BossWait.h" />
+    <ClInclude Include="User\Weapon\BomFire.h">
+      <Filter>user\wepon</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\HumanList.h">
+      <Filter>user\human</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\PostEffect\vignetteEffect.h">
+      <Filter>engine\2d\postFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h">
+      <Filter>engine\2d\postFX</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\BossAttack.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\BossManager.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\BossMove.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\BossWait.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="User\Human\BossManager\IBossState.h">
+      <Filter>user\human\bossManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h">
+      <Filter>engine\2d\postFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\PostEffect\MotionBlur.h">
+      <Filter>engine\2d\postFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SCENE\ISceneFactory.h">
+      <Filter>user\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\MANAGER\SceneFactory.h">
+      <Filter>user\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="User\GAMESCENE\stage\Tutorial.h">
+      <Filter>user\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\Particle\ParticleManager.h">
+      <Filter>engine\2d\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MATH\MathUtility.h">
+      <Filter>engine\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\ModelManager.h">
+      <Filter>engine\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Particle\ObjectParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
@@ -521,11 +612,20 @@
     <None Include="Resources\SHADER\Particle.hlsli">
       <Filter>shader</Filter>
     </None>
-    <None Include="Resources\SHADER\PostEffect.hlsli">
+    <None Include="Resources\SHADER\POSTFX\PostEffect.hlsli">
       <Filter>shader</Filter>
     </None>
     <None Include="Resources\SHADER\Sprite.hlsli">
       <Filter>shader</Filter>
+    </None>
+    <None Include="Resources\SHADER\POSTFX\IPostEffect.hlsli">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="Resources\SHADER\POSTFX\MotionBlurPS.hlsl">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="Resources\SHADER\POSTFX\Vignette.hlsli">
+      <Filter>engine\2d\postFX</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -534,9 +634,6 @@
     </Filter>
     <Filter Include="user">
       <UniqueIdentifier>{53324cfa-3f37-4dee-80d1-93c49b264b70}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="shader">
-      <UniqueIdentifier>{c32523f7-b17a-4ad1-bc77-9961eadf0e36}</UniqueIdentifier>
     </Filter>
     <Filter Include="engine\base">
       <UniqueIdentifier>{2b632ccf-af11-479d-bc38-5ea928075cd9}</UniqueIdentifier>
@@ -553,9 +650,6 @@
     <Filter Include="engine\audio">
       <UniqueIdentifier>{edbea72a-c68c-4893-8e55-b5d7660f2ce2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="engine\colision">
-      <UniqueIdentifier>{30f666f6-3664-494e-b1d4-33fed5a16e2b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="engine\math">
       <UniqueIdentifier>{b4a84e92-1db5-42b3-9659-8e40b22ac464}</UniqueIdentifier>
     </Filter>
@@ -567,9 +661,6 @@
     </Filter>
     <Filter Include="engine\3d\fbx">
       <UniqueIdentifier>{9395df03-0342-4ee5-9bfb-ba99f150e564}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="engine\3d\particle">
-      <UniqueIdentifier>{ba2c4f0c-c2b1-4774-96c4-6cc4a137b9d3}</UniqueIdentifier>
     </Filter>
     <Filter Include="engine\2d\sprite">
       <UniqueIdentifier>{f3fc0490-b4e7-4804-94d5-8b0396743d38}</UniqueIdentifier>
@@ -606,6 +697,18 @@
     </Filter>
     <Filter Include="user\skils">
       <UniqueIdentifier>{be90c4fa-a6bb-4a7d-b98f-c01bad566c95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\collision">
+      <UniqueIdentifier>{30f666f6-3664-494e-b1d4-33fed5a16e2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\2d\particle">
+      <UniqueIdentifier>{ba2c4f0c-c2b1-4774-96c4-6cc4a137b9d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{c32523f7-b17a-4ad1-bc77-9961eadf0e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\human\bossManager">
+      <UniqueIdentifier>{a2241f99-a9dd-4979-baf3-3a1b1c3a5c1d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

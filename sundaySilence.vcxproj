@@ -61,7 +61,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);DIRECTINPUT_VERSION=0x0800</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\SCENE;$(SolutionDir)Engine\COLLIDER;$(SolutionDir)Engine\2D\Particle;$(SolutionDir)Engine\2D\PostEffect;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -87,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);DIRECTINPUT_VERSION=0x0800</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\COLIDER;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)User\Objects;$(SolutionDir)User\GAMESCENE\stage;$(SolutionDir)Engine\SCENE;$(SolutionDir)Engine\COLLIDER;$(SolutionDir)Engine\2D\Particle;$(SolutionDir)Engine\2D\PostEffect;$(SolutionDir)Engine\Framework;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Skills;$(SolutionDir)User\Human\BossManager;$(SolutionDir)User\Human;$(SolutionDir)User\Weapon;$(SolutionDir)User\SCENE\MANAGER;$(SolutionDir)User\GAMESCENE;$(SolutionDir)User\GAMESCENE\MANAGER;$(SolutionDir)User\GAMESCENE\scene;$(SolutionDir)Engine\MATH;$(SolutionDir)Engine\LIGHT;$(SolutionDir)Engine\INPUT;$(SolutionDir)Engine\DEBUG;$(SolutionDir)Engine\CAMERA;$(SolutionDir)Engine\BASE;$(SolutionDir)Engine\AUDIO;$(SolutionDir)Engine\3D\Particle;$(SolutionDir)Engine\3D\Json;$(SolutionDir)Engine\3D\Fbx;$(SolutionDir)Engine\3D;$(SolutionDir)Engine\2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -109,7 +109,12 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\2D\PostEffect.cpp" />
+    <ClCompile Include="Engine\2D\Particle\ParticleManager.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\MotionBlur.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\PostEffect.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\PostEffectManager.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect\vignetteEffect.cpp" />
     <ClCompile Include="Engine\2D\Sprite.cpp" />
     <ClCompile Include="Engine\2D\SpriteCommon.cpp" />
     <ClCompile Include="Engine\3D\Fbx\FBXLoader.cpp" />
@@ -120,8 +125,9 @@
     <ClCompile Include="Engine\3D\Material.cpp" />
     <ClCompile Include="Engine\3D\Mesh.cpp" />
     <ClCompile Include="Engine\3D\Model.cpp" />
+    <ClCompile Include="Engine\3D\ModelManager.cpp" />
     <ClCompile Include="Engine\3D\Object3d.cpp" />
-    <ClCompile Include="Engine\3D\Particle\ParticleManager.cpp" />
+    <ClCompile Include="Engine\3D\Particle\ObjectParticle.cpp" />
     <ClCompile Include="Engine\3D\Transform.cpp" />
     <ClCompile Include="Engine\AUDIO\Audio.cpp" />
     <ClCompile Include="Engine\BASE\DirectXCommon.cpp" />
@@ -129,14 +135,14 @@
     <ClCompile Include="Engine\BASE\main.cpp" />
     <ClCompile Include="Engine\BASE\WinApp.cpp" />
     <ClCompile Include="Engine\CAMERA\Camera.cpp" />
-    <ClCompile Include="Engine\COLIDER\Collision.cpp" />
-    <ClCompile Include="Engine\COLIDER\CollisionManager.cpp" />
-    <ClCompile Include="Engine\COLIDER\CollisionPrimitive.cpp" />
-    <ClCompile Include="Engine\COLIDER\MeshCollider.cpp" />
-    <ClCompile Include="Engine\COLIDER\ObbCollider.cpp" />
-    <ClCompile Include="Engine\COLIDER\QueryCallback.cpp" />
-    <ClCompile Include="Engine\COLIDER\RayCollider.cpp" />
-    <ClCompile Include="Engine\COLIDER\SphereCollider.cpp" />
+    <ClCompile Include="Engine\COLLIDER\Collision.cpp" />
+    <ClCompile Include="Engine\COLLIDER\CollisionManager.cpp" />
+    <ClCompile Include="Engine\COLLIDER\CollisionPrimitive.cpp" />
+    <ClCompile Include="Engine\COLLIDER\MeshCollider.cpp" />
+    <ClCompile Include="Engine\COLLIDER\ObbCollider.cpp" />
+    <ClCompile Include="Engine\COLLIDER\QueryCallback.cpp" />
+    <ClCompile Include="Engine\COLLIDER\RayCollider.cpp" />
+    <ClCompile Include="Engine\COLLIDER\SphereCollider.cpp" />
     <ClCompile Include="Engine\DEBUG\ImGuiManager.cpp" />
     <ClCompile Include="Engine\Framework\Framework.cpp" />
     <ClCompile Include="Engine\Framework\MyGame.cpp" />
@@ -151,12 +157,15 @@
     <ClCompile Include="Engine\MATH\Affin.cpp" />
     <ClCompile Include="Engine\MATH\ConvertXM.cpp" />
     <ClCompile Include="Engine\MATH\Easing.cpp" />
+    <ClCompile Include="Engine\MATH\MathUtility.cpp" />
     <ClCompile Include="Engine\MATH\Matrix4.cpp" />
     <ClCompile Include="Engine\MATH\Quaternion.cpp" />
     <ClCompile Include="Engine\MATH\Vector2.cpp" />
     <ClCompile Include="Engine\MATH\Vector3.cpp" />
     <ClCompile Include="Engine\MATH\Vector4.cpp" />
     <ClCompile Include="Engine\3D\Json\JsonLoader.cpp" />
+    <ClCompile Include="User\GAMESCENE\MANAGER\SceneFactory.cpp" />
+    <ClCompile Include="User\GAMESCENE\stage\Tutorial.cpp" />
     <ClCompile Include="User\Human\BossManager\BossAttack.cpp" />
     <ClCompile Include="User\Human\BossManager\BossMove.cpp" />
     <ClCompile Include="User\Human\BossManager\BossWait.cpp" />
@@ -164,7 +173,6 @@
     <ClCompile Include="User\GAMESCENE\GameScene.cpp" />
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneManager.cpp" />
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneObjects.cpp" />
-    <ClCompile Include="User\GAMESCENE\scene\EndScene.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\Clear.cpp" />
     <ClCompile Include="User\GAMESCENE\scene\TransitionsScene.cpp" />
     <ClCompile Include="User\GAMESCENE\stage\GAME1Scene.cpp" />
@@ -192,7 +200,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\kokut\Downloads\json.hpp" />
-    <ClInclude Include="Engine\2D\PostEffect.h" />
+    <ClInclude Include="Engine\2D\Particle\ParticleManager.h" />
+    <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h" />
+    <ClInclude Include="Engine\2D\PostEffect\MotionBlur.h" />
+    <ClInclude Include="Engine\2D\PostEffect\PostEffect.h" />
+    <ClInclude Include="Engine\2D\PostEffect\PostEffectManager.h" />
+    <ClInclude Include="Engine\2D\PostEffect\vignetteEffect.h" />
     <ClInclude Include="Engine\2D\Sprite.h" />
     <ClInclude Include="Engine\2D\SpriteCommon.h" />
     <ClInclude Include="Engine\3D\Fbx\FBXLoader.h" />
@@ -202,27 +215,28 @@
     <ClInclude Include="Engine\3D\Material.h" />
     <ClInclude Include="Engine\3D\Mesh.h" />
     <ClInclude Include="Engine\3D\Model.h" />
+    <ClInclude Include="Engine\3D\ModelManager.h" />
     <ClInclude Include="Engine\3D\Object3d.h" />
-    <ClInclude Include="Engine\3D\Particle\ParticleManager.h" />
+    <ClInclude Include="Engine\3D\Particle\ObjectParticle.h" />
     <ClInclude Include="Engine\3D\Transform.h" />
     <ClInclude Include="Engine\AUDIO\Audio.h" />
     <ClInclude Include="Engine\BASE\DirectXCommon.h" />
     <ClInclude Include="Engine\BASE\FPS.h" />
     <ClInclude Include="Engine\BASE\WinApp.h" />
     <ClInclude Include="Engine\CAMERA\Camera.h" />
-    <ClInclude Include="Engine\COLIDER\BaseCollider.h" />
-    <ClInclude Include="Engine\COLIDER\Collision.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionAttribute.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionInfo.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionManager.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionPrimitive.h" />
-    <ClInclude Include="Engine\COLIDER\CollisionTypes.h" />
-    <ClInclude Include="Engine\COLIDER\MeshCollider.h" />
-    <ClInclude Include="Engine\COLIDER\ObbCollider.h" />
-    <ClInclude Include="Engine\COLIDER\QueryCallback.h" />
-    <ClInclude Include="Engine\COLIDER\RaycastHit.h" />
-    <ClInclude Include="Engine\COLIDER\RayCollider.h" />
-    <ClInclude Include="Engine\COLIDER\SphereCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\BaseCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\Collision.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionAttribute.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionInfo.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionManager.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionPrimitive.h" />
+    <ClInclude Include="Engine\COLLIDER\CollisionTypes.h" />
+    <ClInclude Include="Engine\COLLIDER\MeshCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\ObbCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\QueryCallback.h" />
+    <ClInclude Include="Engine\COLLIDER\RaycastHit.h" />
+    <ClInclude Include="Engine\COLLIDER\RayCollider.h" />
+    <ClInclude Include="Engine\COLLIDER\SphereCollider.h" />
     <ClInclude Include="Engine\DEBUG\ImGuiManager.h" />
     <ClInclude Include="Engine\Framework\Framework.h" />
     <ClInclude Include="Engine\Framework\MyGame.h" />
@@ -238,11 +252,15 @@
     <ClInclude Include="Engine\MATH\Affin.h" />
     <ClInclude Include="Engine\MATH\ConvertXM.h" />
     <ClInclude Include="Engine\MATH\Easing.h" />
+    <ClInclude Include="Engine\MATH\MathUtility.h" />
     <ClInclude Include="Engine\MATH\Matrix4.h" />
     <ClInclude Include="Engine\MATH\Quaternion.h" />
     <ClInclude Include="Engine\MATH\Vector2.h" />
     <ClInclude Include="Engine\MATH\Vector3.h" />
     <ClInclude Include="Engine\MATH\Vector4.h" />
+    <ClInclude Include="Engine\SCENE\ISceneFactory.h" />
+    <ClInclude Include="User\GAMESCENE\MANAGER\SceneFactory.h" />
+    <ClInclude Include="User\GAMESCENE\stage\Tutorial.h" />
     <ClInclude Include="User\Human\BossManager\BossAttack.h" />
     <ClInclude Include="User\Human\BossManager\BossMove.h" />
     <ClInclude Include="User\Human\BossManager\BossWait.h" />
@@ -251,7 +269,6 @@
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneIntegrate.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneManager.h" />
     <ClInclude Include="User\GAMESCENE\MANAGER\SceneObjects.h" />
-    <ClInclude Include="User\GAMESCENE\scene\EndScene.h" />
     <ClInclude Include="User\GAMESCENE\scene\Clear.h" />
     <ClInclude Include="User\GAMESCENE\scene\TransitionsScene.h" />
     <ClInclude Include="User\GAMESCENE\stage\GAME1Scene.h" />
@@ -284,7 +301,22 @@
     <None Include="Resources\SHADER\FBX.hlsli" />
     <None Include="Resources\SHADER\OBJShaderHeader.hlsli" />
     <None Include="Resources\SHADER\Particle.hlsli" />
-    <None Include="Resources\SHADER\PostEffect.hlsli" />
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\IPostEffectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlur.hlsli">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <None Include="Resources\SHADER\POSTFX\IPostEffect.hlsli" />
+    <None Include="Resources\SHADER\POSTFX\PostEffect.hlsli" />
+    <None Include="Resources\SHADER\POSTFX\Vignette.hlsli" />
     <None Include="Resources\SHADER\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
@@ -323,11 +355,32 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Resources\SHADER\PostEffectPS.hlsl">
+    <None Include="Resources\SHADER\POSTFX\MotionBlurPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <FxCompile Include="Resources\SHADER\POSTFX\PostEffectPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="Resources\SHADER\PostEffectVS.hlsl">
+    <FxCompile Include="Resources\SHADER\POSTFX\PostEffectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\MotionBlurVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\VignettePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\SHADER\POSTFX\VignetteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>

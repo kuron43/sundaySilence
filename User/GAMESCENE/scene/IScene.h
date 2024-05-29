@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "SceneObjects.h"
 #include "ParticleManager.h"
+#include "ObjectParticle.h"
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "Camera.h"
@@ -26,15 +27,15 @@ class IScene
 {
 protected:
 
-	SceneManager* _controller;
-	SceneObjects* _objects;
+	static SceneManager* _manager;
+	static SceneObjects* _objects;
 
 public:
 
 	IScene();
 	virtual ~IScene();
 
-	//virtual Scene Create(SceneManager& controller) = 0;
+	//virtual Scene Create(SceneManager& manager) = 0;
 	/// シーンの初期化を行う
 	virtual void Initialize() = 0;
 
@@ -43,6 +44,9 @@ public:
 
 	/// シーンの描画を行う
 	virtual void Draw() = 0;
+
+	static void SetSceneManager(SceneManager* manager) { _manager = manager; };
+	static void SetSceneObjects(SceneObjects* objects) { _objects = objects; };
 
 };
 

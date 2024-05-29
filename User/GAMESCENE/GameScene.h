@@ -1,17 +1,24 @@
 #pragma once
 
-#include <string>
+#pragma warning(push)
+#pragma warning(disable: 4514)
+
+#include<string>
+#pragma warning(pop)
 
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "SpriteCommon.h"
 #include "SceneManager.h"
 #include "SceneObjects.h"
+#include "SceneFactory.h"
+#include "IScene.h"
 #include "Affin.h"
 #include "Camera.h"
 #include "CollisionManager.h"
 #include "BulletManager.h"
 #include "JsonLoader.h"
+#include "ObjectParticle.h"
 
 
 /// <summary>
@@ -19,9 +26,6 @@
 /// </summary>
 class GameScene
 {
-private: // 静的メンバ変数
-	//static const int debugTextTexNumber = 0;
-
 public: // メンバ関数
 
 	/// <summary>
@@ -49,9 +53,14 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// UI描画
+	/// </summary>
+	void DrawUI();
+
 public:
 
-	
+
 private: // メンバ変数 (固定)
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -59,8 +68,10 @@ private: // メンバ変数 (固定)
 	Camera* camera = nullptr;
 	// mane-ja-
 	SceneManager* sceneManager = nullptr;
+	SceneFactory* sceneFactory = nullptr;
 	CollisionManager* collisionManager_ = nullptr;
 	BulletManager* bulletManager_ = nullptr;
+	ObjParticleManager* objParticleManager_ = nullptr;
 	//ParticleManager* particleManager_ = nullptr;
 
 private:	//メンバ変数

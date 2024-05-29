@@ -26,8 +26,8 @@ GameScene::~GameScene() {
 
 	delete spriteCommon;
 	delete camera;
+	delete sceneFactory;
 	delete sceneManager;
-	CollisionManager::GetInstance()->Finalize();
 }
 
 /// <summary>
@@ -55,11 +55,20 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input) {
 	ParticleManager::SetCamera(camera);
 	Object3d::SetCamera(camera);
 
-	sceneObjects = std::make_unique<SceneObjects>(dxCommon, camera);
+	// シーン管理
+	sceneObjects = std::make_unique<SceneObjects>(dxCommon);
 	sceneObjects->Initialize();
+	IScene::SetSceneObjects(sceneObjects.get());
+
+	sceneFactory = new SceneFactory();
 
 	sceneManager = new SceneManager(dxCommon, camera, sceneObjects.get());
+	sceneManager->SetFactory(sceneFactory);
+	IScene::SetSceneManager(sceneManager);
+	sceneManager->Initialize();
 	sceneManager->SceneInitialize();
+	objParticleManager_ = ObjParticleManager::GetInstance();
+	objParticleManager_->Init(sceneObjects->box);
 
 }
 
@@ -74,12 +83,20 @@ void GameScene::Update() {
 
 	sceneObjects->lightGroup->Update();
 	sceneObjects->skydome_O->Update();
+	sceneObjects->UpdateImGui();
 
 	sceneManager->SceneUpdate(input_);
-
-
+	objParticleManager_->Update();
 	collisionManager_->CheckAllCollisions();
 	camera->Update();
+#ifdef _DEBUG
+	// Imgui
+	float forcalL = camera->GetForcalLengs();
+	ImGui::Begin("ForcalLengs");
+	ImGui::SliderFloat("forcalLengs", &forcalL,0.01f,120.0f);
+	ImGui::End();
+	camera->SetFocalLengs(forcalL);
+#endif
 }
 
 /// <summary>
@@ -90,10 +107,15 @@ void GameScene::Draw() {
 	sceneObjects->skydome_O->Draw();
 	Object3d::PostDraw();
 	sceneManager->SceneDraw();
-	//particleManager_->Draw();
+	//particleManager_->Draw();p
 
 	/*ImGui::Begin("Info");
 	ImGui::Text("E : particle");
 	ImGui::Text("WASD : ball rotate");
 	ImGui::End();*/
+}
+
+void GameScene::DrawUI()
+{
+
 }

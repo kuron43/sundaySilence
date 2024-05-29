@@ -11,18 +11,19 @@ class Shotgun :
     public Weapon
 {
 private:
-	Model* model_;
 	bool active_ = false;
 	bool goShot;
+	bool nowRoading;
+	bool PADDING[5];
+	Model* model_;
 	const uint32_t WeaponNum = 2;
 
 private:
 	const float nomalSpeed = 1.5f;
 	float speed_ = nomalSpeed;
-	uint32_t coolTime = 3;
-	uint32_t mag = 5;
-	uint32_t roadingTime = 500;
-	bool nowRoading;
+	int32_t coolTime = 3;
+	int32_t mag = 5;
+	int32_t roadingTime = 500;
 
 
 public:
@@ -34,7 +35,7 @@ public:
 	bool Initialize() override;
 
 	/// 更新を行う
-	void Update(Input* input, bool isSlow) override;
+	void Update(Input* input) override;
 
 	/// 描画を行う
 	void Draw(DirectXCommon* dxCommon) override;

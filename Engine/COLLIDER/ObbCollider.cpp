@@ -44,7 +44,7 @@ void ObbCollider::CreateOBB(std::vector<VertexPosNormalUv> vertices, Transform* 
 
 	//中心点取得
 	m_Pos = (min + max) * 0.5f + Affin::GetWorldTrans(wtf_->matWorld);
-	//m_Pos = obj->wtf.m_Pos = { 0,0,0 };
+	//m_Pos = obj->transForm.m_Pos = { 0,0,0 };
 
 	//方向ベクトル取得
 	Matrix4 rotMat = Affin::matRotation(wtf_->rotation);
@@ -254,8 +254,8 @@ void ObbCollider::Update()
 void ObbCollider::UpdateObb(Object3d& obj)
 {
 	//ワールド行列から座標を抽出
-	const Matrix4& matWorld = obj.wtf.matWorld;
-	const Matrix4& rotMat = Affin::matRotation(obj.wtf.rotation);
+	const Matrix4& matWorld = obj.transForm.matWorld;
+	const Matrix4& rotMat = Affin::matRotation(obj.transForm.rotation);
 
 	//球のメンバ変数を更新
 	OBB::m_Pos = Affin::GetWorldTrans(matWorld);

@@ -12,14 +12,11 @@
 class GAME1Scene :
     public IScene
 {
-protected:
-	SceneManager* _controller;
-	SceneObjects* _objects;
 public:
-	GAME1Scene(SceneManager* controller, SceneObjects* objects);
+	GAME1Scene();
 	~GAME1Scene() override;
 
-	//void Cleate(SceneManager& controller) override;
+	//void Cleate(SceneManager& manager) override;
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -35,13 +32,15 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw() override;
-
+private:
+	void TutorialInitialize();
+	void TutorialUpdate();
+	void TutrialDraw(bool isTutrial);
 private:
 	bool startTime_ = false;
 	bool stageClear = false;
 	bool stageFailed = false;
 	bool isDrawSP_ = true;
-	uint32_t randTime_;
 
 	// カメラ座標
 	Vector3 camposEye = { 0.0f,90.0f,-10.0001f };
@@ -49,16 +48,12 @@ private:
 	float forcalLengs = 30.0f;
 
 
-	uint32_t testTime = 0;
-
 	std::unique_ptr <Sprite> infoSP_;
 	Vector2 infoPos = { 20.0f,10.0f };
 	uint32_t infoNum_ = 60;
 	uint32_t infoCountTime_ = 0;
 	uint32_t nowInfoNum_,oldInfoNum_;
-	bool isInfoWASD, isInfoSHOT, isInfoSLOW, isInfoDUSH, isInfoWEPC,isAllFalse;
+	bool isInfoBarrier, isInfoSHOT, isInfoSLOW, isInfoDUSH, isInfoWEPC,isAllFalse;
 	bool isTimeCount;
-public:
-	LevelData* leveData = nullptr;
 };
 

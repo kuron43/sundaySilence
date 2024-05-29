@@ -8,6 +8,7 @@
 #include"SphereCollider.h"
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
+#include "ObjectParticle.h"
 
 enum Team
 {
@@ -23,8 +24,6 @@ class Bullet
 public:
 	uint32_t team_;
 	uint32_t weapon;
-	bool isTeam;
-	bool isDead;
 
 	uint32_t DEATH_TIME = 800;
 	uint32_t timeCount;
@@ -34,7 +33,10 @@ public:
 
 	Vector3 moveVec;
 
+	bool isTeam;
+	bool isDead;
 	bool upThrow = false;
+	bool isInversion = false;
 
 public:
 	Bullet();
@@ -46,9 +48,9 @@ public:
 
 	virtual void Draw();
 
-	void OnColision();
+	void OnCollision();
 
-	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bulletObj_->wtf.matWorld); };
+	Vector3 GetWorldPosition() { return Affin::GetWorldTrans(bulletObj_->transForm.matWorld); };
 
 	virtual bool IsDead();
 	void Dead() { isDead = true; }
@@ -61,11 +63,9 @@ public:
 	void SetSphere(SphereCollider* sphere_) { sphere = sphere_; }
 	SphereCollider* GetSphere() { return sphere; }
 private:
-	//int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
-	//std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	SphereCollider* sphere;
-	//Ray* ray;
 	Vector3 spherePos;
-	Object3d* coliderPosTest_;
+	uint32_t PADDING;
+	Object3d* colliderPosTest_;
 };
 

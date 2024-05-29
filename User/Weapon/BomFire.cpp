@@ -19,13 +19,11 @@ bool BomFire::Initialize() {
 }
 
 /// 更新を行う
-void BomFire::Update(Input* input, bool isSlow) {
-
-	_isSlow = isSlow;
+void BomFire::Update(Input* input) {
 	if (input) {
 
 	}
-	if (isSlow == true) {
+	if (_isSlow == true) {
 		speed_ = nomalSpeed * _slowSpeed;
 	}
 	else
@@ -77,23 +75,30 @@ void BomFire::Shot(Transform& shooter, Transform& reticle, uint32_t team) {
 
 	if (coolTime <= 0 && goShot == true) {
 		//弾を生成し、初期化
-		std::unique_ptr<FireBottle> newBullet = std::make_unique<FireBottle>();
-		Vector3 startPos, reticleVec, moveVec, velo;
-		float veloLen;
-		startPos = Affin::GetWorldTrans(shooter.matWorld); // 発射座標
-		startPos.y += 1.0f;
-		reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
-		velo = reticleVec - startPos;
-		veloLen = velo.length();
-		velo.nomalize();
-		moveVec = velo * speed_;
-		moveVec.nomalize();
-		newBullet->Initialize(model_, startPos + velo, moveVec, team);
-		newBullet->SetDeathTime(600);
-		newBullet->SetLength(veloLen);
+		for (int i = 0; i < 3; i++) {
+			std::unique_ptr<FireBottle> newBullet = std::make_unique<FireBottle>();
+			Vector3 startPos, reticleVec, moveVec, velo;
+			float veloLen;
+			startPos = Affin::GetWorldTrans(shooter.matWorld); // 発射座標
+			startPos.y += 1.0f;
+			reticleVec = Affin::GetWorldTrans(reticle.matWorld);	// レティクルの3D座標
+			velo = reticleVec - startPos;
+			veloLen = velo.length();
+			velo.nomalize();
+			if (i == 1) {
+				velo = Affin::VecMat(velo, Affin::matRotateY(Affin::radConvert(30.0f)));
+			}if (i == 2) {
+				velo = Affin::VecMat(velo, Affin::matRotateY(Affin::radConvert(-30.0f)));
+			}
+			moveVec = velo * speed_;
+			moveVec.nomalize();
+			newBullet->Initialize(model_, startPos + velo, moveVec, team);
+			newBullet->SetDeathTime(600);
+			newBullet->SetLength(veloLen);
 
-		//弾を登録
-		BulletManager::GetInstance()->AddBullet(std::move(newBullet));
+			//弾を登録
+			BulletManager::GetInstance()->AddBullet(std::move(newBullet));
+		}
 		mag++;
 
 		//クールタイムをリセット
@@ -130,24 +135,24 @@ void FireBottle::Initialize(Model* model, const Vector3& position, Vector3 move,
 	bottleObj_ = Object3d::Create();
 	bottleObj_->SetModel(model);
 
-	bottleObj_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
-	bottleObj_->wtf.position = position;
+	bottleObj_->transForm.scale = Vector3(0.5f, 0.5f, 0.5f);
+	bottleObj_->transForm.position = position;
 	deathCount = 0;
 	timeCount = 0;
 	isDead = false;
 	if (team_ == PLAYER) {
 		bottleObj_->SetColor({ 0,1,1,1 }); // カラー?RGB の順番
 	}if (team_ == ENEMY) {
-		bottleObj_->SetColor({ 1,1,0,1 });
+		bottleObj_->SetColor({ 1,0,0,1 });
 	}
 
 	//当たり判定用
 	sphere = new SphereCollider;
 	CollisionManager::GetInstance()->AddCollider(sphere);
-	spherePos = Affin::GetWorldTrans(bottleObj_->wtf.matWorld);
+	spherePos = Affin::GetWorldTrans(bottleObj_->transForm.matWorld);
 	sphere->SetObject3d(bottleObj_);
 	//sphere->SetBasisPos(&spherePos[i]);
-	sphere->SetRadius(bottleObj_->wtf.scale.x);
+	sphere->SetRadius(bottleObj_->transForm.scale.x);
 	sphere->Update();
 
 	if (team_ == PLAYER) { // 自機弾
@@ -159,15 +164,6 @@ void FireBottle::Initialize(Model* model, const Vector3& position, Vector3 move,
 	else {
 		sphere->SetAttribute(COLLISION_ATTR_UNKNOWN);
 	}
-
-
-	////test
-	//coliderPosTest_ = Object3d::Create();
-	//coliderPosTest_->SetModel(model);
-	//coliderPosTest_->wtf.position = (sphere->center);
-	//coliderPosTest_->wtf.scale = Vector3(sphere->GetRadius(), sphere->GetRadius(), sphere->GetRadius());
-	//coliderPosTest_->wtf.rotation = (Vector3{ 0,0,0 });
-	//coliderPosTest_->Update();
 }
 
 void FireBottle::Update(float speed)
@@ -183,14 +179,14 @@ void FireBottle::Update(float speed)
 		Dead();
 	}
 	if (isExplosion) {
-		bottleObj_->wtf.position.y = 0.0f;
+		bottleObj_->transForm.position.y = 0.0f;
 	}
 	else {
 		// Y速度を計算(鉛直投げ上げ)
 		bottleYSpeed = 2.5f - 9.8f * (static_cast<float>(timeCount) / 120.0f);
-		bottleObj_->wtf.position.x += (moveVec.x * (vecLength / 70.0f));
-		bottleObj_->wtf.position.y += (bottleYSpeed);
-		bottleObj_->wtf.position.z += (moveVec.z * (vecLength / 70.0f));
+		bottleObj_->transForm.position.x += (moveVec.x * (vecLength / 70.0f));
+		bottleObj_->transForm.position.y += (bottleYSpeed);
+		bottleObj_->transForm.position.z += (moveVec.z * (vecLength / 70.0f));
 	}
 
 	//行列の再計算
@@ -209,7 +205,7 @@ void FireBottle::Update(float speed)
 			sphere->SetAttribute(COLLISION_ATTR_ENEMIESFIRE);
 		}
 	}
-	if (bottleObj_->wtf.position.y <= 0) {
+	if (bottleObj_->transForm.position.y <= 0) {
 		if (team_ == PLAYER) {
 			//isDead = true;
 			isExplosion = true;
@@ -222,21 +218,30 @@ void FireBottle::Update(float speed)
 		}
 	}
 	if (isExplosion) {
-		bottleObj_->wtf.scale = Vector3(0.5f, 0.5f, 0.5f);
+		bottleObj_->transForm.scale = Vector3(0.5f, 0.5f, 0.5f);
 		sphere->SetRadius(5.0f);
+		ObjParticleManager::GetInstance()->SetAnyExp(bottleObj_->transForm.position,
+			{ -0.2f,0.2f }, 2, 0.1f,{1,0,0,1});
 	}
 	else {
-		bottleObj_->wtf.scale = Vector3(0.05f, 0.05f, 0.05f);
+		bottleObj_->transForm.scale = Vector3(0.05f, 0.05f, 0.05f);
 		sphere->SetRadius(0.5f);
+		ObjParticleManager::GetInstance()->SetAnyExp(
+			bottleObj_->transForm.position,
+			{ -0.05f,0.05f },
+			2, 0.05f,
+			{ 0.5f,0,0,1 });
 	}
-	bottleObj_->SetColor(Vector4(1.0f, 0.0f, 0.0f,0.8f));
+	bottleObj_->SetColor(Vector4(1.0f, 0.0f, 0.0f,1.0f));
 	sphere->Update();
 
+////IMGUI
+	//Vector4 col = bulletObj_->GetColor();
 	//ImGui::Begin("bullet");
-	//ImGui::SetWindowPos({ 600,50 });
-	//ImGui::SetWindowSize({500.0f,200.0f});
-	//ImGui::InputFloat4("color", &bulletObj_->color_.x);
+	//ImGui::InputFloat4("color", &col.x);
 	//ImGui::End();
+	//bulletObj_->SetColor(col);
+
 }
 
 void FireBottle::DeadUpdate() {
@@ -248,12 +253,12 @@ void FireBottle::DeadUpdate() {
 
 void FireBottle::Draw()
 {
-	//coliderPosTest_->Draw();
+	//colliderPosTest_->Draw();
 	//モデルの描画
 	bottleObj_->Draw();
 }
 
-void FireBottle::OnColision() {
+void FireBottle::OnCollision() {
 	//isDead = true;
 	isExplosion = true;
 }

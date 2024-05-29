@@ -25,15 +25,18 @@
 #include"RayCollider.h"
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
+#include "ObjectParticle.h"
 
  // ヒトガタ基底クラス
 class Human
 {
 
 protected:
-	float _SlowSpeed = 0.25f;
-	bool _isSlow = false;
+	const float _SlowSpeed = 0.25f;
+	bool _isSlow;
 	bool _isTitle;
+private:
+	bool PADDING[2];
 public:
 
 	Human();

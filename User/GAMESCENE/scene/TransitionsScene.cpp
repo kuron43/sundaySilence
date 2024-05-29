@@ -8,9 +8,7 @@
 #include "Affin.h"
 
 
-TransitionsScene::TransitionsScene(SceneManager* controller, SceneObjects* objects) {
-	_controller = controller;
-	_objects = objects;
+TransitionsScene::TransitionsScene() {
 }
 TransitionsScene::~TransitionsScene() {
 
@@ -67,22 +65,22 @@ void TransitionsScene::Update(Input* input) {
 	}
 
 	if (sceneTimer >= easeMaxTime * (uint32_t)2) {
-		_controller->PopScene();
+		_manager->PopScene();
 	}
 }
 
 void TransitionsScene::Draw() {
 	if (isEaseOut == false) {
-		_objects->floorGround->Draw(_controller->_dxCommon);
-		//_objects->player->Draw(_controller->_dxCommon);
+		_objects->floorGround->Draw(_manager->_dxCommon);
+		//_objects->player->Draw(_manager->_dxCommon);
 		for (std::unique_ptr <Enemy>& enemy : _objects->enemys) {
-			enemy->Draw(_controller->_dxCommon);
+			enemy->Draw(_manager->_dxCommon);
 		}
 		for (std::unique_ptr <Boss>& boss : _objects->boss) {
-			boss->Draw(_controller->_dxCommon);
+			boss->Draw(_manager->_dxCommon);
 		}
 		for (std::unique_ptr <Wall>& walls : _objects->walls) {
-			walls->Draw(_controller->_dxCommon);
+			walls->Draw(_manager->_dxCommon);
 		}
 		if (_objects->GetIsUIDraw()) {
 			_objects->UIDraw();

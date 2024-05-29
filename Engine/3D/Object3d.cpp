@@ -309,7 +309,7 @@ bool Object3d::Initialize()
 
 
 
-	wtf.Initialize();
+	transForm.Initialize();
 	
 	color_ = Vector4(0.8f, 0.8f, 0.8f, 1.0f);
 	return true;
@@ -329,9 +329,9 @@ void Object3d::Update()
 	resultMat = Affin::matUnit();
 	ConstBufferDataB0* constMap = nullptr;
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
-	resultMat = wtf.matWorld * camera_->GetViewProjectionMatrix();	// 行列の合成
+	resultMat = transForm.matWorld * camera_->GetViewProjectionMatrix();	// 行列の合成
 	constMap->veiwproj = camera_->GetViewProjectionMatrix();
-	constMap->world = wtf.matWorld;
+	constMap->world = transForm.matWorld;
 	constMap->cameraPos = camera_->GetEye();
 	constMap->color = color_;
 	constBuffB0->Unmap(0, nullptr);
@@ -343,23 +343,23 @@ void Object3d::UpdateMatrix() {
 	//resultMat = Affin::matUnit();
 
 	//// スケール、回転、平行移動行列の計算
-	//matScale = Affin::matScale(wtf.scale.x, wtf.scale.y, wtf.scale.z);
+	//matScale = Affin::matScale(transForm.scale.x, transForm.scale.y, transForm.scale.z);
 	//matRot = Affin::matUnit();
-	//matRot *= Affin::matRotation(wtf.rotation);
-	//matTrans = Affin::matTrans(wtf.m_Pos.x, wtf.m_Pos.y, wtf.m_Pos.z);
+	//matRot *= Affin::matRotation(transForm.rotation);
+	//matTrans = Affin::matTrans(transForm.m_Pos.x, transForm.m_Pos.y, transForm.m_Pos.z);
 
 	//// ワールド行列の合成
-	//wtf.matWorld = Affin::matUnit(); // 変形をリセット
-	//wtf.matWorld *= matScale; // ワールド行列にスケーリングを反映
-	//wtf.matWorld *= matRot; // ワールド行列に回転を反映
-	//wtf.matWorld *= matTrans; // ワールド行列に平行移動を反映
+	//transForm.matWorld = Affin::matUnit(); // 変形をリセット
+	//transForm.matWorld *= matScale; // ワールド行列にスケーリングを反映
+	//transForm.matWorld *= matRot; // ワールド行列に回転を反映
+	//transForm.matWorld *= matTrans; // ワールド行列に平行移動を反映
 
-	wtf.UpdateMat();
+	transForm.UpdateMat();
 
 	// 親オブジェクトがあれば
 	if (parent_ != nullptr) {
 		// 親オブジェクトのワールド行列を掛ける
-		wtf.matWorld *= parent_->wtf.matWorld;
+		transForm.matWorld *= parent_->transForm.matWorld;
 	}
 }
 

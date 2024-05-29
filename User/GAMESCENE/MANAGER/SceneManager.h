@@ -12,6 +12,8 @@
 
 #pragma warning(pop)
 
+#include "ISceneFactory.h"
+
 class Input;
 class IScene;
 class DirectXCommon;
@@ -26,11 +28,14 @@ public:
 	DirectXCommon* _dxCommon;
 	Camera* _camera;
 	SceneObjects* _objects;
+	ISceneFactory* _factory;
 	
 public:
 
 	SceneManager(DirectXCommon* dxCommon, Camera* camera, SceneObjects* objects);
 	~SceneManager();
+	void SetFactory(ISceneFactory* sceneFactory) { _factory = sceneFactory; };
+	void Initialize();
 
 	// 各シーンのInitializeを呼び出す
 	void SceneInitialize();
@@ -50,10 +55,17 @@ public:
 	void TransScene();
 	void Pause();
 
+	//
+	void TutorialOFF() { nowTutorial = false; };
+	void SetTutorialNum(uint32_t num) { tutorialNum = num; };
+
 public:
 	uint32_t sceneNum = 0;
+	uint32_t tutorialNum = 0;
 	bool isChange = false;
 	bool goToTitle = false;
+	bool nowTutorial = false;
+	bool padding;
 };
 
 //	基本構成の参照元

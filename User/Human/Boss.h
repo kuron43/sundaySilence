@@ -30,8 +30,8 @@ public:
 	void SetWeaponNum(uint32_t WeaponNum) override;
 
 	// セッター
-	void SetPos(Vector3 pos) { object_->wtf.position = pos; }
-	void SetReticle(Vector3 ret) { reticle->wtf.position = ret; }
+	void SetPos(Vector3 pos) { object_->transForm.position = pos; }
+	void SetReticle(Vector3 ret) { reticle->transForm.position = ret; }
 	void SetRestRotate(Vector3 rot) { restRotate_ = rot; }
 
 	void SetFBXModel(FBXModel* model) { bossFbxM_ = model; }
@@ -40,14 +40,14 @@ public:
 	uint32_t HowTribe() { return Tribe_; }
 	bool HowDead() { return isDead; }
 
-	Transform GetTransform() { return object_->wtf; }
+	Transform GetTransform() { return object_->transForm; }
 
 private:
 	//正面をレティクル方向に向かせる
 	void FrontFace();
 	// 当たり判定用のアップデート
-	void ColiderUpdate();
-	void OnColision();
+	void ColliderUpdate();
+	void OnCollision();
 
 	void HitMyColor();
 public:
@@ -57,7 +57,7 @@ public:
 	Weapon* weapon_;
 
 //private:
-	uint32_t debugNum_ = 0;
+	uint32_t stateNum_ = 0;
 	const uint32_t Tribe_ = HU_BOSS;
 	uint32_t useWeapon_ = WP_ASSAULT;
 	bool isWeaponOn = true;
@@ -65,8 +65,11 @@ public:
 	bool isFire = false;
 	bool isFireOld = false;
 	bool isBlocked = false;
-
 	bool isDead = false;
+	bool nowTitle = false;
+	bool onPat_;
+	bool isHitEffect;
+	bool PADDING[3];
 
 	Model* model_;
 	Model* modelCol_;
@@ -79,25 +82,16 @@ public:
 
 	//移動速度
 	const float kMoveSpeed_ = 0.5f;
-	bool isRun_ = false;
 	//移動ベクトル
 	Vector3 velocity_;
 	// 初期回転向き保存
 	Vector3 restRotate_;
 
-
-
-
-	// タイトル用の処理と切り分けるためのやつ
-	bool nowTitle = false;
-
 	// パーティクル関係
-	std::unique_ptr <ParticleManager>  particle_;
 	uint32_t onPatTime_;
-	bool onPat_;
+	ObjParticleManager::ParticlePreset patPreset_;
 
 	// 体の色変化
-	bool isHitEffect;
 	const uint32_t MAX_HITTIME = 5;
 	uint32_t hitTime_;
 
@@ -106,13 +100,13 @@ public:
 	void SetSphere(std::vector<SphereCollider*> sphere_) { sphere = sphere_; }
 	std::vector<SphereCollider*> GetSphere() { return sphere; }
 private:
-	uint32_t SPHERE_COLISSION_NUM = 1;	//コライダー（スフィア）の数
+	Vector3 rayvec;
+	uint32_t SPHERE_COLLISION_NUM = 1;	//コライダー（スフィア）の数
 	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列 // fbx化後の仕様予定
 	std::vector<SphereCollider*> sphere;
 	std::vector<Vector3> spherePos;
-	std::vector<Object3d*> coliderPosTest_;
+	std::vector<Object3d*> colliderPosTest_;
 	RayCollider* ray;
 	RaycastHit* rayHit;
-	Vector3 rayvec;
 };
 

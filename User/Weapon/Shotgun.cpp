@@ -11,23 +11,6 @@ Shotgun::~Shotgun() {
 	delete model_;
 }
 
-Shotgun* Shotgun::Create()
-{
-	// 3Dオブジェクトのインスタンスを生成
-	Shotgun* instans = new Shotgun();
-	if (instans == nullptr) {
-		return nullptr;
-	}
-
-	// 初期化
-	if (!instans->Initialize()) {
-		delete instans;
-		assert(0);
-		return nullptr;
-	}
-
-	return instans;
-}
 
 /// 更新を行う
 bool Shotgun::Initialize() {
@@ -39,43 +22,42 @@ bool Shotgun::Initialize() {
 }
 
 /// 更新を行う
-void Shotgun::Update(Input* input, bool isSlow) {
+void Shotgun::Update(Input* input/*, bool isSlow*/) {
 
-	_isSlow = isSlow;
 	if (input) {
 
 	}
-	if (isSlow == true) {
+	if (_isSlow == true) {
 		speed_ = nomalSpeed * _slowSpeed;
 	}
 	else
 	{
 		speed_ = nomalSpeed;
 	}
-// 
-	if (roadingTime <= 0) {
-		if (mag < 5) {
-			goShot = true;
+	// 
+	if (mag < 5 && nowRoading == false) {
+		goShot = true;
+	}
+	else if (mag >= 5 && nowRoading == false) {
+		goShot = false;
+		nowRoading = true;
+
+		if (_isSlow == true) {
+			mag = 0;
+			roadingTime = 150*2;
 		}
-		if (mag >= 5) {
-			if (_isSlow == true) {
-				roadingTime = 150;
-				goShot = false;
-				mag = 0;
-			}
-			else {
-				roadingTime = 50;
-				goShot = false;
-				mag = 0;
-			}
+		else {
+			mag = 0;
+			roadingTime = 50*2;
 		}
 	}
+	if (roadingTime < 0) {
+		nowRoading = false;
+	}
+	roadingTime--;
 	if (coolTime > 0) {
 		coolTime--;
 	}
-
-	roadingTime--;
-
 	BulletManager::GetInstance()->SetSpeed(speed_);
 }
 

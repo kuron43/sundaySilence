@@ -1,23 +1,19 @@
+/**
+ * @file FBXObject3d.h
+ * @brief FBXSDKオブジェクトを初期化、更新、描画するクラス
+ */
 #pragma once
-#pragma warning(push)
-#pragma warning(disable: 4820)
-#pragma warning(disable: 4514)
-#pragma warning(disable: 4061)
+#include "FBXModel.h"
+#include "fbx/FBXLoader.h"
+#include "Transform.h"
+#include "Camera.h"
+
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <DirectXMath.h>
 #include <string>
-
-#pragma warning(pop)
-#include "FBXModel.h"
-#include "FBXLoader.h"
-#include "Transform.h"
-#include "Camera.h"
-
-
-
 
 class FBXObject3d
 {
@@ -39,7 +35,7 @@ public: // サブクラス
 		XMFLOAT3 cameraPos; // カメラ座標（ワールド座標）
 	};
 	//ボーンの最大数
-	static const uint32_t MAX_BONES = 320;
+	static const int MAX_BONES = 320;
 
 	//定数バッファ用のデータ構造体(スキニング)
 	struct ConstBufferDataSkin
@@ -58,15 +54,15 @@ public: // 静的メンバ関数
 	/// グラフィックパイプラインの生成
 	/// </summary>
 	// setter
-	static void SetDevice(ID3D12Device* device) { FBXObject3d::device_ = device; }
-	static void SetCamera(Camera* camera) { FBXObject3d::camera_ = camera; }
+	static void SetDevice(ID3D12Device* deviceArg) { FBXObject3d::device = deviceArg; }
+	static void SetCamera(Camera* cameraArg) { FBXObject3d::camera = cameraArg; }
 
 
 private: // 静的メンバ変数
 	// デバイス
-	static ID3D12Device* device_;
+	static ID3D12Device* device;
 	// カメラ
-	static Camera* camera_;
+	static Camera* camera;
 	// ルートシグネチャ
 	static ComPtr<ID3D12RootSignature> rootsignature;
 	// パイプラインステートオブジェクト
@@ -98,41 +94,49 @@ public: // メンバ関数
 	/// <summary>
 	/// 大きさの設定
 	/// </summary>
-	/// <param name="m_Pos">座標</param>
-	void SetScale(const Vector3& scale) { wtf.scale = scale; }
+	/// <param name="position">座標</param>
+	void SetScale(const Vector3& scale) { this->transform_.scale = scale; }
 
-	/// <summary>
-	/// 座標の設定
-	/// </summary>
-	/// <param name="m_Pos">座標</param>
-	void SetPosition(const Vector3& position) { wtf.position = position; }
 
 	/// <summary>
 	/// 回転の設定
 	/// </summary>
-	/// <param name="rotate"></param>
-	void SetRotate(const Vector3& rotate) { wtf.rotation = rotate; }
+	/// <param name="position">座標</param>
+	void SetRotate(const Vector3& rotation) { this->transform_.rotation = rotation; }
+
+	/// <summary>
+	/// 座標の設定
+	/// </summary>
+	/// <param name="position">座標</param>
+	void SetPosition(const Vector3& position) { this->transform_.position = position; }
+
+	/// <summary>
+
+	/// 座標の取得
+	/// </summary>
+	/// <returns>座標</returns>
+	const Vector3& GetPosition() const { return transform_.position; }
+	const Vector3& GetRotate() const { return transform_.rotation; }
+	const Vector3& GetScale() const { return transform_.scale; }
 
 	/// <summary>
 	/// モデルをセット
 	/// </summary>
 	/// <param name="fbxmodel"></param>
-	void SetModel(FBXModel* fbxmodel) { fbxmodel_ = fbxmodel; }
+	void SetModel(FBXModel* fbxmodelArg) { this->fbxmodel = fbxmodelArg; }
 
 	/// <summary>
 	/// フレームカウント指定
 	/// </summary>
 	/// <param name="flame"></param>
-	void SetFlame(uint32_t flame);
+	void SetFlame(int flame);
 
 	/// <summary>
 	/// アニメーション再生用
 	/// </summary>
 	void AnimPlay();
 	void AnimStop();
-	void AnimRotPlay();
-	void AnimRotStop();
-	void AnimIsRotateChange();
+	void AnimIsRotateChange(bool isRotate = true);
 
 	/// <summary>
 	/// カメラのゲッター
@@ -145,15 +149,26 @@ public: // メンバ関数
 	/// </summary>
 	/// <returns></returns>
 	FbxTime GetCurrentTimer();
+	// 終了時間ゲット
 	FbxTime GetEndTime();
+	// アニメーション繰り返し状況ゲット
 	bool GetIsAnimRot();
-	uint32_t ConvertFbxTimeToInt(FbxTime time);	//FbxTime型変数をintに変換
+	// FbxTime型をintに変換(なくてもオーバーライドされる)
+	int ConvertFbxTimeToInt(FbxTime time);
+	// animNumのリセットとアニメーション処理
+	void ResetCurrentTime(int animNum);
+	// 定数バッファゲッタ
+	ID3D12Resource* GetConstBuff() { return constBuffTransform.Get(); };
 
 	/// <summary>
 	/// ワールドトランスフォーム取得
 	/// </summary>
 	/// <returns></returns>
 	Transform GetWorldTransform();
+	/// <summary>
+	/// ワールドトランスフォーム取得
+	/// </summary>
+	/// <returns></returns>
 	Transform* GetWorldTransformPtr();
 
 	/// <summary>
@@ -169,30 +184,21 @@ public: // メンバ関数
 	/// <summary>
 	/// アニメーション開始
 	/// </summary>
-	void PlayAnimation(uint32_t animationNum);
+	void PlayAnimation(int animationNum);
 
 	//補間アニメーションカウント
 	void AnimFlameInter(FbxTime nowCount, FbxTime maxCount);
 
-	Transform wtf;
-	
-	ID3D12Resource* GetConstBuff() { return constBuffTransform.Get(); };
+	Transform transform_;
 
 protected: // メンバ変数
 	// 定数バッファ
 	ComPtr<ID3D12Resource> constBuffTransform;
 	// 定数バッファ(スキン)
 	ComPtr<ID3D12Resource> constBuffSkin;
-	//// ローカルスケール
-	//XMFLOAT3 scale = { 1,1,1 };
-	//// X,Y,Z軸回りのローカル回転角
-	//XMFLOAT3 rotation = { 0,0,0 };
-	//// ローカル座標
-	//XMFLOAT3 m_Pos = { 0,0,0 };
-	//// ローカルワールド変換行列
-	//XMMATRIX matWorld;
+
 	// モデル
-	FBXModel* fbxmodel_ = nullptr;
+	FBXModel* fbxmodel = nullptr;
 
 	//1フレームの時間
 	FbxTime frameTime;
@@ -210,7 +216,5 @@ protected: // メンバ変数
 	bool isAnim = true;
 	//アニメーション繰り返すか
 	bool animRot = true;
-	//アニメーション終わったかフラグ
-	bool isAnimEnd = false;
 
 };

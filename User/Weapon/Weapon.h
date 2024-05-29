@@ -16,8 +16,9 @@ class Weapon
 {
 protected:
 	float _slowSpeed = 0.25f;
-	bool _isSlow;
+	static bool _isSlow;
 public:
+	static void SetIsSlow(bool isSlow) { _isSlow = isSlow; };
 	Weapon();
 	virtual ~Weapon();
 
@@ -26,7 +27,7 @@ public:
 	virtual bool Initialize() = 0;
 
 	/// 更新を行う
-	virtual void Update(Input* input,bool isSlow) = 0;
+	virtual void Update(Input* input) = 0;
 
 	/// 描画を行う
 	virtual void Draw(DirectXCommon* dxCommon) = 0;
