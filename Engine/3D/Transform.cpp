@@ -26,10 +26,10 @@ void Transform::Initialize() {
 void Transform::UpdateMat() {
 	Matrix4 matScale, matRot, matTrans;
 	// スケール、回転、平行移動行列の計算
-	matScale = Affin::matScale(scale.x, scale.y, scale.z);
+	matScale = Affin::matScale(scale);
 	matRot = Affin::matUnit();
 	matRot = Affin::matRotation(rotation);
-	matTrans = Affin::matTrans(position.x, position.y, position.z);
+	matTrans = Affin::matTrans(position);
 
 	// ワールド行列の合成
 	matWorld = Affin::matUnit(); // 変形をリセット

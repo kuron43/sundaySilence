@@ -14,3 +14,41 @@ float MathUtility::Randoms::GetRandFloat(const float min, const float max) {
 
 	return result;
 }
+
+ /// <summary>
+/// 度数法 -> ラジアン
+/// </summary>
+ float MathUtility::radConvert(float value) {
+	 float radValue;
+
+	 radValue = value * (PI / 180);
+
+	 return radValue;
+ }
+
+ /// <summary>
+ /// ラジアン -> 度数法
+ /// </summary>
+ float MathUtility::degConvert(float value) {
+	 float degValue;
+
+	 degValue = value * (180 / PI);
+
+	 return degValue;
+ }
+
+
+ //sin、cosを両方出す
+ void MathUtility::SinCos(float& sin_, float& cos_, float angle)
+ {
+	 sin_ = sin(angle);
+	 cos_ = cos(angle);
+ }
+
+ Vector2 MathUtility::SinCosToVec2(const float angle)
+ {
+	 Vector2 result;
+	 result.x = sin(angle);
+	 result.y = cos(angle);
+	 return result;
+ }

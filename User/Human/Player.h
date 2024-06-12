@@ -72,7 +72,7 @@ private:
 	//移動速度
 	const float kMoveSpeed_ = 0.0f;
 	//旋回速度
-	const float kTurnSpeed_ = Affin::radConvert(10);
+	const float kTurnSpeed_ = MathUtility::radConvert(10);
 	bool isRun_ = false;
 	//移動ベクトル
 	//float slowPalams = 0.25f;

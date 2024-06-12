@@ -16,6 +16,12 @@ void Vector2::Init()
 	y = 0.0f;
 }
 
+void Vector2::Init(float num)
+{
+	x = num;
+	y = num;
+}
+
 float Vector2::length()const {
 	return std::sqrt(x * x + y * y);
 }
@@ -36,6 +42,16 @@ float Vector2::dot(const Vector2& v) const
 float Vector2::cross(const Vector2& v) const
 {
 	return x * v.y - y * v.x;
+}
+
+Vector2 Vector2::operator+() const
+{
+	return *this;
+}
+
+Vector2 Vector2::operator-() const
+{
+	return Vector2(-x,-y);
 }
 
 Vector2& Vector2::operator+=(const Vector2& v)

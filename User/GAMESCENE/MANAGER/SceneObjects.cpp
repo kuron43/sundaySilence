@@ -295,7 +295,7 @@ void SceneObjects::Initialize() {
 	lightGroup->Initialize();
 
 	lightGroup->SetDirLightActive(0, true);
-	rotateLight = { Affin::radConvert(60.0f), Affin::radConvert(30.0f), Affin::radConvert(0.0f) };
+	rotateLight = { MathUtility::radConvert(60.0f), MathUtility::radConvert(30.0f), MathUtility::radConvert(0.0f) };
 
 	lightGroup->SetDirLightColor(0, Vector3(1, 1, 1));
 	lightDir = Affin::VecMat(pointLightPos, Affin::matRotation(rotateLight));
@@ -315,7 +315,7 @@ void SceneObjects::UpdateImGui()
 	ImGui::Text("JsonMapNum:%d", (int)levels.size());
 	ImGui::Text("DirLight");
 	ImGui::InputFloat3("DirRot", &pointLightPos.x);
-	ImGui::SliderFloat3("DirPos", &rotateLight.x, 0.0f, Affin::radConvert(360.0f));
+	ImGui::SliderFloat3("DirPos", &rotateLight.x, 0.0f, MathUtility::radConvert(360.0f));
 	ImGui::Text("UI");
 	ImGui::SliderInt("BarrierUISize", &UISP_Weapon_size, 1, 4);
 	ImGui::Text("eneSize:%d", enemys.size());

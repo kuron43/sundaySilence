@@ -13,18 +13,9 @@
 /// </summary>
 namespace Affin {
 
-	//円周率
-	const float PI = 3.141592654f;
-	// 度数法 -> ラジアン変換
-	float radConvert(float value);
-	// ラジアン -> 度数法変換
-	float degConvert(float value);
-
 	// 単位行列 set
 	Matrix4 matUnit();
 
-	// ベクトルと行列の掛け算
-	Vector3 VecMat(Vector3 vec, Matrix4 mat);
 
 	// 平行移動
 	Matrix4 matTrans(float moveX, float moveY, float moveZ);
@@ -53,8 +44,7 @@ namespace Affin {
 
 	// ベクトルと行列の掛け算
 	Vector3 VecMat3D(Vector3 vec, Matrix4 mat);
-
-	//sin、cosを両方出す
-	void SinCos(float& sin_, float& cos_, float angle);
+	// ベクトルと行列の掛け算
+	Vector3 VecMat(Vector3 vec, Matrix4 mat);
 
 } // namespace Affin

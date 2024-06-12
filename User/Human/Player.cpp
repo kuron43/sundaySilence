@@ -376,7 +376,7 @@ void Player::CollisionUpdate() {
 				float cos = rejectDir.dot(up);
 
 				// 地面判定しきい値
-				const float threshold = cosf(Affin::radConvert(NUM_THIRTY));
+				const float threshold = cosf(MathUtility::radConvert(NUM_THIRTY));
 				// 角度差によって天井または地面と判定される場合を除いて
 				if (-threshold < cos && cos < threshold) {
 					// 球を排斥 （押し出す）

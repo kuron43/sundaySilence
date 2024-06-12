@@ -86,9 +86,9 @@ void BomFire::Shot(Transform& shooter, Transform& reticle, uint32_t team) {
 			veloLen = velo.length();
 			velo.nomalize();
 			if (i == 1) {
-				velo = Affin::VecMat(velo, Affin::matRotateY(Affin::radConvert(30.0f)));
+				velo = Affin::VecMat(velo, Affin::matRotateY(MathUtility::radConvert(30.0f)));
 			}if (i == 2) {
-				velo = Affin::VecMat(velo, Affin::matRotateY(Affin::radConvert(-30.0f)));
+				velo = Affin::VecMat(velo, Affin::matRotateY(MathUtility::radConvert(-30.0f)));
 			}
 			moveVec = velo * speed_;
 			moveVec.nomalize();

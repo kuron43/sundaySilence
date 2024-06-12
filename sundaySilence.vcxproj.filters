@@ -291,9 +291,6 @@
     <ClCompile Include="Engine\2D\PostEffect\IPostEffect.cpp">
       <Filter>engine\2d\postFX</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2D\PostEffect\MotionBlur.cpp">
-      <Filter>engine\2d\postFX</Filter>
-    </ClCompile>
     <ClCompile Include="User\GAMESCENE\MANAGER\SceneFactory.cpp">
       <Filter>user\scene</Filter>
     </ClCompile>
@@ -579,9 +576,6 @@
       <Filter>user\human\bossManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\2D\PostEffect\IPostEffect.h">
-      <Filter>engine\2d\postFX</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\2D\PostEffect\MotionBlur.h">
       <Filter>engine\2d\postFX</Filter>
     </ClInclude>
     <ClInclude Include="Engine\SCENE\ISceneFactory.h">
