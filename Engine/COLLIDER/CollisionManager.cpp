@@ -438,11 +438,11 @@ float CollisionManager::PlaneToPointLeng(FinitePlane plane, Vector3 pos, float r
 	bool result = false;
 
 	// 平面との内外判定を行う
-	if (angle < Affin::radConvert(90))
+	if (angle < MathUtility::radConvert(90))
 	{
 		result |= PlaneToPointInside(plane, pos - (nomalizeCross * L));
 	}
-	else if (angle > Affin::radConvert(90))
+	else if (angle > MathUtility::radConvert(90))
 	{
 		result |= PlaneToPointInside(plane, pos + (nomalizeCross * L));
 	}

@@ -10,6 +10,7 @@ public:
 	Vector2();					//零ベクトルとして生成
 	Vector2(float x, float y);		//x成分、ｙ成分を指定しての生成
 	void Init();
+	void Init(float num);
 
 	//　メンバ関数
 	float length() const;				//ノルム（長さ）を求める

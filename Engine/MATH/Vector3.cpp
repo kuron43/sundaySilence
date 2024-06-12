@@ -15,11 +15,24 @@ Vector3::Vector3(float x, float y, float z) {
 	this->z = z;
 }
 
+Vector3::Vector3(float num)
+{
+	x = num;
+	y = num;
+	z = num;
+}
+
 void Vector3::InIt()
 {
 	x = 0.0f;
 	y = 0.0f;
-	z = 0.0f;	
+	z = 0.0f;
+}
+void Vector3::InIt(float num)
+{
+	x = num;
+	y = num;
+	z = num;
 }
 
 float Vector3::length()const {
@@ -46,6 +59,19 @@ const Vector3 Vector3::lerp(const Vector3& start, const Vector3& end, const floa
 	/*float y = t;
 	return start * (1.0f - y) + end * y;*/
 	return start * (1.0f - t) + end * t;
+}
+
+Vector3 Vector3::Vector3Zero()
+{
+	return Vector3(0);
+}
+
+bool Vector3::Vector3Equal(Vector3 v1, Vector3 v2)
+{
+	if (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z) {
+		return true;
+	}
+	return false;
 }
 
 Vector3 Vector3::operator+()const {

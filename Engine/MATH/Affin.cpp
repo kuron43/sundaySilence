@@ -38,27 +38,7 @@ Matrix4 Affin::matTrans(Vector3 move) {
 	return matTrans;
 }
 
-/// <summary>
-/// 度数法 -> ラジアン
-/// </summary>
-float Affin::radConvert(float value) {
-	float radValue;
 
-	radValue = value * (PI / 180);
-
-	return radValue;
-}
-
-/// <summary>
-/// ラジアン -> 度数法
-/// </summary>
-float Affin::degConvert(float value) {
-	float degValue;
-
-	degValue = value * (180 / PI);
-
-	return degValue;
-}
 
 /// <summary>
 /// 回転 X方向
@@ -128,7 +108,7 @@ Matrix4 Affin::matRotation(Vector3 rotate) {
 	Matrix4 y = matRotateY(rotate.y);
 	Matrix4 z = matRotateZ(rotate.z);
 	Matrix4 matRot = matUnit();
-	
+
 	matRot *= z;
 	matRot *= x;
 	matRot *= y;
@@ -251,12 +231,5 @@ Vector3 Affin::wDivision(Vector3 vector, Matrix4 matrix) {
 		w };
 
 	return result;
-}
-
-//sin、cosを両方出す
-void Affin::SinCos(float& sin_, float& cos_, float angle)
-{
-	sin_ = sin(angle);
-	cos_ = cos(angle);
 }
 

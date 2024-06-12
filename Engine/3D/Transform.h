@@ -2,12 +2,12 @@
 
 #include "Matrix4.h"
 #include "Affin.h"
+#include "MathUtility.h"
 
 class Transform
 {
 public:
 	Transform();
-	//~Transform();
 	void Initialize();
 	void UpdateMat();
 	Matrix4 GetRotMat() { return rotMat; };
@@ -24,9 +24,4 @@ public:
 private:
 	Matrix4 rotMat = Affin::matUnit();
 	bool PADDING[4];
-
-	////代入演算子削除
-	//Transform& operator=(const Transform&) = delete;
-	////コピーコンストラクタ削除
-	//Transform(const Transform&) = delete;
 };

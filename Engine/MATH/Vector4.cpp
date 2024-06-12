@@ -1,4 +1,5 @@
 #include "Vector4.h"
+#include "Vector3.h"
 #pragma warning(push)
 #pragma warning(disable: 4819)
 #include<cmath>  //sprt
@@ -12,6 +13,22 @@ Vector4::Vector4(float x, float y, float z, float w) {
 	this->x = x;
 	this->y = y;
 	this->z = z;
+	this->w = w;
+}
+
+Vector4::Vector4(float num)
+{
+	x = num;
+	y = num;
+	z = num;
+	w = num;
+}
+
+Vector4::Vector4(Vector3 vec3, float w)
+{
+	x = vec3.x;
+	y = vec3.y;
+	z = vec3.z;
 	this->w = w;
 }
 
@@ -152,4 +169,19 @@ const Vector4 operator/(const Vector4& v, float s)
 	temp.z /= s;
 	temp.w /= s;
 	return temp;
+}
+
+void Vector4Lerp(const Vector4& src1, const Vector4& src2, float t, Vector4& dest)
+{
+	dest.x = src1.x + (src2.x - src1.x) * t;
+	dest.y = src1.y + (src2.y - src1.y) * t;
+	dest.z = src1.z + (src2.z - src1.z) * t;
+	dest.w = src1.w + (src2.w - src1.w) * t;
+}
+
+Vector4 Vector4Lerp(const Vector4& src1, const Vector4& src2, float t)
+{
+	Vector4 result;
+	Vector4Lerp(src1, src2, t, result);
+	return result;
 }

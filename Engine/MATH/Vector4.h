@@ -1,5 +1,5 @@
 #pragma once
-
+class Vector3;
 //4次元ベクトル
 class Vector4
 {
@@ -13,6 +13,8 @@ public:
 	//コンストラクタ
 	Vector4();//零ベクトル
 	Vector4(float x, float y, float z, float w);//成分を指定して生成
+	Vector4(float num);//成分を指定して生成
+	Vector4(Vector3 vec3, float w);//成分を指定して生成
 
 
 	float Length()const;//ノルムを求める

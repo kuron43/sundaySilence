@@ -87,10 +87,10 @@ void Shotgun::Shot(Transform& player, Transform& reticle, uint32_t team) {
 				velo = reticleVec - startPos;
 			}
 			else if (i == 1) {
-				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(3)));
+				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(MathUtility::radConvert(3)));
 			}
 			else if (i == 2) {
-				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(Affin::radConvert(-3)));
+				velo = Affin::VecMat(reticleVec - startPos, Affin::matRotateY(MathUtility::radConvert(-3)));
 			}
 			velo.nomalize();
 			moveVec = velo * speed_;
