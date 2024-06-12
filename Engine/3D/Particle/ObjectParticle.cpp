@@ -16,14 +16,14 @@ ObjectParticle* ObjectParticle::Create(
 }
 
 void ObjectParticle::Init(
-	const Vector3& pos_, Model* model_, const Vector3& velocity_, float scale, Vector4 color) {
-	object3d.reset(object3d->Create());
-	object3d->SetModel(model_);
-	object3d->SetColor(color);
-	object3d->transForm.position = pos_;
-	object3d->transForm.scale = { scale,scale,scale };
+	const Vector3& pos_, Model* model_, const Vector3& velocity, float scale, Vector4 color) {
+	object_.reset(object_->Create());
+	object_->SetModel(model_);
+	object_->SetColor(color);
+	object_->transForm.position = pos_;
+	object_->transForm.scale = { scale,scale,scale };
 
-	velocity = velocity_;
+	velocity_ = velocity;
 
 	lifeTimer = 0;
 
@@ -33,14 +33,14 @@ void ObjectParticle::Update() {
 	if (lifeTimer < MAXLIFETIME) {
 		lifeTimer++;
 
-		object3d->transForm.position += velocity;
+		object_->transForm.position += velocity_;
 
-		object3d->transForm.rotation += { 30.0f, 30.0f, 30.0f };
+		object_->transForm.rotation += { 30.0f, 30.0f, 30.0f };
 
 		if (lifeTimer > MAXLIFETIME - MAXEASETIME) {
 			if (easeTimer < MAXEASETIME) {
 				easeTimer++;
-				object3d->transForm.scale = Easing::OutQuadVec3({ 0.5f, 0.5f, 0.5f }, { 0.0f, 0.0f, 0.0f }, easeTimer / MAXEASETIME);
+				object_->transForm.scale = Easing::OutQuadVec3({ 0.5f, 0.5f, 0.5f }, { 0.0f, 0.0f, 0.0f }, easeTimer / MAXEASETIME);
 			}
 		}
 	}
@@ -48,10 +48,10 @@ void ObjectParticle::Update() {
 		isDead = true;
 	}
 
-	object3d->Update();
+	object_->Update();
 }
 
-void ObjectParticle::Draw() { object3d->Draw(); }
+void ObjectParticle::Draw() { object_->Draw(); }
 
 void ObjParticleManager::Init(Model* model) {
 	model_ = model;
