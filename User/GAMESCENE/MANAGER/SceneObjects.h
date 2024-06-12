@@ -150,7 +150,6 @@ private: // UI用
 
 public: // オブジェクトの管理
 	std::unique_ptr <LightGroup> lightGroup;
-	std::unique_ptr <Audio> audio;
 	std::unique_ptr <SpriteCommon> spriteCommon_;
 	std::unique_ptr<Cursor> mouseCursor_;
 

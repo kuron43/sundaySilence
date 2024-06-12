@@ -309,7 +309,9 @@
     <ClCompile Include="Engine\3D\ModelManager.cpp">
       <Filter>engine\3d</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\Particle\ObjectParticle.cpp" />
+    <ClCompile Include="Engine\3D\Particle\ObjectParticle.cpp">
+      <Filter>engine\3d\particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\MATH\Affin.h">
@@ -600,7 +602,9 @@
     <ClInclude Include="Engine\3D\ModelManager.h">
       <Filter>engine\3d</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3D\Particle\ObjectParticle.h" />
+    <ClInclude Include="Engine\3D\Particle\ObjectParticle.h">
+      <Filter>engine\3d\particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SHADER\FBX.hlsli">
@@ -709,6 +713,9 @@
     </Filter>
     <Filter Include="user\human\bossManager">
       <UniqueIdentifier>{a2241f99-a9dd-4979-baf3-3a1b1c3a5c1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\particle">
+      <UniqueIdentifier>{0734579b-b5e6-4195-8a97-6919d6ba99af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

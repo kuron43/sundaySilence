@@ -10,7 +10,7 @@ public:
 	/// 作成
 	/// </summary>
 	/// <returns></returns>
-	static ObjectParticle* Create(const Vector3& pos_, Model* model_, const Vector3& velocity, float scale = 1.0f, Vector4 color = { 1,1,1,1 });
+	static ObjectParticle* Create(const Vector3& pos_, Model* model_, const Vector3& velocity_, float scale = 1.0f, Vector4 color = { 1,1,1,1 });
 
 	/// <summary>
 	/// 初期化
@@ -18,7 +18,7 @@ public:
 	/// <param name="pos_"></param>
 	/// <param name="model_"></param>
 	/// <param name="pipeline_"></param>
-	void Init(const Vector3& pos_, Model* model_, const Vector3& velocity, float scale, Vector4 color);
+	void Init(const Vector3& pos_, Model* model_, const Vector3& velocity_, float scale, Vector4 color);
 
 	/// <summary>
 	/// 更新
@@ -42,9 +42,9 @@ public:
 
 private:
 	// オブジェクト
-	std::unique_ptr<Object3d> object3d = nullptr;
+	std::unique_ptr<Object3d> object_ = nullptr;
 
-	Vector3 velocity = { 0,0,0 };
+	Vector3 velocity_ = { 0,0,0 };
 
 	// 生存時間
 	uint32_t lifeTimer = 0;

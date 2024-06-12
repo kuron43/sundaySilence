@@ -73,10 +73,6 @@ public: // 静的メンバ関数
 	/// <returns></returns>
 	static Object3d* Create();
 
-
-
-
-
 private: // 静的メンバ変数
 	// デバイス
 	static ComPtr<ID3D12Device> device_;

@@ -18,7 +18,7 @@
 class Audio
 {
 private: // エイリアス
-// Microsoft::WRL::を省略
+	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 public:
 	//チャンクヘッダ
@@ -52,10 +52,22 @@ public:
 		IXAudio2SourceVoice* sourceVoice = nullptr;
 	};
 
+public:
+	Audio() = default;
+	~Audio() = default;
+
+	Audio(const Audio&) = delete;
+	Audio& operator=(const Audio&) = delete;
+	Audio(Audio&&) = delete;
+	Audio& operator=(Audio&&) = delete;
+
+	static Audio* get_instance();
+
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::string& directoryPath = "Resources/");
+	void Initialize();
 
 	/// <summary>
 	/// 終了処理

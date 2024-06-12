@@ -22,13 +22,13 @@ void MyGame::Initialize() {
 
 
 	// ゲームシーンの初期化
-	gameScene = new GameScene();
+	gameScene = std::make_unique<GameScene>();
 	gameScene->Initialize(dxCommon, input);
 }
 // 終了
 void MyGame::Finalize() {
 
-	delete gameScene;
+	//delete gameScene;
 
 	////////////////////////
 
@@ -51,7 +51,7 @@ void MyGame::Draw() {
 
 
 	//// ポストエフェクト用ゲームシーンの描画
-	postFXManager->TargetPreDraw(dxCommon->GetCommandList(), gameScene);
+	postFXManager->TargetPreDraw(dxCommon->GetCommandList(), gameScene.get());
 
 	//4.描画コマンドここから
 	dxCommon->PreDraw();

@@ -106,6 +106,7 @@ void TitleScene::Update(Input* input) {
 	if (_objects->mouseCursor_->Cursor2Sprite(titleButton_.get())) {
 		if (input->MouseButtonTrigger(0)) {
 			_manager->SetSceneNum(SCE_SELECT);
+			Audio::get_instance()->PlayWave("shot.wav");
 		}
 		titleButton_->SetTextureIndex(9);
 	}

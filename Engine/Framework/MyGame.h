@@ -22,7 +22,7 @@ protected:
 
 	//ポインタ
 	//FbxManager* fbxManager = nullptr;
-	GameScene* gameScene = nullptr;
+	std::unique_ptr<GameScene> gameScene;
 	std::unique_ptr<PostEffectManager> postFXManager;
 	//PostEffect* postEffect = nullptr;
 	//IPostEffect* postEffectMix = nullptr;

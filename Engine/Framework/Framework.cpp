@@ -41,16 +41,22 @@ void Framework::Initialize() {
 	imgui = new ImGuiManager();
 	imgui->Initialize(winApp, dxCommon);
 
+	audio = Audio::get_instance();
+	audio->Initialize();
+
 	endRequest_ = false;
 }
 
 void Framework::Finalize() {
-	//// メモリりーく
-	ID3D12DebugDevice* debugInterface;
-	if (SUCCEEDED(dxCommon->GetDevice()->QueryInterface(&debugInterface))) {
-		debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
-		debugInterface->Release();
-	}
+
+	////// メモリりーく
+	//ID3D12DebugDevice* debugInterface;
+	//if (SUCCEEDED(dxCommon->GetDevice()->QueryInterface(&debugInterface))) {
+	//	debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
+	//	debugInterface->Release();
+	//}
+
+	audio->Finalize();
 
 	imgui->Finalize();
 	//WindowsAPIの終了処理
