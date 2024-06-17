@@ -112,41 +112,6 @@ void ObbCollider::CreateOBB(std::vector<VertexPosNormalUv> vertices, Transform* 
 		plane[5].vertex[2] = { -1.0f, -1.0f, -1.0f }; // 右下  K
 		plane[5].vertex[3] = { -1.0f, +1.0f, -1.0f }; // 右上  F
 	}
-	{// (仮)
-
-	 // ABC (頂点参考)
-	 // https://www.studyup.jp/contents/sansuu/tenkai.html#index_id2
-
-		//plane[0].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上 B
-		//plane[0].vertex[2] = { +1.0f, +1.0f, +1.0f }; // 右下 D
-		//plane[0].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上 A
-		//plane[0].vertex[0] = { -1.0f, +1.0f, +1.0f }; // 左下 C
-
-		//plane[1].vertex[3] = { +1.0f, +1.0f, +1.0f }; // 右上  D
-		//plane[1].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  I
-		//plane[1].vertex[1] = { -1.0f, +1.0f, +1.0f }; // 左上  C
-		//plane[1].vertex[0] = { -1.0f, -1.0f, +1.0f }; // 左下  H
-
-		//plane[2].vertex[3] = { +1.0f, +1.0f, -1.0f }; // 右上  E
-		//plane[2].vertex[2] = { +1.0f, -1.0f, -1.0f }; // 右下  J
-		//plane[2].vertex[1] = { +1.0f, +1.0f, +1.0f }; // 左上  D
-		//plane[2].vertex[0] = { +1.0f, -1.0f, +1.0f }; // 左下  I
-
-		//plane[3].vertex[3] = { -1.0f, +1.0f, -1.0f }; // 右上  F
-		//plane[3].vertex[2] = { -1.0f, -1.0f, -1.0f }; // 右下  K
-		//plane[3].vertex[1] = { +1.0f, +1.0f, -1.0f }; // 左上  E
-		//plane[3].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  J
-
-		//plane[4].vertex[3] = { -1.0f, +1.0f, +1.0f }; // 右上  G
-		//plane[4].vertex[2] = { -1.0f, -1.0f, +1.0f }; // 右下  L
-		//plane[4].vertex[1] = { -1.0f, +1.0f, -1.0f }; // 左上  F
-		//plane[4].vertex[0] = { -1.0f, -1.0f, -1.0f }; // 左下  K
-
-		//plane[5].vertex[3] = { -1.0f, -1.0f, +1.0f }; // 右上  L
-		//plane[5].vertex[2] = { +1.0f, -1.0f, +1.0f }; // 右下  N
-		//plane[5].vertex[1] = { -1.0f, -1.0f, -1.0f }; // 左上  K
-		//plane[5].vertex[0] = { +1.0f, -1.0f, -1.0f }; // 左下  M
-	}
 }
 
 void ObbCollider::Update()
